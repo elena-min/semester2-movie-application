@@ -1,0 +1,21 @@
+﻿using LogicLayer.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LogicLayer.Interfaces
+{
+    public interface IUserDAL
+    {
+        void InsertUser(User newUser);
+        User GetUserByID(int id);
+        User GetUserByUsername(string username);
+        User GetUserByEmail(string email);
+        User[] GetAll();
+        void UpdateUser(User user);
+        void DeleteUser(int id);
+
+    }
+}

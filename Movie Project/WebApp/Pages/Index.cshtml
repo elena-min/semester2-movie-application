@@ -1,0 +1,85 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<main>
+    <div id="welcome-container">
+        <div id="main-container">
+            <h1>Welcome to Cinematic</h1>
+            <div class="buttons">
+                <div class="button_for_account">
+                    <a asp-page="Login" name="action" value="login" class="btn btn-primary">Login</a>
+                    <a asp-page="Register" name="action" value="register" class="btn btn-primary">Register</a>
+                </div><br>
+                <div class ="button_for_noaccount">
+                    <a asp-page="Main" name="action" value="guest" class="btn btn-primary">Continue without an account</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-picture">
+            <img src="/images/mainPoster.jpg" alt="Poster">
+        </div>
+    </div>
+
+    <div id="content-container">
+        <div class="content-container1">
+            <div class="small-container">
+                <div class="image">
+                    <img src="/images/Movie-clipart.png" alt="Cinema" height="200">
+                </div>
+                <div class="small-container-text">
+                    <h4>Explore a variety of movies</h4>
+                    <p>Cinematic offers a large range of movies and shows. It's time to find your next favorite! Just look up the trending titles or browse anything you want.</p>
+                </div>
+
+            </div>
+            <div class="small-container">
+                <div class="small-container-text">
+                    <h4>Express your personal opinion!</h4>
+                    <p>"Dark, depressing and unsettling film with a haunting score. Incredible acting, directing and screenplay. Joaquin killed it. 5 out of 5 stars! Mental health is so important guys!!!"</p>
+                    <p><i>- andrewchristianjr</i></p>
+                </div>
+                <div class="image">
+                    <img src="/images/Joker2019.jpg" alt="Joker(2019)" height="200">
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-container1">
+            <div class="small-container">
+                <div class="image">
+                    <img src="/images/Barbie.jpg" alt="Barbie(2023)" height="200">
+                </div>
+                <div class="small-container-text">
+                    <h4>Get the best recommendations!</h4>
+                    <p>Our website offers personalized recommendations. All you have to do is register and start adding all of your favorite movies and shows. Easy, right? The program will take care of everything else for you!</p>
+                </div>
+            </div>
+            <div class="small-container">
+                
+                <div class="small-container-text">
+                    <h4>Join now!</h4>
+                    <div class="buttons-small-container">
+                    <div class="button_for_account-small-container">
+                        <a asp-page="Login" name="action" value="login" class="btn btn-primary">Login</a>
+                        <a asp-page="Register" name="action" value="register" class="btn btn-primary">Register</a>
+                    </div><br>
+                </div>
+                </div>
+                <div class="image">
+                    <img src="/images/FamilyGuy.jpg" alt="Family guy(1999-)" height="200">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+@* <div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div> *@

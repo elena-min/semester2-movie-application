@@ -1,0 +1,122 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0-windows7.0": {
+      "DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "LogicLayer": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DAL.dll": {}
+        }
+      },
+      "LogicLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/LogicLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LogicLayer.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DAL/1.0.0": {
+      "type": "project",
+      "path": "../DAL/DAL.csproj",
+      "msbuildProject": "../DAL/DAL.csproj"
+    },
+    "LogicLayer/1.0.0": {
+      "type": "project",
+      "path": "../LogicLayer/LogicLayer.csproj",
+      "msbuildProject": "../LogicLayer/LogicLayer.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0-windows7.0": [
+      "DAL >= 1.0.0",
+      "LogicLayer >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\lenam\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\DesktopApp\\DesktopApp.csproj",
+      "projectName": "DesktopApp",
+      "projectPath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\DesktopApp\\DesktopApp.csproj",
+      "packagesPath": "C:\\Users\\lenam\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\DesktopApp\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\lenam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0-windows"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "projectReferences": {
+            "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\DAL\\DAL.csproj"
+            },
+            "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\LogicLayer\\LogicLayer.csproj": {
+              "projectPath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\LogicLayer\\LogicLayer.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0-windows7.0": {
+        "targetAlias": "net6.0-windows",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WindowsForms": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

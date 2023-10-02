@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "WebApp/1.0.0": {
+        "dependencies": {
+          "DAL": "1.0.0",
+          "LogicLayer": "1.0.0"
+        },
+        "runtime": {
+          "WebApp.dll": {}
+        }
+      },
+      "DAL/1.0.0": {
+        "dependencies": {
+          "LogicLayer": "1.0.0"
+        },
+        "runtime": {
+          "DAL.dll": {}
+        }
+      },
+      "LogicLayer/1.0.0": {
+        "runtime": {
+          "LogicLayer.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WebApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DAL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LogicLayer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
