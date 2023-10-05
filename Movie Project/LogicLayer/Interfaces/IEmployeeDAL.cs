@@ -9,13 +9,13 @@ namespace LogicLayer.Interfaces
 {
     public interface IEmployeeDAL
     {
-        void InsertEmployee(Employee newEmployee);
+        bool InsertEmployee(Employee newEmployee);
         Employee GetEmployeeByID(int id);
         Employee GetEmployeeByUsername(string username);
         Employee GetEmployeeByEmail(string email);
         Employee[] GetAll();
-        void UpdateEmployee(Employee employee);
-        void DeleteEmployee(int id);
+        bool UpdateEmployee(Employee employee);
+        string DeleteEmployee(int id);
 
     }
 }

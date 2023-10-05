@@ -17,7 +17,13 @@ namespace LogicLayer.Classes
         protected double rating;
         protected List<int> ratings;
         protected string countryOfOrigin;
+        public Cast Cast { get; set; }
 
+        public string Title { get; private set; }
+        public string Description { get; private set; }
+        public DateTime ReleaseDate { get; private set; }
+        public double Rating { get; private set; }
+        public string CountryOfOrigin { get; private set; }
         public MediaItem()
         {
             ratings = new List<int>();
@@ -26,13 +32,15 @@ namespace LogicLayer.Classes
 
         public MediaItem(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating)
         {
-            this.title = _title;
-            this.description = _description;
-            this.releaseDate = _releaseDate;
-            this.countryOfOrigin = _countryOfOrigin;
-            this.rating = _rating;  
+            Title = _title;
+            Description = _description;
+            ReleaseDate = _releaseDate;
+            CountryOfOrigin = _countryOfOrigin;
+            Rating = _rating;  
             ratings = new List<int>();
             genres = new List<Genre>();
+            Cast = new Cast(Title);
+
         }
         public void SetId(int id)
         {
@@ -82,7 +90,7 @@ namespace LogicLayer.Classes
         }
         public virtual string ToString()
         {
-            return $"{GetId()} - {this.title} ({this.releaseDate.ToString("dd-MM-yyyy")})";
+            return $"{GetId()} - {Title} ({ReleaseDate.ToString("dd-MM-yyyy")})";
         }
     }
 }

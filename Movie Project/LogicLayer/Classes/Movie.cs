@@ -11,12 +11,15 @@ namespace LogicLayer.Classes
         private string director;
         private string writer;
         private int duration;
+        public string Director { get; private set; }
+        public string Writer { get; private set; }
+        public int Duration { get; private set; }
 
-        public Movie(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, int _rating,  string _director, string _writer, int _duration) : base(_title, _description, _releaseDate, _countryOfOrigin, _rating)
+        public Movie(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating,  string _director, string _writer, int _duration) : base(_title, _description, _releaseDate, _countryOfOrigin, _rating)
         {
-            this.director = _director;
-            this.writer = _writer;
-            this.duration = _duration;
+            Director = _director;
+            Writer = _writer;
+            Duration = _duration;
         }
         public virtual string ToString()
         {

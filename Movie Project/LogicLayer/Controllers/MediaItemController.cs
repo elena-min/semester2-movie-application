@@ -15,9 +15,9 @@ namespace LogicLayer.Controllers
         {
             this.imediaItemDAL = mediaItemDAL;
         }
-        public void AddMediaItem(MediaItem newMediaItem, byte[] pictureBytes)
+        public bool AddMediaItem(MediaItem newMediaItem, byte[] pictureBytes)
         {
-            imediaItemDAL.AddMediaItem(newMediaItem, pictureBytes);
+            return imediaItemDAL.AddMediaItem(newMediaItem, pictureBytes);
         }
         public MediaItem[] GetAll()
         {
@@ -39,13 +39,13 @@ namespace LogicLayer.Controllers
         {
             return imediaItemDAL.GetMediaItemImageByID((int)id);
         }
-        public void UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes)
+        public bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes)
         {
-            imediaItemDAL.UpdateMediaItem(mediaItem, pictureBytes); 
+            return imediaItemDAL.UpdateMediaItem(mediaItem, pictureBytes); 
         }
-        public void RemoveMediaItem(int id)
+        public string RemoveMediaItem(int id)
         {
-            imediaItemDAL.RemoveMediaItem(id);
+            return imediaItemDAL.RemoveMediaItem(id);
         }
     }
 }

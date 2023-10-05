@@ -47,12 +47,12 @@
             labelMoviePublishment = new Label();
             textBoxMovieDuration = new TextBox();
             labelMovieDuration = new Label();
-            btnAddCast = new Button();
             checkedLBGenres = new CheckedListBox();
             labelMovieGenre = new Label();
             btnImageUpload = new Button();
             pictureBoxMoviePic = new PictureBox();
             buttonAddMovie = new Button();
+            lblWarning = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMoviePic).BeginInit();
             SuspendLayout();
             // 
@@ -73,7 +73,7 @@
             textBoxCast.ForeColor = Color.FromArgb(60, 144, 137);
             textBoxCast.Location = new Point(12, 440);
             textBoxCast.Name = "textBoxCast";
-            textBoxCast.Size = new Size(500, 31);
+            textBoxCast.Size = new Size(582, 31);
             textBoxCast.TabIndex = 85;
             // 
             // lblMovieCast
@@ -82,9 +82,9 @@
             lblMovieCast.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
             lblMovieCast.Location = new Point(12, 416);
             lblMovieCast.Name = "lblMovieCast";
-            lblMovieCast.Size = new Size(182, 25);
+            lblMovieCast.Size = new Size(241, 25);
             lblMovieCast.TabIndex = 84;
-            lblMovieCast.Text = "Cast (add separately):";
+            lblMovieCast.Text = "Cast (seperate with commas):";
             // 
             // textBoxMovieWriter
             // 
@@ -241,16 +241,6 @@
             labelMovieDuration.TabIndex = 87;
             labelMovieDuration.Text = "Duration (minutes):";
             // 
-            // btnAddCast
-            // 
-            btnAddCast.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            btnAddCast.Location = new Point(518, 440);
-            btnAddCast.Name = "btnAddCast";
-            btnAddCast.Size = new Size(76, 31);
-            btnAddCast.TabIndex = 94;
-            btnAddCast.Text = "Add";
-            btnAddCast.UseVisualStyleBackColor = true;
-            // 
             // checkedLBGenres
             // 
             checkedLBGenres.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -281,6 +271,7 @@
             btnImageUpload.TabIndex = 98;
             btnImageUpload.Text = "Upload Image";
             btnImageUpload.UseVisualStyleBackColor = true;
+            btnImageUpload.Click += btnImageUpload_Click;
             // 
             // pictureBoxMoviePic
             // 
@@ -304,6 +295,18 @@
             buttonAddMovie.TabIndex = 99;
             buttonAddMovie.Text = "Add";
             buttonAddMovie.UseVisualStyleBackColor = false;
+            buttonAddMovie.Click += buttonAddMovie_Click;
+            // 
+            // lblWarning
+            // 
+            lblWarning.AutoSize = true;
+            lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            lblWarning.ForeColor = Color.Maroon;
+            lblWarning.Location = new Point(209, 6);
+            lblWarning.Name = "lblWarning";
+            lblWarning.Size = new Size(81, 25);
+            lblWarning.TabIndex = 100;
+            lblWarning.Text = "Warning";
             // 
             // AddMovie
             // 
@@ -311,12 +314,12 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(231, 223, 198);
             ClientSize = new Size(834, 583);
+            Controls.Add(lblWarning);
             Controls.Add(buttonAddMovie);
             Controls.Add(btnImageUpload);
             Controls.Add(pictureBoxMoviePic);
             Controls.Add(checkedLBGenres);
             Controls.Add(labelMovieGenre);
-            Controls.Add(btnAddCast);
             Controls.Add(textBMovieCountryOfOrigin);
             Controls.Add(lblMovieCountryOfOrigin);
             Controls.Add(textBoxMovieRating);
@@ -366,11 +369,11 @@
         private Label labelMoviePublishment;
         private TextBox textBoxMovieDuration;
         private Label labelMovieDuration;
-        private Button btnAddCast;
         private CheckedListBox checkedLBGenres;
         private Label labelMovieGenre;
         private Button btnImageUpload;
         private PictureBox pictureBoxMoviePic;
         private Button buttonAddMovie;
+        private Label lblWarning;
     }
 }

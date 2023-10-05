@@ -10,11 +10,13 @@ namespace LogicLayer.Classes
     {
         private int seasons;
         private int episodes;
+        public int Seasons { get; private set; }
+        public int Episodes { get; private set; }
 
-        public Serie(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, int _rating, int _seasons, int _episodes) : base(_title, _description, _releaseDate, _countryOfOrigin, _rating)
+        public Serie(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating, int _seasons, int _episodes) : base(_title, _description, _releaseDate, _countryOfOrigin, _rating)
         {
-            this.seasons = _seasons;
-            this.episodes = _episodes;
+            Seasons = _seasons;
+            Episodes = _episodes;
         }
 
 

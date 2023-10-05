@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            btnAddMovie = new Button();
             btnView = new Button();
+            btnAddMovie = new Button();
             labelOrder = new Label();
             comboBoxOrder = new ComboBox();
             lblWarning = new Label();
@@ -44,6 +44,7 @@
             buttonUpdate = new Button();
             buttonMoreInfo = new Button();
             buttonSearch = new Button();
+            panelDesktop = new Panel();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -58,19 +59,6 @@
             panel1.Size = new Size(834, 67);
             panel1.TabIndex = 0;
             // 
-            // btnAddMovie
-            // 
-            btnAddMovie.FlatAppearance.BorderSize = 0;
-            btnAddMovie.FlatStyle = FlatStyle.Flat;
-            btnAddMovie.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAddMovie.ForeColor = Color.White;
-            btnAddMovie.Location = new Point(3, 0);
-            btnAddMovie.Name = "btnAddMovie";
-            btnAddMovie.Size = new Size(424, 75);
-            btnAddMovie.TabIndex = 9;
-            btnAddMovie.Text = "Add Movie";
-            btnAddMovie.UseVisualStyleBackColor = true;
-            // 
             // btnView
             // 
             btnView.FlatAppearance.BorderSize = 0;
@@ -83,6 +71,21 @@
             btnView.TabIndex = 10;
             btnView.Text = "View Movies";
             btnView.UseVisualStyleBackColor = true;
+            btnView.Click += btnView_Click;
+            // 
+            // btnAddMovie
+            // 
+            btnAddMovie.FlatAppearance.BorderSize = 0;
+            btnAddMovie.FlatStyle = FlatStyle.Flat;
+            btnAddMovie.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnAddMovie.ForeColor = Color.White;
+            btnAddMovie.Location = new Point(3, 0);
+            btnAddMovie.Name = "btnAddMovie";
+            btnAddMovie.Size = new Size(424, 75);
+            btnAddMovie.TabIndex = 9;
+            btnAddMovie.Text = "Add Movie";
+            btnAddMovie.UseVisualStyleBackColor = true;
+            btnAddMovie.Click += btnAddMovie_Click;
             // 
             // labelOrder
             // 
@@ -235,6 +238,15 @@
             buttonSearch.TabIndex = 128;
             buttonSearch.Text = "Search";
             buttonSearch.UseVisualStyleBackColor = false;
+            buttonSearch.Click += buttonSearch_Click;
+            // 
+            // panelDesktop
+            // 
+            panelDesktop.BackColor = Color.FromArgb(231, 223, 198);
+            panelDesktop.Location = new Point(0, 64);
+            panelDesktop.Name = "panelDesktop";
+            panelDesktop.Size = new Size(834, 521);
+            panelDesktop.TabIndex = 129;
             // 
             // MovieMenu
             // 
@@ -256,6 +268,7 @@
             Controls.Add(labelBooksID);
             Controls.Add(listBoxViewMovies);
             Controls.Add(panel1);
+            Controls.Add(panelDesktop);
             ForeColor = Color.FromArgb(138, 104, 86);
             Name = "MovieMenu";
             Text = "MovieMenu";
@@ -282,5 +295,6 @@
         private Button buttonUpdate;
         private Button buttonMoreInfo;
         private Button buttonSearch;
+        private Panel panelDesktop;
     }
 }

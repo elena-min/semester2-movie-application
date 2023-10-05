@@ -1,4 +1,8 @@
-﻿using System;
+﻿using DAL;
+using LogicLayer.Classes;
+using LogicLayer.Controllers;
+using LogicLayer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +16,153 @@ namespace DesktopApp.Movies
 {
     public partial class MovieMenu : Form
     {
+        private Button currentButton;
+        private Form activeform;
+        private readonly MediaItemController mediaItemController;
+        IMediaItemDAL iMediaItemDAL;
+        List<MediaItem> allMovies;
         public MovieMenu()
         {
             InitializeComponent();
+            iMediaItemDAL = new MediaItemDAL();
+            mediaItemController = new MediaItemController(iMediaItemDAL);
+
+            lblWarning.Text = "";
+            string[] orderOptions = new string[]
+            {
+                "Ascending by id",
+                "Descending by id",
+                "Ascending by title",
+                "Descending by title"
+            };
+            foreach (string option in orderOptions)
+            {
+                comboBoxOrder.Items.Add(option);
+            }
+
+            listBoxViewMovies.Items.Clear();
+            allMovies = new List<MediaItem>();
+
+            if (mediaItemController.GetAll() == null)
+            {
+
+                lblWarning.Text = "No movies in the system.";
+            }
+            else
+            {
+                foreach (MediaItem movie in mediaItemController.GetAll())
+                {
+                    if (movie is Movie)
+                    {
+                        allMovies.Add(movie);
+                    }
+                }
+            }
+
+            if (allMovies.Count > 0)
+            {
+                foreach (MediaItem movie in allMovies)
+                {
+                    listBoxViewMovies.Items.Add(((Movie)movie).ToString());
+                }
+            }
+            else
+            {
+                lblWarning.Text = "No movies in the system.";
+            }
+        }
+        private void ActivateButton(object btnSender)
+        {
+            if (btnSender != null)
+            {
+                if (currentButton != (Button)btnSender)
+                {
+                    DisableButton();
+                    currentButton = (Button)btnSender;
+                    currentButton.BackColor = Color.FromArgb(0, 71, 102);
+                    currentButton.ForeColor = Color.FromArgb(145, 190, 222);
+                }
+            }
+        }
+        private void DisableButton()
+        {
+            foreach (Control previousButton in panelDesktop.Controls)
+            {
+                if (previousButton.GetType() == typeof(Button))
+                {
+                    previousButton.BackColor = Color.FromArgb(145, 190, 222);
+                    previousButton.ForeColor = Color.White;
+                }
+            }
+        }
+        private void OpenChildForm(Form childform, object btnSender)
+        {
+            if (activeform != null)
+            {
+                activeform.Close();
+            }
+            ActivateButton(btnSender);
+            activeform = childform;
+            childform.TopLevel = false;
+            childform.FormBorderStyle = FormBorderStyle.None;
+            childform.Dock = DockStyle.Fill;
+            this.panelDesktop.Controls.Add(childform);
+            this.panelDesktop.Tag = childform;
+            childform.BringToFront();
+            childform.Show();
+        }
+        private void btnAddMovie_Click(object sender, EventArgs e)
+        {
+            AddMovie addMovies = new AddMovie();
+            addMovies.Show();
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            if (activeform != null)
+            {
+                activeform.Close();
+            }
+            ActivateButton(sender);
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            lblWarning.Text = "";
+            listBoxViewMovies.Items.Clear();
+            List<MediaItem> allMovies = new List<MediaItem>();
+            if (textBoxMoviesTitle.Text != null && textBoxMoviesID.Text != null)
+            {
+                foreach (MediaItem movie in mediaItemController.GetAll())
+                {
+                    if (movie.Title.Contains(textBoxMoviesTitle.Text))
+                    {
+                        string movieID = movie.GetId().ToString();
+                        if (movieID.Contains(textBoxMoviesID.Text))
+                        {
+                            //listBoxViewMovies.Items.Add(movie.ToString());
+                            allMovies.Add(movie);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (MediaItem movie in mediaItemController.GetAll())
+                {
+                    if(movie is Movie)
+                    {
+                        allMovies.Add(movie);
+                    }
+                    //listBoxViewMovies.Items.Add(book.ToString());
+                }
+            }
+
+
+            foreach (MediaItem movie in allMovies)
+            {
+                listBoxViewMovies.Items.Add(movie.ToString());
+            }
         }
     }
 }

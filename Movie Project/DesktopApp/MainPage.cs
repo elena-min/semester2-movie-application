@@ -33,8 +33,8 @@ namespace DesktopApp
                 {
                     DisableButton();
                     currentButton = (Button)btnSender;
-                    currentButton.BackColor = Color.FromArgb(170, 218, 199);
-                    currentButton.ForeColor = Color.FromArgb(60, 144, 137);
+                    currentButton.BackColor = Color.FromArgb(0, 71, 102);
+                    currentButton.ForeColor = Color.FromArgb(145, 190, 222);
                     buttonClose.Visible = true;
                 }
             }
@@ -46,7 +46,7 @@ namespace DesktopApp
             {
                 if (previousButton.GetType() == typeof(Button))
                 {
-                    previousButton.BackColor = Color.FromArgb(60, 144, 137);
+                    previousButton.BackColor = Color.FromArgb(145, 190, 222);
                     previousButton.ForeColor = Color.White;
                 }
             }
@@ -70,7 +70,7 @@ namespace DesktopApp
         private void btnMovies_Click(object sender, EventArgs e)
         {
             lblFormTitle.Text = "Movies";
-            // OpenChildForm(new Movies.MoviesMenu(), sender);
+            OpenChildForm(new Movies.MovieMenu(), sender);
         }
 
         private void buttonClose_Click(object sender, EventArgs e)

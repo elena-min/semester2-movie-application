@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\LogicLayer\\LogicLayer.csproj",
+      "projectUniqueName": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\LogicLayer\\LogicLayer.csproj",
       "projectName": "LogicLayer",
-      "projectPath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\LogicLayer\\LogicLayer.csproj",
+      "projectPath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\LogicLayer\\LogicLayer.csproj",
       "packagesPath": "C:\\Users\\lenam\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\Movie Project\\LogicLayer\\obj\\",
+      "outputPath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\LogicLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

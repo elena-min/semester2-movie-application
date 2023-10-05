@@ -13,9 +13,6 @@
     <Compile Update="Movies\MovieMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Series\AddSerie.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Series\SerieMenu.cs">
       <SubType>Form</SubType>
     </Compile>

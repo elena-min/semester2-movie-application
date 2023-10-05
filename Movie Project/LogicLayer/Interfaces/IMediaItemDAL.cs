@@ -9,14 +9,14 @@ namespace LogicLayer.Interfaces
 {
     public interface IMediaItemDAL
     {
-        void AddMediaItem(MediaItem newMediaItem, byte[] pictureBytes);
+        bool AddMediaItem(MediaItem newMediaItem, byte[] pictureBytes);
         MediaItem[] GetAll();
         MediaItem GetMediaItem(string title);
         MediaItem GetMediaItemById(int id);
         int[] GetAllGivenRatings(int id);
         string GetMediaItemImageByID(int id);
-        void UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes);
-        void RemoveMediaItem(int id);
+        bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes);
+        string RemoveMediaItem(int id);
 
     }
 }
