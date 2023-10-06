@@ -20,7 +20,7 @@ namespace LogicLayer.Classes
         }
 
 
-        public virtual string ToString()
+        public override string ToString()
         {
             return $"Serie- {base.ToString()}";
         }

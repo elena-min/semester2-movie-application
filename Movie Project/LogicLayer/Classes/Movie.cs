@@ -21,7 +21,7 @@ namespace LogicLayer.Classes
             Writer = _writer;
             Duration = _duration;
         }
-        public virtual string ToString()
+        public override string ToString()
         {
             return $"Movie- {base.ToString()}";
         }
