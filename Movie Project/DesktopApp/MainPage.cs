@@ -92,7 +92,7 @@ namespace DesktopApp
         private void btnSeries_Click(object sender, EventArgs e)
         {
             lblFormTitle.Text = "Series";
-            //OpenChildForm(new Movies.MoviesMenu(), sender);
+            OpenChildForm(new Series.SerieMenu(), sender);
         }
 
         private void btnReviews_Click(object sender, EventArgs e)

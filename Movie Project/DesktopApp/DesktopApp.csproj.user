@@ -10,10 +10,25 @@
     <Compile Update="Movies\AddMovie.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Movies\MoreInfoMovie.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Movies\MovieMenu.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Movies\UpdateMovie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Series\AddSerie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Series\MoreInfoSerie.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Series\SerieMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Series\UpdateSerie.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

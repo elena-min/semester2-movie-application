@@ -70,7 +70,7 @@
             // textBoxCast
             // 
             textBoxCast.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxCast.ForeColor = Color.FromArgb(60, 144, 137);
+            textBoxCast.ForeColor = Color.Black;
             textBoxCast.Location = new Point(12, 440);
             textBoxCast.Name = "textBoxCast";
             textBoxCast.Size = new Size(582, 31);
@@ -89,7 +89,7 @@
             // textBoxMovieWriter
             // 
             textBoxMovieWriter.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxMovieWriter.ForeColor = Color.FromArgb(60, 144, 137);
+            textBoxMovieWriter.ForeColor = Color.Black;
             textBoxMovieWriter.Location = new Point(12, 382);
             textBoxMovieWriter.Name = "textBoxMovieWriter";
             textBoxMovieWriter.Size = new Size(582, 31);
@@ -108,7 +108,7 @@
             // textBoxMovieDirector
             // 
             textBoxMovieDirector.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxMovieDirector.ForeColor = Color.FromArgb(60, 144, 137);
+            textBoxMovieDirector.ForeColor = Color.Black;
             textBoxMovieDirector.Location = new Point(12, 322);
             textBoxMovieDirector.Name = "textBoxMovieDirector";
             textBoxMovieDirector.Size = new Size(582, 31);
@@ -116,6 +116,7 @@
             // 
             // richTextBoxDescription
             // 
+            richTextBoxDescription.ForeColor = Color.Black;
             richTextBoxDescription.Location = new Point(12, 130);
             richTextBoxDescription.Name = "richTextBoxDescription";
             richTextBoxDescription.Size = new Size(582, 163);
@@ -125,7 +126,7 @@
             // textBoxMovieTitle
             // 
             textBoxMovieTitle.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxMovieTitle.ForeColor = Color.FromArgb(60, 144, 137);
+            textBoxMovieTitle.ForeColor = Color.Black;
             textBoxMovieTitle.Location = new Point(12, 70);
             textBoxMovieTitle.Name = "textBoxMovieTitle";
             textBoxMovieTitle.Size = new Size(582, 31);
@@ -164,7 +165,7 @@
             // textBMovieCountryOfOrigin
             // 
             textBMovieCountryOfOrigin.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBMovieCountryOfOrigin.ForeColor = Color.FromArgb(60, 144, 137);
+            textBMovieCountryOfOrigin.ForeColor = Color.Black;
             textBMovieCountryOfOrigin.Location = new Point(12, 502);
             textBMovieCountryOfOrigin.Name = "textBMovieCountryOfOrigin";
             textBMovieCountryOfOrigin.Size = new Size(582, 31);
@@ -184,7 +185,7 @@
             // textBoxMovieRating
             // 
             textBoxMovieRating.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxMovieRating.ForeColor = Color.FromArgb(60, 144, 137);
+            textBoxMovieRating.ForeColor = Color.Black;
             textBoxMovieRating.Location = new Point(619, 96);
             textBoxMovieRating.Name = "textBoxMovieRating";
             textBoxMovieRating.Size = new Size(203, 31);
@@ -224,7 +225,7 @@
             // textBoxMovieDuration
             // 
             textBoxMovieDuration.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxMovieDuration.ForeColor = Color.FromArgb(60, 144, 137);
+            textBoxMovieDuration.ForeColor = Color.Black;
             textBoxMovieDuration.Location = new Point(190, 540);
             textBoxMovieDuration.Name = "textBoxMovieDuration";
             textBoxMovieDuration.Size = new Size(203, 31);

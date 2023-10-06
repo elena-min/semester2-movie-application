@@ -53,3 +53,8 @@ C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignmen
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.csproj.CopyComplete
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.genruntimeconfig.cache
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\ref\DesktopApp.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Movies.MoreInfoMovie.resources
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Series.AddSerie.resources
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Movies.UpdateMovie.resources
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Series.MoreInfoSerie.resources
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Series.UpdateSerie.resources

@@ -44,6 +44,7 @@
             panel1 = new Panel();
             btnView = new Button();
             btnAddSerie = new Button();
+            panelDesktop = new Panel();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -61,6 +62,7 @@
             buttonSearch.TabIndex = 142;
             buttonSearch.Text = "Search";
             buttonSearch.UseVisualStyleBackColor = false;
+            buttonSearch.Click += buttonSearch_Click;
             // 
             // buttonMoreInfo
             // 
@@ -76,6 +78,7 @@
             buttonMoreInfo.TabIndex = 141;
             buttonMoreInfo.Text = "More Info";
             buttonMoreInfo.UseVisualStyleBackColor = false;
+            buttonMoreInfo.Click += buttonMoreInfo_Click;
             // 
             // buttonUpdate
             // 
@@ -91,6 +94,7 @@
             buttonUpdate.TabIndex = 140;
             buttonUpdate.Text = "Update";
             buttonUpdate.UseVisualStyleBackColor = false;
+            buttonUpdate.Click += buttonUpdate_Click;
             // 
             // buttonDelete
             // 
@@ -106,6 +110,7 @@
             buttonDelete.TabIndex = 139;
             buttonDelete.Text = "Delete";
             buttonDelete.UseVisualStyleBackColor = false;
+            buttonDelete.Click += buttonDelete_Click;
             // 
             // labelOrder
             // 
@@ -222,6 +227,7 @@
             btnView.TabIndex = 10;
             btnView.Text = "View Series";
             btnView.UseVisualStyleBackColor = true;
+            btnView.Click += btnView_Click;
             // 
             // btnAddSerie
             // 
@@ -235,6 +241,16 @@
             btnAddSerie.TabIndex = 9;
             btnAddSerie.Text = "Add Serie";
             btnAddSerie.UseVisualStyleBackColor = true;
+            btnAddSerie.Click += btnAddSerie_Click;
+            // 
+            // panelDesktop
+            // 
+            panelDesktop.BackColor = Color.FromArgb(231, 223, 198);
+            panelDesktop.Dock = DockStyle.Bottom;
+            panelDesktop.Location = new Point(0, 62);
+            panelDesktop.Name = "panelDesktop";
+            panelDesktop.Size = new Size(834, 521);
+            panelDesktop.TabIndex = 143;
             // 
             // SerieMenu
             // 
@@ -256,6 +272,7 @@
             Controls.Add(labelSeriesID);
             Controls.Add(listBoxViewSeries);
             Controls.Add(panel1);
+            Controls.Add(panelDesktop);
             ForeColor = Color.FromArgb(138, 104, 86);
             Name = "SerieMenu";
             Text = "SerieMenu";
@@ -282,5 +299,6 @@
         private Panel panel1;
         private Button btnView;
         private Button btnAddSerie;
+        private Panel panelDesktop;
     }
 }

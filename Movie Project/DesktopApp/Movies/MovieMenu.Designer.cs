@@ -193,6 +193,7 @@
             buttonDelete.TabIndex = 125;
             buttonDelete.Text = "Delete";
             buttonDelete.UseVisualStyleBackColor = false;
+            buttonDelete.Click += buttonDelete_Click;
             // 
             // buttonUpdate
             // 
@@ -208,6 +209,7 @@
             buttonUpdate.TabIndex = 126;
             buttonUpdate.Text = "Update";
             buttonUpdate.UseVisualStyleBackColor = false;
+            buttonUpdate.Click += buttonUpdate_Click;
             // 
             // buttonMoreInfo
             // 
@@ -223,6 +225,7 @@
             buttonMoreInfo.TabIndex = 127;
             buttonMoreInfo.Text = "More Info";
             buttonMoreInfo.UseVisualStyleBackColor = false;
+            buttonMoreInfo.Click += buttonMoreInfo_Click;
             // 
             // buttonSearch
             // 

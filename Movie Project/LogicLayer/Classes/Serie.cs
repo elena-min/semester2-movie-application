@@ -22,7 +22,7 @@ namespace LogicLayer.Classes
 
         public virtual string ToString()
         {
-            return $"Serie: {base.ToString()}";
+            return $"Serie- {base.ToString()}";
         }
     }
 }

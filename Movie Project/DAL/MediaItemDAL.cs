@@ -166,12 +166,12 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select p.id, p.title, r.rating from Product as p inner join Review as r on p.id = r.pointedTowards where p.id = @productID";
+            string query = "select m.id, m.title, r.rating from MediaItem as m inner join Review as r on m.id = r.pointedTowards where m.id = @mediaID";
             List<int> givenRatings = new List<int>();
             //try
             //{
             SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@productID", id);
+            cmd.Parameters.AddWithValue("@mediaID", id);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
             {
@@ -394,7 +394,7 @@ namespace DAL
             //try
             //{
                 conn.Open();
-                string commandSql = "UPDATE Product SET title = @title, description = @description, rating = @rating, dateOfComingOut = @dateOfComingOut, genres = @genres, image = @image WHERE id = @id";
+                string commandSql = "UPDATE MediaItem SET title = @title, description = @description, rating = @rating, releaseDate = @releaseDate, countryOfOrigin = @countryOfOrigin, genres = @genres,  cast = @cast, image = @image WHERE id = @id";
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@id", mediaItem.GetId());
                 cmd.Parameters.AddWithValue("@title", mediaItem.Title);

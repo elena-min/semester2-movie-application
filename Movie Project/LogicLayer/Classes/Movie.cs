@@ -23,7 +23,7 @@ namespace LogicLayer.Classes
         }
         public virtual string ToString()
         {
-            return $"Movie: {base.ToString()}";
+            return $"Movie- {base.ToString()}";
         }
     }
 }
