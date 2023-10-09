@@ -42,7 +42,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Employee id = @id";
+            string query = "select * from Employee where id = @id";
             //try
             //{
             Employee newEmp = null;
@@ -81,7 +81,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Employee username = @username";
+            string query = "select * from Employee where username = @username";
             //try
             //{
             Employee newEmp = null;
@@ -115,7 +115,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Employee email = @email";
+            string query = "select * from Employee where email = @email";
             //try
             //{
             Employee newEmp = null;

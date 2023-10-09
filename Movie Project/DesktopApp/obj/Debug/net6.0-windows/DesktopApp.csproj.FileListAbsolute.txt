@@ -58,3 +58,6 @@ C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignmen
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Movies.UpdateMovie.resources
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Series.MoreInfoSerie.resources
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Series.UpdateSerie.resources
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Employees.AddEmployee.resources
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Employees.EmployeeMenu.resources
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.Employees.MoreInfoEmp.resources

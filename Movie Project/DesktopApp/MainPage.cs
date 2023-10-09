@@ -110,7 +110,7 @@ namespace DesktopApp
         private void btnEmployees_Click(object sender, EventArgs e)
         {
             lblFormTitle.Text = "Employees";
-            //   OpenChildForm(new Movies.MoviesMenu(), sender);
+            OpenChildForm(new Employees.EmployeeMenu(), sender);
         }
 
         private void btnProfile_Click(object sender, EventArgs e)

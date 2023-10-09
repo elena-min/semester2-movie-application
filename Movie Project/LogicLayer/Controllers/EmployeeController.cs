@@ -16,9 +16,9 @@ namespace LogicLayer.Controllers
             this.iemployeeDAL = employeeDAL;
         }
 
-        public void AddEmployee(Employee newEmployee)
+        public bool AddEmployee(Employee newEmployee)
         {
-            iemployeeDAL.InsertEmployee(newEmployee);
+            return iemployeeDAL.InsertEmployee(newEmployee);
         }
         public Employee GetEmployeeByID(int id)
         {
@@ -44,9 +44,9 @@ namespace LogicLayer.Controllers
         {
             iemployeeDAL.UpdateEmployee(employee);
         }
-        public void DeleteEmployee(int id)
+        public string DeleteEmployee(int id)
         {
-            iemployeeDAL.DeleteEmployee(id);    
+            return iemployeeDAL.DeleteEmployee(id);    
         }
 
     }

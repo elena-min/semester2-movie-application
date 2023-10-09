@@ -35,10 +35,10 @@
             comboBoxOrder = new ComboBox();
             lblWarning = new Label();
             lblSearchMovies = new Label();
-            textBoxMoviesTitle = new TextBox();
-            labelMoviesTitle = new Label();
+            textBoxMovieName = new TextBox();
+            labelName = new Label();
             textBoxMoviesID = new TextBox();
-            labelBooksID = new Label();
+            labelMoviesID = new Label();
             listBoxViewMovies = new ListBox();
             buttonDelete = new Button();
             buttonUpdate = new Button();
@@ -46,6 +46,7 @@
             buttonSearch = new Button();
             panelDesktop = new Panel();
             panel1.SuspendLayout();
+            panelDesktop.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -56,7 +57,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(834, 67);
+            panel1.Size = new Size(860, 67);
             panel1.TabIndex = 0;
             // 
             // btnView
@@ -65,9 +66,9 @@
             btnView.FlatStyle = FlatStyle.Flat;
             btnView.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
             btnView.ForeColor = Color.White;
-            btnView.Location = new Point(409, 0);
+            btnView.Location = new Point(433, 0);
             btnView.Name = "btnView";
-            btnView.Size = new Size(425, 75);
+            btnView.Size = new Size(427, 75);
             btnView.TabIndex = 10;
             btnView.Text = "View Movies";
             btnView.UseVisualStyleBackColor = true;
@@ -81,7 +82,7 @@
             btnAddMovie.ForeColor = Color.White;
             btnAddMovie.Location = new Point(3, 0);
             btnAddMovie.Name = "btnAddMovie";
-            btnAddMovie.Size = new Size(424, 75);
+            btnAddMovie.Size = new Size(435, 75);
             btnAddMovie.TabIndex = 9;
             btnAddMovie.Text = "Add Movie";
             btnAddMovie.UseVisualStyleBackColor = true;
@@ -104,7 +105,7 @@
             comboBoxOrder.FormattingEnabled = true;
             comboBoxOrder.Location = new Point(546, 268);
             comboBoxOrder.Name = "comboBoxOrder";
-            comboBoxOrder.Size = new Size(263, 33);
+            comboBoxOrder.Size = new Size(288, 33);
             comboBoxOrder.TabIndex = 68;
             // 
             // lblWarning
@@ -129,25 +130,25 @@
             lblSearchMovies.TabIndex = 63;
             lblSearchMovies.Text = "Search by:";
             // 
-            // textBoxMoviesTitle
+            // textBoxMovieName
             // 
-            textBoxMoviesTitle.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxMoviesTitle.ForeColor = Color.FromArgb(60, 144, 137);
-            textBoxMoviesTitle.Location = new Point(546, 139);
-            textBoxMoviesTitle.Name = "textBoxMoviesTitle";
-            textBoxMoviesTitle.Size = new Size(263, 31);
-            textBoxMoviesTitle.TabIndex = 61;
+            textBoxMovieName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxMovieName.ForeColor = Color.FromArgb(60, 144, 137);
+            textBoxMovieName.Location = new Point(546, 139);
+            textBoxMovieName.Name = "textBoxMovieName";
+            textBoxMovieName.Size = new Size(288, 31);
+            textBoxMovieName.TabIndex = 61;
             // 
-            // labelMoviesTitle
+            // labelName
             // 
-            labelMoviesTitle.AutoSize = true;
-            labelMoviesTitle.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            labelMoviesTitle.ForeColor = Color.FromArgb(138, 104, 86);
-            labelMoviesTitle.Location = new Point(546, 111);
-            labelMoviesTitle.Name = "labelMoviesTitle";
-            labelMoviesTitle.Size = new Size(50, 25);
-            labelMoviesTitle.TabIndex = 62;
-            labelMoviesTitle.Text = "Title:";
+            labelName.AutoSize = true;
+            labelName.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelName.ForeColor = Color.FromArgb(138, 104, 86);
+            labelName.Location = new Point(546, 111);
+            labelName.Name = "labelName";
+            labelName.Size = new Size(50, 25);
+            labelName.TabIndex = 62;
+            labelName.Text = "Title:";
             // 
             // textBoxMoviesID
             // 
@@ -155,19 +156,19 @@
             textBoxMoviesID.ForeColor = Color.FromArgb(60, 144, 137);
             textBoxMoviesID.Location = new Point(546, 201);
             textBoxMoviesID.Name = "textBoxMoviesID";
-            textBoxMoviesID.Size = new Size(263, 31);
+            textBoxMoviesID.Size = new Size(288, 31);
             textBoxMoviesID.TabIndex = 59;
             // 
-            // labelBooksID
+            // labelMoviesID
             // 
-            labelBooksID.AutoSize = true;
-            labelBooksID.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            labelBooksID.ForeColor = Color.FromArgb(138, 104, 86);
-            labelBooksID.Location = new Point(546, 173);
-            labelBooksID.Name = "labelBooksID";
-            labelBooksID.Size = new Size(34, 25);
-            labelBooksID.TabIndex = 60;
-            labelBooksID.Text = "ID:";
+            labelMoviesID.AutoSize = true;
+            labelMoviesID.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelMoviesID.ForeColor = Color.FromArgb(138, 104, 86);
+            labelMoviesID.Location = new Point(546, 173);
+            labelMoviesID.Name = "labelMoviesID";
+            labelMoviesID.Size = new Size(34, 25);
+            labelMoviesID.TabIndex = 60;
+            labelMoviesID.Text = "ID:";
             // 
             // listBoxViewMovies
             // 
@@ -176,7 +177,7 @@
             listBoxViewMovies.ItemHeight = 23;
             listBoxViewMovies.Location = new Point(12, 114);
             listBoxViewMovies.Name = "listBoxViewMovies";
-            listBoxViewMovies.Size = new Size(497, 395);
+            listBoxViewMovies.Size = new Size(508, 418);
             listBoxViewMovies.TabIndex = 58;
             // 
             // buttonDelete
@@ -187,7 +188,7 @@
             buttonDelete.FlatStyle = FlatStyle.Flat;
             buttonDelete.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
             buttonDelete.ForeColor = Color.FromArgb(138, 104, 86);
-            buttonDelete.Location = new Point(606, 527);
+            buttonDelete.Location = new Point(631, 481);
             buttonDelete.Name = "buttonDelete";
             buttonDelete.Size = new Size(203, 44);
             buttonDelete.TabIndex = 125;
@@ -203,7 +204,7 @@
             buttonUpdate.FlatStyle = FlatStyle.Flat;
             buttonUpdate.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
             buttonUpdate.ForeColor = Color.FromArgb(138, 104, 86);
-            buttonUpdate.Location = new Point(306, 527);
+            buttonUpdate.Location = new Point(306, 481);
             buttonUpdate.Name = "buttonUpdate";
             buttonUpdate.Size = new Size(203, 44);
             buttonUpdate.TabIndex = 126;
@@ -219,7 +220,7 @@
             buttonMoreInfo.FlatStyle = FlatStyle.Flat;
             buttonMoreInfo.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
             buttonMoreInfo.ForeColor = Color.FromArgb(138, 104, 86);
-            buttonMoreInfo.Location = new Point(12, 527);
+            buttonMoreInfo.Location = new Point(12, 481);
             buttonMoreInfo.Name = "buttonMoreInfo";
             buttonMoreInfo.Size = new Size(203, 44);
             buttonMoreInfo.TabIndex = 127;
@@ -237,7 +238,7 @@
             buttonSearch.ForeColor = Color.FromArgb(138, 104, 86);
             buttonSearch.Location = new Point(546, 325);
             buttonSearch.Name = "buttonSearch";
-            buttonSearch.Size = new Size(263, 44);
+            buttonSearch.Size = new Size(288, 44);
             buttonSearch.TabIndex = 128;
             buttonSearch.Text = "Search";
             buttonSearch.UseVisualStyleBackColor = false;
@@ -246,9 +247,13 @@
             // panelDesktop
             // 
             panelDesktop.BackColor = Color.FromArgb(231, 223, 198);
-            panelDesktop.Location = new Point(0, 64);
+            panelDesktop.Controls.Add(buttonDelete);
+            panelDesktop.Controls.Add(buttonMoreInfo);
+            panelDesktop.Controls.Add(buttonUpdate);
+            panelDesktop.Dock = DockStyle.Bottom;
+            panelDesktop.Location = new Point(0, 68);
             panelDesktop.Name = "panelDesktop";
-            panelDesktop.Size = new Size(834, 521);
+            panelDesktop.Size = new Size(860, 534);
             panelDesktop.TabIndex = 129;
             // 
             // MovieMenu
@@ -256,26 +261,25 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(231, 223, 198);
-            ClientSize = new Size(834, 583);
+            ClientSize = new Size(860, 602);
             Controls.Add(buttonSearch);
-            Controls.Add(buttonMoreInfo);
-            Controls.Add(buttonUpdate);
-            Controls.Add(buttonDelete);
             Controls.Add(labelOrder);
             Controls.Add(comboBoxOrder);
             Controls.Add(lblWarning);
             Controls.Add(lblSearchMovies);
-            Controls.Add(textBoxMoviesTitle);
-            Controls.Add(labelMoviesTitle);
+            Controls.Add(textBoxMovieName);
+            Controls.Add(labelName);
             Controls.Add(textBoxMoviesID);
-            Controls.Add(labelBooksID);
+            Controls.Add(labelMoviesID);
             Controls.Add(listBoxViewMovies);
             Controls.Add(panel1);
             Controls.Add(panelDesktop);
             ForeColor = Color.FromArgb(138, 104, 86);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "MovieMenu";
             Text = "MovieMenu";
             panel1.ResumeLayout(false);
+            panelDesktop.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -289,10 +293,10 @@
         private ComboBox comboBoxOrder;
         private Label lblWarning;
         private Label lblSearchMovies;
-        private TextBox textBoxMoviesTitle;
-        private Label labelMoviesTitle;
+        private TextBox textBoxMovieName;
+        private Label labelName;
         private TextBox textBoxMoviesID;
-        private Label labelBooksID;
+        private Label labelMoviesID;
         private ListBox listBoxViewMovies;
         private Button buttonDelete;
         private Button buttonUpdate;

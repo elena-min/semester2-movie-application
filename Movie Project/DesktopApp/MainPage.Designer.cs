@@ -210,6 +210,7 @@
             Controls.Add(panelDesktop);
             Controls.Add(panelButtons);
             Controls.Add(panelTitle);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "MainPage";
             Text = "MainPage";
             panelButtons.ResumeLayout(false);

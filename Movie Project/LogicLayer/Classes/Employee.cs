@@ -50,7 +50,7 @@ namespace LogicLayer.Classes
     
         public override string ToString()
         {
-            return $"{this.GetId()}: {this.username} - {this.firstName} {this.lastName}";
+            return $"{this.GetId()}- {Username} - {FirstName} {LastName}";
         }
     }
 }

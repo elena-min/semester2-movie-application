@@ -26,12 +26,45 @@ namespace DesktopApp
             textBoxPassword.PasswordChar = '*';
             btnHidePass.Text = "Show";
         }
+        MainPage mainform;
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            MainPage mainform = new MainPage();
-            mainform.Show();
-            this.Hide();
+            string email = textBoxEmail.Text;
+            Employee employee = employeeController.GetEmployeeByEmail(textBoxEmail.Text);
+            bool isLoggedIn = false;
+
+            if (employee == null)
+            {
+                lblWarning.Text = $"No employee with the email {email} exists.";
+                return;
+            }
+            else if (employee.Username != textBoxUsername.Text)
+            {
+                lblWarning.Text = "Incorrect username.";
+                return;
+            }
+            else if (employee.Password != textBoxPassword.Text)
+            {
+                lblWarning.Text = "Incorrect password.";
+                return;
+            }
+            else
+            {
+                isLoggedIn = true;
+            }
+
+
+            if (isLoggedIn)
+            {
+                mainform = new MainPage(/*employee*/);
+                mainform.Show();
+                this.Hide();
+            }
+            else
+            {
+                return;
+            }
         }
 
         private void btnHidePass_Click(object sender, EventArgs e)

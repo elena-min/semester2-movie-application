@@ -138,7 +138,7 @@ namespace DesktopApp.Series
             {
                 foreach (MediaItem serie in mediaItemController.GetAll())
                 {
-                    if(serie is Serie)
+                    if (serie is Serie)
                     {
                         if (serie.Title.Contains(textBoxSeriesTitle.Text))
                         {
@@ -149,7 +149,7 @@ namespace DesktopApp.Series
                                 allSeries.Add(serie);
                             }
                         }
-                    }        
+                    }
                 }
             }
             else

@@ -131,16 +131,16 @@ namespace DesktopApp.Movies
             lblWarning.Text = "";
             listBoxViewMovies.Items.Clear();
             List<MediaItem> allMovies = new List<MediaItem>();
-            if (textBoxMoviesTitle.Text != null && textBoxMoviesID.Text != null)
+            if (textBoxMovieName.Text != null && textBoxMoviesID.Text != null)
             {
                 foreach (MediaItem movie in mediaItemController.GetAll())
                 {
-                    if(movie is Movie)
+                    if (movie is Movie)
                     {
-                        if (movie.Title.Contains(textBoxMoviesTitle.Text))
+                        if (movie.Title.Contains(textBoxMovieName.Text))
                         {
                             string movieID = movie.GetId().ToString();
-                            if (movieID.Contains(textBoxMoviesID.Text))
+                            if (movieID == textBoxMoviesID.Text)
                             {
                                 //listBoxViewMovies.Items.Add(movie.ToString());
                                 allMovies.Add(movie);
@@ -219,14 +219,14 @@ namespace DesktopApp.Movies
                 int movieID = Convert.ToInt32(selectedMovie.Split("-")[1]);
                 foreach (MediaItem movie in mediaItemController.GetAll())
                 {
-                    if(movie is Movie)
+                    if (movie is Movie)
                     {
                         if (selectedMovie == ((Movie)movie).ToString())
                         {
                             UpdateMovie movieUpdate = new UpdateMovie(movie, movieID);
                             movieUpdate.Show();
                         }
-                    }                   
+                    }
                 }
             }
             else
