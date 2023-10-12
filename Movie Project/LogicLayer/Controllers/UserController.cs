@@ -15,9 +15,9 @@ namespace LogicLayer.Controllers
         {
             this.iuserDAL = userDAL;
         }
-        public void InsertUser(User newUser)
+        public bool InsertUser(User newUser)
         {
-            iuserDAL.InsertUser(newUser);   
+            return iuserDAL.InsertUser(newUser);   
         }
         public User GetUserByID(int id)
         {

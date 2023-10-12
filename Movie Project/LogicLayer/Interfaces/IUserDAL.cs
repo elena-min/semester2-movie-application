@@ -9,7 +9,7 @@ namespace LogicLayer.Interfaces
 {
     public interface IUserDAL
     {
-        void InsertUser(User newUser);
+        bool InsertUser(User newUser);
         User GetUserByID(int id);
         User GetUserByUsername(string username);
         User GetUserByEmail(string email);

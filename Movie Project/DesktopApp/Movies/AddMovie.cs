@@ -107,7 +107,6 @@ namespace DesktopApp.Movies
                 lblWarning.Text = "Please enter a valid duartion in minutes.";
                 return;
             }
-            int checkedItemCount = 0;
 
 
             newMovie = new Movie(title, description, pubslishDate, countryOfOrigin, rating, director, writer, duration);
