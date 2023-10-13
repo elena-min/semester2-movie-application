@@ -3,9 +3,16 @@ using LogicLayer.Classes;
 using LogicLayer.Controllers;
 using DAL;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
+    options.LoginPath = new PathString("/Login");
+    options.AccessDeniedPath = new PathString("/AccessDenied");
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+
+});
 builder.Services.AddSingleton<UserController>(new UserController(new UserDAL()));
 builder.Services.AddSingleton<UserDAL>(new UserDAL());
 builder.Services.AddSingleton<MediaItemController>(new MediaItemController(new MediaItemDAL()));

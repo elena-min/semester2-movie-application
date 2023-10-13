@@ -1,0 +1,71 @@
+﻿@page
+@using DAL;
+@using LogicLayer.Classes;
+@using LogicLayer.Controllers;
+@using LogicLayer.Interfaces;
+@model WebApp.Pages.SerieInfoModel
+@{
+    Layout = "_LayoutMain";
+
+    @functions {
+        static IReviewDAL iReviewDAL = new ReviewDAL();
+        static ReviewController reviewController = new ReviewController(iReviewDAL);
+        static IMediaItemDAL iMediaItemDAL = new MediaItemDAL();
+        static MediaItemController mediaController = new MediaItemController(iMediaItemDAL);
+        static IUserDAL iuserDAL = new UserDAL();
+        static UserController userController = new UserController(iuserDAL);
+    }
+}
+
+
+<main class="main-book-info">
+    <div class="cover">
+        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Serie.GetId())" alt="Movie cover" style="padding:10px">
+    </div>
+    <div class="information">
+        <h3><b>@Model.Serie.Title</b></h3><br>
+        <h6><i>Director: </i>@((Serie)Model.Serie).Director</h6>
+        <p>Description:</p>
+        <p>@Model.Serie.Description</p>
+        @{
+            string genresString = string.Join(", ", Model.Serie.GetAllGenres());
+        }
+        <p><b>Genres :</b> @genresString</p>
+        <p><b>Rating :</b> @Model.Serie.Rating</p>
+        <p><b>Cast :</b> @Model.Serie.Cast.ToString()</p>
+        <p><b>Country of origin :</b> @Model.Serie.CountryOfOrigin</p>
+        <p><b>Seasons :</b> @((Serie)Model.Serie).Seasons.ToString("dd-MM-yyyy")</p>
+        <p><b>Epsiodes : </b>@((Serie)Model.Serie).Epsiodes</p>
+
+        @{
+            if (mediaController.GetAllGivenRatings(@Model.Serie.GetId()).Length != 0)
+            {
+                foreach (int rating in mediaController.GetAllGivenRatings(@Model.Serie.GetId()))
+                {
+                    Model.Serie.AddRating(rating);
+                }
+                <p>
+                    <b> User given rating:</b> @Model.Serie.CalculateAverageRating()
+
+                </p>
+            }
+            else
+            {
+                <p> <b>User given rating:</b> no reviews yet.</p>
+            }
+        }
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+
+        <br />
+        <div id="writeReview">
+            <a asp-page="/ReviewPage" asp-route-bookId="@Model.Serie.GetId()" class="btn btn-primary">Write a review</a>
+        </div>
+        <form method="post">
+            <button type="submit" name="productId" value="@Model.Serie.GetId()">Add to Favorites</button>
+        </form>
+
+    }
+
+</main>
