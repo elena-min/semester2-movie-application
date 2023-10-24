@@ -15,9 +15,9 @@ namespace LogicLayer.Controllers
         {
             this.ireviewDAL = reviewDAL;
         }
-        public void AddReview(Review newReview)
+        public bool AddReview(Review newReview)
         {
-            ireviewDAL.AddReview(newReview);
+            return ireviewDAL.AddReview(newReview);
         }
         public Review[] GetAll()
         {
@@ -44,13 +44,13 @@ namespace LogicLayer.Controllers
         {
             return ireviewDAL.GetDeletedReviewsByUser(userID).ToArray();
         }
-        public void Delete(int id)
+        public string Delete(Review review)
         {
-            ireviewDAL.Delete(id);
+            return ireviewDAL.Delete(review);
         }
-        public void DeletebyUser(Review review)
+        public string DeletebyUser(Review review)
         {
-            ireviewDAL.DeletebyUser(review);
+            return ireviewDAL.DeletebyUser(review);
         }
     }
 }

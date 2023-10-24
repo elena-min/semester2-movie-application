@@ -7,28 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\MovieInfo.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
     <ProjectReference Include="..\LogicLayer\LogicLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\MovieInfo.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\MovieInfo.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\MovieInfo.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -24,54 +24,42 @@
 
     <div id="movies-container">
         <div class="movies">
-            @foreach(MediaItem m in Model.Movies.Take(4))
+            @foreach(MediaItem m in Model.Movies.Take(5))
             {
                 Movie movie = m as Movie;
 
                 <div class="movie">
                     <div class="image-grid">
-                        <a asp-page="./MovieInfo" asp-route-id="@movie.GetId()" target="_blank">
-                            <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie.GetId())" alt="Serie cover">
+                        <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
+                            <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie.GetId())" alt="Movie cover">
                         </a>
                     </div>
                     <div class="movie-text p-1">
-                        <h3><b><a asp-page="./MovieInfo" asp-route-id="@movie.GetId()">@movie.Title</a></b></h3>
+                        <h5><b><a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()">@movie.Title</a></b></h5>
                         <h6><i>@movie.ReleaseDate.ToString("MM-yyyy")</i></h6>
                     </div>
                 </div>
-                 } 
+                  
             
             } 
-
-            @* <div class="movie">
-            <div class="image-grid">
-            <a asp-page="./MovieInfo" target="_blank">
-            <img src="/images/Barbie.jpg" alt="Movie cover">
-            </a>
-            </div>
-            <div class="movie-text p-1">
-            <h3><b><a asp-page="./MovieInfo" >Barbie (2023)</a></b></h3>
-            <h6><i>release dtae </i></h6>
-            </div>
-            </div> *@
              
        
 </div>
         <div class="shows">
-            @foreach (MediaItem s in Model.Shows.Take(4))
+            @foreach (MediaItem s in Model.Shows.Take(5))
             {
                 Serie serie = s as Serie;
 
                 <div class="movie">
                     <div class="image-grid">
-                        <a asp-page="./SerieInfo" asp-route-id="@serie.GetId()" target="_blank">
+                        <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
                             <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie.GetId())" alt="Serie cover">
                         </a>
                     </div>
                     <div class="movie-text p-1">
-                        <h3><b><a asp-page="./SerieInfo" asp-route-id="@serie.GetId()">@serie.Title</a></b></h3>
+                        <h5><b><a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()">@serie.Title</a></b></h5>
                         <h6><i>@serie.ReleaseDate.ToString("MM-yyyy")</i></h6>
-                        <h6>Seasons: @((Serie)serie).Seasons</h6>
+                        <h6><i>@(((Serie)serie).Seasons) seasons</i></h6>
                     </div>
                 </div>
             }

@@ -210,7 +210,7 @@ namespace DAL
                     int mediaItemId = reader.GetInt32(0);
                     string retrievedTitle = reader.GetString(1);
                     string description = reader.GetString(2);
-                    double rating = reader.GetDouble(3);
+                    double rating = (double)reader.GetDecimal(3);
                     DateTime releaseDate = reader.GetDateTime(4);
                     string countryOfOrigin = reader.GetString(5);
                     string string_cast = reader.GetString(7);
@@ -281,12 +281,14 @@ namespace DAL
                     int mediaItemId = reader.GetInt32(0);
                     string retrievedTitle = reader.GetString(1);
                     string description = reader.GetString(2);
-                    double rating = reader.GetDouble(3);
+                    double rating = (double)reader.GetDecimal(3);
                     DateTime releaseDate = reader.GetDateTime(4);
                     string countryOfOrigin = reader.GetString(5);
                     string string_cast = reader.GetString(7);
-                    string genresString = reader.GetString(reader.GetOrdinal("genres"));
-                    List<Genre> genres = genresString.Split(',').Select(s => Enum.Parse<Genre>(s)).ToList();
+                    string genresString = reader.GetString(6);
+                    //List<Genre> genres = genresString.Split(',').Select(s => Enum.Parse<Genre>(s)).ToList();
+                    string[] string_genres = genresString.Split(',');
+                    
                     string[] cast = string_cast.Split(',');
 
                     if (reader["director"] != DBNull.Value)
@@ -312,9 +314,12 @@ namespace DAL
 
                     mediaItem.SetId(mediaItemId);
                     mediaItem.Cast = new Cast(retrievedTitle);
-                    foreach (Genre genre in genres)
+                    foreach (string string_genre in string_genres)
                     {
-                        mediaItem.AddGenre(genre);
+                        if (Enum.TryParse(string_genre, out Genre enum_genre))
+                        {
+                            mediaItem.AddGenre(enum_genre);
+                        }
                     }
                     foreach (string actor in cast)
                     {

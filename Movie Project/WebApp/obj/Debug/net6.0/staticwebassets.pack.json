@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\WebApp.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\css\\site-info.css",
+      "PackagePath": "staticwebassets\\css\\site-info.css"
+    },
+    {
       "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\css\\site-main.css",
       "PackagePath": "staticwebassets\\css\\site-main.css"
     },
@@ -35,6 +39,18 @@
     {
       "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\Movie-clipart.png",
       "PackagePath": "staticwebassets\\images\\Movie-clipart.png"
+    },
+    {
+      "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\icons8-rating-48.png",
+      "PackagePath": "staticwebassets\\images\\icons8-rating-48.png"
+    },
+    {
+      "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\icons8-review-48.png",
+      "PackagePath": "staticwebassets\\images\\icons8-review-48.png"
+    },
+    {
+      "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\icons8-review-50.png",
+      "PackagePath": "staticwebassets\\images\\icons8-review-50.png"
     },
     {
       "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\mainPoster.jpg",

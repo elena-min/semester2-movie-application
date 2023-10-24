@@ -20,7 +20,10 @@ namespace WebApp.Pages
         }
         public void OnGet()
         {
-            foreach(MediaItem m in _mediaController.GetAll())
+            Movies = new List<MediaItem>();
+            Shows = new List<MediaItem>();
+
+            foreach (MediaItem m in _mediaController.GetAll())
             {
                 if (m is Movie)
                 {

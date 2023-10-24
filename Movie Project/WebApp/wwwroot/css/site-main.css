@@ -27,7 +27,7 @@ nav {
     nav a {
         color: #E7DFC6;
         font-weight: bolder;
-        font-size: 24px;
+        font-size: 20px;
         text-decoration: none;
         transition: transform .4s ease;
     }

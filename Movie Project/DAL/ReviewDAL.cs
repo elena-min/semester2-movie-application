@@ -2,6 +2,7 @@
 using LogicLayer.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,46 +11,342 @@ namespace DAL
 {
     public class ReviewDAL : IReviewDAL
     {
-        public void AddReview(Review newReview)
+        private readonly UserDAL userDAL;
+        private readonly MediaItemDAL mediaDAL;
+        public ReviewDAL()
         {
+            userDAL = new UserDAL();
+            mediaDAL = new MediaItemDAL();
+        }
+        public static SqlConnection CreateConnection()
+        {
+            return new SqlConnection("server=mssqlstud.fhict.local;Database=dbi500809_movieapp;User Id=dbi500809_movieapp;Password=movieapp;");
+        }
+        public bool AddReview(Review newReview)
+        {
+            SqlConnection conn = CreateConnection();
+            //try
+            //{
+            string commandSql = "INSERT INTO Review (title, reviewConten, rating, pointedTowards, reviewWriter, dateOfPublication, isItDeleted) VALUES (@title, @reviewConten, @rating, @pointedTowards, @reviewWriter, @dateOfPublication, @isItDeleted);";
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            cmd.Parameters.AddWithValue("@title", newReview.Title);
+            cmd.Parameters.AddWithValue("@reviewConten", newReview.ReviewContent);
+            cmd.Parameters.AddWithValue("@rating", newReview.Rating);
+            cmd.Parameters.AddWithValue("@pointedTowards", newReview.PointedTowards.GetId());
+            cmd.Parameters.AddWithValue("@reviewWriter", newReview.ReviewWriter.GetId());
+            DateTime today = DateTime.Today;
+            cmd.Parameters.AddWithValue("@dateOfPublication", today);
+            cmd.Parameters.AddWithValue("@isItDeleted", 0);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            return true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return "Operation failed.";
+            //}
         }
 
-        public void Delete(int id)
-        {
-        }
-
-        public void DeletebyUser(Review review)
-        {
-        }
 
         public Review[] GetAll()
         {
-            return new Review[0];
-        }
+            SqlConnection conn = CreateConnection();
+            string query = "select * from Review where isItDeleted = 0";
+            List<Review> productReviews = new List<Review>();
+            //try
+            //{
+            conn.Open();
+            SqlCommand command = new SqlCommand(query, conn);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string title = reader.GetString(1);
+                    string reviewContent = reader.GetString(2);
+                    int rating = reader.GetInt32(3);
+                    int pointedTowardsID = reader.GetInt32(4);
+                    MediaItem pointedTowards = mediaDAL.GetMediaItemById(pointedTowardsID);
+                    pointedTowards.AddRating(rating);
+                    int reviewWriterID = reader.GetInt32(5);
+                    User reviewWriter = userDAL.GetUserByID(reviewWriterID);
+                    DateTime dateOfPublication = reader.GetDateTime(6);
+                    Review review = new Review(title, reviewContent, rating, pointedTowards, reviewWriter, dateOfPublication);
+                    review.SetId(id);
+                    productReviews.Add(review);
+                }
+            }
 
-        public Review[] GetDeletedReviewsByUser(int userID)
-        {
-            return new Review[0];
+            reader.Close();
+            conn.Close();
+            return productReviews.ToArray();
+            //}
+            //catch (Exception)
+            //{
+            //    return null;
+            //}        }
         }
-
         public Review GetReviewByID(int id)
         {
-            return new Review();
-        }
+            SqlConnection conn = CreateConnection();
+            conn.Open();
+            string query = "select * from Review where id = @id";
+            //try
+            //{
+            Review review = null;
+            CreateConnection().Open();
+            SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@id", id);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    int r_id = reader.GetInt32(0);
+                    string title = reader.GetString(1);
+                    string reviewContent = reader.GetString(2);
+                    int rating = reader.GetInt32(3);
+                    int pointedTowardsID = reader.GetInt32(4);
+                    MediaItem pointedTowards = mediaDAL.GetMediaItemById(pointedTowardsID);
+                    pointedTowards.AddRating(rating);
+                    int reviewWriterID = reader.GetInt32(5);
+                    User reviewWriter = userDAL.GetUserByID(reviewWriterID);
+                    DateTime dateOfPublication = reader.GetDateTime(6);
+                    review = new Review(title, reviewContent, rating, pointedTowards, reviewWriter, dateOfPublication);
+                    review.SetId(id);
+                }
+            }
 
-        public Review[] GetReviewsByDate(DateTime date)
+            reader.Close();
+            conn.Close();
+            return review;
+            //}
+            //catch (Exception)
+            //{
+            //    return null;
+            //}        }
+        }
+        
+        public Review[] GetReviewsByUser(int userID)
         {
-            return new Review[0];
+            SqlConnection conn = CreateConnection();
+            string query = "select * from Review where isItDeleted = 0 AND reviewWriter = @userID";
+            List<Review> productReviews = new List<Review>();
+            //try
+            //{
+            conn.Open();
+            SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@userID", userID);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string title = reader.GetString(1);
+                    string reviewContent = reader.GetString(2);
+                    int rating = reader.GetInt32(3);
+                    int pointedTowardsID = reader.GetInt32(4);
+                    MediaItem pointedTowards = mediaDAL.GetMediaItemById(pointedTowardsID);
+                    pointedTowards.AddRating(rating);
+
+                    int reviewWriterID = reader.GetInt32(5);
+                    User reviewWriter = userDAL.GetUserByID(reviewWriterID);
+                    DateTime dateOfPublication = reader.GetDateTime(6);
+                    Review review = new Review(title, reviewContent, rating, pointedTowards, reviewWriter, dateOfPublication);
+                    review.SetId(id);
+                    productReviews.Add(review);
+                }
+            }
+
+            reader.Close();
+            conn.Close();
+            return productReviews.ToArray();
+            //}
+            //catch (Exception)
+            //{
+            //    return null;
+            //}        }
         }
 
         public Review[] GetReviewsByMediaItem(int mediaItemID)
         {
-            return new Review[0];
+            {
+                SqlConnection conn = CreateConnection();
+                string query = "select * from Review where isItDeleted = 0 AND pointedTowards = @mediaItemID";
+                List<Review> productReviews = new List<Review>();
+                //try
+                //{
+                conn.Open();
+                SqlCommand command = new SqlCommand(query, conn);
+                command.Parameters.AddWithValue("@mediaItemID", mediaItemID);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string title = reader.GetString(1);
+                        string reviewContent = reader.GetString(2);
+                        int rating = reader.GetInt32(3);
+                        int pointedTowardsID = reader.GetInt32(4);
+                        MediaItem pointedTowards = mediaDAL.GetMediaItemById(mediaItemID);
+                        pointedTowards.AddRating(rating);
+                        int reviewWriterID = reader.GetInt32(5);
+                        User reviewWriter = userDAL.GetUserByID(reviewWriterID);
+                        DateTime dateOfPublication = reader.GetDateTime(6);
+                        Review review = new Review(title, reviewContent, rating, pointedTowards, reviewWriter, dateOfPublication);
+                        review.SetId(id);
+                        productReviews.Add(review);
+                    }
+                }
+
+                reader.Close();
+                conn.Close();
+                return productReviews.ToArray();
+                //}
+                //catch (Exception)
+                //{
+                //    return null;
+                //}
+            }
+        }
+        public Review[] GetReviewsByDate(DateTime date)
+        {
+            SqlConnection conn = CreateConnection();
+            string query = "select * from Review where isItDeleted = 0 AND dateOfPublication = @dateOfPublication";
+            List<Review> productReviews = new List<Review>();
+            //try
+            //{
+            conn.Open();
+            SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@dateOfPublication", date.ToString("yyyy-MM-dd"));
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string title = reader.GetString(1);
+                    string reviewContent = reader.GetString(2);
+                    int rating = reader.GetInt32(3);
+                    int pointedTowardsID = reader.GetInt32(4);
+                    MediaItem pointedTowards = mediaDAL.GetMediaItemById(pointedTowardsID);
+                    pointedTowards.AddRating(rating);
+                    int reviewWriterID = reader.GetInt32(5);
+                    User reviewWriter = userDAL.GetUserByID(reviewWriterID);
+                    DateTime dateOfPublication = reader.GetDateTime(6);
+                    Review review = new Review(title, reviewContent, rating, pointedTowards, reviewWriter, dateOfPublication);
+                    review.SetId(id);
+                    productReviews.Add(review);
+                }
+            }
+
+            reader.Close();
+            conn.Close();
+            return productReviews.ToArray();
+            //}
+            //catch (Exception)
+            //{
+            //    return null;
+            //}
         }
 
-        public Review[] GetReviewsByUser(int userID)
+        public Review[] GetDeletedReviewsByUser(int userID)
         {
-            return new Review[0];
+            SqlConnection conn = CreateConnection();
+            string query = "select * from Review where isItDeleted = 1 AND reviewWriter = @userID";
+            List<Review> productReviews = new List<Review>();
+            //try
+            //{
+            conn.Open();
+            SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@userID", userID);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string title = reader.GetString(1);
+                    string reviewContent = reader.GetString(2);
+                    int rating = reader.GetInt32(3);
+                    int pointedTowardsID = reader.GetInt32(4);
+                    MediaItem pointedTowards = mediaDAL.GetMediaItemById(pointedTowardsID);
+                    pointedTowards.AddRating(rating);
+                    int reviewWriterID = reader.GetInt32(5);
+                    User reviewWriter = userDAL.GetUserByID(reviewWriterID);
+                    DateTime dateOfPublication = reader.GetDateTime(6);
+                    string deletingReason = reader.GetString(8);
+                    Review review = new Review(title, reviewContent, rating, pointedTowards, reviewWriter, dateOfPublication);
+                    review.SetId(id);
+                    review.SetReviewAsDeleted(deletingReason);
+                    productReviews.Add(review);
+                }
+            }
+
+            reader.Close();
+            conn.Close();
+            return productReviews.ToArray();
+            //}
+            //catch (Exception)
+            //{
+            //    return null;
+            //}
+        }
+        public string Delete(Review review)
+        {
+            SqlConnection conn = CreateConnection();
+            // try
+            //  {
+            string commandSql = "UPDATE Review SET isItDeleted = @isItDeleted, reasonForDeleting = @reasonForDeleting WHERE id = @r_id;";
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            cmd.Parameters.AddWithValue("@r_id", review.GetId());
+            int isItDeletedInt = 0;
+            if (review.IsDeleted == true)
+            {
+                isItDeletedInt = 1;
+            }
+            cmd.Parameters.AddWithValue("@isItDeleted", isItDeletedInt);
+            cmd.Parameters.AddWithValue("@reasonForDeleting", review.ReasonForDeleting);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            return "Review has been deleteted.";
+            //}
+            //catch (Exception ex)
+            //{
+            //    return "Operation failed.";
+            //}
+        }
+
+        public string DeletebyUser(Review review)
+        {
+            SqlConnection conn = CreateConnection();
+            // try
+            //  {
+            string commandSql = "DELETE Review WHERE id = @r_id;";
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            cmd.Parameters.AddWithValue("@r_id", review.GetId());
+            int rowsAffected = cmd.ExecuteNonQuery();
+            conn.Close();
+
+            if (rowsAffected > 0)
+            {
+                return "Review deleted successfully";
+            }
+            else
+            {
+                return "No data found.";
+            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return "Operation failed.";
+            //}
         }
     }
 }

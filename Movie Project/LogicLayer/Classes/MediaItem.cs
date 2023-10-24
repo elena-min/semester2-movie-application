@@ -62,6 +62,10 @@ namespace LogicLayer.Classes
             //}
             //Rating = ratingSum / ratings.Count();
         }
+        public int[] GetAllRatings()
+        {
+            return ratings.ToArray();
+        }
         public virtual double CalculateAverageRating()
         {
             if (ratings == null || ratings.Count == 0)

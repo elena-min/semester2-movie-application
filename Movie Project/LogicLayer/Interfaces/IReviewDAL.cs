@@ -9,15 +9,15 @@ namespace LogicLayer.Interfaces
 {
     public interface IReviewDAL
     {
-        void AddReview(Review newReview);
+        bool AddReview(Review newReview);
         Review[] GetAll();
         Review GetReviewByID(int id);
         Review[] GetReviewsByUser(int userID);
         Review[] GetReviewsByMediaItem(int mediaItemID);
         Review[] GetReviewsByDate(DateTime date);
         Review[] GetDeletedReviewsByUser(int userID);
-        void Delete(int id);
-        void DeletebyUser(Review review);
+        string Delete(Review review);
+        string DeletebyUser(Review review);
 
     }
 }

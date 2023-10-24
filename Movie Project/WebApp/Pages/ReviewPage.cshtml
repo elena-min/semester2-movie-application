@@ -1,0 +1,81 @@
+﻿@page
+@using DAL;
+@using LogicLayer.Controllers;
+@using LogicLayer.Interfaces;
+@model WebApp.Pages.ReviewPageModel
+@{
+    Layout = "~/Pages/Shared/_LayoutMain.cshtml";
+    @functions {
+        static IMediaItemDAL iMediaItemDAL = new MediaItemDAL();
+        static MediaItemController mediaController = new MediaItemController(iMediaItemDAL);
+    }
+}
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<main id="mainReview">
+
+    <div class="product_cover">
+
+
+        @if (@Model.Movie != null)
+        {
+            <div class="information">
+                <h2><b>@Model.Movie.Title</b></h2><br>
+            </div>
+            <div class="coverReview">
+                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Movie.GetId())" alt="Movie cover" style="padding:10px">
+            </div>
+        }
+        else if (@Model.Serie != null)
+        {
+            <div class="information">
+                <h2><b>@Model.Serie.Title</b></h2><br>
+            </div>
+            <div class="coverReview">
+                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Serie.GetId())" alt="Serie cover" style="padding:10px">
+            </div>
+        }
+    </div>
+
+    <div class="review_content">
+        <form method="post">
+            <label asp-for="ReviewTitle">Review Title:</label>
+            <span asp-validation-for="ReviewTitle"></span><br />
+            <input asp-for="ReviewTitle" placeholder="What is you review about..."><br />
+
+            <div>
+                <label for="rating"><b>My Rating:</b></label>
+                <div class="ratingnumbers">
+                    <span data-value="1">1</span>
+                    <span data-value="2">2</span>
+                    <span data-value="3">3</span>
+                    <span data-value="4">4</span>
+                    <span data-value="5">5</span>
+                </div>
+                <div class="rating">
+                    <span class="star" data-value="1    ">&#9733;</span>
+                    <span class="star" data-value="2    ">&#9733;</span>
+                    <span class="star" data-value="3    ">&#9733;</span>
+                    <span class="star" data-value="4    ">&#9733;</span>
+                    <span class="star" data-value="5    ">&#9733;</span>
+                </div>
+                <input type="hidden" id="rating-value" name="Rating" value="0" />
+            </div>
+            <div>
+                <label asp-for="ReviewContent"> What do you think?</label>
+                <span asp-validation-for="ReviewContent"></span><br />
+                <textarea asp-for="ReviewContent" maxlength="18800" placeholder="Give us your opinion (optional)" rows="12"> </textarea><br />
+            </div>
+            <div class="button_container">
+                <input type="submit" value="Submit review">
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+            }
+        </form>
+    </div>
+</main>

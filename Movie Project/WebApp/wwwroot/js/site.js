@@ -2,3 +2,12 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+$(function () {
+    $('.star').click(function () {
+        $('.star').removeClass('active');
+        $(this).addClass('active');
+        var ratingValue = $(this).data('value');
+        $('#rating-value').val(ratingValue);
+    });
+});

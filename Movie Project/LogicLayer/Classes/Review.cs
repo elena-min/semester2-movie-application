@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,16 +19,34 @@ namespace LogicLayer.Classes
         private bool isDeleted;
         private string reasonForDeleting;
 
+        public string Title { get; set; }
+        public string ReviewContent { get; set; }
+        public int Rating { get; set; }
+        public MediaItem PointedTowards { get; set; }
+        public User ReviewWriter { get; set; }
+        public DateTime DateOfPublication { get; set; }
+        public bool IsDeleted { get; set; }
+        public string ReasonForDeleting { get; set; }
         public Review() { }
         public Review(string title, string content, int rating, MediaItem pointedTowards, User reviewWriter)
         {
-            this.title = title;
-            this.reviewContent = content;
-            this.rating = rating;
-            this.pointedTowards = pointedTowards;
-            this.reviewWriter = reviewWriter;
-            this.dateOfPublication = DateTime.Now;
-            this.isDeleted = false;
+            Title = title;
+            ReviewContent = content;
+            Rating = rating;
+            PointedTowards = pointedTowards;
+            ReviewWriter = reviewWriter;
+            DateOfPublication = DateTime.Now;
+            IsDeleted = false;
+        }
+        public Review(string title, string content, int rating, MediaItem pointedTowards, User reviewWriter, DateTime dateOfPublication)
+        {
+            Title = title;
+            ReviewContent = content;
+            Rating = rating;
+            PointedTowards = pointedTowards;
+            ReviewWriter = reviewWriter;
+            DateOfPublication = dateOfPublication;
+            IsDeleted = false;
         }
         public void SetId(int id)
         {
@@ -40,12 +59,12 @@ namespace LogicLayer.Classes
 
         public void SetReviewAsDeleted(string reason)
         {
-            this.isDeleted = true;  
-            this.reasonForDeleting = reason;
+            IsDeleted = true;  
+            ReasonForDeleting = reason;
         }
         public override string ToString()
         {
-            return $"{this.reviewWriter.Username}: {this.title}({this.rating})";
+            return $"{ReviewWriter.Username}: {Title}({Rating})";
         }
     }
 }
