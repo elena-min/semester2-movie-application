@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site-main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site-review.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site-favs.css" asp-append-version="true" />
+
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow">
+            <div class="container">
+                <a asp-area="" asp-page="/Index">Cinematic</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-expand-lg d-lg-inline-flex justify-content-between fs-5">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item border-end border-3 border-white px-3">
+                            <a class="nav-link text-white" asp-area="" asp-page="/Main">Home</a>
+                        </li>
+                        <li class="nav-item border-end border-3 border-white px-3">
+                            <a class="nav-link text-white" asp-area="" asp-page="/Explore">Explore</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item px-3">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Recommendations">Recommendations</a>
+                            </li>
+                            <li class="nav-item border-end border-3 border-white px-3">
+                                <a class="nav-link text-white" asp-area="" asp-page="/FavoriteMovies">Favorites</a>
+                            </li>
+                            <li class="nav-item px-3">
+                                <a class="nav-link text-white" asp-area="" asp-page="/WrittenReviews">Reviews</a>
+                            </li>
+                            <li class="nav-item px-3">
+                                <a class="nav-link text-white" asp-area="" asp-page="/ProfilePage">Profile</a>
+                            </li>
+                            <li class="nav-item border-end border-3 border-white px-3">
+                                <form asp-page-handler="logout" method="post" class="form-inline">
+                                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item border-end border-3 border-white px-3">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Login">Login</a>
+                            </li>
+                            <li class="nav-item px-3">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Register">Register</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid px-0 pt-0">
+        <main role="main" class="pt-0 px-0">
+
+            <div class="menuBar">
+                <ul>
+                    <li class="navigationItem">
+                        <a class="nav-link text-white" asp-area="" asp-page="/FavoriteMovies"> Favorite Movies</a>
+                    </li>
+                    <li class="navigationItem">
+                        <a class="nav-link text-white" asp-area="" asp-page="/FavoriteSeries">Favorite Series</a>
+                    </li>
+                </ul>
+            </div>
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="footer-basic">
+            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="Índex">Home</a></li>
+                <li class="list-inline-item"><a href="#">About</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+            </ul>
+            <p class="copyright">Cinematic © 2023</p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

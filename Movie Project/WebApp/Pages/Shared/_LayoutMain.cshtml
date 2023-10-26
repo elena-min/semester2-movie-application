@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using LogicLayer;
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -6,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site-main.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site-info.css" asp-append-version="true" />
@@ -15,7 +18,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow">
             <div class="container">
                 <a asp-area="" asp-page="/Index">Cinematic</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -36,10 +39,10 @@
                                 <a class="nav-link text-white" asp-area="" asp-page="/Recommendations">Recommendations</a>
                             </li>
                             <li class="nav-item border-end border-3 border-white px-3">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Favorites">Favorites</a>
+                                <a class="nav-link text-white" asp-area="" asp-page="/FavoriteMovies">Favorites</a>
                             </li>
                             <li class="nav-item px-3">
-                                <a class="nav-link text-white" asp-area="" asp-page="/PersonalReviewsPage">Reviews</a>
+                                <a class="nav-link text-white" asp-area="" asp-page="/WrittenReviews">Reviews</a>
                             </li>
                             <li class="nav-item px-3">
                                 <a class="nav-link text-white" asp-area="" asp-page="/ProfilePage">Profile</a>
@@ -67,6 +70,25 @@
     </header>
     <div class="container-fluid px-0 pt-0">
         <main role="main" class="pt-0 px-0">
+            <div class="search-bar" style="background-color: #B0D1E8">
+                <div class="search-bar-content" style="width: 55%">
+                    <form method="get">
+                        <div style="display: flex; width: 60%;">
+                            <label for="genreSelect" style="padding-right:5px;">Select Genre:</label>
+                            <select id="genreSelect" name="genreSelect">
+                                <option value="">All Genres</option>
+                                @foreach (var genre in Enum.GetValues(typeof(Genre)))
+                                {
+                                    <option value="@genre">@genre</option>
+                                }
+                            </select>
+                        </div>
+                        <input style="width: 90% " type="search" name="searchTerm" placeholder="Search..">
+                        <button type="submit"><i class="fa fa-search p-1"></i></button>
+                    </form>
+                </div>
+            </div>
+
             @RenderBody()
         </main>
     </div>

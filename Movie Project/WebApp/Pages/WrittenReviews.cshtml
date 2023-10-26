@@ -1,0 +1,65 @@
+﻿@page
+@using DAL;
+@using LogicLayer.Classes;
+@using LogicLayer.Controllers;
+@using LogicLayer.Interfaces;
+@model WebApp.Pages.WrittenReviewsModel
+@{
+    Layout = "_LayoutReviews";
+    @functions {
+        static IReviewDAL ireviewDAL = new ReviewDAL();
+        static ReviewController reviewController = new ReviewController(ireviewDAL);
+        static IMediaItemDAL imediaItemDAL = new MediaItemDAL();
+        static MediaItemController mediaController = new MediaItemController(imediaItemDAL);
+    }
+}
+
+<h1>All written Reviews</h1>
+<div id="reviewsContainers">
+    @foreach (Review review in Model.Reviews)
+    {
+        Review writtenReview = review;
+        MediaItem mediaItem = mediaController.GetMediaItemById(writtenReview.PointedTowards.GetId());
+
+        if (mediaItem is Movie )
+        {
+            <div class="review">
+                <div class="image-grid">
+                    <a asp-page="./MovieInfoPage" asp-route-id="@writtenReview.PointedTowards.GetId()" target="_blank">
+                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(writtenReview.PointedTowards.GetId())" alt="Movie cover" style="padding:10px; width: 280px; height: 440px; object-fit: cover">
+                    </a>
+                </div>
+                <div class="reviewText p-1">
+                    <h3><b>@writtenReview.Title</b></h3>
+                    <h6><b>@mediaItem.Title</b></h6>
+                    <p>@writtenReview.ReviewContent</p>
+                    <p><i>Written on: @writtenReview.DateOfPublication.ToString("dd-MM-yyyy")</i></p>
+                    <form method="post" asp-page-handler="delete" asp-route-reviewId="@writtenReview.GetId()">
+                        <button type="submit" class="btn btn-danger">Delete Review</button>
+                    </form>
+                </div>
+            </div>
+        }
+        else if (mediaItem is Serie)
+        {
+            <div class="review">
+                <div class="image-grid" style=" ">
+                    <a asp-page="./SerieInfoPage" asp-route-id="@writtenReview.PointedTowards.GetId()" target="_blank">
+                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(writtenReview.PointedTowards.GetId())" alt="Book cover" style="padding:10px; width: 280px; height: 440px; object-fit: cover">
+                    </a>
+                </div>
+                <div class="reviewText p-1">
+                    <h3><b>@writtenReview.Title</b></h3>
+                    <h6><b>@mediaItem.Title</b></h6>
+                    <p>@writtenReview.ReviewContent</p>
+                    <p><i>Written on: @writtenReview.DateOfPublication.ToString("dd-MM-yyyy")</i></p>
+                    <form method="post" asp-page-handler="delete" asp-route-reviewId="@writtenReview.GetId()">
+                        <button type="submit" class="btn btn-danger">Delete Review</button>
+                    </form>
+                </div>
+            </div>
+        }
+
+    }
+</div>
+

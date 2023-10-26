@@ -1,0 +1,175 @@
+﻿@page
+@using DAL;
+@using LogicLayer.Classes;
+@using LogicLayer.Controllers;
+@using LogicLayer.Interfaces;
+@model WebApp.Pages.FavoriteSeriesModel
+@{
+    Layout = "_LayoutFavorites";
+    @functions {
+        static IReviewDAL ireviewDAL = new ReviewDAL();
+        static ReviewController reviewController = new ReviewController(ireviewDAL);
+        static IMediaItemDAL imediaItemDAL = new MediaItemDAL();
+        static MediaItemController mediaController = new MediaItemController(imediaItemDAL);
+        static IUserDAL iuserDAL = new UserDAL();
+        static UserController userController = new UserController(iuserDAL);
+    }
+}
+
+<h1>Favorite Series</h1>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+<div id="mediasContainers">
+    @if (Model.FavoriteSeries != null)
+    {
+        @if (Model.Results != null && Model.Results.Count > 0)
+        {
+            <div id="products-containers1">
+                @foreach (MediaItem mediaItem in @Model.Results.Take(4))
+                {
+                    Serie serie = mediaItem as Serie;
+                    <div class="favProduct">
+                        <div class="image-grid">
+                            <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
+                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(serie.GetId())" alt="Serie cover" style="padding:10px">
+                            </a>
+                        </div>
+                        <div class="movieText p-1">
+                            <h3><b>@serie.Title</b></h3>
+                            <p> Seaons: @serie.Seasons.ToString()</p>
+                            <form method="post">
+                                <button type="submit" name="movieId" value="@mediaItem.GetId()">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="products-containers2">
+                @foreach (MediaItem mediaItem in @Model.Results.Skip(4).Take(4))
+                {
+                    Serie serie = mediaItem as Serie;
+                    <div class="favProduct">
+                        <div class="image-grid">
+                            <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
+                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(serie.GetId())" alt="Serie cover" style="padding:10px">
+                            </a>
+                        </div>
+                        <div class="movieText p-1">
+                            <h3><b>@serie.Title</b></h3>
+                            <p> Seaons: @serie.Seasons.ToString()</p>
+                            <form method="post">
+                                <button type="submit" name="movieId" value="@mediaItem.GetId()">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="pagination">
+                @if (Model.TotalPages > 1)
+                {
+                    @if (Model.CurrentPage > 1)
+                    {
+                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="1">First</a>
+                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage - 1)">Previous</a>
+                    }
+
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        if (i == Model.CurrentPage)
+                        {
+                            <span class="current-page">@i</span>
+                        }
+                        else
+                        {
+                            <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@i">@i</a>
+                        }
+                    }
+
+                    if (Model.CurrentPage < Model.TotalPages)
+                    {
+                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
+                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@Model.TotalPages">Last</a>
+                    }
+                }
+            </div>
+
+        }
+        else
+        {
+            <div id="products-containers1">
+                @foreach (MediaItem mediaItem in Model.FavoriteSeries.Take(4))
+                {
+                    Serie serie = mediaItem as Serie;
+                    <div class="favProduct">
+                        <div class="image-grid">
+                            <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
+                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(serie.GetId())" alt="Serie cover" style="padding:10px">
+                            </a>
+                        </div>
+                        <div class="movieText p-1">
+                            <h3><b>@serie.Title</b></h3>
+                            <p> Seaons: @serie.Seasons.ToString()</p>
+                            <form method="post">
+                                <button type="submit" name="movieId" value="@mediaItem.GetId()">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="products-containers2">
+                @foreach (MediaItem mediaItem in Model.FavoriteSeries.Skip(4).Take(4))
+                {
+                    Serie serie = mediaItem as Serie;
+                    <div class="favProduct">
+                        <div class="image-grid">
+                            <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
+                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(serie.GetId())" alt="Serie cover" style="padding:10px">
+                            </a>
+                        </div>
+                        <div class="movieText p-1">
+                            <h3><b>@serie.Title</b></h3>
+                            <p> Seaons: @serie.Seasons.ToString()</p>
+                            <form method="post">
+                                <button type="submit" name="movieId" value="@mediaItem.GetId()">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="pagination">
+                @if (Model.TotalPages > 1)
+                {
+                    @if (Model.CurrentPage > 1)
+                    {
+                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="1">First</a>
+                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage - 1)">Previous</a>
+                    }
+
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        if (i == Model.CurrentPage)
+                        {
+                            <span class="current-page">@i</span>
+                        }
+                        else
+                        {
+                            <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@i">@i</a>
+                        }
+                    }
+
+                    if (Model.CurrentPage < Model.TotalPages)
+                    {
+                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
+                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@Model.TotalPages">Last</a>
+                    }
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <p>No series in favorites.</p>
+    }
+</div>

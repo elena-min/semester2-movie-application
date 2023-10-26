@@ -32,6 +32,33 @@ namespace WebApp.Pages
             }
         }
 
+        public IActionResult OnPost(int id)
+        {
+            var serie = _mediaController.GetMediaItemById(id);
+
+            if (serie == null)
+            {
+                return NotFound();
+            }
+
+            var userID = User.FindFirst("Id").Value;
+            Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
+
+            if (Userr == null)
+            {
+                return RedirectToPage("/Login");
+            }
+
+            if (_userController.CheckIfProductIsInFavorites(serie.GetId(), Userr.GetId()) == false)
+            {
+                _userController.AddProductToFavorite(serie.GetId(), Userr.GetId());
+                TempData["Message"] = "Serie added to favorites!";
+                return RedirectToPage("/SerieInfoPage", new { id = serie.GetId() });
+            }
+
+            TempData["Message"] = "Serie is already in favorites!";
+            return RedirectToPage("/SerieInfoPage", new { id = serie.GetId() });
+        }
         public IActionResult OnPostLogout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

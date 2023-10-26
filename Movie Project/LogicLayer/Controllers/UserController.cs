@@ -44,5 +44,26 @@ namespace LogicLayer.Controllers
         {
             iuserDAL.DeleteUser(id);
         }
+        public bool AddProductToFavorite(int mediaID, int userID)
+        {
+             return iuserDAL.AddProductToFavorite(mediaID, userID);   
+        }
+        public bool CheckIfProductIsInFavorites(int mediaID, int userID)
+        {
+            return iuserDAL.CheckIfProductIsInFavorites(mediaID, userID);
+        }
+        public MediaItem[] GetAllFavorites(int userID)
+        {
+         return iuserDAL.GetAllFavorites(userID);   
+        }
+        public MediaItem[] GetAllFavoriteMovies(int userID)
+        {
+            return iuserDAL.GetAllFavoriteMovies(userID);
+
+        }
+        public string RemoveFromFavorites(int mediaID, int userID)
+        {
+            return iuserDAL.RemoveFromFavorites(mediaID, userID);
+        }
     }
 }

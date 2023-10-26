@@ -1,0 +1,72 @@
+﻿body {
+}
+body {
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+
+
+    .book-text {
+        margin-bottom: 30px;
+    }
+
+    .mediasContainers {
+        padding: 20px;
+    }
+
+    #products-containers1 {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+
+    #products-containers2 {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 30px;
+    }
+
+
+
+    .favProduct {
+        display: flex;
+        width: 23%;
+        height: 260px;
+        padding: 10px;
+        border: 5px solid #004766 /*#3c9089*/;
+        border-radius: 10px;
+        transition: transform .4s ease;
+    }
+
+        .favProduct:hover {
+            transform: scale(1.1);
+        }
+
+        .favProduct img {
+            width: 160px;
+            height: 240px;
+            object-fit: cover;
+        }
+
+    .movieText {
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .favProduct a:hover {
+        color: #3C9089;
+        text-decoration: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}

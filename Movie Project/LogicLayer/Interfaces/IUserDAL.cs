@@ -16,6 +16,10 @@ namespace LogicLayer.Interfaces
         User[] GetAll();
         void UpdateUser(User user);
         void DeleteUser(int id);
-
+        bool AddProductToFavorite(int mediaID, int userID);
+        bool CheckIfProductIsInFavorites(int mediaID, int userID);
+        MediaItem[] GetAllFavorites(int userID);
+        MediaItem[] GetAllFavoriteMovies(int userID);
+        string RemoveFromFavorites(int mediaID, int userID);
     }
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dmST318z95vRI6prcjaSn8Y5q8OcZU15S+MblhIkBRI=",
+  "Hash": "zA0oc+b39OM/1o1FGX/vUnOROgeNr7jFPCY1t/BsXws=",
   "Source": "WebApp",
   "BasePath": "_content/WebApp",
   "Mode": "Default",
@@ -68,6 +68,23 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
+      "Identity": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\css\\site-favs.css",
+      "SourceId": "WebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\",
+      "BasePath": "_content/WebApp",
+      "RelativePath": "css/site-favs.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site-favs.css"
+    },
+    {
       "Identity": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\css\\site-info.css",
       "SourceId": "WebApp",
       "SourceType": "Discovered",
@@ -100,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site-main.css"
+    },
+    {
+      "Identity": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\css\\site-review.css",
+      "SourceId": "WebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\",
+      "BasePath": "_content/WebApp",
+      "RelativePath": "css/site-review.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site-review.css"
     },
     {
       "Identity": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\favicon.ico",

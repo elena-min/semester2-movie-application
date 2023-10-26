@@ -36,6 +36,16 @@ nav {
             color: #E7DFC6;
             transform: scale(1.07);
         }
+.search-bar {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #B0D1E8;
+    padding: 10px;
+    border-bottom: 4px solid #004766;
+}
+.search-bar-content form {
+    display: flex;
+}
 
 body {
     margin-bottom: 60px;
@@ -50,7 +60,6 @@ main {
 
 #welcome-container {
     height: 400px;
-    margin-top: -20px;
     width: 100%;
     background-color: #B0D1E8;
     border-bottom: 3px solid #004766;
