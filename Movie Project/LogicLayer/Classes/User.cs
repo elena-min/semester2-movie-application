@@ -18,13 +18,13 @@ namespace LogicLayer.Classes
         private string profileDescription;
         private List<MediaItem> favoriteMediaItems;
 
-        public string FirstName { get; }
-        public string LastName { get; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; }
-        public Gender Gender { get;  }
-        public string ProfileDescription { get; }  
+        public Gender Gender { get; set; }
+        public string ProfileDescription { get; set; }
 
         public User() { }
         public User(string firstName, string lastName, string username, string email, string password, Gender gender)

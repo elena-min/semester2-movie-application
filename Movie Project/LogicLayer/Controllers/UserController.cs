@@ -36,13 +36,22 @@ namespace LogicLayer.Controllers
             return iuserDAL.GetAll();
         }
             
-        public void UpdateUser(User user)
+        public bool UpdateUser(User user)
         {
-            iuserDAL.UpdateUser(user);
+            return iuserDAL.UpdateUser(user);
         }
         public void DeleteUser(int id)
         {
             iuserDAL.DeleteUser(id);
+        }
+        public bool SetProfilePicture(int id, byte[] imageArray)
+        {
+            return iuserDAL.SetProfilePicture(id, imageArray);
+        }
+        public string GetProfilePicByID(int id)
+        {
+            return iuserDAL.GetProfilePicByID(id);
+
         }
         public bool AddProductToFavorite(int mediaID, int userID)
         {

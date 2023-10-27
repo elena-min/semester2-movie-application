@@ -48,7 +48,6 @@ namespace DAL
             //}
         }
 
-
         public Review[] GetAll()
         {
             SqlConnection conn = CreateConnection();

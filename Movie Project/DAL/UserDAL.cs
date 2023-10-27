@@ -197,11 +197,93 @@ namespace DAL
             //}
         }
 
-        public void UpdateUser(User user)
+        public bool UpdateUser(User user)
         {
+            SqlConnection conn = CreateConnection();
+            // try
+            //{
+            conn.Open();
+            string commandSql;
+
+            if (user.ProfileDescription != null)
+            {
+                commandSql = "UPDATE Users SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender, profileDescription = @profileDescription WHERE id = @e_id;";
+            }
+            else
+            {
+                commandSql = "UPDATE Users SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender WHERE id = @e_id;";
+            }
+
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            cmd.Parameters.AddWithValue("@e_id", user.GetId());
+            cmd.Parameters.AddWithValue("@e_username", user.Username);
+            cmd.Parameters.AddWithValue("@e_fname", user.FirstName);
+            cmd.Parameters.AddWithValue("@e_lname", user.LastName);
+            cmd.Parameters.AddWithValue("@e_gender", user.Gender.ToString());
+
+            if (user.ProfileDescription != null)
+            {
+                cmd.Parameters.AddWithValue("@profileDescription", user.ProfileDescription);
+            }
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            return true;
+
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    return failed;
+            //}
         }
         public void DeleteUser(int id)
         {
+        }
+        
+        public bool SetProfilePicture(int id, byte[] imageArray)
+        {
+            SqlConnection conn = CreateConnection();
+            //try
+            //{
+            conn.Open();
+            string commandSql = "UPDATE Users SET profilePicture = @profilePicture WHERE id = @id";
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@profilePicture", imageArray);
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    return false;
+            //}
+        }
+
+        public string GetProfilePicByID(int id)
+        {
+            SqlConnection conn = CreateConnection();
+            conn.Open();
+            string query = "SELECT profilePicture FROM Users WHERE id = @id";
+
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                object result = cmd.ExecuteScalar();
+
+                if (result != DBNull.Value && result != null)
+                {
+                    byte[] imageData = (byte[])result;
+                    string base64StringImage = Convert.ToBase64String(imageData);
+                    return base64StringImage;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         public bool AddProductToFavorite(int mediaID, int userID)

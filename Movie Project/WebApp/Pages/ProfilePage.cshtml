@@ -1,0 +1,50 @@
+﻿@page
+@using DAL;
+@using LogicLayer.Classes;
+@using LogicLayer.Controllers;
+@using LogicLayer.Interfaces;
+@model WebApp.Pages.ProfilePageModel
+@{
+    Layout = "_LayoutNoSearch";
+    @functions {
+        static IUserDAL iuserDAL = new UserDAL();
+        static UserController userController = new UserController(iuserDAL);
+    }
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+<main class="mainProfileInfo">
+    <div class="profilePicture">
+        @if (!string.IsNullOrWhiteSpace(Model.ProfilePicture))
+        {
+            <img src="data:image;base64,@userController.GetProfilePicByID(@Model.Userr.GetId())" alt="Profile picture" style="padding:10px">
+        }
+        else
+        {
+            <img src="/images//noProfilePicture.png" alt="No Profile picture" style="padding:10px">
+        }
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="profilePicture">Upload Profile Picture:</label>
+                <input type="file" class="form-control" id="profilePicture" name="ProfilePicture">
+            </div>
+            <button type="submit" class="btn btn-primary">Save Profile Picture</button>
+        </form>
+    </div>
+
+    <div class="profileInformation">
+        <h3><b>Hello @Model.Userr.FirstName @Model.Userr.LastName!</b></h3><br>
+        <p><i>Your profile description:</i></p>
+        <p>@Model.Userr.ProfileDescription</p>
+
+    </div><br />
+
+</main>
+
+<div id="updateProfileButton">
+    
+    <a asp-page="/ProfileChangePage" asp-route-userId="@Model.Userr.GetId()" class="btn btn-primary">Change you profile information</a><br /><br />
+</div>

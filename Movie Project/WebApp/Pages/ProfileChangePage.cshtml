@@ -1,0 +1,64 @@
+﻿@page
+@model WebApp.Pages.ProfileChangePageModel
+@{
+    Layout = "~/Pages/Shared/_LayoutNoSearch.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+<main class="main-prifile-info" style="padding: 30px">
+    <div class="profile-information">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                
+
+                <label>First name:</label><br />
+                <input type="text" name="firstName" value="@Model.Userr.FirstName" /><br /><br />
+
+                <label>Last name:</label><br />
+                <input type="text" name="lastName" value="@Model.Userr.LastName" /><br /><br />
+
+                <label>Username:</label><br />
+                <input type="text" name="username" value="@Model.Userr.Username" /><br /><br />
+
+                <label for="email">Email: @Model.Userr.Email</label><br /><br />
+
+                <label for="gender">Gender:</label>
+
+                <select id="gender" name="gender">
+                    @if (Model.Userr.Gender.ToString() == "Male")
+                    {
+                        <option value="Male" selected>Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    }
+                    else if (Model.Userr.Gender.ToString() == "Female")
+                    {
+                        <option value="Male">Male</option>
+                        <option value="Female" selected>Female</option>
+                        <option value="Other">Other</option>
+                    }
+                    else if (Model.Userr.Gender.ToString() == "Other")
+                    {
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other" selected>Other</option>
+                    }
+                </select><br /><br />
+
+                <label for="profileDescription">ProfileDescription:</label>
+                <textarea class="form-control" id="profileDescription" name="profileDescription">@Model.Userr.ProfileDescription</textarea><br />
+
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+
+    </div>
+
+</main>
