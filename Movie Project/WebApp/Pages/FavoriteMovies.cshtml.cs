@@ -63,23 +63,6 @@ namespace WebApp.Pages
                 return Page();
             }
 
-            //_recommendationContext.SetRecommendationStrategy(new SearchRecommendationStrategy(searchTerm, genreSelect));
-            //Product[] trendingRecommendations = _recommendationContext.GetRecommendations(_userController.GetFavoritesMovies(Userr.GetId()).ToList());
-            //Results = trendingRecommendations.ToList();
-            //    const int pageSize = 8;
-            //TotalResults = Results.Count;
-            //TotalPages = (int)Math.Ceiling((double)TotalResults / pageSize);
-            //CurrentPage = pageIndex;
-
-            //int startIndex = (pageIndex - 1) * pageSize;
-            //int endIndex = Math.Min(startIndex + pageSize - 1, TotalResults - 1);
-
-            //Results = Results.GetRange(startIndex, endIndex - startIndex + 1);
-            //if (Results.Count == 0)
-            //{
-            //    TempData["Message"] = "No results.";
-            //}
-
             return Page();
         }
         public IActionResult OnPost(int movieId)

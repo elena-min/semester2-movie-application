@@ -10,7 +10,6 @@ namespace WebApp.Pages
     public class MainModel : PageModel
     {
         private readonly MediaItemController _mediaController;
-
         public List<MediaItem> Movies { get; set; }
         public List<MediaItem> Shows { get; set; }
 

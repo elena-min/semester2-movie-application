@@ -13,7 +13,7 @@ namespace WebApp.Pages
     {
         private readonly UserController _userController;
 
-        [BindProperty]
+        [BindProperty(SupportsGet =true)]
         public User User { get; set; }
 
         public LoginModel(UserController userController)
@@ -46,7 +46,8 @@ namespace WebApp.Pages
                         return RedirectToPage("Main");
                     }
                 }
-                ModelState.AddModelError("InvalidCredentials", "The supplied username and/or password is invalid");
+                //ModelState.AddModelError("InvalidCredentials", "The supplied username and/or password is invalid");
+                TempData["Message"] = "The supplied username and/or password is invalid";
             }
             return Page();
         }

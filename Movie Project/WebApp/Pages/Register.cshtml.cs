@@ -68,7 +68,9 @@ namespace WebApp.Pages
                 }
                 else
                 {
-                    ModelState.AddModelError("InvalidCredentials", "This username is taken!");
+                    TempData["Message"] = "This username is taken!";
+
+                    //ModelState.AddModelError("InvalidCredentials", "This username is taken!");
                 }
             }
 

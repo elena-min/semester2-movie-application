@@ -68,7 +68,6 @@ namespace WebApp.Pages
                     profilePicture.CopyTo(memoryStream);
                     byte[] imageArray = memoryStream.ToArray();
 
-
                     if (_userController.SetProfilePicture(Userr.GetId(), imageArray))
                     {
                         TempData["Message"] = "Profile Picture successfully changed";
@@ -90,11 +89,11 @@ namespace WebApp.Pages
             return RedirectToPage("/Index");
         }
 
-        private bool IsImageFile(IFormFile file)
-        {
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-            var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
-            return allowedExtensions.Contains(fileExtension);
-        }
+        //private bool IsImageFile(IFormFile file)
+        //{
+        //    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+        //    var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        //    return allowedExtensions.Contains(fileExtension);
+        //}
     }
 }
