@@ -1,0 +1,159 @@
+﻿using DAL;
+using DesktopApp.Employees;
+using LogicLayer.Classes;
+using LogicLayer.Controllers;
+using LogicLayer.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace DesktopApp.Users
+{
+    public partial class UserMenu : Form
+    {
+        private Button currentButton;
+        private Form activeform;
+        private readonly UserController userController;
+        IUserDAL iUserDAL;
+        List<User> allUsers;
+        public UserMenu()
+        {
+            InitializeComponent();
+            iUserDAL = new UserDAL();
+            userController = new UserController(iUserDAL);
+
+            lblWarning.Text = "";
+            listBoxViewUsers.Items.Clear();
+            allUsers = new List<User>();
+
+            
+            if (userController.GetAll() == null)
+            {
+
+            lblWarning.Text = "No users in the system.";
+            }
+            else
+            {
+                foreach (User user in userController.GetAll())
+                {
+                    allUsers.Add(user);
+                }
+            }
+
+            if (allUsers.Count > 0)
+            {
+                foreach (User user in allUsers)
+                {
+                    listBoxViewUsers.Items.Add(user.ToString());
+                }
+            }
+            else
+            {
+                lblWarning.Text = "No users in the system.";
+            }
+        }
+
+        private void ActivateButton(object btnSender)
+        {
+            if (btnSender != null)
+            {
+                if (currentButton != (Button)btnSender)
+                {
+                    DisableButton();
+                    currentButton = (Button)btnSender;
+                    currentButton.BackColor = Color.FromArgb(0, 71, 102);
+                    currentButton.ForeColor = Color.FromArgb(145, 190, 222);
+                }
+            }
+        }
+
+        private void DisableButton()
+        {
+            foreach (Control previousButton in panel1.Controls)
+            {
+                if (previousButton.GetType() == typeof(Button))
+                {
+                    previousButton.BackColor = Color.FromArgb(145, 190, 222);
+                    previousButton.ForeColor = Color.White;
+                }
+            }
+        }
+
+        private void OpenChildForm(Form childform, object btnSender)
+        {
+            if (activeform != null)
+            {
+                activeform.Close();
+            }
+            ActivateButton(btnSender);
+            activeform = childform;
+            childform.TopLevel = false;
+            childform.FormBorderStyle = FormBorderStyle.None;
+            childform.Dock = DockStyle.Fill;
+            this.panelDesktop.Controls.Add(childform);
+            this.panelDesktop.Tag = childform;
+            childform.BringToFront();
+            childform.Show();
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            if (activeform != null)
+            {
+                activeform.Close();
+            }
+            ActivateButton(sender);
+        }
+
+        private void buttonMoreInfo_Click(object sender, EventArgs e)
+        {
+            lblWarning.Text = "";
+            if (listBoxViewUsers.SelectedItem != null)
+            {
+                string selectedUser = listBoxViewUsers.SelectedItem.ToString();
+                foreach (User user in userController.GetAll())
+                {
+                    if (selectedUser == user.ToString())
+                    {
+                        MoreInfoUser userMoreInfo = new MoreInfoUser(user);
+                        userMoreInfo.Show();
+                    }
+                }
+            }
+            else
+            {
+                lblWarning.Text = "There is no user selected.";
+            }
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            if (listBoxViewUsers.SelectedIndex != -1)
+            {
+                int selected_user_id = Int32.Parse(listBoxViewUsers.SelectedItem.ToString().Split('-')[0]);
+                lblWarning.Text = userController.DeleteUser(selected_user_id); ;
+                listBoxViewUsers.Items.Clear();
+                foreach (User user in userController.GetAll())
+                {
+                    listBoxViewUsers.Items.Add(user.ToString());
+                }
+            }
+            else
+            {
+                lblWarning.Text = "There is no user selected!";
+
+            }
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            
+        }
+    }
+}

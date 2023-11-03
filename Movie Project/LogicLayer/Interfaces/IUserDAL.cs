@@ -15,7 +15,7 @@ namespace LogicLayer.Interfaces
         User GetUserByEmail(string email);
         User[] GetAll();
         bool UpdateUser(User user);
-        void DeleteUser(int id);
+        string DeleteUser(int id);
         bool SetProfilePicture(int id, byte[] imageArray);
         string GetProfilePicByID(int id);
         bool AddProductToFavorite(int mediaID, int userID);

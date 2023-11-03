@@ -98,13 +98,13 @@ namespace DesktopApp
         private void btnReviews_Click(object sender, EventArgs e)
         {
             lblFormTitle.Text = "Reviews";
-            // OpenChildForm(new Movies.MoviesMenu(), sender);
+             OpenChildForm(new Reviews.ReviewMenu(), sender);
         }
 
         private void btnUsers_Click(object sender, EventArgs e)
         {
             lblFormTitle.Text = "Users";
-            //   OpenChildForm(new Movies.MoviesMenu(), sender);
+               OpenChildForm(new Users.UserMenu(), sender);
         }
 
         private void btnEmployees_Click(object sender, EventArgs e)
@@ -116,7 +116,7 @@ namespace DesktopApp
         private void btnProfile_Click(object sender, EventArgs e)
         {
             lblFormTitle.Text = "Profile";
-            //OpenChildForm(new Movies.MoviesMenu(), sender);
+            OpenChildForm(new Employees.ProfilePage(_user), sender);
         }
 
         private void btnLogout_Click(object sender, EventArgs e)

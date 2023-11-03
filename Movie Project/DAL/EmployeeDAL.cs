@@ -17,7 +17,7 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             //try
             //{
-            string commandSql = "INSERT INTO Employee (firstName, lastName, username, password, email, gender, age) VALUES (@firstName, @lastName, @username, @password, @email, @gender, @age);";
+            string commandSql = "INSERT INTO Employee (firstName, lastName, username, password, email, gender, age, profilePicture) VALUES (@firstName, @lastName, @username, @password, @email, @gender, @age, @profilePicture);";
             conn.Open();
             SqlCommand cmd = new SqlCommand(commandSql, conn);
             cmd.Parameters.AddWithValue("@firstName", newEmployee.Username);
@@ -27,6 +27,7 @@ namespace DAL
             cmd.Parameters.AddWithValue("@email", newEmployee.LastName);
             cmd.Parameters.AddWithValue("@gender", newEmployee.Gender.ToString());
             cmd.Parameters.AddWithValue("@age", newEmployee.Age);
+            cmd.Parameters.AddWithValue("@profilePicture", new byte[0]);
 
             cmd.ExecuteNonQuery();
 
@@ -183,12 +184,12 @@ namespace DAL
                 return null;
             }
         }
-        public bool UpdateEmployee(Employee employee)
+        public bool UpdateEmployee(Employee employee, byte[] pictureBytes)
         {
             SqlConnection conn = CreateConnection();
             try
             {
-                string commandSql = "UPDATE Employee SET firstName = @e_fname, lastName = @e_lname, username = @e_username, email = @e_email, gender = @e_gender WHERE id = @e_id;";
+                string commandSql = "UPDATE Employee SET firstName = @e_fname, lastName = @e_lname, username = @e_username, email = @e_email, gender = @e_gender, profilePicture = @profilePicture WHERE id = @e_id;";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@e_id", employee.GetId());
@@ -197,6 +198,8 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@e_fname", employee.FirstName);
                 cmd.Parameters.AddWithValue("@e_lname", employee.LastName);
                 cmd.Parameters.AddWithValue("@e_gender", employee.Gender.ToString());
+                cmd.Parameters.AddWithValue("@profilePicture", pictureBytes);
+
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 return true;
@@ -236,5 +239,30 @@ namespace DAL
                 }
             }
         }
+        public string GetProfilePicByID(int id)
+        {
+            SqlConnection conn = CreateConnection();
+            conn.Open();
+            string query = "SELECT profilePicture FROM Employee WHERE id = @id";
+
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                object result = cmd.ExecuteScalar();
+
+                if (result != DBNull.Value && result != null)
+                {
+                    byte[] imageData = (byte[])result;
+                    string base64StringImage = Convert.ToBase64String(imageData);
+                    return base64StringImage;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+
     }
 }

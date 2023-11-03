@@ -40,9 +40,9 @@ namespace LogicLayer.Controllers
         {
             return iuserDAL.UpdateUser(user);
         }
-        public void DeleteUser(int id)
+        public string DeleteUser(int id)
         {
-            iuserDAL.DeleteUser(id);
+            return iuserDAL.DeleteUser(id);
         }
         public bool SetProfilePicture(int id, byte[] imageArray)
         {

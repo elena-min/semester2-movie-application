@@ -62,9 +62,14 @@ namespace LogicLayer.Classes
             IsDeleted = true;  
             ReasonForDeleting = reason;
         }
+        public string GetInfo()
+        {
+            return $"{GetId()} - {Title} - {Rating}/5";
+
+        }
         public override string ToString()
         {
-            return $"{ReviewWriter.Username}: {Title}({Rating})";
+            return $"{GetId()} - {ReviewWriter.Username}: {Title}({Rating})";
         }
     }
 }

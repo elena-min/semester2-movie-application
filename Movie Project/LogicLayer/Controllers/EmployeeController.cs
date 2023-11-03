@@ -40,14 +40,17 @@ namespace LogicLayer.Controllers
         {
             return iemployeeDAL.GetAll();
         }
-        public void UpdateEmployee(Employee employee)
+        public bool UpdateEmployee(Employee employee, byte[] pictureBytes)
         {
-            iemployeeDAL.UpdateEmployee(employee);
+            return iemployeeDAL.UpdateEmployee(employee, pictureBytes);
         }
         public string DeleteEmployee(int id)
         {
             return iemployeeDAL.DeleteEmployee(id);    
         }
-
+        public string GetProfilePicByID(int id)
+        {
+            return iemployeeDAL.GetProfilePicByID(id);  
+        }
     }
 }

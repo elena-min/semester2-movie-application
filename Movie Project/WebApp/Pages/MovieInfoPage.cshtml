@@ -21,7 +21,7 @@
 {
     <div class="alert alert-success">@TempData["Message"]</div>
 }
-<main class="main-movie-info">
+<main class="movie-info">
     <div class="main-movie-info">
         <div class="information">
             <div id="info1">
@@ -70,7 +70,7 @@
                                 {
                                     Model.Movie.AddRating(rating);
                                 }
-                                <p>@Model.Movie.GetAllRatings()</p>
+                                <p>@Model.Movie.GetAllRatings().Length.ToString()</p>
                             }
                             else
                             {

@@ -222,9 +222,9 @@
             btnView.FlatStyle = FlatStyle.Flat;
             btnView.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
             btnView.ForeColor = Color.White;
-            btnView.Location = new Point(419, 0);
+            btnView.Location = new Point(481, 0);
             btnView.Name = "btnView";
-            btnView.Size = new Size(451, 75);
+            btnView.Size = new Size(389, 75);
             btnView.TabIndex = 10;
             btnView.Text = "View Employees";
             btnView.UseVisualStyleBackColor = true;

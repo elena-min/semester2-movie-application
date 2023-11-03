@@ -208,6 +208,10 @@ namespace DesktopApp.Movies
                     }
                 }
             }
+            else
+            {
+                lblWarning.Text = "There is no movie selected.";
+            }
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)

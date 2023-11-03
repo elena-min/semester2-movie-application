@@ -161,10 +161,10 @@ namespace DAL
         public User[] GetAll()
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from User";
+            string query = "select * from Users";
             List<User> users = new List<User>();
-            //try
-            //{
+            try
+            {
                 conn.Open();
                 SqlCommand command = new SqlCommand(query, conn);
                 SqlDataReader reader = command.ExecuteReader();
@@ -180,7 +180,6 @@ namespace DAL
                         string email = reader.GetString(6);
                         string string_gender = reader.GetString(7);
                         Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
-                        int age = reader.GetInt32(8);
                         User newUser = new User(firstName, lastName, username, email, password, gender);
                         newUser.SetId(id);
                         users.Add(newUser);
@@ -190,11 +189,11 @@ namespace DAL
                 reader.Close();
                 conn.Close();
                 return users.ToArray();
-            //}
-            //catch (Exception)
-            //{
-            //    return null;
-            //}
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool UpdateUser(User user)
@@ -237,8 +236,34 @@ namespace DAL
             //    return failed;
             //}
         }
-        public void DeleteUser(int id)
+        public string DeleteUser(int id)
         {
+            SqlConnection conn = CreateConnection();
+            using (conn)
+            {
+                try
+                {
+                    string query = "DELETE FROM Users WHERE id = @id";
+                    SqlCommand commandSql = new SqlCommand(query, conn);
+                    commandSql.Parameters.AddWithValue("@id", id);
+                    conn.Open();
+                    int rowsAffected = commandSql.ExecuteNonQuery();
+                    conn.Close();
+
+                    if (rowsAffected > 0)
+                    {
+                        return "User deleted successfully";
+                    }
+                    else
+                    {
+                        return "No data found.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return "Operation failed.";
+                }
+            }
         }
         
         public bool SetProfilePicture(int id, byte[] imageArray)

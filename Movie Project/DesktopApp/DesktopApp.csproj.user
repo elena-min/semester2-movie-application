@@ -10,6 +10,12 @@
     <Compile Update="Employees\MoreInfoEmp.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Employees\ProfilePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Employees\ProfilePageEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -28,6 +34,12 @@
     <Compile Update="Movies\UpdateMovie.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Reviews\MoreInfoReview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Reviews\ReviewMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Series\AddSerie.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -38,6 +50,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Series\UpdateSerie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Users\MoreInfoUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Users\UserMenu.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

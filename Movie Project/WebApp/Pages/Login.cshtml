@@ -13,14 +13,13 @@
             <div class="form_container">
                 <div class="alert-danger"><p>@TempData["Message"]</p></div>
                 <form method="post">
-                    @* <div asp-validation-summary="All" class="text-danger"></div> *@
                     <label asp-for="User.Username">Username:</label>
                     <span asp-validation-for="User.Username"></span><br />
                     <input asp-for="User.Username" placeholder="Your username..."><br />
                     
                     <label asp-for="User.Password">Password:</label>
                     <span asp-validation-for="User.Password"></span><br />
-                    <input asp-for="User.Password" placeholder="Your password..."><br /><br />
+                    <input asp-for="User.Password" type="password" placeholder="Your password..."><br /><br />
                     <div class="button_container">
                         
                         <input type="submit" value="Login">

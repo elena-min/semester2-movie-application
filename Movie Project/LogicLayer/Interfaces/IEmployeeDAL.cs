@@ -14,8 +14,10 @@ namespace LogicLayer.Interfaces
         Employee GetEmployeeByUsername(string username);
         Employee GetEmployeeByEmail(string email);
         Employee[] GetAll();
-        bool UpdateEmployee(Employee employee);
+        bool UpdateEmployee(Employee employee, byte[] pictureBytes);
         string DeleteEmployee(int id);
+        string GetProfilePicByID(int id);
+
 
     }
 }

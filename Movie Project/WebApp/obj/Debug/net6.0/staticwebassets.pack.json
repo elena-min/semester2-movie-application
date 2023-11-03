@@ -41,12 +41,16 @@
       "PackagePath": "staticwebassets\\images\\Cinema-clipart.jpg"
     },
     {
-      "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\FamilyGuy.jpg",
-      "PackagePath": "staticwebassets\\images\\FamilyGuy.jpg"
-    },
-    {
       "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\Joker2019.jpg",
       "PackagePath": "staticwebassets\\images\\Joker2019.jpg"
+    },
+    {
+      "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\LionKing.jpg",
+      "PackagePath": "staticwebassets\\images\\LionKing.jpg"
+    },
+    {
+      "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\MainPosterr.jpg",
+      "PackagePath": "staticwebassets\\images\\MainPosterr.jpg"
     },
     {
       "Id": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\WebApp\\wwwroot\\images\\Movie-clipart.png",
