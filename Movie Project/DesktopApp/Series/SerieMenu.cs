@@ -173,23 +173,28 @@ namespace DesktopApp.Series
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (listBoxViewSeries.SelectedIndex != -1)
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this review?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
             {
-                int selected_serie_id = Int32.Parse(listBoxViewSeries.SelectedItem.ToString().Split('-')[1]);
-                lblWarning.Text = mediaItemController.RemoveMediaItem(selected_serie_id); ;
-                listBoxViewSeries.Items.Clear();
-                foreach (MediaItem serie in mediaItemController.GetAll())
+                if (listBoxViewSeries.SelectedIndex != -1)
                 {
-                    if (serie is Serie)
+                    int selected_serie_id = Int32.Parse(listBoxViewSeries.SelectedItem.ToString().Split('-')[1]);
+                    lblWarning.Text = mediaItemController.RemoveMediaItem(selected_serie_id); ;
+                    listBoxViewSeries.Items.Clear();
+                    foreach (MediaItem serie in mediaItemController.GetAll())
                     {
-                        listBoxViewSeries.Items.Add(serie.ToString());
+                        if (serie is Serie)
+                        {
+                            listBoxViewSeries.Items.Add(serie.ToString());
+                        }
                     }
                 }
-            }
-            else
-            {
-                lblWarning.Text = "There is no serie selected!";
+                else
+                {
+                    lblWarning.Text = "There is no serie selected!";
 
+                }
             }
         }
 

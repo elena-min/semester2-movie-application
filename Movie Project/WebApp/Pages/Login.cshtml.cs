@@ -26,13 +26,12 @@ namespace WebApp.Pages
         public IActionResult OnPost()
         {
             ModelState.Clear();
-
             if (ModelState.IsValid)
             {
                 var user = _userController.GetUserByUsername(User.Username);
                 if (user != null)
                 {
-                    var result = HashPassword.VerifyPassword(User.Password, user.Password);
+                    var result = HashPassword.VerifyPassword(User.Password, user.Password, user.Salt);
 
                     if (result)
                     {

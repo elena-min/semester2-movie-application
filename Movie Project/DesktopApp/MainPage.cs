@@ -1,4 +1,5 @@
-﻿using LogicLayer;
+﻿using DAL;
+using LogicLayer;
 using LogicLayer.Classes;
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.VisualBasic.Logging;
@@ -23,7 +24,7 @@ namespace DesktopApp
         {
             InitializeComponent();
             buttonClose.Visible = false;
-            //_user = user;
+            
         }
         private void ActivateButton(object btnSender)
         {

@@ -189,21 +189,26 @@ namespace DesktopApp.Employees
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (listBoxViewEmpoyees.SelectedIndex != -1)
-            {
-                int selected_emp_id = Int32.Parse(listBoxViewEmpoyees.SelectedItem.ToString().Split('-')[0]);
-                lblWarning.Text = empController.DeleteEmployee(selected_emp_id); ;
-                listBoxViewEmpoyees.Items.Clear();
-                foreach (Employee emp in empController.GetAll())
-                {
-                    listBoxViewEmpoyees.Items.Add(emp.ToString());
-                }
-            }
-            else
-            {
-                lblWarning.Text = "There is no employee selected!";
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this review?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            }
+            if (result == DialogResult.Yes)
+            {
+                if (listBoxViewEmpoyees.SelectedIndex != -1)
+                {
+                    int selected_emp_id = Int32.Parse(listBoxViewEmpoyees.SelectedItem.ToString().Split('-')[0]);
+                    lblWarning.Text = empController.DeleteEmployee(selected_emp_id); ;
+                    listBoxViewEmpoyees.Items.Clear();
+                    foreach (Employee emp in empController.GetAll())
+                    {
+                        listBoxViewEmpoyees.Items.Add(emp.ToString());
+                    }
+                }
+                else
+                {
+                    lblWarning.Text = "There is no employee selected!";
+
+                }
+            }               
         }
     }
 }

@@ -39,7 +39,13 @@ namespace DesktopApp.Users
             richTextBoxDescription.Text = selectedUser.ProfileDescription;
             labelGender.Text = selectedUser.Gender.ToString();
 
-            if (userController.GetProfilePicByID(selectedUser.GetId()).Length != 0 || userController.GetProfilePicByID(selectedUser.GetId()) != null)
+            if (userController.GetProfilePicByID(selectedUser.GetId()) == null || userController.GetProfilePicByID(selectedUser.GetId()).Length == 0 )
+            {
+                pictureBoxBookPic.Image = null;
+                btnRemoveImage.Visible = false;
+
+            }
+            else
             {
                 byte[] pictureBytes = Convert.FromBase64String(userController.GetProfilePicByID(selectedUser.GetId()));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);
@@ -91,7 +97,7 @@ namespace DesktopApp.Users
                 string selectedReview = listBoxViewReviews.SelectedItem.ToString();
                 foreach (Review review in reviewController.GetAll())
                 {
-                    if (selectedReview == review.ToString())
+                    if (selectedReview == review.GetInfo())
                     {
                         MoreInfoReview reviewMoreInfo = new MoreInfoReview(review);
                         reviewMoreInfo.Show();

@@ -170,23 +170,28 @@ namespace DesktopApp.Movies
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (listBoxViewMovies.SelectedIndex != -1)
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this review?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
             {
-                int selected_movie_id = Int32.Parse(listBoxViewMovies.SelectedItem.ToString().Split('-')[1]);
-                lblWarning.Text = mediaItemController.RemoveMediaItem(selected_movie_id); ;
-                listBoxViewMovies.Items.Clear();
-                foreach (MediaItem movie in mediaItemController.GetAll())
+                if (listBoxViewMovies.SelectedIndex != -1)
                 {
-                    if (movie is Movie)
+                    int selected_movie_id = Int32.Parse(listBoxViewMovies.SelectedItem.ToString().Split('-')[1]);
+                    lblWarning.Text = mediaItemController.RemoveMediaItem(selected_movie_id); ;
+                    listBoxViewMovies.Items.Clear();
+                    foreach (MediaItem movie in mediaItemController.GetAll())
                     {
-                        listBoxViewMovies.Items.Add(movie.ToString());
+                        if (movie is Movie)
+                        {
+                            listBoxViewMovies.Items.Add(movie.ToString());
+                        }
                     }
                 }
-            }
-            else
-            {
-                lblWarning.Text = "There is no movie selected!";
+                else
+                {
+                    lblWarning.Text = "There is no movie selected!";
 
+                }
             }
         }
 

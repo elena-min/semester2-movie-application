@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             paneldeleteReview = new Panel();
+            lblWarning = new Label();
             buttonDelete = new Button();
             textBoxReason = new TextBox();
             lblReasonForDeleting = new Label();
@@ -42,8 +43,11 @@
             labelWrittenBy = new Label();
             labelReviewTitle = new Label();
             labelReview = new Label();
-            lblWarning = new Label();
+            labelTowardsTitle = new Label();
+            labelTowards = new Label();
+            pictureBoxPic = new PictureBox();
             paneldeleteReview.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxPic).BeginInit();
             SuspendLayout();
             // 
             // paneldeleteReview
@@ -54,10 +58,21 @@
             paneldeleteReview.Controls.Add(textBoxReason);
             paneldeleteReview.Controls.Add(lblReasonForDeleting);
             paneldeleteReview.Dock = DockStyle.Bottom;
-            paneldeleteReview.Location = new Point(0, 385);
+            paneldeleteReview.Location = new Point(0, 410);
             paneldeleteReview.Name = "paneldeleteReview";
-            paneldeleteReview.Size = new Size(806, 101);
+            paneldeleteReview.Size = new Size(809, 101);
             paneldeleteReview.TabIndex = 129;
+            // 
+            // lblWarning
+            // 
+            lblWarning.AutoSize = true;
+            lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            lblWarning.ForeColor = Color.Maroon;
+            lblWarning.Location = new Point(12, 9);
+            lblWarning.Name = "lblWarning";
+            lblWarning.Size = new Size(81, 25);
+            lblWarning.TabIndex = 130;
+            lblWarning.Text = "Warning";
             // 
             // buttonDelete
             // 
@@ -98,7 +113,7 @@
             lblInsertDateOfPublishment.AutoSize = true;
             lblInsertDateOfPublishment.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             lblInsertDateOfPublishment.ForeColor = Color.FromArgb(138, 104, 86);
-            lblInsertDateOfPublishment.Location = new Point(194, 343);
+            lblInsertDateOfPublishment.Location = new Point(194, 365);
             lblInsertDateOfPublishment.Name = "lblInsertDateOfPublishment";
             lblInsertDateOfPublishment.Size = new Size(188, 25);
             lblInsertDateOfPublishment.TabIndex = 128;
@@ -109,7 +124,7 @@
             lblInsertGivenRating.AutoSize = true;
             lblInsertGivenRating.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             lblInsertGivenRating.ForeColor = Color.FromArgb(138, 104, 86);
-            lblInsertGivenRating.Location = new Point(595, 343);
+            lblInsertGivenRating.Location = new Point(595, 365);
             lblInsertGivenRating.Name = "lblInsertGivenRating";
             lblInsertGivenRating.Size = new Size(78, 25);
             lblInsertGivenRating.TabIndex = 127;
@@ -120,7 +135,7 @@
             lblInsertUser.AutoSize = true;
             lblInsertUser.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             lblInsertUser.ForeColor = Color.FromArgb(138, 104, 86);
-            lblInsertUser.Location = new Point(12, 300);
+            lblInsertUser.Location = new Point(12, 337);
             lblInsertUser.Name = "lblInsertUser";
             lblInsertUser.Size = new Size(57, 25);
             lblInsertUser.TabIndex = 126;
@@ -142,7 +157,7 @@
             labelGivenRating.AutoSize = true;
             labelGivenRating.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
             labelGivenRating.ForeColor = Color.FromArgb(138, 104, 86);
-            labelGivenRating.Location = new Point(490, 343);
+            labelGivenRating.Location = new Point(490, 365);
             labelGivenRating.Name = "labelGivenRating";
             labelGivenRating.Size = new Size(113, 25);
             labelGivenRating.TabIndex = 124;
@@ -150,9 +165,9 @@
             // 
             // richTextBoxContent
             // 
-            richTextBoxContent.Location = new Point(9, 94);
+            richTextBoxContent.Location = new Point(9, 134);
             richTextBoxContent.Name = "richTextBoxContent";
-            richTextBoxContent.Size = new Size(664, 163);
+            richTextBoxContent.Size = new Size(634, 163);
             richTextBoxContent.TabIndex = 123;
             richTextBoxContent.Text = "";
             // 
@@ -161,7 +176,7 @@
             labelReviewPublishment.AutoSize = true;
             labelReviewPublishment.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
             labelReviewPublishment.ForeColor = Color.FromArgb(138, 104, 86);
-            labelReviewPublishment.Location = new Point(12, 343);
+            labelReviewPublishment.Location = new Point(12, 365);
             labelReviewPublishment.Name = "labelReviewPublishment";
             labelReviewPublishment.Size = new Size(176, 25);
             labelReviewPublishment.TabIndex = 122;
@@ -172,7 +187,7 @@
             labelWrittenBy.AutoSize = true;
             labelWrittenBy.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
             labelWrittenBy.ForeColor = Color.FromArgb(138, 104, 86);
-            labelWrittenBy.Location = new Point(12, 275);
+            labelWrittenBy.Location = new Point(12, 312);
             labelWrittenBy.Name = "labelWrittenBy";
             labelWrittenBy.Size = new Size(72, 25);
             labelWrittenBy.TabIndex = 121;
@@ -194,29 +209,51 @@
             labelReview.AutoSize = true;
             labelReview.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
             labelReview.ForeColor = Color.FromArgb(138, 104, 86);
-            labelReview.Location = new Point(9, 66);
+            labelReview.Location = new Point(9, 106);
             labelReview.Name = "labelReview";
             labelReview.Size = new Size(105, 25);
             labelReview.TabIndex = 119;
             labelReview.Text = "Description:";
             // 
-            // lblWarning
+            // labelTowardsTitle
             // 
-            lblWarning.AutoSize = true;
-            lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            lblWarning.ForeColor = Color.Maroon;
-            lblWarning.Location = new Point(12, 9);
-            lblWarning.Name = "lblWarning";
-            lblWarning.Size = new Size(81, 25);
-            lblWarning.TabIndex = 130;
-            lblWarning.Text = "Warning";
+            labelTowardsTitle.AutoSize = true;
+            labelTowardsTitle.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            labelTowardsTitle.ForeColor = Color.FromArgb(138, 104, 86);
+            labelTowardsTitle.Location = new Point(12, 81);
+            labelTowardsTitle.Name = "labelTowardsTitle";
+            labelTowardsTitle.Size = new Size(61, 25);
+            labelTowardsTitle.TabIndex = 131;
+            labelTowardsTitle.Text = "Title...";
+            // 
+            // labelTowards
+            // 
+            labelTowards.AutoSize = true;
+            labelTowards.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelTowards.ForeColor = Color.FromArgb(138, 104, 86);
+            labelTowards.Location = new Point(9, 56);
+            labelTowards.Name = "labelTowards";
+            labelTowards.Size = new Size(113, 25);
+            labelTowards.TabIndex = 130;
+            labelTowards.Text = "Movie/Show:";
+            // 
+            // pictureBoxPic
+            // 
+            pictureBoxPic.Location = new Point(658, 114);
+            pictureBoxPic.Name = "pictureBoxPic";
+            pictureBoxPic.Size = new Size(139, 183);
+            pictureBoxPic.TabIndex = 132;
+            pictureBoxPic.TabStop = false;
             // 
             // MoreInfoReview
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(231, 223, 198);
-            ClientSize = new Size(806, 486);
+            ClientSize = new Size(809, 511);
+            Controls.Add(pictureBoxPic);
+            Controls.Add(labelTowardsTitle);
+            Controls.Add(labelTowards);
             Controls.Add(paneldeleteReview);
             Controls.Add(lblInsertDateOfPublishment);
             Controls.Add(lblInsertGivenRating);
@@ -233,6 +270,7 @@
             Text = "MoreInfoReview";
             paneldeleteReview.ResumeLayout(false);
             paneldeleteReview.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxPic).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -254,5 +292,8 @@
         private Label labelReview;
         private Button buttonDelete;
         private Label lblWarning;
+        private Label labelTowardsTitle;
+        private Label labelTowards;
+        private PictureBox pictureBoxPic;
     }
 }

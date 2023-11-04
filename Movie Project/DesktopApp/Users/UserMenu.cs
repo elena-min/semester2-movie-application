@@ -134,20 +134,25 @@ namespace DesktopApp.Users
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (listBoxViewUsers.SelectedIndex != -1)
-            {
-                int selected_user_id = Int32.Parse(listBoxViewUsers.SelectedItem.ToString().Split('-')[0]);
-                lblWarning.Text = userController.DeleteUser(selected_user_id); ;
-                listBoxViewUsers.Items.Clear();
-                foreach (User user in userController.GetAll())
-                {
-                    listBoxViewUsers.Items.Add(user.ToString());
-                }
-            }
-            else
-            {
-                lblWarning.Text = "There is no user selected!";
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this review?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            if (result == DialogResult.Yes)
+            {
+                if (listBoxViewUsers.SelectedIndex != -1)
+                {
+                    int selected_user_id = Int32.Parse(listBoxViewUsers.SelectedItem.ToString().Split('-')[0]);
+                    lblWarning.Text = userController.DeleteUser(selected_user_id); ;
+                    listBoxViewUsers.Items.Clear();
+                    foreach (User user in userController.GetAll())
+                    {
+                        listBoxViewUsers.Items.Add(user.ToString());
+                    }
+                }
+                else
+                {
+                    lblWarning.Text = "There is no user selected!";
+
+                }
             }
         }
 

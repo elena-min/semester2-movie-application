@@ -21,13 +21,15 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             //try
             //{
-                var hashedPassword = HashPassword.GenerateHash(newUser.Password);
-                string commandSql = "INSERT INTO Users (firstName, lastName, username, password, email, gender) VALUES ( @u_fname, @u_lname, @u_username, @u_password, @u_email, @u_gender);";
+            string salt;
+            var hashedPassword = HashPassword.GenerateHash(newUser.Password, out salt);
+            string commandSql = "INSERT INTO Users (firstName, lastName, username, password, saltedPassword, email, gender) VALUES ( @u_fname, @u_lname, @u_username, @u_password, @u_saltedPassword, @u_email, @u_gender);";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@u_username", newUser.Username);
                 cmd.Parameters.AddWithValue("@u_password", hashedPassword);
-                cmd.Parameters.AddWithValue("@u_email", newUser.Email);
+            cmd.Parameters.AddWithValue("@u_saltedPassword", salt);
+            cmd.Parameters.AddWithValue("@u_email", newUser.Email);
                 cmd.Parameters.AddWithValue("@u_fname", newUser.FirstName);
                 cmd.Parameters.AddWithValue("@u_lname", newUser.LastName);
                 cmd.Parameters.AddWithValue("@u_gender", newUser.Gender.ToString());
@@ -62,10 +64,25 @@ namespace DAL
                     string lastName = reader.GetString(2);
                     string username = reader.GetString(3);
                     string password = reader.GetString(4);
+                    string salt = reader.GetString(5);  
                     string email = reader.GetString(6);
                     string string_gender = reader.GetString(7);
+                    string profileDescription = null;
+                    if (!reader.IsDBNull(9))
+                    {
+                        profileDescription = reader.GetString(9);
+                    }
                     Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
-                    newUser = new User(firstName, lastName, username, email, password, gender);
+                    if (!string.IsNullOrWhiteSpace(profileDescription))
+                    {
+                        newUser = new User(firstName, lastName, username, email, password, salt, gender, profileDescription);
+
+                    }
+                    else
+                    {
+                        newUser = new User(firstName, lastName, username, email, password, salt, gender);
+
+                    }
                     newUser.SetId(e_id);
                 }
             }
@@ -103,10 +120,25 @@ namespace DAL
                     string lastName = reader.GetString(2);
                     string u_username = reader.GetString(3);
                     string password = reader.GetString(4);
+                    string salt = reader.GetString(5);
                     string email = reader.GetString(6);
                     string string_gender = reader.GetString(7);
+                    string profileDescription = null;
+                    if (!reader.IsDBNull(9))
+                    {
+                        profileDescription = reader.GetString(9);
+                    }
                     Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
-                    newUser = new User(firstName, lastName, u_username, email, password, gender);
+                    if (!string.IsNullOrWhiteSpace(profileDescription))
+                    {
+                        newUser = new User(firstName, lastName, u_username, email, password, salt, gender, profileDescription);
+
+                    }
+                    else
+                    {
+                        newUser = new User(firstName, lastName, u_username, email, password, salt, gender);
+
+                    }
                     newUser.SetId(id);
                 }
             }
@@ -141,10 +173,25 @@ namespace DAL
                     string lastName = reader.GetString(2);
                     string username = reader.GetString(3);
                     string password = reader.GetString(4);
+                    string salt = reader.GetString(5);
                     string u_email = reader.GetString(6);
                     string string_gender = reader.GetString(7);
+                    string profileDescription = null;
+                    if (!reader.IsDBNull(9))
+                    {
+                        profileDescription = reader.GetString(9);
+                    }
                     Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
-                    newUser = new User(firstName, lastName, username, u_email, password, gender);
+                    if (!string.IsNullOrWhiteSpace(profileDescription))
+                    {
+                        newUser = new User(firstName, lastName, username, email, password, salt, gender, profileDescription);
+
+                    }
+                    else
+                    {
+                        newUser = new User(firstName, lastName, username, email, password, salt, gender);
+
+                    }
                     newUser.SetId(id);
                 }
             }
@@ -163,8 +210,8 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             string query = "select * from Users";
             List<User> users = new List<User>();
-            try
-            {
+            //try
+            //{
                 conn.Open();
                 SqlCommand command = new SqlCommand(query, conn);
                 SqlDataReader reader = command.ExecuteReader();
@@ -177,10 +224,26 @@ namespace DAL
                         string lastName = reader.GetString(2);
                         string username = reader.GetString(3);
                         string password = reader.GetString(4);
+                        string salt = reader.GetString(5);
                         string email = reader.GetString(6);
                         string string_gender = reader.GetString(7);
+                        string profileDescription = null;
+                    if (!reader.IsDBNull(9))
+                    {
+                            profileDescription = reader.GetString(9);
+                        }
                         Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
-                        User newUser = new User(firstName, lastName, username, email, password, gender);
+                        User newUser = null;
+                        if (!string.IsNullOrWhiteSpace(profileDescription))
+                        {
+                             newUser= new User(firstName, lastName, username, email, password, salt, gender, profileDescription);
+
+                        }
+                        else
+                        {
+                            newUser = new User(firstName, lastName, username, email, password, salt, gender);
+
+                        }
                         newUser.SetId(id);
                         users.Add(newUser);
                     }
@@ -189,11 +252,11 @@ namespace DAL
                 reader.Close();
                 conn.Close();
                 return users.ToArray();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return null;
+            //}
         }
 
         public bool UpdateUser(User user)
@@ -515,6 +578,26 @@ namespace DAL
                     return "No data found.";
                 }
             }
+        }
+
+        public void UpdateUserRecordInDatabase(int e_id, string hashedPassword, string salt)
+        {
+            SqlConnection conn = CreateConnection();
+            // try
+            //{
+            conn.Open();
+            string commandSql;
+                commandSql = "UPDATE Users SET password = @password, saltedPassword = @saltedPassword WHERE id = @e_id;";
+
+
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            cmd.Parameters.AddWithValue("@password", hashedPassword);
+            cmd.Parameters.AddWithValue("@saltedPassword", salt);
+            cmd.Parameters.AddWithValue("@e_id", e_id);
+
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
         }
     }
 }
