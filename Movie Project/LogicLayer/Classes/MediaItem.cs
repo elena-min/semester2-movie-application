@@ -24,13 +24,17 @@ namespace LogicLayer.Classes
         public DateTime ReleaseDate { get; private set; }
         public double Rating { get; private set; }
         public string CountryOfOrigin { get; private set; }
+        public int NumberOfViews { get; private set; }
+        public double PopularityScore {  get;  set; }
+
         public MediaItem()
         {
             ratings = new List<int>();
             genres = new List<Genre>();
+            PopularityScore = 0;
         }
 
-        public MediaItem(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating)
+        public MediaItem(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating, int _numberOfViews)
         {
             Title = _title;
             Description = _description;
@@ -40,6 +44,8 @@ namespace LogicLayer.Classes
             ratings = new List<int>();
             genres = new List<Genre>();
             Cast = new Cast(Title);
+            NumberOfViews = _numberOfViews;
+            PopularityScore = 0;
 
         }
         public void SetId(int id)
@@ -54,13 +60,6 @@ namespace LogicLayer.Classes
         public void AddRating(int newRating)
         {
             ratings.Add(newRating);
-            //int ratingSum = 0;
-            //foreach (int rating in ratings)
-            //{
-
-            //    ratingSum += rating;
-            //}
-            //Rating = ratingSum / ratings.Count();
         }
         public int[] GetAllRatings()
         {
@@ -81,6 +80,29 @@ namespace LogicLayer.Classes
 
             return sum / ratings.Count;
         }
+        //private double CalculateWeightedRating()
+        //{
+        //    if (ratings == null || ratings.Count == 0)
+        //    {
+        //        return 0.0;
+        //    }
+
+        //    double sum = 0.0;
+        //    foreach (int rating in ratings)
+        //    {
+        //        sum += rating;
+        //    }
+
+        //    double averageRating = sum / ratings.Count;
+        //    double weight = ratings.Count; // You can adjust the weight based on your preference
+
+        //    // Use a formula to calculate the weighted rating
+        //    double weightedRating = (averageRating * (weight - 1) + 5) / weight;
+        //    // The "5" in the formula is just an example, you can adjust it based on your scale
+
+        //    return weightedRating;
+        //}
+
         public void AddGenre(Genre newgenre)
         {
             if (!genres.Contains(newgenre))
@@ -91,6 +113,20 @@ namespace LogicLayer.Classes
         public Genre[] GetAllGenres()
         {
             return genres.ToArray();
+        }
+        public void RecordView()
+        {
+            NumberOfViews++;
+        }
+
+        public void CalculatePopularityScore()
+        {
+            double ratingScore = this.CalculateAverageRating();
+            double viewsScore = NumberOfViews;
+
+            // Adjust weights as needed
+            PopularityScore = 0.7 * ratingScore + 0.3 * NumberOfViews;
+
         }
         public virtual string ToString()
         {

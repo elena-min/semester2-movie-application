@@ -17,6 +17,7 @@ namespace LogicLayer.Interfaces
         string GetMediaItemImageByID(int id);
         bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes);
         string RemoveMediaItem(int id);
+        public void RecordView(MediaItem mediaItem);
 
     }
 }

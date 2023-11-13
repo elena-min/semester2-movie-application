@@ -30,6 +30,9 @@ namespace WebApp.Pages
             {
                 Serie.AddRating(rating);
             }
+            Serie.RecordView();
+            _mediaController.RecordView(Serie);
+
         }
 
         public IActionResult OnPost(int id)

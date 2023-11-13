@@ -419,7 +419,7 @@ namespace DAL
         public MediaItem[] GetAllFavorites(int userID)
         {
             SqlConnection conn = CreateConnection();
-            string query = "select f.mediaID, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, M.director, M.writer, M.duration, S.seasons, S.episodes " +
+            string query = "select f.mediaID, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.numberOfViews, M.director, M.writer, M.duration, S.seasons, S.episodes " +
                 "from FavoritesList as f " +
                 "inner join  MediaItem as MI on f.mediaID = MI.id " +
                 "LEFT JOIN Movie as M ON MI.id = M.id " +
@@ -446,27 +446,29 @@ namespace DAL
                     string genres_string = reader.GetString(6);
                     string[] string_genres = genres_string.Split(',');
                     string[] cast = string_cast.Split(',');
+                        int numberOfViews = reader.GetInt32(8);
 
-                    MediaItem mediaItem;
+
+                        MediaItem mediaItem;
 
                     if (reader["director"] != DBNull.Value)
                     {
-                        string director = reader.GetString(8);
-                        string writer = reader.GetString(9);
-                        int duration = reader.GetInt32(10);
+                        string director = reader.GetString(9);
+                        string writer = reader.GetString(10);
+                        int duration = reader.GetInt32(11);
 
-                        mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
+                        mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating,numberOfViews, director, writer, duration);
                     }
                     else if (reader["seasons"] != DBNull.Value)
                     {
-                        int seasons = reader.GetInt32(11);
-                        int episodes = reader.GetInt32(12);
+                        int seasons = reader.GetInt32(12);
+                        int episodes = reader.GetInt32(13);
 
-                        mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
+                        mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, numberOfViews, seasons, episodes);
                     }
                     else
                     {
-                        mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating);
+                        mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating, numberOfViews);
                     }
 
                     mediaItem.SetId(mediaItemId);
@@ -498,7 +500,7 @@ namespace DAL
         public MediaItem[] GetAllFavoriteMovies(int userID)
         {
             SqlConnection conn = CreateConnection();
-            string query = "select f.mediaID, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, M.director, M.writer, M.duration " +
+            string query = "select f.mediaID, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, M.director, M.writer, M.duration, MI.numberOfViews " +
                 "from FavoritesList as f " +
                 "inner join  MediaItem as MI on f.mediaID = MI.id " +
                 "inner JOIN Movie as M ON MI.id = M.id " +
@@ -527,8 +529,9 @@ namespace DAL
                         string director = reader.GetString(8);
                         string writer = reader.GetString(9);
                        int duration = reader.GetInt32(10);
-                        MediaItem mediaItem;
-                        mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
+                    int numberOfViews = reader.GetInt32(11);
+                    MediaItem mediaItem;
+                        mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, numberOfViews, director, writer, duration);
 
 
                         mediaItem.SetId(mediaItemId);

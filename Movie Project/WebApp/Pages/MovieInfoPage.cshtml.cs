@@ -30,6 +30,8 @@ namespace WebApp.Pages
             {
                 Movie.AddRating(rating);
             }
+            Movie.RecordView();
+            _mediaController.RecordView(Movie);
         }
 
         public IActionResult OnPost(int id)
