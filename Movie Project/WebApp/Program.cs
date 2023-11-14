@@ -19,7 +19,8 @@ builder.Services.AddSingleton<MediaItemController>(new MediaItemController(new M
 builder.Services.AddSingleton<MediaItemDAL>(new MediaItemDAL());
 builder.Services.AddSingleton<ReviewController>(new ReviewController(new ReviewDAL()));
 builder.Services.AddSingleton<ReviewDAL>(new ReviewDAL());
-
+builder.Services.AddSingleton<FavoritesController>(new FavoritesController(new FavoritesDAL()));
+builder.Services.AddSingleton<FavoritesDAL>(new FavoritesDAL());
 // Add services to the container.
 builder.Services.AddRazorPages();
 

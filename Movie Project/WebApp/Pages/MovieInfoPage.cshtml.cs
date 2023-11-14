@@ -16,11 +16,13 @@ namespace WebApp.Pages
 
         private readonly UserController _userController;
         private readonly MediaItemController _mediaController;
+        private readonly FavoritesController _favoritesController;
 
-        public MovieInfoPageModel(UserController userController, MediaItemController mediaController)
+        public MovieInfoPageModel(UserController userController, MediaItemController mediaController, FavoritesController favoritesController)
         {
             _userController = userController;
             _mediaController = mediaController;
+            _favoritesController = favoritesController;
         }
 
         public void OnGet(int id)
@@ -51,9 +53,9 @@ namespace WebApp.Pages
                 return RedirectToPage("/Login");
             }
 
-            if (_userController.CheckIfProductIsInFavorites(movie.GetId(), Userr.GetId()) == false)
+            if (_favoritesController.CheckIfProductIsInFavorites(movie.GetId(), Userr.GetId()) == false)
             {
-                _userController.AddProductToFavorite(movie.GetId(), Userr.GetId());
+                _favoritesController.AddProductToFavorite(movie.GetId(), Userr.GetId());
                 TempData["Message"] = "Movie added to favorites!";
                 return RedirectToPage("/MovieInfoPage", new { id = movie.GetId() });
             }

@@ -14,6 +14,7 @@ namespace WebApp.Pages
         public User Userr { get; set; }
 
         private readonly UserController _userController;
+        private readonly FavoritesController _favoritesController;
 
         public List<MediaItem> FavoriteSeries { get; set; }
 
@@ -23,9 +24,10 @@ namespace WebApp.Pages
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
 
-        public FavoriteSeriesModel(UserController userController)
+        public FavoriteSeriesModel(UserController userController, FavoritesController favoritesController)
         {
             this._userController = userController;
+            this._favoritesController = favoritesController;
             FavoriteSeries = new List<MediaItem>();
 
         }
@@ -45,9 +47,9 @@ namespace WebApp.Pages
                 return NotFound();
             }
 
-            if (_userController.GetAllFavoriteMovies(Userr.GetId()) != null)
+            if (_favoritesController.GetAllFavoriteMovies(Userr.GetId()) != null)
             {
-                foreach (MediaItem media in _userController.GetAllFavorites(Userr.GetId()))
+                foreach (MediaItem media in _favoritesController.GetAllFavorites(Userr.GetId()))
                 {
                     if (media is Serie)
                     {
@@ -75,7 +77,7 @@ namespace WebApp.Pages
                 return NotFound();
             }
 
-            TempData["Message"] = _userController.RemoveFromFavorites(movieId, Int32.Parse(userID));
+            TempData["Message"] = _favoritesController.RemoveFromFavorites(movieId, Int32.Parse(userID));
             return RedirectToPage("/FavoriteSeries");
         }
 

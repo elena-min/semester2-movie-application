@@ -122,9 +122,7 @@ namespace LogicLayer.Classes
         public void CalculatePopularityScore()
         {
             double ratingScore = this.CalculateAverageRating();
-            double viewsScore = NumberOfViews;
 
-            // Adjust weights as needed
             PopularityScore = 0.7 * ratingScore + 0.3 * NumberOfViews;
 
         }

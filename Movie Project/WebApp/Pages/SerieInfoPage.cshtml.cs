@@ -16,11 +16,13 @@ namespace WebApp.Pages
 
         private readonly UserController _userController;
         private readonly MediaItemController _mediaController;
+        private readonly FavoritesController _favoritesController;
 
-        public SerieInfoPageModel(UserController userController, MediaItemController mediaController)
+        public SerieInfoPageModel(UserController userController, MediaItemController mediaController, FavoritesController favoritesController)
         {
             _userController = userController;
             _mediaController = mediaController;
+            _favoritesController = favoritesController;
         }
 
         public void OnGet(int id)
@@ -52,9 +54,9 @@ namespace WebApp.Pages
                 return RedirectToPage("/Login");
             }
 
-            if (_userController.CheckIfProductIsInFavorites(serie.GetId(), Userr.GetId()) == false)
+            if (_favoritesController.CheckIfProductIsInFavorites(serie.GetId(), Userr.GetId()) == false)
             {
-                _userController.AddProductToFavorite(serie.GetId(), Userr.GetId());
+                _favoritesController.AddProductToFavorite(serie.GetId(), Userr.GetId());
                 TempData["Message"] = "Serie added to favorites!";
                 return RedirectToPage("/SerieInfoPage", new { id = serie.GetId() });
             }

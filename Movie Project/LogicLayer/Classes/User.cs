@@ -27,6 +27,7 @@ namespace LogicLayer.Classes
         public string Email { get; }
         public Gender Gender { get; set; }
         public string ProfileDescription { get; set; }
+        public FavoriteMediaItem FavoriteMediaItem { get; set; }
 
         public User() { }
         public User(string firstName, string lastName, string username, string email, string password, Gender gender)
@@ -37,7 +38,7 @@ namespace LogicLayer.Classes
             Email = email;
             Password = password;
             Gender = gender;
-
+            FavoriteMediaItem = new FavoriteMediaItem(username);
         }
         public User(string firstName, string lastName, string username, string email, string password, string salt,  Gender gender)
         {
@@ -48,7 +49,7 @@ namespace LogicLayer.Classes
             Password = password;
             Salt = salt;
             Gender = gender;
-            
+            FavoriteMediaItem = new FavoriteMediaItem(username);
         }
         public User(string firstName, string lastName, string username, string email, string password, string salt, Gender gender, string profileDescription)
         {
@@ -60,6 +61,7 @@ namespace LogicLayer.Classes
             Salt = salt;
             Gender = gender;
             ProfileDescription = profileDescription;
+            FavoriteMediaItem = new FavoriteMediaItem(username);
         }
         public void SetId(int id)
         {
@@ -68,27 +70,6 @@ namespace LogicLayer.Classes
         public int GetId()
         {
             return this.id;
-        }
-        public void AddFavoriteMediaItem(MediaItem mediaItem)
-        {
-            if (!favoriteMediaItems.Contains(mediaItem))
-            {
-                favoriteMediaItems.Add(mediaItem);
-            }
-        }
-        public void RemoveFavoriteMediaItem(int mediaItemID)
-        {
-            foreach(MediaItem mediaItem in favoriteMediaItems)
-            {
-                if(mediaItem.GetId() == mediaItemID)
-                {
-                    favoriteMediaItems.Remove(mediaItem);
-                }
-            }
-        }
-        public MediaItem[] GetAllFavorite()
-        {
-            return favoriteMediaItems.ToArray();
         }
 
         public override string ToString()
