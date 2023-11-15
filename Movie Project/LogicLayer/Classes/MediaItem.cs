@@ -25,6 +25,8 @@ namespace LogicLayer.Classes
         public double Rating { get; private set; }
         public string CountryOfOrigin { get; private set; }
         public int NumberOfViews { get; private set; }
+
+        private Dictionary<DateTime, int> viewsNumberByDate;
         public double PopularityScore {  get;  set; }
 
         public MediaItem()
@@ -32,6 +34,7 @@ namespace LogicLayer.Classes
             ratings = new List<int>();
             genres = new List<Genre>();
             PopularityScore = 0;
+            viewsNumberByDate = new Dictionary<DateTime, int>();
         }
 
         public MediaItem(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating, int _numberOfViews)
@@ -46,6 +49,7 @@ namespace LogicLayer.Classes
             Cast = new Cast(Title);
             NumberOfViews = _numberOfViews;
             PopularityScore = 0;
+            viewsNumberByDate = new Dictionary<DateTime, int>();
 
         }
         public void SetId(int id)
@@ -114,17 +118,64 @@ namespace LogicLayer.Classes
         {
             return genres.ToArray();
         }
-        public void RecordView()
+        public void RecordView(DateTime currentDate)
         {
-            NumberOfViews++;
+            //If there is already a key with this date, it adds +1 to its value 
+            if (viewsNumberByDate.ContainsKey(currentDate.Date))
+            {
+                viewsNumberByDate[currentDate.Date]++;
+            }
+            else
+            {
+                //If there isnt a key with this date, it creates a new one and starts with 1
+                viewsNumberByDate[currentDate.Date] = 1;
+            }
         }
 
-        public void CalculatePopularityScore()
+        public void CalculatePopularityScore(DateTime dateToCheck, TimePeriod timePeriod)
         {
-            double ratingScore = this.CalculateAverageRating();
+            double ratingScore = CalculateAverageRating();
+            int viewsOnPeriod = 0;
 
-            PopularityScore = 0.7 * ratingScore + 0.3 * NumberOfViews;
+            switch (timePeriod)
+            {
+                case TimePeriod.Day:
+                    //Takes the media item's views for today
+                    viewsOnPeriod = viewsNumberByDate.GetValueOrDefault(dateToCheck.Date);
+                    break;
 
+                case TimePeriod.Week:
+                    //
+                    DateTime startOfWeek = dateToCheck.Date.AddDays(-(int)dateToCheck.DayOfWeek + (int)DayOfWeek.Monday);
+                    DateTime endOfWeek = startOfWeek.AddDays(6);
+
+                    //Loop that goes through each day from the begining of the week until the end 
+                    for (DateTime date = startOfWeek; date <= endOfWeek; date = date.AddDays(1))
+                    {
+                        //The visits from each day are being added in the variable 'viewsOnPeriod' in order to get all the views for the current week
+                        viewsOnPeriod += viewsNumberByDate.GetValueOrDefault(date.Date);
+                    }
+                    break;
+
+                case TimePeriod.Month:
+                    // Count views for the current month
+                    DateTime startOfMonth = new DateTime(dateToCheck.Year, dateToCheck.Month, 1);
+                    DateTime endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+
+                    //Loop that goes through each day from the begining of the month until the end 
+                    for (DateTime date = startOfMonth; date <= endOfMonth; date = date.AddDays(1))
+                    {
+                        //The visits from each day are being added in the variable 'viewsOnPeriod' in order to get all the views for the current month
+                        viewsOnPeriod += viewsNumberByDate.GetValueOrDefault(date.Date);
+                    }
+                    break;
+
+                    //Invalid TimePeriod type gives out an exception
+                default:
+                    throw new ArgumentException("Invalid time period specified");
+            }
+
+            PopularityScore = 0.7 * ratingScore + 0.3 * viewsOnPeriod;
         }
         public virtual string ToString()
         {

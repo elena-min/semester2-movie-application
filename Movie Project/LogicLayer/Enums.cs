@@ -45,4 +45,12 @@ namespace LogicLayer
         Female,
         Other
     }
+
+    public enum TimePeriod 
+    {
+        Day,
+        Week,
+        Month
+    }
+
 }
