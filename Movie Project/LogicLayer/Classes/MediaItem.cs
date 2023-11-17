@@ -24,9 +24,10 @@ namespace LogicLayer.Classes
         public DateTime ReleaseDate { get; private set; }
         public double Rating { get; private set; }
         public string CountryOfOrigin { get; private set; }
+        public byte[] Picture { get; set; }
         public int NumberOfViews { get; private set; }
 
-        private Dictionary<DateTime, int> viewsNumberByDate;
+        public Dictionary<DateTime, int> ViewsNumberByDate { get;  set; }
         public double PopularityScore {  get;  set; }
 
         public MediaItem()
@@ -34,9 +35,22 @@ namespace LogicLayer.Classes
             ratings = new List<int>();
             genres = new List<Genre>();
             PopularityScore = 0;
-            viewsNumberByDate = new Dictionary<DateTime, int>();
+            ViewsNumberByDate = new Dictionary<DateTime, int>();
         }
+        public MediaItem(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating)
+        {
+            Title = _title;
+            Description = _description;
+            ReleaseDate = _releaseDate;
+            CountryOfOrigin = _countryOfOrigin;
+            Rating = _rating;
+            ratings = new List<int>();
+            genres = new List<Genre>();
+            Cast = new Cast(Title);
+            PopularityScore = 0;
+            ViewsNumberByDate = new Dictionary<DateTime, int>();
 
+        }
         public MediaItem(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating, int _numberOfViews)
         {
             Title = _title;
@@ -49,7 +63,7 @@ namespace LogicLayer.Classes
             Cast = new Cast(Title);
             NumberOfViews = _numberOfViews;
             PopularityScore = 0;
-            viewsNumberByDate = new Dictionary<DateTime, int>();
+            ViewsNumberByDate = new Dictionary<DateTime, int>();
 
         }
         public void SetId(int id)
@@ -84,28 +98,6 @@ namespace LogicLayer.Classes
 
             return sum / ratings.Count;
         }
-        //private double CalculateWeightedRating()
-        //{
-        //    if (ratings == null || ratings.Count == 0)
-        //    {
-        //        return 0.0;
-        //    }
-
-        //    double sum = 0.0;
-        //    foreach (int rating in ratings)
-        //    {
-        //        sum += rating;
-        //    }
-
-        //    double averageRating = sum / ratings.Count;
-        //    double weight = ratings.Count; // You can adjust the weight based on your preference
-
-        //    // Use a formula to calculate the weighted rating
-        //    double weightedRating = (averageRating * (weight - 1) + 5) / weight;
-        //    // The "5" in the formula is just an example, you can adjust it based on your scale
-
-        //    return weightedRating;
-        //}
 
         public void AddGenre(Genre newgenre)
         {
@@ -121,18 +113,17 @@ namespace LogicLayer.Classes
         public void RecordView(DateTime currentDate)
         {
             //If there is already a key with this date, it adds +1 to its value 
-            if (viewsNumberByDate.ContainsKey(currentDate.Date))
+            if (ViewsNumberByDate.ContainsKey(currentDate.Date))
             {
-                viewsNumberByDate[currentDate.Date]++;
+                ViewsNumberByDate[currentDate.Date]++;
             }
             else
             {
                 //If there isnt a key with this date, it creates a new one and starts with 1
-                viewsNumberByDate[currentDate.Date] = 1;
+                ViewsNumberByDate[currentDate.Date] = 1;
             }
         }
-
-        public void CalculatePopularityScore(DateTime dateToCheck, TimePeriod timePeriod)
+        public double CalculatePopularityScoreTwo(DateTime dateToCheck, TimePeriod timePeriod)
         {
             double ratingScore = CalculateAverageRating();
             int viewsOnPeriod = 0;
@@ -141,7 +132,7 @@ namespace LogicLayer.Classes
             {
                 case TimePeriod.Day:
                     //Takes the media item's views for today
-                    viewsOnPeriod = viewsNumberByDate.GetValueOrDefault(dateToCheck.Date);
+                    viewsOnPeriod = ViewsNumberByDate.GetValueOrDefault(dateToCheck.Date);
                     break;
 
                 case TimePeriod.Week:
@@ -153,7 +144,7 @@ namespace LogicLayer.Classes
                     for (DateTime date = startOfWeek; date <= endOfWeek; date = date.AddDays(1))
                     {
                         //The visits from each day are being added in the variable 'viewsOnPeriod' in order to get all the views for the current week
-                        viewsOnPeriod += viewsNumberByDate.GetValueOrDefault(date.Date);
+                        viewsOnPeriod += ViewsNumberByDate.GetValueOrDefault(date.Date);
                     }
                     break;
 
@@ -166,7 +157,53 @@ namespace LogicLayer.Classes
                     for (DateTime date = startOfMonth; date <= endOfMonth; date = date.AddDays(1))
                     {
                         //The visits from each day are being added in the variable 'viewsOnPeriod' in order to get all the views for the current month
-                        viewsOnPeriod += viewsNumberByDate.GetValueOrDefault(date.Date);
+                        viewsOnPeriod += ViewsNumberByDate.GetValueOrDefault(date.Date);
+                    }
+                    break;
+
+                //Invalid TimePeriod type gives out an exception
+                default:
+                    throw new ArgumentException("Invalid time period specified");
+            }
+
+            return PopularityScore = 0.7 * ratingScore + 0.3 * viewsOnPeriod;
+        }
+
+        public void CalculatePopularityScore(DateTime dateToCheck, TimePeriod timePeriod)
+        {
+            double ratingScore = CalculateAverageRating();
+            int viewsOnPeriod = 0;
+
+            switch (timePeriod)
+            {
+                case TimePeriod.Day:
+                    //Takes the media item's views for today
+                    viewsOnPeriod = ViewsNumberByDate.GetValueOrDefault(dateToCheck.Date);
+                    break;
+
+                case TimePeriod.Week:
+                    //
+                    DateTime startOfWeek = dateToCheck.Date.AddDays(-(int)dateToCheck.DayOfWeek + (int)DayOfWeek.Monday);
+                    DateTime endOfWeek = startOfWeek.AddDays(6);
+
+                    //Loop that goes through each day from the begining of the week until the end 
+                    for (DateTime date = startOfWeek; date <= endOfWeek; date = date.AddDays(1))
+                    {
+                        //The visits from each day are being added in the variable 'viewsOnPeriod' in order to get all the views for the current week
+                        viewsOnPeriod += ViewsNumberByDate.GetValueOrDefault(date.Date);
+                    }
+                    break;
+
+                case TimePeriod.Month:
+                    // Count views for the current month
+                    DateTime startOfMonth = new DateTime(dateToCheck.Year, dateToCheck.Month, 1);
+                    DateTime endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+
+                    //Loop that goes through each day from the begining of the month until the end 
+                    for (DateTime date = startOfMonth; date <= endOfMonth; date = date.AddDays(1))
+                    {
+                        //The visits from each day are being added in the variable 'viewsOnPeriod' in order to get all the views for the current month
+                        viewsOnPeriod += ViewsNumberByDate.GetValueOrDefault(date.Date);
                     }
                     break;
 

@@ -9,12 +9,19 @@ namespace LogicLayer.Strategy
 {
     public class TrendingFilterStrategy : IFilterStrategy
     {
+        private DateTime dateTime;
+        private TimePeriod timePeriod;
+        public TrendingFilterStrategy(DateTime dateTime, TimePeriod timePeriod)
+        {
+            this.timePeriod = timePeriod;
+            this.dateTime = dateTime;
+        }
         public MediaItem[] GetFilteredMediaItems(List<MediaItem> mediaItems)
         {
             //Using this loop the PopularityScore is being calculated and assigned for each media item
             foreach (var movie in mediaItems)
             {
-                movie.CalculatePopularityScore();
+                movie.CalculatePopularityScore(dateTime, timePeriod);
             }
 
             //Orders the list descedning by the PopularityScore

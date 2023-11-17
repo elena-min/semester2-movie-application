@@ -24,7 +24,8 @@ namespace LogicLayer.Classes
         public string Password { get; set; }
         public string Email {  get; set; }
         public Gender Gender { get; set; }
-        public int Age { get; set; }    
+        public int Age { get; set; }
+        public byte[] ProfilePicture { get; set; }
 
 
         public Employee() { }

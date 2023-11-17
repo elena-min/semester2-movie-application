@@ -32,7 +32,7 @@ namespace WebApp.Pages
             {
                 Serie.AddRating(rating);
             }
-            Serie.RecordView();
+            //Serie.RecordView();
             _mediaController.RecordView(Serie);
 
         }

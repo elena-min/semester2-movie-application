@@ -4,6 +4,8 @@ using LogicLayer.Controllers;
 using DAL;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Filters;
+using LogicLayer.Strategy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +19,14 @@ builder.Services.AddSingleton<UserController>(new UserController(new UserDAL()))
 builder.Services.AddSingleton<UserDAL>(new UserDAL());
 builder.Services.AddSingleton<MediaItemController>(new MediaItemController(new MediaItemDAL()));
 builder.Services.AddSingleton<MediaItemDAL>(new MediaItemDAL());
+builder.Services.AddSingleton<MediaItemViewsController>(new MediaItemViewsController(new MediaItemViewsDAL()));
+builder.Services.AddSingleton<MediaItemViewsDAL>(new MediaItemViewsDAL());
 builder.Services.AddSingleton<ReviewController>(new ReviewController(new ReviewDAL()));
 builder.Services.AddSingleton<ReviewDAL>(new ReviewDAL());
 builder.Services.AddSingleton<FavoritesController>(new FavoritesController(new FavoritesDAL()));
 builder.Services.AddSingleton<FavoritesDAL>(new FavoritesDAL());
+builder.Services.AddSingleton<LogicLayer.Strategy.FilterContext>();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 

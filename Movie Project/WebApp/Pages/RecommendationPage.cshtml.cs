@@ -30,47 +30,47 @@ namespace WebApp.Pages
             _filterContext = filterContext;
             _userController = userController;
         }
-        public IActionResult OnGet()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var userID = User.FindFirst("Id").Value;
+        //public IActionResult OnGet()
+        //{
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+        //        var userID = User.FindFirst("Id").Value;
 
-                if (userID == null)
-                {
-                    return RedirectToPage("/Login");
-                }
+        //        if (userID == null)
+        //        {
+        //            return RedirectToPage("/Login");
+        //        }
 
-                Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
+        //        Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
 
-                if (Userr == null)
-                {
-                    return NotFound();
-                }
+        //        if (Userr == null)
+        //        {
+        //            return NotFound();
+        //        }
 
-                foreach (MediaItem favMedia in _userController.GetAllFavorites(Userr.GetId()))
-                {
-                    Userr.FavoriteMediaItem.AddToFavoroites(favMedia);
-                }
-            }
+        //        foreach (MediaItem favMedia in _userController.GetAllFavorites(Userr.GetId()))
+        //        {
+        //            Userr.FavoriteMediaItem.AddToFavoroites(favMedia);
+        //        }
+        //    }
 
 
-            Movies = new List<MediaItem>();
-            Shows = new List<MediaItem>();
+        //    Movies = new List<MediaItem>();
+        //    Shows = new List<MediaItem>();
 
-            foreach (MediaItem m in _mediaController.GetAll())
-            {
-                if (m is Movie)
-                {
-                    Movies.Add(m);
-                }
-                else if (m is Serie)
-                {
-                    Shows.Add(m);
-                }
+        //    foreach (MediaItem m in _mediaController.GetAll())
+        //    {
+        //        if (m is Movie)
+        //        {
+        //            Movies.Add(m);
+        //        }
+        //        else if (m is Serie)
+        //        {
+        //            Shows.Add(m);
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
         public IActionResult OnPostLogout()
         {

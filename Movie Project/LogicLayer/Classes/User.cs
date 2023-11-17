@@ -27,6 +27,8 @@ namespace LogicLayer.Classes
         public string Email { get; }
         public Gender Gender { get; set; }
         public string ProfileDescription { get; set; }
+        public byte[] ProfilePicture { get; set; }
+
         public FavoriteMediaItem FavoriteMediaItem { get; set; }
 
         public User() { }

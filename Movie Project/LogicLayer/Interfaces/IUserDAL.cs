@@ -18,10 +18,6 @@ namespace LogicLayer.Interfaces
         string DeleteUser(int id);
         bool SetProfilePicture(int id, byte[] imageArray);
         string GetProfilePicByID(int id);
-        bool AddProductToFavorite(int mediaID, int userID);
-        bool CheckIfProductIsInFavorites(int mediaID, int userID);
-        MediaItem[] GetAllFavorites(int userID);
-        MediaItem[] GetAllFavoriteMovies(int userID);
-        string RemoveFromFavorites(int mediaID, int userID);
+       
     }
 }

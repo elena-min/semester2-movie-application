@@ -104,7 +104,7 @@ namespace DesktopApp.Series
             int checkedItemCount = 0;
 
 
-            newSerie = new Serie(title, description, pubslishDate, countryOfOrigin, rating, seasons, episodes);
+            newSerie = new Serie(title, description, pubslishDate, countryOfOrigin, rating, 0,seasons, episodes);
             List<string> castList = cast.Split(',').ToList();
             foreach (string actor in castList)
             {
