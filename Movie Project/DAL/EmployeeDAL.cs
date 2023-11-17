@@ -20,11 +20,11 @@ namespace DAL
             string commandSql = "INSERT INTO Employee (firstName, lastName, username, password, email, gender, age, profilePicture) VALUES (@firstName, @lastName, @username, @password, @email, @gender, @age, @profilePicture);";
             conn.Open();
             SqlCommand cmd = new SqlCommand(commandSql, conn);
-            cmd.Parameters.AddWithValue("@firstName", newEmployee.Username);
-            cmd.Parameters.AddWithValue("@lastName", newEmployee.Password);
-            cmd.Parameters.AddWithValue("@username", newEmployee.Email);
-            cmd.Parameters.AddWithValue("@password", newEmployee.FirstName);
-            cmd.Parameters.AddWithValue("@email", newEmployee.LastName);
+            cmd.Parameters.AddWithValue("@firstName", newEmployee.FirstName);
+            cmd.Parameters.AddWithValue("@lastName", newEmployee.LastName);
+            cmd.Parameters.AddWithValue("@username", newEmployee.Username);
+            cmd.Parameters.AddWithValue("@password", newEmployee.Password);
+            cmd.Parameters.AddWithValue("@email", newEmployee.Email);
             cmd.Parameters.AddWithValue("@gender", newEmployee.Gender.ToString());
             cmd.Parameters.AddWithValue("@age", newEmployee.Age);
             cmd.Parameters.AddWithValue("@profilePicture", new byte[0]);

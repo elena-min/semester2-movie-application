@@ -18,6 +18,7 @@ namespace LogicLayer.Interfaces
         Review[] GetDeletedReviewsByUser(int userID);
         string Delete(Review review);
         string DeletebyUser(Review review);
+        bool DeletedMediaItem(int mediaID);
 
     }
 }

@@ -19,13 +19,22 @@ namespace DesktopApp.Movies
         private Button currentButton;
         private Form activeform;
         private readonly MediaItemController mediaItemController;
+        private readonly FavoritesController favController;
+        private readonly ReviewController reviewController;
+
         IMediaItemDAL iMediaItemDAL;
+        IFavoritesDAL ifavoritesDAL;
+        IReviewDAL iReviewDAL;
         List<MediaItem> allMovies;
         public MovieMenu()
         {
             InitializeComponent();
             iMediaItemDAL = new MediaItemDAL();
+            ifavoritesDAL = new FavoritesDAL();
+            iReviewDAL = new ReviewDAL();
             mediaItemController = new MediaItemController(iMediaItemDAL);
+            favController = new FavoritesController(ifavoritesDAL);
+            reviewController = new ReviewController(iReviewDAL);
 
             lblWarning.Text = "";
             string[] orderOptions = new string[]
@@ -177,7 +186,20 @@ namespace DesktopApp.Movies
                 if (listBoxViewMovies.SelectedIndex != -1)
                 {
                     int selected_movie_id = Int32.Parse(listBoxViewMovies.SelectedItem.ToString().Split('-')[1]);
-                    lblWarning.Text = mediaItemController.RemoveMediaItem(selected_movie_id); ;
+                    //lblWarning.Text = mediaItemController.RemoveMediaItem(selected_movie_id);
+                    bool removalSuccess = mediaItemController.RemoveMediaItem(selected_movie_id);
+
+                    if (removalSuccess)
+                    {
+                        lblWarning.Text = "Media item deleted successfully";
+                        reviewController.DeletedMediaItem(selected_movie_id);
+                        favController.DeletedMediaItem(selected_movie_id);
+
+                    }
+                    else
+                    {
+                        lblWarning.Text = "Failed to delete media item";
+                    }
                     listBoxViewMovies.Items.Clear();
                     foreach (MediaItem movie in mediaItemController.GetAll())
                     {

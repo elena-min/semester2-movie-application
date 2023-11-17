@@ -64,7 +64,6 @@ namespace WebApp.Pages
                 
             }
 
-
             _filterContext.SetFilterStrategy(new TrendingFilterStrategy(DateTime.Now, LogicLayer.TimePeriod.Day));
             MoviesTrendingDaily = _filterContext.GetFilteredMediaItems(MediaItems).ToList();
             //ShowsTrendingDaily = _filterContext.GetFilteredMediaItems(Series).ToList();

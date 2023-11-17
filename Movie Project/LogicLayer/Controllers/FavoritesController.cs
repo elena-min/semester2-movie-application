@@ -38,5 +38,9 @@ namespace LogicLayer.Controllers
         {
             return iFavoritesDAL.RemoveFromFavorites(mediaID, userID);
         }
+        public bool DeletedMediaItem(int mediaID)
+        {
+            return iFavoritesDAL.DeletedMediaItem(mediaID);
+        }
     }
 }

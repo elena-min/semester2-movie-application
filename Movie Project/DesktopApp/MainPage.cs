@@ -20,10 +20,11 @@ namespace DesktopApp
         private Button currentButton;
         private Form activeform;
         private Employee _user { get; }
-        public MainPage(/*Employee user*/)
+        public MainPage(Employee user)
         {
             InitializeComponent();
             buttonClose.Visible = false;
+            this._user = user;
             
         }
         private void ActivateButton(object btnSender)

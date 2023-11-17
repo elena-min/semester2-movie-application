@@ -14,5 +14,7 @@ namespace LogicLayer.Interfaces
         MediaItem[] GetAllFavorites(int userID);
         MediaItem[] GetAllFavoriteMovies(int userID);
         string RemoveFromFavorites(int mediaID, int userID);
+        bool DeletedMediaItem(int mediaID);
+
     }
 }

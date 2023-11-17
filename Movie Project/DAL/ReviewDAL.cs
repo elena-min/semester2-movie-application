@@ -347,5 +347,28 @@ namespace DAL
             //    return "Operation failed.";
             //}
         }
+
+        public bool DeletedMediaItem(int mediaID)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                string query = "DELETE FROM Review WHERE pointedTowards = @mediaID";
+                SqlCommand commandSql = new SqlCommand(query, conn);
+                commandSql.Parameters.AddWithValue("@mediaID", mediaID);
+                conn.Open();
+                int rowsAffected = commandSql.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+
     }
 }

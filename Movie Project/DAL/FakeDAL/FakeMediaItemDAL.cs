@@ -67,17 +67,17 @@ namespace DAL.FakeDAL
                 return null;
             }
         }
-        public string RemoveMediaItem(int id)
+        public bool RemoveMediaItem(int id)
         {
             MediaItem mediaItemToRemove = mediaItems.Find(item => item.GetId() == id);
             if (mediaItemToRemove != null)
             {
                 mediaItems.Remove(mediaItemToRemove);
-                return "MediaItem deleted successfully";
+                return true;
             }
             else
             {
-                return "No data found.";
+                return false;
             }
         }
 

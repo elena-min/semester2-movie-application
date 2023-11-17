@@ -16,13 +16,15 @@ namespace WebApp.Pages
 
         private readonly UserController _userController;
         private readonly MediaItemController _mediaController;
+        private readonly MediaItemViewsController _mediaViewsController;
         private readonly FavoritesController _favoritesController;
 
-        public SerieInfoPageModel(UserController userController, MediaItemController mediaController, FavoritesController favoritesController)
+        public SerieInfoPageModel(UserController userController, MediaItemController mediaController, FavoritesController favoritesController, MediaItemViewsController mediaViewsController)
         {
             _userController = userController;
             _mediaController = mediaController;
             _favoritesController = favoritesController;
+            _mediaViewsController = mediaViewsController;
         }
 
         public void OnGet(int id)
@@ -32,8 +34,8 @@ namespace WebApp.Pages
             {
                 Serie.AddRating(rating);
             }
-            //Serie.RecordView();
-            _mediaController.RecordView(Serie);
+            Serie.RecordView(DateTime.Now);
+            _mediaViewsController.UpdateViewsCount(Serie.GetId(), DateTime.Now);
 
         }
 

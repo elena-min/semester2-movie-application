@@ -31,15 +31,12 @@
                             <a class="nav-link text-white" asp-area="" asp-page="/Main">Home</a>
                         </li>
                         <li class="nav-item border-end border-3 border-white px-3">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Explore">Explore</a>
-                        </li>
-                        <li class="nav-item border-end border-3 border-white px-3">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Trending">Trend</a>
+                            <a class="nav-link text-white" asp-area="" asp-page="/Trending">Trending</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item border-end border-3 border-white px-3">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Recommendations">Recommendations</a>
+                                <a class="nav-link text-white" asp-area="" asp-page="/RecommendationPage">Recommendations</a>
                             </li>
                             <li class="nav-item border-end border-3 border-white px-3">
                                 <a class="nav-link text-white" asp-area="" asp-page="/FavoriteMovies">Favorites</a>

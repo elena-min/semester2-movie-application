@@ -52,5 +52,10 @@ namespace LogicLayer.Controllers
         {
             return ireviewDAL.DeletebyUser(review);
         }
+
+        public bool DeletedMediaItem(int mediaID)
+        {
+            return ireviewDAL.DeletedMediaItem(mediaID);
+        }
     }
 }

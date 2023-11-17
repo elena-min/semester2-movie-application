@@ -205,6 +205,7 @@
             btnView.TabIndex = 10;
             btnView.Text = "View Reviews";
             btnView.UseVisualStyleBackColor = true;
+            btnView.Click += btnView_Click;
             // 
             // panel1
             // 

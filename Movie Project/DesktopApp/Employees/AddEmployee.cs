@@ -82,14 +82,27 @@ namespace DesktopApp.Employees
             string password = textBoxPassword.Text;
             Gender gender = (Gender)comboBoxGender.SelectedItem;
             int age;
-            if (!int.TryParse(textBoxAge.Text, out age))
+            //if (!int.TryParse(textBoxAge.Text, out age))
+            //{
+            //    lblWarning.Text = "Please enter a valid age in years.";
+            //    return;
+            //}
+
+            if (int.TryParse(textBoxAge.Text, out  age))
+            {
+                if (age < 16 && age > 80)
+                {
+                    lblWarning.Text = "e is not valid. You must be at least 16 years old and under 80.";
+                }
+            }
+            else
             {
                 lblWarning.Text = "Please enter a valid age in years.";
                 return;
             }
 
 
-            newEmp = new Employee(fName, lName, username, email, password, gender, age);
+            newEmp = new Employee(fName, lName, username, email,password, gender, age);
             //empController.AddEmployee(newEmp);
             if (empController.AddEmployee(newEmp))
             {

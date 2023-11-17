@@ -43,13 +43,9 @@ namespace LogicLayer.Controllers
         {
             return imediaItemDAL.UpdateMediaItem(mediaItem, pictureBytes); 
         }
-        public string RemoveMediaItem(int id)
+        public bool RemoveMediaItem(int id)
         {
             return imediaItemDAL.RemoveMediaItem(id);
-        }
-        public void RecordView(MediaItem mediaItem)
-        {
-             imediaItemDAL.RecordView(mediaItem);
         }
 
     }

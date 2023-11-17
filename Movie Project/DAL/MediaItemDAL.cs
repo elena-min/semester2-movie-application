@@ -25,7 +25,7 @@ namespace DAL
             //try
             // {
             conn.Open();
-            string commandSql = "INSERT INTO MediaItem (title, description, rating, releaseDate, countryOfOrigin, genres, cast, image, numberOfViews) VALUES (@title, @description, @rating, @releaseDate, @countryOfOrigin, @genres, @cast, @image, @numberOfViews); SELECT SCOPE_IDENTITY();";
+            string commandSql = "INSERT INTO MediaItem (title, description, rating, releaseDate, countryOfOrigin, genres, cast, image) VALUES (@title, @description, @rating, @releaseDate, @countryOfOrigin, @genres, @cast, @image); SELECT SCOPE_IDENTITY();";
             SqlCommand cmd = new SqlCommand(commandSql, conn);
             cmd.Parameters.AddWithValue("@title", newMediaItem.Title);
             cmd.Parameters.AddWithValue("@description", newMediaItem.Description);
@@ -34,7 +34,6 @@ namespace DAL
             cmd.Parameters.AddWithValue("@countryOfOrigin", newMediaItem.CountryOfOrigin);
             cmd.Parameters.AddWithValue("@cast", newMediaItem.Cast.ToString());
             cmd.Parameters.AddWithValue("@image", pictureBytes);
-            cmd.Parameters.AddWithValue("@numberOfViews", 0);
 
 
             //cmd.Parameters.AddWithValue("@image", imageArray);
@@ -95,7 +94,7 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             conn.Open();
 
-            string commandSql = "SELECT MI.id, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.image, MI.numberOfViews, " +
+            string commandSql = "SELECT MI.id, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.image, " +
                                 "M.director, M.writer, M.duration, " +
                                 "S.seasons, S.episodes " +
                                 "FROM MediaItem as MI " +
@@ -117,29 +116,28 @@ namespace DAL
                     string genres_string = reader.GetString(6);
                     string[] string_genres = genres_string.Split(',');
                     string[] cast = string_cast.Split(',');
-                    int numberOfviews = reader.GetInt32(9);
 
                     MediaItem mediaItem;
 
                     if (reader["director"] != DBNull.Value)
                     {
-                        string director = reader.GetString(10);
-                        string writer = reader.GetString(11);
-                        int duration = reader.GetInt32(12);
+                        string director = reader.GetString(9);
+                        string writer = reader.GetString(10);
+                        int duration = reader.GetInt32(11);
 
-                        mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, numberOfviews, director, writer, duration);
+                        mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
                     }
                     else if (reader["seasons"] != DBNull.Value)
                     {
-                        int seasons = reader.GetInt32(13);
-                        int episodes = reader.GetInt32(14);
+                        int seasons = reader.GetInt32(12);
+                        int episodes = reader.GetInt32(13);
 
-                        mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, numberOfviews, seasons, episodes);
+                        mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
                     }
                     else
                     {
                         // If it's neither a Movie nor Serie, create a generic MediaItem
-                        mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating, numberOfviews);
+                        mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating);
                     }
 
                     mediaItem.SetId(mediaItemId); 
@@ -193,7 +191,7 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             conn.Open();
 
-            string commandSql = "SELECT MI.id, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.image, MI.numberOfViews, " +
+            string commandSql = "SELECT MI.id, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.image, " +
                                 "M.director, M.writer, M.duration, " +
                                 "S.seasons, S.episodes " +
                                 "FROM MediaItem as MI " +
@@ -219,27 +217,26 @@ namespace DAL
                     string genresString = reader.GetString(reader.GetOrdinal("genres"));
                     List<Genre> genres = genresString.Split(',').Select(s => Enum.Parse<Genre>(s)).ToList();
                     string[] cast = string_cast.Split(',');
-                    int numberOfviews = reader.GetInt32(9);
 
                     if (reader["director"] != DBNull.Value)
                     {
-                        string director = reader.GetString(10);
-                        string writer = reader.GetString(11);
-                        int duration = reader.GetInt32(12);
+                        string director = reader.GetString(9);
+                        string writer = reader.GetString(10);
+                        int duration = reader.GetInt32(11);
 
-                        mediaItem = new Movie(retrievedTitle, description, releaseDate, countryOfOrigin, rating, numberOfviews, director, writer, duration);
+                        mediaItem = new Movie(retrievedTitle, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
                     }
                     else if (reader["seasons"] != DBNull.Value)
                     {
                         int seasons = reader.GetInt32(12);
                         int episodes = reader.GetInt32(13);
 
-                        mediaItem = new Serie(retrievedTitle, description, releaseDate, countryOfOrigin, rating, numberOfviews, seasons, episodes);
+                        mediaItem = new Serie(retrievedTitle, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
                     }
                     else
                     {
                         // If it's neither a Movie nor Serie, create a generic MediaItem
-                        mediaItem = new MediaItem(retrievedTitle, description, releaseDate, countryOfOrigin, rating, numberOfviews);
+                        mediaItem = new MediaItem(retrievedTitle, description, releaseDate, countryOfOrigin, rating);
                     }
 
                     mediaItem.SetId(mediaItemId);
@@ -265,7 +262,7 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             conn.Open();
 
-            string commandSql = "SELECT MI.id, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.image, MI.numberOfViews, " +
+            string commandSql = "SELECT MI.id, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.image, " +
                                 "M.director, M.writer, M.duration, " +
                                 "S.seasons, S.episodes " +
                                 "FROM MediaItem as MI " +
@@ -291,30 +288,29 @@ namespace DAL
                     string genresString = reader.GetString(6);
                     //List<Genre> genres = genresString.Split(',').Select(s => Enum.Parse<Genre>(s)).ToList();
                     string[] string_genres = genresString.Split(',');
-                    int numberOfViews = reader.GetInt32(9);
 
 
                     string[] cast = string_cast.Split(',');
 
                     if (reader["director"] != DBNull.Value)
                     {
-                        string director = reader.GetString(10);
-                        string writer = reader.GetString(11);
-                        int duration = reader.GetInt32(12);
+                        string director = reader.GetString(9);
+                        string writer = reader.GetString(10);
+                        int duration = reader.GetInt32(11);
 
-                        mediaItem = new Movie(retrievedTitle, description, releaseDate, countryOfOrigin, rating, numberOfViews, director, writer, duration);
+                        mediaItem = new Movie(retrievedTitle, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
                     }
                     else if (reader["seasons"] != DBNull.Value)
                     {
-                        int seasons = reader.GetInt32(13);
-                        int episodes = reader.GetInt32(14);
+                        int seasons = reader.GetInt32(12);
+                        int episodes = reader.GetInt32(13);
 
-                        mediaItem = new Serie(retrievedTitle, description, releaseDate, countryOfOrigin, rating, numberOfViews, seasons, episodes);
+                        mediaItem = new Serie(retrievedTitle, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
                     }
                     else
                     {
                         // If it's neither a Movie nor Serie, create a generic MediaItem
-                        mediaItem = new MediaItem(retrievedTitle, description, releaseDate, countryOfOrigin, rating, numberOfViews);
+                        mediaItem = new MediaItem(retrievedTitle, description, releaseDate, countryOfOrigin, rating);
                     }
 
                     mediaItem.SetId(mediaItemId);
@@ -353,7 +349,7 @@ namespace DAL
             return base64StringImage;
         }
 
-        public string RemoveMediaItem(int id)
+        public bool RemoveMediaItem(int id)
         {
             SqlConnection conn = CreateConnection();
             using (conn)
@@ -379,20 +375,20 @@ namespace DAL
 
                 if (rowsAffected3 > 0 || rowsAffected > 0)
                 {
-                    return "Movie deleted successfully";
+                    return true;
                 }
                 else if (rowsAffected3 > 0 || rowsAffected2 > 0)
                 {
-                    return "Serie deleted successfully";
+                    return true;
                 }
                 else
                 {
-                    return "No data found.";
+                    return false;
                 }
                 //}
                 //catch (Exception ex)
                 //{
-                //    return "Operation failed.";
+                //    return false;
                 //}
             }
         }
@@ -452,25 +448,5 @@ namespace DAL
             //}
         }
 
-        public void RecordView(MediaItem mediaItem)
-        {
-            SqlConnection conn = CreateConnection();
-            //try
-            //{
-            conn.Open();
-            string commandSql = "UPDATE MediaItem SET numberOfViews = @numberOfViews WHERE id = @id";
-            SqlCommand cmd = new SqlCommand(commandSql, conn);
-            cmd.Parameters.AddWithValue("@id", mediaItem.GetId());
-            cmd.Parameters.AddWithValue("@numberOfViews", mediaItem.NumberOfViews);
-            cmd.ExecuteNonQuery();
-           
-            conn.Close();
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    return "Operation failed.";
-            //}
-        }
     }
 }

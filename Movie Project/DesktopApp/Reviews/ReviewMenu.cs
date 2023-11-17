@@ -30,7 +30,7 @@ namespace DesktopApp.Reviews
             reviewController = new ReviewController(iReviewDAL);
 
             lblWarning.Text = "";
-           
+
             listBoxViewReviews.Items.Clear();
             allReviews = new List<Review>();
 
@@ -150,6 +150,41 @@ namespace DesktopApp.Reviews
         private void labelName_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            lblWarning.Text = "";
+
+            listBoxViewReviews.Items.Clear();
+            allReviews = new List<Review>();
+
+            if (reviewController.GetAll() == null)
+            {
+
+                lblWarning.Text = "No reviews in the system.";
+            }
+            else
+            {
+                foreach (Review movie in reviewController.GetAll())
+                {
+
+                    allReviews.Add(movie);
+
+                }
+            }
+
+            if (allReviews.Count > 0)
+            {
+                foreach (Review review in allReviews)
+                {
+                    listBoxViewReviews.Items.Add(review.ToString());
+                }
+            }
+            else
+            {
+                lblWarning.Text = "No reviews in the system.";
+            }
         }
     }
 }

@@ -20,13 +20,21 @@ namespace DesktopApp.Series
         private Button currentButton;
         private Form activeform;
         private readonly MediaItemController mediaItemController;
+        private readonly FavoritesController favController;
+        private readonly ReviewController reviewController;
         IMediaItemDAL iMediaItemDAL;
+        IFavoritesDAL ifavoritesDAL;
+        IReviewDAL iReviewDAL;
         List<MediaItem> allSeries;
         public SerieMenu()
         {
             InitializeComponent();
             iMediaItemDAL = new MediaItemDAL();
+            ifavoritesDAL = new FavoritesDAL();
+            iReviewDAL = new ReviewDAL();
             mediaItemController = new MediaItemController(iMediaItemDAL);
+            favController = new FavoritesController(ifavoritesDAL);
+            reviewController = new ReviewController(iReviewDAL);
 
             lblWarning.Text = "";
             string[] orderOptions = new string[]
@@ -180,7 +188,19 @@ namespace DesktopApp.Series
                 if (listBoxViewSeries.SelectedIndex != -1)
                 {
                     int selected_serie_id = Int32.Parse(listBoxViewSeries.SelectedItem.ToString().Split('-')[1]);
-                    lblWarning.Text = mediaItemController.RemoveMediaItem(selected_serie_id); ;
+                    bool removalSuccess = mediaItemController.RemoveMediaItem(selected_serie_id);
+
+                    if (removalSuccess)
+                    {
+                        lblWarning.Text = "Media item deleted successfully";
+                        reviewController.DeletedMediaItem(selected_serie_id);
+                        favController.DeletedMediaItem(selected_serie_id);
+
+                    }
+                    else
+                    {
+                        lblWarning.Text = "Failed to delete media item";
+                    }
                     listBoxViewSeries.Items.Clear();
                     foreach (MediaItem serie in mediaItemController.GetAll())
                     {

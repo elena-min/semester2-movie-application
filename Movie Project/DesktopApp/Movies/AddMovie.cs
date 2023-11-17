@@ -109,7 +109,7 @@ namespace DesktopApp.Movies
             }
 
 
-            newMovie = new Movie(title, description, pubslishDate, countryOfOrigin, rating,0, director, writer, duration);
+            newMovie = new Movie(title, description, pubslishDate, countryOfOrigin, rating, director, writer, duration);
             List<string> castList = cast.Split(',').ToList();
             foreach (string actor in castList)
             {

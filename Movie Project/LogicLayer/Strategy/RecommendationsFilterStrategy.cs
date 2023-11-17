@@ -43,10 +43,20 @@ namespace LogicLayer.Strategy
 
             List<MediaItem> recommendations = matchedGenreCounts.Keys.ToList();
 
+            //Makes sure the media items with most favrotite genres in them are on top of the list
             recommendations.Sort((mediaItem1, mediaItem2) =>
                 matchedGenreCounts[mediaItem2].CompareTo(matchedGenreCounts[mediaItem1]));
 
-            return recommendations.ToArray();
+            //Loop throught the results and keeps only those which have been released in the past 10 years
+            List<MediaItem> filteredMediaItems = new List<MediaItem>();
+            foreach (var movie in recommendations)
+            {
+                if (movie.ReleaseDate >= DateTime.Now.AddYears(-10))
+                {
+                    filteredMediaItems.Add(movie);
+                }
+            }
+            return filteredMediaItems.ToArray();
         }
 
         private bool IsMediaItemInFavorites(MediaItem mediaItem)

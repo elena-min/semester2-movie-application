@@ -127,6 +127,15 @@ main {
     padding: 10px;
 }
 
+.picksTitle {
+    padding: 10px;
+    background-color: #004766;
+    color: #E7DFC6;
+    text-align:center;
+}
+.picksTitle h4{
+    font-weight: 800;
+}
 
 .movies {
     padding: 20px;

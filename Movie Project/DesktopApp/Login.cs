@@ -57,7 +57,7 @@ namespace DesktopApp
 
             if (isLoggedIn)
             {
-                mainform = new MainPage(/*employee*/);
+                mainform = new MainPage(employee);
                 mainform.Show();
                 this.Hide();
             }

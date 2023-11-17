@@ -15,7 +15,8 @@
 <main>
     <div id="welcome-container">
         <div id="main-container">
-            <h1>Welcome to Cinematic</h1>
+            <h1>Trending now!</h1>
+            <h6>Check out the most popular movies/series on our website at the moment!</h6>
         </div>
         <div class="main-picture">
             <img src="/images/MainPosterr.jpg" alt="Poster">
@@ -23,7 +24,9 @@
     </div>
 
     <div id="movies-container">
-        <h4>Daily picks</h4>
+        <div class="picksTitle">
+            <h4>Daily picks</h4>
+        </div>
         <div class="topPicks">
             @foreach (MediaItem m in Model.MoviesTrendingDaily.Take(5))
             {
@@ -67,7 +70,10 @@
 
 
         </div>
-        <h4>Weekly picks</h4>
+
+        <div class="picksTitle">
+            <h4>Weekly picks</h4>
+        </div>        
         <div class="topPicks">
             @foreach (MediaItem m in Model.MoviesTrendingWeekly.Take(5))
             {
@@ -109,7 +115,15 @@
 
 
         </div>
-        <h4>Monthly picks</h4>
+
+        <div class="picksTitle">
+            @{
+                var englishCulture = new System.Globalization.CultureInfo("en-US");
+                var formattedMonth = DateTime.Now.ToString("MMMM", englishCulture);
+            }
+
+            <h4>Monthly picks for @formattedMonth</h4>
+        </div>
         <div class="topPicks">
             @foreach (MediaItem m in Model.MoviesTrendingMonthly.Take(5))
             {

@@ -27,7 +27,7 @@ namespace DesktopApp.Employees
             InitializeComponent();
             iEmployeeDAL = new EmployeeDAL();
             empController = new EmployeeController(iEmployeeDAL);
-            this.employee = selectedEmp;
+            this.employee = empController.GetEmployeeByID(selectedEmp.GetId());
 
             labelFName.Text = employee.FirstName;
             labelLName.Text = employee.LastName;
@@ -35,7 +35,7 @@ namespace DesktopApp.Employees
             labelEmail.Text = employee.Email;
             labelAge.Text = employee.Age.ToString() + " years";
             labelGender.Text = employee.Gender.ToString();
-            if (empController.GetProfilePicByID(employee.GetId()).Length != 0)
+            if (empController.GetProfilePicByID(employee.GetId()).Length != 0 || empController.GetProfilePicByID(employee.GetId()) == null)
             {
                 byte[] pictureBytes = Convert.FromBase64String(empController.GetProfilePicByID(employee.GetId()));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);

@@ -21,7 +21,7 @@ namespace UnitTestProject
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes = new byte[] { 1, 2, 3 };
-            Movie movie = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
 
             // Act
             bool result = mediaController.AddMediaItem(movie, pictureBytes);
@@ -38,8 +38,8 @@ namespace UnitTestProject
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
             byte[] pictureBytes2 = new byte[] { 4, 5, 6 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
-            Movie movie2 = new Movie("Interstellar", "Sci-fi masterpiece", DateTime.Now, "USA", 9.7, 0, "Christopher Nolan", "Jonathan Nolan", 169);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie2 = new Movie("Interstellar", "Sci-fi masterpiece", DateTime.Now, "USA", 9.7, "Christopher Nolan", "Jonathan Nolan", 169);
 
             // Act
             mediaController.AddMediaItem(movie1, pictureBytes1);
@@ -69,7 +69,7 @@ namespace UnitTestProject
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
 
             //Act
             mediaController.AddMediaItem(movie1, pictureBytes1);
@@ -85,7 +85,7 @@ namespace UnitTestProject
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
 
             //Act
             mediaController.AddMediaItem(movie1, pictureBytes1);
@@ -101,7 +101,7 @@ namespace UnitTestProject
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
 
             //Act
             mediaController.AddMediaItem(movie1, pictureBytes1);
@@ -117,7 +117,7 @@ namespace UnitTestProject
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
 
             //Act
             mediaController.AddMediaItem(movie1, pictureBytes1);
@@ -133,7 +133,7 @@ namespace UnitTestProject
             //Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
             movie1.AddRating(2);
             movie1.AddRating(5);
             movie1.AddRating(4);
@@ -152,7 +152,7 @@ namespace UnitTestProject
             //Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
 
 
             //Act
@@ -182,7 +182,7 @@ namespace UnitTestProject
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
             movie1.Picture = pictureBytes1;
             mediaController.AddMediaItem(movie1, pictureBytes1);
             
@@ -212,7 +212,7 @@ namespace UnitTestProject
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = null;
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
             movie1.Picture = null;
             mediaController.AddMediaItem(movie1, pictureBytes1);
 
@@ -229,10 +229,10 @@ namespace UnitTestProject
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
             mediaController.AddMediaItem(movie1, pictureBytes1);
 
-            Movie movie2 = new Movie("Interstellar", "Sci-fi masterpiece", DateTime.Now, "USA", 9.7, 0, "Christopher Nolan", "Jonathan Nolan", 169);
+            Movie movie2 = new Movie("Interstellar", "Sci-fi masterpiece", DateTime.Now, "USA", 9.7, "Christopher Nolan", "Jonathan Nolan", 169);
             movie2.SetId(movie1.GetId());
             byte[] pictureBytes2 = new byte[] { 2, 5, 6 };
 
@@ -250,7 +250,7 @@ namespace UnitTestProject
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
             movie1.SetId(2);
 
             //Act
@@ -267,17 +267,17 @@ namespace UnitTestProject
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
             byte[] pictureBytes2 = new byte[] { 4, 5, 6 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
-            Movie movie2 = new Movie("Interstellar", "Sci-fi masterpiece", DateTime.Now, "USA", 9.7, 0, "Christopher Nolan", "Jonathan Nolan", 169);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie2 = new Movie("Interstellar", "Sci-fi masterpiece", DateTime.Now, "USA", 5.0, "Christopher Nolan", "Jonathan Nolan", 169);
 
             mediaController.AddMediaItem(movie1, pictureBytes1);
             mediaController.AddMediaItem(movie2, pictureBytes2);
 
             //Act
-            string result = mediaController.RemoveMediaItem(2);
+            bool result = mediaController.RemoveMediaItem(2);
 
             //Assert
-            Assert.AreEqual("MediaItem deleted successfully", result);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
@@ -287,17 +287,17 @@ namespace UnitTestProject
             MediaItemController mediaController = new MediaItemController(createTestRepo());
             byte[] pictureBytes1 = new byte[] { 1, 2, 3 };
             byte[] pictureBytes2 = new byte[] { 4, 5, 6 };
-            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, 0, "Christopher Nolan", "Jonathan Nolan", 148);
-            Movie movie2 = new Movie("Interstellar", "Sci-fi masterpiece", DateTime.Now, "USA", 9.7, 0, "Christopher Nolan", "Jonathan Nolan", 169);
+            Movie movie1 = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
+            Movie movie2 = new Movie("Interstellar", "Sci-fi masterpiece", DateTime.Now, "USA", 9.7, "Christopher Nolan", "Jonathan Nolan", 169);
 
             mediaController.AddMediaItem(movie1, pictureBytes1);
             mediaController.AddMediaItem(movie2, pictureBytes2);
 
             //Act
-            string result = mediaController.RemoveMediaItem(4);
+            bool result = mediaController.RemoveMediaItem(4);
 
             //Assert
-            Assert.AreEqual("No data found.", result);
+            Assert.IsFalse(result);
         }
 
         [TestMethod]

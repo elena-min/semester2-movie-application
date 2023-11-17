@@ -22,10 +22,21 @@ namespace LogicLayer.Classes
         public string Title { get; private set; }
         public string Description { get; private set; }
         public DateTime ReleaseDate { get; private set; }
-        public double Rating { get; private set; }
+        public double Rating
+        {
+            get => rating;
+            set
+            {
+                if (value <= 1 || value >= 10)
+                {
+                    throw new InvalidRatingException();
+                }
+
+                rating = value;
+            }
+        }
         public string CountryOfOrigin { get; private set; }
         public byte[] Picture { get; set; }
-        public int NumberOfViews { get; private set; }
 
         public Dictionary<DateTime, int> ViewsNumberByDate { get;  set; }
         public double PopularityScore {  get;  set; }
@@ -43,29 +54,15 @@ namespace LogicLayer.Classes
             Description = _description;
             ReleaseDate = _releaseDate;
             CountryOfOrigin = _countryOfOrigin;
-            Rating = _rating;
-            ratings = new List<int>();
-            genres = new List<Genre>();
-            Cast = new Cast(Title);
-            PopularityScore = 0;
-            ViewsNumberByDate = new Dictionary<DateTime, int>();
-
-        }
-        public MediaItem(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating, int _numberOfViews)
-        {
-            Title = _title;
-            Description = _description;
-            ReleaseDate = _releaseDate;
-            CountryOfOrigin = _countryOfOrigin;
             Rating = _rating;  
             ratings = new List<int>();
             genres = new List<Genre>();
             Cast = new Cast(Title);
-            NumberOfViews = _numberOfViews;
             PopularityScore = 0;
             ViewsNumberByDate = new Dictionary<DateTime, int>();
 
         }
+
         public void SetId(int id)
         {
             this.id = id;

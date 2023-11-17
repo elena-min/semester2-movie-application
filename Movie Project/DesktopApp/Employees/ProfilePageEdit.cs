@@ -25,9 +25,9 @@ namespace DesktopApp.Employees
         public ProfilePageEdit(Employee user)
         {
             InitializeComponent();
-            _user = user;
             iemployeeDAL = new EmployeeDAL();
             employeeController = new EmployeeController(iemployeeDAL);
+            _user = employeeController.GetEmployeeByID(user.GetId());
             //labelEmpId.Text = _user.GetId().ToString();
             textBoxFName.Text = _user.FirstName;
             textBoxLName.Text = _user.LastName;
@@ -36,6 +36,15 @@ namespace DesktopApp.Employees
             textBoxAge.Text = _user.Age.ToString();
             comboBoxGender.DataSource = Enum.GetValues(typeof(Gender));
             comboBoxGender.SelectedItem = _user.Gender;
+
+            if (employeeController.GetProfilePicByID(_user.GetId()).Length != 0 || employeeController.GetProfilePicByID(_user.GetId()) == null)
+            {
+                byte[] pictureBytes = Convert.FromBase64String(employeeController.GetProfilePicByID(_user.GetId()));
+                MemoryStream memoryStream = new MemoryStream(pictureBytes);
+                Image pictureImage = Image.FromStream(memoryStream);
+                pictureBoxProfilePic.BackgroundImageLayout = ImageLayout.Stretch;
+                pictureBoxProfilePic.BackgroundImage = pictureImage;
+            }
             lblWarning.Text = "";
         }
         byte[] Filename;
@@ -90,9 +99,16 @@ namespace DesktopApp.Employees
 
 
             int age;
-            if (!int.TryParse(textBoxAge.Text, out age))
+            if (int.TryParse(textBoxAge.Text, out age))
             {
-                lblWarning.Text = "Please enter a valid age.";
+                if (age < 16 && age > 80)
+                {
+                    lblWarning.Text = "e is not valid. You must be at least 16 years old and under 80.";
+                }
+            }
+            else
+            {
+                lblWarning.Text = "Please enter a valid age in years.";
                 return;
             }
             Gender gender = (Gender)comboBoxGender.SelectedItem;
