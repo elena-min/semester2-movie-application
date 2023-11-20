@@ -10,6 +10,7 @@ namespace WebApp.Pages
     public class SerieInfoPageModel : PageModel
     {
         public MediaItem Serie { get; set; }
+        public List<double> PopularityScores { get; set; }
 
         [BindProperty]
         public User Userr { get; set; }
@@ -34,9 +35,19 @@ namespace WebApp.Pages
             {
                 Serie.AddRating(rating);
             }
+            Serie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(Serie.GetId());
             Serie.RecordView(DateTime.Now);
             _mediaViewsController.UpdateViewsCount(Serie.GetId(), DateTime.Now);
 
+            DateTime currentDate = DateTime.Now.Date;
+            PopularityScores = new List<double>();
+
+            for (int i = 6; i >= 0; i--)
+            {
+                DateTime dateToCheck = currentDate.AddDays(-i);
+                double popularityScore = Serie.CalculatePopularityScoreTwo(dateToCheck, LogicLayer.TimePeriod.Day);
+                PopularityScores.Add(popularityScore);
+            }
         }
 
         public IActionResult OnPost(int id)

@@ -39,7 +39,7 @@ namespace LogicLayer.Classes
         public byte[] Picture { get; set; }
 
         public Dictionary<DateTime, int> ViewsNumberByDate { get;  set; }
-        public double PopularityScore {  get;  set; }
+        public double PopularityScore{  get;  set; }
 
         public MediaItem()
         {
