@@ -52,5 +52,10 @@ namespace LogicLayer.Controllers
         {
             return iemployeeDAL.GetProfilePicByID(id);  
         }
+        public bool DeleteUserAccount(User user, string reasonForDeleting)
+        {
+            return iemployeeDAL.DeleteUserAccount(user, reasonForDeleting);
+
+        }
     }
 }

@@ -35,14 +35,23 @@ namespace WebApp.Pages
 
                     if (result)
                     {
-                        List<Claim> claims = new List<Claim>();
-                        claims.Add(new Claim(ClaimTypes.Name, user.Username));
-                        claims.Add(new Claim("Password", user.Password));
-                        claims.Add(new Claim("Id", user.GetId().ToString()));
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+                        string reasonForBanning = _userController.CheckIfUserIsBanned(user.GetId());
+                        if (reasonForBanning == null)
+                        {
+                            List<Claim> claims = new List<Claim>();
+                            claims.Add(new Claim(ClaimTypes.Name, user.Username));
+                            claims.Add(new Claim("Id", user.GetId().ToString()));
+                            claims.Add(new Claim(ClaimTypes.Role, user.Role));
+                            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
 
-                        return RedirectToPage("Main");
+                            return RedirectToPage("Main");
+                        }
+                        else{
+                            user.SetUserAsBanned(reasonForBanning);
+                            TempData["Message"] = "Your account has been banned. Reason: " + user.ReasonForDeleting;
+                        }
+
                     }
                 }
                 //ModelState.AddModelError("InvalidCredentials", "The supplied username and/or password is invalid");

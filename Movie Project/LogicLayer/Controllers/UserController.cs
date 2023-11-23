@@ -17,7 +17,7 @@ namespace LogicLayer.Controllers
         }
         public bool InsertUser(User newUser)
         {
-            return iuserDAL.InsertUser(newUser);   
+            return iuserDAL.InsertUser(newUser);
         }
         public User GetUserByID(int id)
         {
@@ -35,7 +35,7 @@ namespace LogicLayer.Controllers
         {
             return iuserDAL.GetAll();
         }
-            
+
         public bool UpdateUser(User user)
         {
             return iuserDAL.UpdateUser(user);
@@ -53,6 +53,10 @@ namespace LogicLayer.Controllers
             return iuserDAL.GetProfilePicByID(id);
 
         }
-      
+        public string CheckIfUserIsBanned(int id)
+        {
+            return iuserDAL.CheckIfUserIsBanned(id);
+
+        }
     }
 }

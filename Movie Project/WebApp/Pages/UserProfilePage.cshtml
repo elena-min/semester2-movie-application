@@ -1,0 +1,53 @@
+﻿@page
+@using DAL;
+@using LogicLayer.Controllers;
+@using LogicLayer.Interfaces;
+@using Microsoft.AspNetCore.Authorization;
+@model WebApp.Pages.UserProfilePageModel
+@attribute [Authorize(Roles = "Employee")]
+@{
+    Layout = "_LayoutNoSearch";
+    @functions {
+        static IUserDAL iuserDAL = new UserDAL();
+        static UserController userController = new UserController(iuserDAL);
+    }
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+<main class="mainProfileInfo">
+    <div class="profilePicture">
+        @if (userController.GetProfilePicByID(Model.Userr.GetId()) != null && userController.GetProfilePicByID(Model.Userr.GetId()).Length > 0)
+        {
+            <img src="data:image;base64,@userController.GetProfilePicByID(@Model.Userr.GetId())" alt="Profile picture" style="padding:10px">
+        }
+        else
+        {
+            <img src="/images//noProfilePicture.png" alt="No Profile picture" style="padding:10px">
+        }
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="profilePicture">Upload Profile Picture:</label>
+                <input type="file" class="form-control" id="profilePicture" name="ProfilePicture">
+            </div>
+            <button type="submit" class="btn btn-primary">Save Profile Picture</button>
+        </form>
+    </div>
+
+    <div class="profileInformation">
+        <h3><b>@Model.Userr.FirstName @Model.Userr.LastName</b></h3><br>
+        <p><i>Profile description:</i></p>
+        <p>@Model.Userr.ProfileDescription</p>
+
+    </div><br />
+   
+</main>
+<div id="deleteProfileButton">
+    <form method="post" asp-page-handler="DeleteUser" asp-route-ID="@Model.Userr.GetId()">
+        <input type="text" name="reason" placeholder="Reason for deletion" />
+        <button type="submit">Ban User</button>
+    </form>
+</div>
+

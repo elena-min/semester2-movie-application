@@ -23,7 +23,7 @@ namespace DAL
             //{
             string salt;
             var hashedPassword = HashPassword.GenerateHash(newUser.Password, out salt);
-            string commandSql = "INSERT INTO Users (firstName, lastName, username, password, saltedPassword, email, gender) VALUES ( @u_fname, @u_lname, @u_username, @u_password, @u_saltedPassword, @u_email, @u_gender);";
+            string commandSql = "INSERT INTO People (firstName, lastName, username, password, saltedPassword, email, gender, isAccountDeleted) VALUES ( @u_fname, @u_lname, @u_username, @u_password, @u_saltedPassword, @u_email, @u_gender, 0);";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@u_username", newUser.Username);
@@ -47,7 +47,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Users where id = @id";
+            string query = "select * from People where id = @id";
             //try
             //{
             User newUser = null;
@@ -68,9 +68,9 @@ namespace DAL
                     string email = reader.GetString(6);
                     string string_gender = reader.GetString(7);
                     string profileDescription = null;
-                    if (!reader.IsDBNull(9))
+                    if (!reader.IsDBNull(10))
                     {
-                        profileDescription = reader.GetString(9);
+                        profileDescription = reader.GetString(10);
                     }
                     Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
                     if (!string.IsNullOrWhiteSpace(profileDescription))
@@ -101,7 +101,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Users where username = @username";
+            string query = "select * from People where username = @username";
 
             User newUser = null;
 
@@ -124,9 +124,9 @@ namespace DAL
                     string email = reader.GetString(6);
                     string string_gender = reader.GetString(7);
                     string profileDescription = null;
-                    if (!reader.IsDBNull(9))
+                    if (!reader.IsDBNull(10))
                     {
-                        profileDescription = reader.GetString(9);
+                        profileDescription = reader.GetString(10);
                     }
                     Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
                     if (!string.IsNullOrWhiteSpace(profileDescription))
@@ -156,7 +156,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Users where email = @email";
+            string query = "select * from People where email = @email";
             //try
             //{
             User newUser = null;
@@ -177,9 +177,9 @@ namespace DAL
                     string u_email = reader.GetString(6);
                     string string_gender = reader.GetString(7);
                     string profileDescription = null;
-                    if (!reader.IsDBNull(9))
+                    if (!reader.IsDBNull(10))
                     {
-                        profileDescription = reader.GetString(9);
+                        profileDescription = reader.GetString(10);
                     }
                     Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
                     if (!string.IsNullOrWhiteSpace(profileDescription))
@@ -208,7 +208,7 @@ namespace DAL
         public User[] GetAll()
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from Users";
+            string query = "select * from People";
             List<User> users = new List<User>();
             //try
             //{
@@ -269,11 +269,11 @@ namespace DAL
 
             if (user.ProfileDescription != null)
             {
-                commandSql = "UPDATE Users SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender, profileDescription = @profileDescription WHERE id = @e_id;";
+                commandSql = "UPDATE People SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender, profileDescription = @profileDescription WHERE id = @e_id;";
             }
             else
             {
-                commandSql = "UPDATE Users SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender WHERE id = @e_id;";
+                commandSql = "UPDATE People SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender WHERE id = @e_id;";
             }
 
             SqlCommand cmd = new SqlCommand(commandSql, conn);
@@ -354,7 +354,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "SELECT profilePicture FROM Users WHERE id = @id";
+            string query = "SELECT profilePicture FROM People WHERE id = @id";
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
@@ -366,6 +366,27 @@ namespace DAL
                     byte[] imageData = (byte[])result;
                     string base64StringImage = Convert.ToBase64String(imageData);
                     return base64StringImage;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public string CheckIfUserIsBanned(int id)
+        {
+            SqlConnection conn = CreateConnection();
+            conn.Open();
+            string query = "SELECT reasonForDeleting FROM People WHERE id = @id";
+
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                var result = cmd.ExecuteScalar();
+                if (result != DBNull.Value && result != null)
+                {
+                    return result.ToString();
                 }
                 else
                 {

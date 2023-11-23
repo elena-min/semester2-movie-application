@@ -18,6 +18,6 @@ namespace LogicLayer.Interfaces
         string DeleteUser(int id);
         bool SetProfilePicture(int id, byte[] imageArray);
         string GetProfilePicByID(int id);
-       
+        string CheckIfUserIsBanned(int id);
     }
 }

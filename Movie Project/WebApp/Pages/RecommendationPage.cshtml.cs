@@ -54,6 +54,10 @@ namespace WebApp.Pages
                     Userr.FavoriteMediaItem.AddToFavoroites(favMedia);
                 }
             }
+            else
+            {
+
+            }
 
 
             Recommendations = new List<MediaItem>();

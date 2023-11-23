@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.FakeDAL
 {
-    public class FakeUserDAL : IUserDAL
+    public class FakeUserDAL /*: IUserDAL*/
     {
         private List<User> users;
         public FakeUserDAL()

@@ -17,7 +17,7 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             //try
             //{
-            string commandSql = "INSERT INTO Employee (firstName, lastName, username, password, email, gender, age, profilePicture) VALUES (@firstName, @lastName, @username, @password, @email, @gender, @age, @profilePicture);";
+            string commandSql = "INSERT INTO People (firstName, lastName, username, password, email, gender, age, profilePicture) VALUES (@firstName, @lastName, @username, @password, @email, @gender, @age, @profilePicture);";
             conn.Open();
             SqlCommand cmd = new SqlCommand(commandSql, conn);
             cmd.Parameters.AddWithValue("@firstName", newEmployee.FirstName);
@@ -43,7 +43,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Employee where id = @id";
+            string query = "select * from People where id = @id";
             //try
             //{
             Employee newEmp = null;
@@ -82,7 +82,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Employee where username = @username";
+            string query = "select * from People where username = @username";
             //try
             //{
             Employee newEmp = null;
@@ -116,7 +116,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Employee where email = @email";
+            string query = "select * from People where email = @email";
             //try
             //{
             Employee newEmp = null;
@@ -149,7 +149,7 @@ namespace DAL
         public Employee[] GetAll()
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from Employee";
+            string query = "select * from People";
             List<Employee> employees = new List<Employee>();
             try
             {
@@ -189,7 +189,7 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             try
             {
-                string commandSql = "UPDATE Employee SET firstName = @e_fname, lastName = @e_lname, username = @e_username, email = @e_email, gender = @e_gender, profilePicture = @profilePicture WHERE id = @e_id;";
+                string commandSql = "UPDATE People SET firstName = @e_fname, lastName = @e_lname, username = @e_username, email = @e_email, gender = @e_gender, profilePicture = @profilePicture WHERE id = @e_id;";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@e_id", employee.GetId());
@@ -217,7 +217,7 @@ namespace DAL
             {
                 try
                 {
-                    string query = "DELETE FROM Employee WHERE id = @id";
+                    string query = "DELETE FROM People WHERE id = @id";
                     SqlCommand commandSql = new SqlCommand(query, conn);
                     commandSql.Parameters.AddWithValue("@id", id);
                     conn.Open();
@@ -243,7 +243,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "SELECT profilePicture FROM Employee WHERE id = @id";
+            string query = "SELECT profilePicture FROM People WHERE id = @id";
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
@@ -262,6 +262,35 @@ namespace DAL
                 }
             }
         }
+
+        public bool DeleteUserAccount(User user, string reasonForDeleting)
+        {
+            SqlConnection conn = CreateConnection();
+            // try
+            //{
+            conn.Open();
+            string commandSql;
+
+          
+            commandSql = "UPDATE People SET isAccountDeleted = 1, reasonForDeleting = @reasonForDeleting, WHERE id = @u_id;";
+            
+
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            cmd.Parameters.AddWithValue("@u_id", user.GetId());
+            cmd.Parameters.AddWithValue("@reasonForDeleting", reasonForDeleting);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            return true;
+
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    return failed;
+            //}
+        }
+
 
 
     }

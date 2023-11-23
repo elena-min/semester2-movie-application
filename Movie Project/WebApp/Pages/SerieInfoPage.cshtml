@@ -136,39 +136,70 @@
         <canvas id="popularityChart" width="400" height="200"></canvas>
     </div>
 
-    <script>
-        var ctx = document.getElementById('popularityChart').getContext('2d');
-        var popularityScores = @Html.Raw(Json.Serialize(Model.PopularityScores));
-
-        // Get the last 7 days, including today
-        var last7Days = [];
-        for (var i = 6; i >= 0; i--) {
-            var currentDate = new Date();
-            currentDate.setDate(currentDate.getDate() - i);
-            var formattedDate = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-            last7Days.push(formattedDate);
-        }
-
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: last7Days,
-                datasets: [{
-                    label: 'Popularity Scores',
-                    data: popularityScores,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
 
 </main>
+<br>
+
+<h3>All written Reviews</h3>
+<div id="reviewsContainers">
+    @foreach (Review review in reviewController.GetReviewsByMediaItem(@Model.Serie.GetId()))
+    {
+        Review writtenReview = review;
+        <div class="review">
+            <div class="reviewText p-1">
+                <h3><b>@writtenReview.Title</b></h3>
+                <p>
+                    <i> Written by:</i>
+                    <a asp-page="./UserProfilePage" asp-route-id="@writtenReview.ReviewWriter.GetId()" target="_blank">
+                        @userController.GetUserByID(writtenReview.ReviewWriter.GetId()).Username
+                    </a>
+                </p>
+                <div class="rating">
+                    <span class="star @((@writtenReview.Rating >= 1) ? "gold" : "")">&#9733;</span>
+                    <span class="star @((@writtenReview.Rating >= 2) ? "gold" : "")">&#9733;</span>
+                    <span class="star @((@writtenReview.Rating >= 3) ? "gold" : "")">&#9733;</span>
+                    <span class="star @((@writtenReview.Rating >= 4) ? "gold" : "")">&#9733;</span>
+                    <span class="star @((@writtenReview.Rating >= 5) ? "gold" : "")">&#9733;</span>
+                </div>
+                <p>@writtenReview.ReviewContent</p>
+                <p><i>Written on: @writtenReview.DateOfPublication.ToString("dd-MM-yyyy")</i></p>
+            </div>
+        </div>
+    }
+</div>
+
+
+<script>
+    var ctx = document.getElementById('popularityChart').getContext('2d');
+    var popularityScores = @Html.Raw(Json.Serialize(Model.PopularityScores));
+
+    // Get the last 7 days, including today
+    var last7Days = [];
+    for (var i = 6; i >= 0; i--) {
+        var currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - i);
+        var formattedDate = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+        last7Days.push(formattedDate);
+    }
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: last7Days,
+            datasets: [{
+                label: 'Popularity Scores',
+                data: popularityScores,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using LogicLayer.Classes;
 using System.Reflection;
+using LogicLayer.Strategy;
 
 namespace WebApp.Pages
 {
@@ -17,6 +18,8 @@ namespace WebApp.Pages
 
         private readonly UserController _userController;
         private readonly FavoritesController _favoritesController;
+        private readonly FilterContext _filterContext;
+
         public List<MediaItem> FavoriteMovies { get; set; }
 
         [BindProperty]
@@ -25,11 +28,12 @@ namespace WebApp.Pages
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
 
-        public FavoriteMoviesModel(UserController userController, FavoritesController favoritesController)
+        public FavoriteMoviesModel(UserController userController, FavoritesController favoritesController, FilterContext filterContext)
         {
             this._userController = userController;
             FavoriteMovies = new List<MediaItem>();
             _favoritesController = favoritesController;
+            _filterContext = filterContext;
         }
         public IActionResult OnGet(string searchTerm, Genre? genreSelect, int pageIndex = 1)
         {
@@ -58,11 +62,25 @@ namespace WebApp.Pages
                 }
             }
 
-            if (string.IsNullOrEmpty(searchTerm) && !genreSelect.HasValue)
-            {
-                return Page();
-            }
+            //if (string.IsNullOrEmpty(searchTerm) && !genreSelect.HasValue)
+            //{
+            //    return Page();
+            //}
+            _filterContext.SetFilterStrategy(new SearchFilterStrategy(searchTerm, genreSelect));
+            MediaItem[] searchRecommendations = _filterContext.GetFilteredMediaItems(FavoriteMovies);
+            Results = searchRecommendations.ToList();
+            const int pageSize = 10;
+            TotalResults = Results.Count;
+            TotalPages = (int)Math.Ceiling((double)TotalResults / (pageSize));
+            CurrentPage = pageIndex;
+            int startIndex = (pageIndex - 1) * pageSize;
+            int endIndex = startIndex + pageSize - 1;
 
+            Results = Results.GetRange(startIndex, endIndex - startIndex + 1);
+            if (Results.Count == 0)
+            {
+                TempData["Message"] = "No results.";
+            }
             return Page();
         }
         public IActionResult OnPost(int movieId)

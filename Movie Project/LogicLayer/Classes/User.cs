@@ -1,79 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LogicLayer.Classes
 {
-    public class User
+    public class User : Person
     {
-        private int id;
-        private string firstName;
-        private string lastName;
-        private string username;
-        private string email;
-        private string password;
-        private Gender gender;
+       
         private string profileDescription;
         private List<MediaItem> favoriteMediaItems;
-
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Salt { get; set; } 
-
-        public string Email { get; }
-        public Gender Gender { get; set; }
         public string ProfileDescription { get; set; }
         public byte[] ProfilePicture { get; set; }
-
         public FavoriteMediaItem FavoriteMediaItem { get; set; }
 
+        public bool IsBanned { get; set; }
+        public string ReasonForDeleting { get; set; }
+
         public User() { }
-        public User(string firstName, string lastName, string username, string email, string password, Gender gender)
+        public User(string firstName, string lastName, string username, string email, string password, Gender gender) : base(firstName, lastName, username, email, password, gender)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            Username = username;
-            Email = email;
-            Password = password;
-            Gender = gender;
             FavoriteMediaItem = new FavoriteMediaItem(username);
-        }
-        public User(string firstName, string lastName, string username, string email, string password, string salt,  Gender gender)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            Username = username;
-            Email = email;
-            Password = password;
-            Salt = salt;
-            Gender = gender;
-            FavoriteMediaItem = new FavoriteMediaItem(username);
-        }
-        public User(string firstName, string lastName, string username, string email, string password, string salt, Gender gender, string profileDescription)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            Username = username;
-            Email = email;
-            Password = password;
-            Salt = salt;
-            Gender = gender;
-            ProfileDescription = profileDescription;
-            FavoriteMediaItem = new FavoriteMediaItem(username);
-        }
-        public void SetId(int id)
-        {
-            this.id = id;
-        }
-        public int GetId()
-        {
-            return this.id;
+            Role = "User";
+            IsBanned = false;
         }
 
+        public User(string firstName, string lastName, string username, string email, string password, string salt,  Gender gender) : base(firstName, lastName, username, email, password, gender, salt)
+        {
+            FavoriteMediaItem = new FavoriteMediaItem(username);
+            Role = "User";
+            IsBanned = false;
+        }
+        public User(string firstName, string lastName, string username, string email, string password, string salt, Gender gender, string profileDescription) : base(firstName, lastName, username, email, password, gender, salt)
+        {
+
+            ProfileDescription = profileDescription;
+            FavoriteMediaItem = new FavoriteMediaItem(username);
+            Role = "User";
+            IsBanned = false;
+        }
+
+        public void SetUserAsBanned(string reason)
+        {
+            IsBanned = true;
+            ReasonForDeleting = reason;
+        }
         public override string ToString()
         {
             return $"{this.GetId()}: {Username} - {FirstName} {LastName}";
