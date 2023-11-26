@@ -30,7 +30,6 @@
         {
             buttonSearch = new Button();
             buttonMoreInfo = new Button();
-            buttonUpdate = new Button();
             buttonDelete = new Button();
             labelOrder = new Label();
             comboBoxOrder = new ComboBox();
@@ -80,22 +79,6 @@
             buttonMoreInfo.Text = "More Info";
             buttonMoreInfo.UseVisualStyleBackColor = false;
             buttonMoreInfo.Click += buttonMoreInfo_Click;
-            // 
-            // buttonUpdate
-            // 
-            buttonUpdate.BackColor = Color.White;
-            buttonUpdate.FlatAppearance.BorderColor = Color.FromArgb(138, 104, 86);
-            buttonUpdate.FlatAppearance.BorderSize = 2;
-            buttonUpdate.FlatStyle = FlatStyle.Flat;
-            buttonUpdate.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonUpdate.ForeColor = Color.FromArgb(138, 104, 86);
-            buttonUpdate.Location = new Point(322, 483);
-            buttonUpdate.Name = "buttonUpdate";
-            buttonUpdate.Size = new Size(203, 44);
-            buttonUpdate.TabIndex = 141;
-            buttonUpdate.Text = "Update";
-            buttonUpdate.UseVisualStyleBackColor = false;
-            buttonUpdate.Click += buttonUpdate_Click;
             // 
             // buttonDelete
             // 
@@ -251,7 +234,6 @@
             panelDesktop.Controls.Add(buttonMoreInfo);
             panelDesktop.Controls.Add(listBoxViewEmpoyees);
             panelDesktop.Controls.Add(buttonSearch);
-            panelDesktop.Controls.Add(buttonUpdate);
             panelDesktop.Controls.Add(lblSearchMovies);
             panelDesktop.Controls.Add(buttonDelete);
             panelDesktop.Controls.Add(labelName);
@@ -288,7 +270,6 @@
 
         private Button buttonSearch;
         private Button buttonMoreInfo;
-        private Button buttonUpdate;
         private Button buttonDelete;
         private Label labelOrder;
         private ComboBox comboBoxOrder;

@@ -101,7 +101,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from People where username = @username";
+            string query = "select * from People where username = @username and where saltedPassword is not null";
 
             User newUser = null;
 
@@ -156,7 +156,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from People where email = @email";
+            string query = "select * from People where email = @email and where saltedPassword is not null";
             //try
             //{
             User newUser = null;
@@ -208,7 +208,7 @@ namespace DAL
         public User[] GetAll()
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from People";
+            string query = "select * from People where saltedPassword is not null";
             List<User> users = new List<User>();
             //try
             //{
@@ -230,7 +230,7 @@ namespace DAL
                         string profileDescription = null;
                     if (!reader.IsDBNull(9))
                     {
-                            profileDescription = reader.GetString(9);
+                            profileDescription = reader.GetString(10);
                         }
                         Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
                         User newUser = null;

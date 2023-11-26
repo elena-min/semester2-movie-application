@@ -1,5 +1,6 @@
 ﻿using LogicLayer;
 using LogicLayer.Classes;
+using LogicLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class TrendingDAL
+    public class TrendingDAL : ITrendingDAL
     {
         public static SqlConnection CreateConnection()
         {
@@ -20,7 +21,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string selectCommandSql = "INSERT INTO MonthlyTrendingMovies (MonthYear, mediaItemID, TrendingScore) VALUES (@MonthYear, @mediaItemID, @TrendingScore)";
+            string selectCommandSql = "INSERT INTO MonthlyTrendingMediaItems (MonthYear, mediaItemID, TrendingScore) VALUES (@MonthYear, @mediaItemID, @TrendingScore)";
 
             foreach (MediaItem mediaItem in monthlyTrendingMedias)
             {
@@ -44,7 +45,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string selectCommandSql = "INSERT INTO WeeklyTrendingMovies (WeekStartDate, WeekEndDate, mediaItemID, TrendingScore) VALUES (@WeekStartDate, @WeekEndDate, @mediaItemID, @TrendingScore)";
+            string selectCommandSql = "INSERT INTO WeeklyTrendingMediaItems (WeekStartDate, WeekEndDate, mediaItemID, TrendingScore) VALUES (@WeekStartDate, @WeekEndDate, @mediaItemID, @TrendingScore)";
 
             foreach (MediaItem mediaItem in mediaItems)
                 {
@@ -108,7 +109,7 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             conn.Open();
 
-            string commandSql = "select DTM.Day, MI.id, MI.title, MI.description, MI.rating, MI.countryOfOrigin, MI.genres, MI.cast, MI.image, M.director, M.writer, M.duration, S.seasons, S.episodes " +
+            string commandSql = "select DTM.Day, MI.id, MI.title, MI.description, MI.rating, MI.countryOfOrigin, MI.genres, MI.cast, MI.releaseDate, M.director, M.writer, M.duration, S.seasons, S.episodes " +
                 "from DailyTrendingMediaItems as DTM " +
                 "inner join MediaItem as MI " +
                 "on DTM.mediaItemID = MI.id " +
@@ -126,10 +127,10 @@ namespace DAL
                     string title = reader.GetString(2);
                     string description = reader.GetString(3);
                     double rating = (double)reader.GetDecimal(4);
-                    DateTime releaseDate = reader.GetDateTime(5);
-                    string countryOfOrigin = reader.GetString(6);
-                    string string_cast = reader.GetString(8);
-                    string genres_string = reader.GetString(7);
+                    string countryOfOrigin = reader.GetString(5);
+                    string string_cast = reader.GetString(7);
+                    string genres_string = reader.GetString(6);
+                    DateTime releaseDate = reader.GetDateTime(8);
                     string[] string_genres = genres_string.Split(',');
                     string[] cast = string_cast.Split(',');
 
@@ -200,6 +201,166 @@ namespace DAL
             conn.Close();
 
             return lastCalculationTime;
+        }
+
+        public MediaItem[] GetTrendingWeekly(DateTime dayPicked)
+        {
+            List<MediaItem> mediaItems = new List<MediaItem>();
+
+            SqlConnection conn = CreateConnection();
+            conn.Open();
+
+            string commandSql = "select DTM.WeekStartDate,  MI.id, MI.title, MI.description, MI.rating, MI.countryOfOrigin, MI.genres, MI.cast, MI.releaseDate, M.director, M.writer, M.duration, S.seasons, S.episodes " +
+                "from WeeklyTrendingMediaItems as DTM " +
+                "inner join MediaItem as MI " +
+                "on DTM.mediaItemID = MI.id " +
+                "LEFT JOIN Movie as M ON MI.id = M.id " +
+                "LEFT JOIN Serie as S ON MI.id = S.id " +
+                "WHERE DTM.WeekStartDate = @startDate AND DTM.WeekEndDate = @endDate;";
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            int dayOfWeek = (int)dayPicked.DayOfWeek;
+            DateTime startDate = dayPicked.AddDays(-(dayOfWeek == 0 ? 6 : dayOfWeek - 1));
+            DateTime endDate = startDate.AddDays(6);
+            cmd.Parameters.AddWithValue("@startDate", startDate);
+            cmd.Parameters.AddWithValue("@endDate", endDate);
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int mediaItemId = reader.GetInt32(1);
+                    string title = reader.GetString(2);
+                    string description = reader.GetString(3);
+                    double rating = (double)reader.GetDecimal(4);
+                    string countryOfOrigin = reader.GetString(5);
+                    string string_cast = reader.GetString(7);
+                    string genres_string = reader.GetString(6);
+                    DateTime releaseDate = reader.GetDateTime(8);
+                    string[] string_genres = genres_string.Split(',');
+                    string[] cast = string_cast.Split(',');
+
+                    MediaItem mediaItem;
+
+                    if (reader["director"] != DBNull.Value)
+                    {
+                        string director = reader.GetString(9);
+                        string writer = reader.GetString(10);
+                        int duration = reader.GetInt32(11);
+
+                        mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
+                    }
+                    else if (reader["seasons"] != DBNull.Value)
+                    {
+                        int seasons = reader.GetInt32(12);
+                        int episodes = reader.GetInt32(13);
+
+                        mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
+                    }
+                    else
+                    {
+                        // If it's neither a Movie nor Serie, create a generic MediaItem
+                        mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating);
+                    }
+
+                    mediaItem.SetId(mediaItemId);
+                    foreach (string string_genre in string_genres)
+                    {
+                        if (Enum.TryParse(string_genre, out Genre enum_genre))
+                        {
+                            mediaItem.AddGenre(enum_genre);
+                        }
+                    }
+                    foreach (string actor in cast)
+                    {
+                        mediaItem.Cast.AddToCast(actor);
+                    }
+
+                    mediaItems.Add(mediaItem);
+                }
+            }
+
+            conn.Close();
+
+            return mediaItems.ToArray();
+        }
+
+        public MediaItem[] GetTrendingMonthly(DateTime dayPicked)
+        {
+            List<MediaItem> mediaItems = new List<MediaItem>();
+
+            SqlConnection conn = CreateConnection();
+            conn.Open();
+
+            string commandSql = "select DTM.MonthYear, MI.id, MI.title, MI.description, MI.rating, MI.countryOfOrigin, MI.genres, MI.cast, MI.releaseDate, M.director, M.writer, M.duration, S.seasons, S.episodes " +
+                "from MonthlyTrendingMediaItems as DTM " +
+                "inner join MediaItem as MI " +
+                "on DTM.mediaItemID = MI.id " +
+                "LEFT JOIN Movie as M ON MI.id = M.id " +
+                "LEFT JOIN Serie as S ON MI.id = S.id " +
+                "WHERE DTM.MonthYear = @MonthYear;";
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            string formattedMonthYear = dayPicked.ToString("yyyy-MM");
+            cmd.Parameters.AddWithValue("@MonthYear", formattedMonthYear);
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int mediaItemId = reader.GetInt32(1);
+                    string title = reader.GetString(2);
+                    string description = reader.GetString(3);
+                    double rating = (double)reader.GetDecimal(4);
+                    string countryOfOrigin = reader.GetString(5);
+                    string string_cast = reader.GetString(7);
+                    string genres_string = reader.GetString(6);
+                    DateTime releaseDate = reader.GetDateTime(8);
+                    string[] string_genres = genres_string.Split(',');
+                    string[] cast = string_cast.Split(',');
+
+                    MediaItem mediaItem;
+
+                    if (reader["director"] != DBNull.Value)
+                    {
+                        string director = reader.GetString(9);
+                        string writer = reader.GetString(10);
+                        int duration = reader.GetInt32(11);
+
+                        mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
+                    }
+                    else if (reader["seasons"] != DBNull.Value)
+                    {
+                        int seasons = reader.GetInt32(12);
+                        int episodes = reader.GetInt32(13);
+
+                        mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
+                    }
+                    else
+                    {
+                        // If it's neither a Movie nor Serie, create a generic MediaItem
+                        mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating);
+                    }
+
+                    mediaItem.SetId(mediaItemId);
+                    foreach (string string_genre in string_genres)
+                    {
+                        if (Enum.TryParse(string_genre, out Genre enum_genre))
+                        {
+                            mediaItem.AddGenre(enum_genre);
+                        }
+                    }
+                    foreach (string actor in cast)
+                    {
+                        mediaItem.Cast.AddToCast(actor);
+                    }
+
+                    mediaItems.Add(mediaItem);
+                }
+            }
+
+            conn.Close();
+
+            return mediaItems.ToArray();
         }
 
     }

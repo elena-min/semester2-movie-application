@@ -91,13 +91,6 @@ namespace DesktopApp.Employees
             OpenChildForm(new ProfilePageEdit(employee), sender);
         }
 
-        private void btnView_Click(object sender, EventArgs e)
-        {
-            if (activeform != null)
-            {
-                activeform.Close();
-            }
-            ActivateButton(sender);
-        }
+        private void btnView_Click(object sender, EventArgs e) {}
     }
 }

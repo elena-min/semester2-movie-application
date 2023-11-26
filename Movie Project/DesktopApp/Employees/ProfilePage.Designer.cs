@@ -44,7 +44,6 @@
             lblAge = new Label();
             btnEditProfile = new Button();
             panel1 = new Panel();
-            btnView = new Button();
             panelDesktop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxProfilePic).BeginInit();
             panel1.SuspendLayout();
@@ -216,27 +215,12 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(145, 190, 222);
-            panel1.Controls.Add(btnView);
             panel1.Controls.Add(btnEditProfile);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(860, 67);
             panel1.TabIndex = 145;
-            // 
-            // btnView
-            // 
-            btnView.FlatAppearance.BorderSize = 0;
-            btnView.FlatStyle = FlatStyle.Flat;
-            btnView.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnView.ForeColor = Color.White;
-            btnView.Location = new Point(481, 0);
-            btnView.Name = "btnView";
-            btnView.Size = new Size(389, 75);
-            btnView.TabIndex = 10;
-            btnView.Text = "View Profile";
-            btnView.UseVisualStyleBackColor = true;
-            btnView.Click += btnView_Click;
             // 
             // ProfilePage
             // 
@@ -262,7 +246,6 @@
         private Panel panelDesktop;
         private Button btnEditProfile;
         private Panel panel1;
-        private Button btnView;
         private Label labelGender;
         private Label labelAge;
         private Label labelLName;

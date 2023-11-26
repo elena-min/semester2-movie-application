@@ -17,7 +17,7 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             //try
             //{
-            string commandSql = "INSERT INTO People (firstName, lastName, username, password, email, gender, age, profilePicture) VALUES (@firstName, @lastName, @username, @password, @email, @gender, @age, @profilePicture);";
+            string commandSql = "INSERT INTO People (firstName, lastName, username, password, email, gender, age, profilePicture, role) VALUES (@firstName, @lastName, @username, @password, @email, @gender, @age, @profilePicture, @role);";
             conn.Open();
             SqlCommand cmd = new SqlCommand(commandSql, conn);
             cmd.Parameters.AddWithValue("@firstName", newEmployee.FirstName);
@@ -28,6 +28,7 @@ namespace DAL
             cmd.Parameters.AddWithValue("@gender", newEmployee.Gender.ToString());
             cmd.Parameters.AddWithValue("@age", newEmployee.Age);
             cmd.Parameters.AddWithValue("@profilePicture", new byte[0]);
+            cmd.Parameters.AddWithValue("@role", "Employee");
 
             cmd.ExecuteNonQuery();
 
@@ -149,10 +150,10 @@ namespace DAL
         public Employee[] GetAll()
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from People";
+            string query = "select * from People where saltedPassword is null";
             List<Employee> employees = new List<Employee>();
-            try
-            {
+            //try
+            //{
                 conn.Open();
                 SqlCommand command = new SqlCommand(query, conn);
                 SqlDataReader reader = command.ExecuteReader();
@@ -178,18 +179,18 @@ namespace DAL
                 reader.Close();
                 conn.Close();
                 return employees.ToArray();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return null;
+            //}
         }
         public bool UpdateEmployee(Employee employee, byte[] pictureBytes)
         {
             SqlConnection conn = CreateConnection();
             try
             {
-                string commandSql = "UPDATE People SET firstName = @e_fname, lastName = @e_lname, username = @e_username, email = @e_email, gender = @e_gender, profilePicture = @profilePicture WHERE id = @e_id;";
+                string commandSql = "UPDATE People SET firstName = @e_fname, lastName = @e_lname, username = @e_username, email = @e_email, gender = @e_gender, age = @e_age, profilePicture = @profilePicture WHERE id = @e_id;";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@e_id", employee.GetId());
@@ -198,6 +199,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@e_fname", employee.FirstName);
                 cmd.Parameters.AddWithValue("@e_lname", employee.LastName);
                 cmd.Parameters.AddWithValue("@e_gender", employee.Gender.ToString());
+                cmd.Parameters.AddWithValue("@e_age", employee.Age.ToString());
                 cmd.Parameters.AddWithValue("@profilePicture", pictureBytes);
 
                 cmd.ExecuteNonQuery();

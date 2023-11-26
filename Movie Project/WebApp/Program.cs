@@ -25,6 +25,7 @@ builder.Services.AddSingleton<ReviewController>(new ReviewController(new ReviewD
 builder.Services.AddSingleton<ReviewDAL>(new ReviewDAL());
 builder.Services.AddSingleton<FavoritesController>(new FavoritesController(new FavoritesDAL()));
 builder.Services.AddSingleton<FavoritesDAL>(new FavoritesDAL());
+builder.Services.AddSingleton<TrendingController>(new TrendingController(new TrendingDAL()));
 builder.Services.AddSingleton<TrendingDAL>(new TrendingDAL());
 
 builder.Services.AddSingleton<LogicLayer.Strategy.FilterContext>();

@@ -3,6 +3,7 @@ using DesktopApp.Employees;
 using LogicLayer.Classes;
 using LogicLayer.Controllers;
 using LogicLayer.Interfaces;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,7 @@ namespace DesktopApp.Users
         private Form activeform;
         private readonly UserController userController;
         IUserDAL iUserDAL;
-        List<User> allUsers;
+        List<LogicLayer.Classes.User> allUsers;
         public UserMenu()
         {
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace DesktopApp.Users
 
             lblWarning.Text = "";
             listBoxViewUsers.Items.Clear();
-            allUsers = new List<User>();
+            allUsers = new List<LogicLayer.Classes.User>();
 
             
             if (userController.GetAll() == null)
@@ -40,7 +41,7 @@ namespace DesktopApp.Users
             }
             else
             {
-                foreach (User user in userController.GetAll())
+                foreach (LogicLayer.Classes.User user in userController.GetAll())
                 {
                     allUsers.Add(user);
                 }
@@ -48,7 +49,7 @@ namespace DesktopApp.Users
 
             if (allUsers.Count > 0)
             {
-                foreach (User user in allUsers)
+                foreach (LogicLayer.Classes.User user in allUsers)
                 {
                     listBoxViewUsers.Items.Add(user.ToString());
                 }
@@ -117,7 +118,7 @@ namespace DesktopApp.Users
             if (listBoxViewUsers.SelectedItem != null)
             {
                 string selectedUser = listBoxViewUsers.SelectedItem.ToString();
-                foreach (User user in userController.GetAll())
+                foreach (LogicLayer.Classes.User user in userController.GetAll())
                 {
                     if (selectedUser == user.ToString())
                     {
@@ -134,7 +135,7 @@ namespace DesktopApp.Users
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this review?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this account?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -143,7 +144,7 @@ namespace DesktopApp.Users
                     int selected_user_id = Int32.Parse(listBoxViewUsers.SelectedItem.ToString().Split('-')[0]);
                     lblWarning.Text = userController.DeleteUser(selected_user_id); ;
                     listBoxViewUsers.Items.Clear();
-                    foreach (User user in userController.GetAll())
+                    foreach (LogicLayer.Classes.User user in userController.GetAll())
                     {
                         listBoxViewUsers.Items.Add(user.ToString());
                     }
@@ -158,7 +159,34 @@ namespace DesktopApp.Users
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            
+            lblWarning.Text = "";
+            listBoxViewUsers.Items.Clear();
+            List<LogicLayer.Classes.User> allUsers = new List<LogicLayer.Classes.User>();
+            if (textBoxUserName.Text != null || textBoxUserName.Text == "")
+            {
+                foreach (LogicLayer.Classes.User user in userController.GetAll())
+                {
+
+                    if (user.FirstName.Contains(textBoxUserName.Text) || user.LastName.Contains(textBoxUserName.Text))
+                    {
+                        allUsers.Add(user);    
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (LogicLayer.Classes.User user in userController.GetAll())
+                {
+                    allUsers.Add(user);
+                }
+            }
+
+
+            foreach (LogicLayer.Classes.User user in allUsers)
+            {
+                listBoxViewUsers.Items.Add(user.ToString());
+            }
         }
     }
 }

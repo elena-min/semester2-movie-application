@@ -189,7 +189,7 @@ namespace DesktopApp.Employees
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this review?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this employee?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -208,7 +208,7 @@ namespace DesktopApp.Employees
                     lblWarning.Text = "There is no employee selected!";
 
                 }
-            }               
+            }
         }
     }
 }
