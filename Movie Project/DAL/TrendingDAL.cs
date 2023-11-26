@@ -40,7 +40,7 @@ namespace DAL
             conn.Close();
         }
 
-        public void SaveTrendingWeekly(List<MediaItem> mediaItems, DateTime weekStartDate, DateTime weekEndDate)
+        public void SaveTrendingWeekly(List<MediaItem> mediaItems, DateTime currentDate)
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
@@ -52,10 +52,12 @@ namespace DAL
                 {
                     // Assume you have a method to calculate the trending score for each media item
                     double trendingScore = mediaItem.CalculatePopularityScoreTwo(DateTime.Today, LogicLayer.TimePeriod.Week);
-
+                    int dayOfWeek = (int)currentDate.DayOfWeek;
+                    DateTime startDate = currentDate.AddDays(-(dayOfWeek == 0 ? 6 : dayOfWeek - 1));
+                    DateTime endDate  = startDate.AddDays(6);
                     // Set parameters
-                    command.Parameters.AddWithValue("@WeekStartDate", weekStartDate);
-                        command.Parameters.AddWithValue("@WeekEndDate", weekEndDate);
+                    command.Parameters.AddWithValue("@WeekStartDate", startDate);
+                        command.Parameters.AddWithValue("@WeekEndDate", endDate);
                         command.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId());
                         command.Parameters.AddWithValue("@TrendingScore", trendingScore);
 
@@ -71,7 +73,7 @@ namespace DAL
             conn.Open();
 
             // Delete existing records for the specified day
-            string deleteCommandSql = "DELETE FROM DailyTrendingMediaItems WHERE Day = @Day";
+            string deleteCommandSql = "DELETE FROM DailyTrendingMediaItems WHERE CONVERT(DATE, Day) = @Day";
 
             using (SqlCommand deleteCommand = new SqlCommand(deleteCommandSql, conn))
             {
@@ -175,5 +177,30 @@ namespace DAL
 
             return mediaItems.ToArray();
         }
+        public DateTime GetLastTrendingCalculationTime(DateTime givenDate)
+        {
+            SqlConnection conn = CreateConnection();
+            conn.Open();
+            DateTime lastCalculationTime = DateTime.MinValue;
+
+            string commandSql = "SELECT TOP 1 Day AS LastCalculationTime " +
+                "FROM DailyTrendingMediaItems " +
+                "WHERE CONVERT(DATE, [Day]) = CONVERT(DATE, @GivenDate);";
+            SqlCommand cmd = new SqlCommand(commandSql, conn);
+            cmd.Parameters.AddWithValue("@GivenDate", givenDate);
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("LastCalculationTime")))
+                {
+                    lastCalculationTime = reader.GetDateTime(reader.GetOrdinal("LastCalculationTime"));
+                }
+            }
+
+            conn.Close();
+
+            return lastCalculationTime;
+        }
+
     }
 }

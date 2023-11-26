@@ -19,11 +19,9 @@
             <h6>Check out the most popular movies/series on our website at the moment!</h6>
             @{
                 DateTime currentDateTime = DateTime.Now;
-                bool shouldRecalculate = Model.ShouldRecalculateTrending();
             }
             <h6>Current Hour: @currentDateTime.Hour, Last Calculation Hour: @Model.LastTrendingCalculationTime.Hour</h6>
             <h6>Current Hour: @currentDateTime.Hour, Last Calculation Hour: @Model.LastTrendingCalculationTime.Minute</h6>
-            <h6>Result: @shouldRecalculate</h6>
 
         </div>
         <div class="main-picture">
