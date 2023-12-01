@@ -18,7 +18,8 @@ namespace LogicLayer.Interfaces
         string DeleteEmployee(int id);
         string GetProfilePicByID(int id);
         bool DeleteUserAccount(User user, string reasonForDeleting);
-
+        string GetPasswords(int id);
+         void UpdatePasswordInDatabase(string hashedPassword, string salt, int id);
 
     }
 }

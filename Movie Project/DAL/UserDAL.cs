@@ -23,7 +23,7 @@ namespace DAL
             //{
             string salt;
             var hashedPassword = HashPassword.GenerateHash(newUser.Password, out salt);
-            string commandSql = "INSERT INTO People (firstName, lastName, username, password, saltedPassword, email, gender, isAccountDeleted) VALUES ( @u_fname, @u_lname, @u_username, @u_password, @u_saltedPassword, @u_email, @u_gender, 0);";
+            string commandSql = "INSERT INTO Person (firstName, lastName, username, password, saltedPassword, email, gender, isAccountDeleted, role) VALUES ( @u_fname, @u_lname, @u_username, @u_password, @u_saltedPassword, @u_email, @u_gender, 0, @role);";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@u_username", newUser.Username);
@@ -33,7 +33,8 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@u_fname", newUser.FirstName);
                 cmd.Parameters.AddWithValue("@u_lname", newUser.LastName);
                 cmd.Parameters.AddWithValue("@u_gender", newUser.Gender.ToString());
-                cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@role", "User");
+            cmd.ExecuteNonQuery();
 
                 conn.Close();
                 return true;
@@ -101,7 +102,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from People where username = @username and where saltedPassword is not null";
+            string query = "select * from Person where username = @username and age is  null";
 
             User newUser = null;
 
@@ -156,7 +157,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from People where email = @email and where saltedPassword is not null";
+            string query = "select * from Person where email = @email and age is  null";
             //try
             //{
             User newUser = null;
@@ -208,7 +209,7 @@ namespace DAL
         public User[] GetAll()
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from People where saltedPassword is not null";
+            string query = "select * from Person where age is  null";
             List<User> users = new List<User>();
             //try
             //{
@@ -269,7 +270,7 @@ namespace DAL
 
             if (user.ProfileDescription != null)
             {
-                commandSql = "UPDATE People SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender, profileDescription = @profileDescription WHERE id = @e_id;";
+                commandSql = "UPDATE Person SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender, profileDescription = @profileDescription WHERE id = @e_id;";
             }
             else
             {
@@ -306,7 +307,7 @@ namespace DAL
             {
                 try
                 {
-                    string query = "DELETE FROM Users WHERE id = @id";
+                    string query = "DELETE FROM Person WHERE id = @id";
                     SqlCommand commandSql = new SqlCommand(query, conn);
                     commandSql.Parameters.AddWithValue("@id", id);
                     conn.Open();
@@ -335,7 +336,7 @@ namespace DAL
             //try
             //{
             conn.Open();
-            string commandSql = "UPDATE Users SET profilePicture = @profilePicture WHERE id = @id";
+            string commandSql = "UPDATE Person SET profilePicture = @profilePicture WHERE id = @id";
             SqlCommand cmd = new SqlCommand(commandSql, conn);
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@profilePicture", imageArray);
@@ -354,7 +355,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "SELECT profilePicture FROM People WHERE id = @id";
+            string query = "SELECT profilePicture FROM Person WHERE id = @id";
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
@@ -378,7 +379,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "SELECT reasonForDeleting FROM People WHERE id = @id";
+            string query = "SELECT reasonForDeleting FROM Person WHERE id = @id";
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {

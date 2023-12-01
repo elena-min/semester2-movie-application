@@ -21,7 +21,7 @@ namespace LogicLayer.Classes
             Age = age;
             Role = "Employee";
         }
-        public Employee(string firstName, string lastName, string username, string email, string password, Gender gender, int age, string salt) : base(firstName, lastName, username, email, password, gender, salt)
+        public Employee(string firstName, string lastName, string username, string email, string password, string salt, Gender gender, int age) : base(firstName, lastName, username, email, password, salt, gender)
         {
             Age = age;
             Role = "Employee";

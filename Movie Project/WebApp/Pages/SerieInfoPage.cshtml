@@ -150,9 +150,16 @@
                 <h3><b>@writtenReview.Title</b></h3>
                 <p>
                     <i> Written by:</i>
-                    <a asp-page="./UserProfilePage" asp-route-id="@writtenReview.ReviewWriter.GetId()" target="_blank">
-                        @userController.GetUserByID(writtenReview.ReviewWriter.GetId()).Username
-                    </a>
+                    @if (userController.GetUserByID(@writtenReview.ReviewWriter.GetId()) != null)
+                    {
+                        <a asp-page="./UserProfilePage" asp-route-id="@writtenReview.ReviewWriter.GetId()" target="_blank">
+                            @userController.GetUserByID(writtenReview.ReviewWriter.GetId()).Username
+                        </a>
+                    }
+                    else
+                    {
+                    <p>@userController.GetUserByID(writtenReview.ReviewWriter.GetId()).Username</p>
+                    }
                 </p>
                 <div class="rating">
                     <span class="star @((@writtenReview.Rating >= 1) ? "gold" : "")">&#9733;</span>

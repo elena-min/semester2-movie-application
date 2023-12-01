@@ -57,5 +57,9 @@ namespace LogicLayer.Controllers
         {
             return ireviewDAL.DeletedMediaItem(mediaID);
         }
+        public bool DeletedUser(User deletedUser)
+        {
+            return ireviewDAL.DeletedUser(deletedUser);
+        }
     }
 }

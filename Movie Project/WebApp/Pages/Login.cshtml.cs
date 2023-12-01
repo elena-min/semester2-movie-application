@@ -12,13 +12,15 @@ namespace WebApp.Pages
     public class LoginModel : PageModel
     {
         private readonly UserController _userController;
+        private readonly EmployeeController _empController;
 
         [BindProperty(SupportsGet =true)]
         public User User { get; set; }
 
-        public LoginModel(UserController userController)
+        public LoginModel(UserController userController, EmployeeController empController)
         {
             _userController = userController;
+            _empController = empController;
         }
         public void OnGet()
         {
@@ -51,6 +53,25 @@ namespace WebApp.Pages
                             user.SetUserAsBanned(reasonForBanning);
                             TempData["Message"] = "Your account has been banned. Reason: " + user.ReasonForDeleting;
                         }
+
+                    }
+                }
+
+                var emp = _empController.GetEmployeeByUsername(User.Username);
+                if (emp != null)
+                {
+                    var result = HashPassword.VerifyPassword(User.Password, emp.Password, emp.Salt);
+
+                    if (result)
+                    {
+                        List<Claim> claims = new List<Claim>();
+                        claims.Add(new Claim(ClaimTypes.Name, emp.Username));
+                        claims.Add(new Claim("Id", emp.GetId().ToString()));
+                        claims.Add(new Claim(ClaimTypes.Role, emp.Role));
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+
+                        return RedirectToPage("Main");
 
                     }
                 }

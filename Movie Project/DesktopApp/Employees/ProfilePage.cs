@@ -1,4 +1,5 @@
 ﻿using DAL;
+using LogicLayer;
 using LogicLayer.Classes;
 using LogicLayer.Controllers;
 using LogicLayer.Interfaces;
@@ -43,6 +44,12 @@ namespace DesktopApp.Employees
                 pictureBoxProfilePic.BackgroundImageLayout = ImageLayout.Stretch;
                 pictureBoxProfilePic.BackgroundImage = pictureImage;
             }
+
+
+            string password = employee.Password;
+            string salt;
+            string hashedPassword = HashPassword.GenerateHash(password, out salt);
+            empController.UpdatePasswordInDatabase(hashedPassword, salt, employee.GetId());
         }
         private void ActivateButton(object btnSender)
         {

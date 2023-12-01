@@ -7,6 +7,7 @@ using LogicLayer.Classes;
 
 namespace WebApp.Pages
 {
+    [Authorize]
     public class ProfilePageModel : PageModel
     {
         public User Userr { get; set; }

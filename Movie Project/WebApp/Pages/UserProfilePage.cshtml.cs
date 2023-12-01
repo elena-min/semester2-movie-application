@@ -24,7 +24,6 @@ namespace WebApp.Pages
         public void OnGet(int ID)
         {
             Userr = _userController.GetUserByID(ID);
-
         }
 
         [Authorize(Roles = "Employee")]

@@ -45,10 +45,12 @@ namespace LogicLayer
 
                 var hashedBytes = sha256.ComputeHash(saltedPassword);
                 var computedHash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                bool isPasswordCorrect = StringComparer.Ordinal.Equals(hash, computedHash);
 
-                return hash.Equals(computedHash);
+                return isPasswordCorrect;
             }
         }
+
     }
 
 }

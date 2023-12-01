@@ -71,8 +71,8 @@
                 {
                     @if (Model.CurrentPage > 1)
                     {
-                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="1">First</a>
-                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage - 1)">Previous</a>
+                        <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="1">First</a>
+                        <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage - 1)">Previous</a>
                     }
 
                     @for (int i = 1; i <= Model.TotalPages; i++)
@@ -83,14 +83,14 @@
                         }
                         else
                         {
-                            <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@i">@i</a>
+                            <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@i">@i</a>
                         }
                     }
 
                     if (Model.CurrentPage < Model.TotalPages)
                     {
-                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
-                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@Model.TotalPages">Last</a>
+                        <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
+                        <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@Model.TotalPages">Last</a>
                     }
                 }
             </div>
@@ -143,8 +143,8 @@
                 {
                     @if (Model.CurrentPage > 1)
                     {
-                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="1">First</a>
-                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage - 1)">Previous</a>
+                        <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="1">First</a>
+                        <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage - 1)">Previous</a>
                     }
 
                     @for (int i = 1; i <= Model.TotalPages; i++)
@@ -155,14 +155,14 @@
                         }
                         else
                         {
-                            <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@i">@i</a>
+                            <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@i">@i</a>
                         }
                     }
 
                     if (Model.CurrentPage < Model.TotalPages)
                     {
-                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
-                        <a asp-page="/Main" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@Model.TotalPages">Last</a>
+                        <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
+                        <a asp-page="/FavoriteMovies" asp-route-searchTerm="@Request.Query["searchTerm"]" asp-route-pageIndex="@Model.TotalPages">Last</a>
                     }
                 }
             </div>

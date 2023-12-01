@@ -246,5 +246,27 @@ namespace DAL
 
         }
 
+        public bool DeletedUser(User user)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                string query = "DELETE FROM FavoritesList WHERE userID = @userID";
+                SqlCommand commandSql = new SqlCommand(query, conn);
+                commandSql.Parameters.AddWithValue("@userID", user.GetId());
+                conn.Open();
+                int rowsAffected = commandSql.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+
     }
 }

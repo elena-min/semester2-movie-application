@@ -27,13 +27,13 @@ namespace LogicLayer.Classes
             IsBanned = false;
         }
 
-        public User(string firstName, string lastName, string username, string email, string password, string salt,  Gender gender) : base(firstName, lastName, username, email, password, gender, salt)
+        public User(string firstName, string lastName, string username, string email, string password, string salt,  Gender gender) : base(firstName, lastName, username, email, password, salt, gender)
         {
             FavoriteMediaItem = new FavoriteMediaItem(username);
             Role = "User";
             IsBanned = false;
         }
-        public User(string firstName, string lastName, string username, string email, string password, string salt, Gender gender, string profileDescription) : base(firstName, lastName, username, email, password, gender, salt)
+        public User(string firstName, string lastName, string username, string email, string password, string salt, Gender gender, string profileDescription) : base(firstName, lastName, username, email, password,salt, gender)
         {
 
             ProfileDescription = profileDescription;
@@ -49,7 +49,7 @@ namespace LogicLayer.Classes
         }
         public override string ToString()
         {
-            return $"{this.GetId()}: {Username} - {FirstName} {LastName}";
+            return $"{this.GetId()}- {Username} - {FirstName} {LastName}";
         }
      }
 }

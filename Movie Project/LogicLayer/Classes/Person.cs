@@ -38,7 +38,7 @@ namespace LogicLayer.Classes
             Password = password;
             Gender = gender;
         }
-        public Person(string firstName, string lastName, string username, string email, string password, Gender gender, string salt)
+        public Person(string firstName, string lastName, string username, string email, string password, string salt, Gender gender)
         {
             FirstName = firstName;
             LastName = lastName;

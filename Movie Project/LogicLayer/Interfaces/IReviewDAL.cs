@@ -19,6 +19,7 @@ namespace LogicLayer.Interfaces
         string Delete(Review review);
         string DeletebyUser(Review review);
         bool DeletedMediaItem(int mediaID);
+        bool DeletedUser(User deletedUser);
 
     }
 }

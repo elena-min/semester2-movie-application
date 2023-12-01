@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using LogicLayer.Strategy;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Pages
 {
+    [Authorize]
     public class RecommendationPageModel : PageModel
     {
         private readonly UserController _userController;

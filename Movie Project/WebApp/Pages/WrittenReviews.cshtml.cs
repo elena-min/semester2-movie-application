@@ -9,6 +9,7 @@ namespace WebApp.Pages
 {
     public class WrittenReviewsModel : PageModel
     {
+        [Authorize]
         public User Userr { get; set; }
         public List<Review> Reviews {  get; set; }
         private readonly UserController _userController;

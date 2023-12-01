@@ -21,6 +21,18 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
+
+            string formattedMonthYear = monthYear.ToString("yyyy-MM");
+
+            // Delete existing records for the specified month
+            string deleteCommandSql = "DELETE FROM MonthlyTrendingMediaItems WHERE MonthYear = @MonthYear";
+
+            using (SqlCommand deleteCommand = new SqlCommand(deleteCommandSql, conn))
+            {
+                deleteCommand.Parameters.AddWithValue("@MonthYear", formattedMonthYear);
+                deleteCommand.ExecuteNonQuery();
+            }
+
             string selectCommandSql = "INSERT INTO MonthlyTrendingMediaItems (MonthYear, mediaItemID, TrendingScore) VALUES (@MonthYear, @mediaItemID, @TrendingScore)";
 
             foreach (MediaItem mediaItem in monthlyTrendingMedias)
@@ -29,7 +41,6 @@ namespace DAL
                 using (SqlCommand command = new SqlCommand(selectCommandSql, conn))
                 {
                     double trendingScore = mediaItem.CalculatePopularityScoreTwo(DateTime.Today, LogicLayer.TimePeriod.Month);
-                    string formattedMonthYear = monthYear.ToString("yyyy-MM");
 
                     command.Parameters.AddWithValue("@MonthYear", formattedMonthYear);
                     command.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId());
@@ -45,6 +56,19 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
+            int dayOfWeek = (int)currentDate.DayOfWeek;
+            DateTime startDate = currentDate.AddDays(-(dayOfWeek == 0 ? 6 : dayOfWeek - 1));
+            DateTime endDate = startDate.AddDays(6);
+            // Delete existing records for the specified week
+            string deleteCommandSql = "DELETE FROM WeeklyTrendingMediaItems WHERE WeekStartDate = @WeekStartDate AND WeekEndDate = @WeekEndDate";
+
+            using (SqlCommand deleteCommand = new SqlCommand(deleteCommandSql, conn))
+            {
+                deleteCommand.Parameters.AddWithValue("@WeekStartDate", startDate);
+                deleteCommand.Parameters.AddWithValue("@WeekEndDate", endDate);
+                deleteCommand.ExecuteNonQuery();
+            }
+
             string selectCommandSql = "INSERT INTO WeeklyTrendingMediaItems (WeekStartDate, WeekEndDate, mediaItemID, TrendingScore) VALUES (@WeekStartDate, @WeekEndDate, @mediaItemID, @TrendingScore)";
 
             foreach (MediaItem mediaItem in mediaItems)
@@ -53,9 +77,7 @@ namespace DAL
                 {
                     // Assume you have a method to calculate the trending score for each media item
                     double trendingScore = mediaItem.CalculatePopularityScoreTwo(DateTime.Today, LogicLayer.TimePeriod.Week);
-                    int dayOfWeek = (int)currentDate.DayOfWeek;
-                    DateTime startDate = currentDate.AddDays(-(dayOfWeek == 0 ? 6 : dayOfWeek - 1));
-                    DateTime endDate  = startDate.AddDays(6);
+                    ;
                     // Set parameters
                     command.Parameters.AddWithValue("@WeekStartDate", startDate);
                         command.Parameters.AddWithValue("@WeekEndDate", endDate);

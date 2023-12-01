@@ -27,14 +27,14 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             //try
             //{
-            string commandSql = "INSERT INTO Review (title, reviewConten, rating, pointedTowards, reviewWriter, dateOfPublication, isItDeleted) VALUES (@title, @reviewConten, @rating, @pointedTowards, @reviewWriter, @dateOfPublication, @isItDeleted);";
+            string commandSql = "INSERT INTO Review (title, reviewConten, rating, mediaItemID, personID, dateOfPublication, isItDeleted) VALUES (@title, @reviewConten, @rating, @mediaItemID, @personID, @dateOfPublication, @isItDeleted);";
             conn.Open();
             SqlCommand cmd = new SqlCommand(commandSql, conn);
             cmd.Parameters.AddWithValue("@title", newReview.Title);
             cmd.Parameters.AddWithValue("@reviewConten", newReview.ReviewContent);
             cmd.Parameters.AddWithValue("@rating", newReview.Rating);
-            cmd.Parameters.AddWithValue("@pointedTowards", newReview.PointedTowards.GetId());
-            cmd.Parameters.AddWithValue("@reviewWriter", newReview.ReviewWriter.GetId());
+            cmd.Parameters.AddWithValue("@mediaItemID", newReview.PointedTowards.GetId());
+            cmd.Parameters.AddWithValue("@personID", newReview.ReviewWriter.GetId());
             DateTime today = DateTime.Today;
             cmd.Parameters.AddWithValue("@dateOfPublication", today);
             cmd.Parameters.AddWithValue("@isItDeleted", 0);
@@ -131,13 +131,13 @@ namespace DAL
         public Review[] GetReviewsByUser(int userID)
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from Review where isItDeleted = 0 AND reviewWriter = @userID";
+            string query = "select * from Review where isItDeleted = 0 AND personID = @personID";
             List<Review> productReviews = new List<Review>();
             //try
             //{
             conn.Open();
             SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@userID", userID);
+            command.Parameters.AddWithValue("@personID", userID);
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
@@ -174,13 +174,13 @@ namespace DAL
         {
             {
                 SqlConnection conn = CreateConnection();
-                string query = "select * from Review where isItDeleted = 0 AND pointedTowards = @mediaItemID";
+                string query = "select * from Review where isItDeleted = 0 AND pointedTowards = @pointedTowards";
                 List<Review> productReviews = new List<Review>();
                 //try
                 //{
                 conn.Open();
                 SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.AddWithValue("@mediaItemID", mediaItemID);
+                command.Parameters.AddWithValue("@pointedTowards", mediaItemID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -256,13 +256,13 @@ namespace DAL
         public Review[] GetDeletedReviewsByUser(int userID)
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from Review where isItDeleted = 1 AND reviewWriter = @userID";
+            string query = "select * from Review where isItDeleted = 1 AND personID = @personID";
             List<Review> productReviews = new List<Review>();
             //try
             //{
             conn.Open();
             SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@userID", userID);
+            command.Parameters.AddWithValue("@personID", userID);
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
@@ -352,9 +352,30 @@ namespace DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                string query = "DELETE FROM Review WHERE pointedTowards = @mediaID";
+                string query = "DELETE FROM Review WHERE mediaItemID = @mediaItemID";
                 SqlCommand commandSql = new SqlCommand(query, conn);
-                commandSql.Parameters.AddWithValue("@mediaID", mediaID);
+                commandSql.Parameters.AddWithValue("@mediaItemID", mediaID);
+                conn.Open();
+                int rowsAffected = commandSql.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+        public bool DeletedUser(User deletedUser)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                string query = "DELETE FROM Review WHERE personID = @personID";
+                SqlCommand commandSql = new SqlCommand(query, conn);
+                commandSql.Parameters.AddWithValue("@personID", deletedUser.GetId());
                 conn.Open();
                 int rowsAffected = commandSql.ExecuteNonQuery();
 

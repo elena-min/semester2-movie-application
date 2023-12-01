@@ -17,6 +17,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 builder.Services.AddSingleton<UserController>(new UserController(new UserDAL()));
 builder.Services.AddSingleton<UserDAL>(new UserDAL());
+builder.Services.AddSingleton<EmployeeController>(new EmployeeController(new EmployeeDAL()));
+builder.Services.AddSingleton<EmployeeDAL>(new EmployeeDAL());
 builder.Services.AddSingleton<MediaItemController>(new MediaItemController(new MediaItemDAL()));
 builder.Services.AddSingleton<MediaItemDAL>(new MediaItemDAL());
 builder.Services.AddSingleton<MediaItemViewsController>(new MediaItemViewsController(new MediaItemViewsDAL()));

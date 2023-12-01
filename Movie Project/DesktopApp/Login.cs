@@ -1,4 +1,5 @@
 ﻿using DAL;
+using LogicLayer;
 using LogicLayer.Classes;
 using LogicLayer.Controllers;
 using LogicLayer.Interfaces;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -44,7 +46,7 @@ namespace DesktopApp
                 lblWarning.Text = "Incorrect username.";
                 return;
             }
-            else if (employee.Password != textBoxPassword.Text)
+            else if (!HashPassword.VerifyPassword(textBoxPassword.Text ,employee.Password, employee.Salt))
             {
                 lblWarning.Text = "Incorrect password.";
                 return;
@@ -53,7 +55,6 @@ namespace DesktopApp
             {
                 isLoggedIn = true;
             }
-
 
             if (isLoggedIn)
             {

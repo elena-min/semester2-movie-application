@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using LogicLayer.Classes;
 using System.Reflection;
 using LogicLayer.Strategy;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Pages
 {
+    [Authorize]
     public class FavoriteMoviesModel : PageModel
     {
 
@@ -69,18 +71,22 @@ namespace WebApp.Pages
             _filterContext.SetFilterStrategy(new SearchFilterStrategy(searchTerm, genreSelect));
             MediaItem[] searchRecommendations = _filterContext.GetFilteredMediaItems(FavoriteMovies);
             Results = searchRecommendations.ToList();
-            const int pageSize = 10;
+            const int pageSize = 8;
             TotalResults = Results.Count;
-            TotalPages = (int)Math.Ceiling((double)TotalResults / (pageSize));
+            TotalPages = (int)Math.Ceiling((double)TotalResults / pageSize);
+            pageIndex = Math.Max(1, Math.Min(pageIndex, TotalPages));
             CurrentPage = pageIndex;
+
             int startIndex = (pageIndex - 1) * pageSize;
-            int endIndex = startIndex + pageSize - 1;
+            int endIndex = Math.Min(startIndex + pageSize - 1, TotalResults - 1);
 
             Results = Results.GetRange(startIndex, endIndex - startIndex + 1);
+
             if (Results.Count == 0)
             {
-                TempData["Message"] = "No results.";
+                TempData["Message"] = "No favorite movies.";
             }
+
             return Page();
         }
         public IActionResult OnPost(int movieId)

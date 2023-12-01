@@ -57,5 +57,13 @@ namespace LogicLayer.Controllers
             return iemployeeDAL.DeleteUserAccount(user, reasonForDeleting);
 
         }
+        public string GetPasswords(int id)
+        {
+            return iemployeeDAL.GetPasswords(id);
+        }
+        public void UpdatePasswordInDatabase(string hashedPassword, string salt, int id)
+        {
+            iemployeeDAL.UpdatePasswordInDatabase(hashedPassword, salt, id);    
+        }
     }
 }

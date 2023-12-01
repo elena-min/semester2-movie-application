@@ -20,14 +20,22 @@ namespace DesktopApp.Users
     {
         private Button currentButton;
         private Form activeform;
+        private readonly ReviewController reviewController;
+        IReviewDAL iReviewDAL;
         private readonly UserController userController;
         IUserDAL iUserDAL;
+        private readonly FavoritesController favController;
+        IFavoritesDAL ifavDAL;
         List<LogicLayer.Classes.User> allUsers;
         public UserMenu()
         {
             InitializeComponent();
             iUserDAL = new UserDAL();
             userController = new UserController(iUserDAL);
+            ifavDAL = new FavoritesDAL();
+            favController = new FavoritesController(ifavDAL);
+            iReviewDAL = new ReviewDAL();
+            reviewController = new ReviewController(iReviewDAL);    
 
             lblWarning.Text = "";
             listBoxViewUsers.Items.Clear();
@@ -142,7 +150,17 @@ namespace DesktopApp.Users
                 if (listBoxViewUsers.SelectedIndex != -1)
                 {
                     int selected_user_id = Int32.Parse(listBoxViewUsers.SelectedItem.ToString().Split('-')[0]);
-                    lblWarning.Text = userController.DeleteUser(selected_user_id); ;
+                    LogicLayer.Classes.User selectedUser = userController.GetUserByID(selected_user_id);
+                    if(selectedUser != null)
+                    {
+                        lblWarning.Text = userController.DeleteUser(selected_user_id);
+                        reviewController.DeletedUser(selectedUser);
+                        favController.DeletedUser(selectedUser);
+                    }
+                    else
+                    {
+                        lblWarning.Text = "No data found.";
+                    }
                     listBoxViewUsers.Items.Clear();
                     foreach (LogicLayer.Classes.User user in userController.GetAll())
                     {

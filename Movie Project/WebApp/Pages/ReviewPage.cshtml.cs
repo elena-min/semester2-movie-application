@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Pages
 {
+    [Authorize]
     public class ReviewPageModel : PageModel
     {
         private readonly UserController _userController;
@@ -70,7 +72,7 @@ namespace WebApp.Pages
             }
             else
             {
-                RedirectToPage("/Index");
+                RedirectToPage("/Main");
             }
 
             if (Movie != null)

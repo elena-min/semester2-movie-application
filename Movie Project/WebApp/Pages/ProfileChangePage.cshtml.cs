@@ -8,6 +8,7 @@ using LogicLayer.Classes;
 
 namespace WebApp.Pages
 {
+    [Authorize]
     public class ProfileChangePageModel : PageModel
     {
         [BindProperty]

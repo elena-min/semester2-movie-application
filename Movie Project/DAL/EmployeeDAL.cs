@@ -17,13 +17,17 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             //try
             //{
-            string commandSql = "INSERT INTO People (firstName, lastName, username, password, email, gender, age, profilePicture, role) VALUES (@firstName, @lastName, @username, @password, @email, @gender, @age, @profilePicture, @role);";
+            string salt;
+
+            var hashedPassword = HashPassword.GenerateHash(newEmployee.Password, out salt);
+            string commandSql = "INSERT INTO Person (firstName, lastName, username, password,saltedPassword, email, gender, age, profilePicture, role) VALUES (@firstName, @lastName, @username, @password, @saltedPassword, @email, @gender, @age, @profilePicture, @role);";
             conn.Open();
             SqlCommand cmd = new SqlCommand(commandSql, conn);
             cmd.Parameters.AddWithValue("@firstName", newEmployee.FirstName);
             cmd.Parameters.AddWithValue("@lastName", newEmployee.LastName);
             cmd.Parameters.AddWithValue("@username", newEmployee.Username);
             cmd.Parameters.AddWithValue("@password", newEmployee.Password);
+            cmd.Parameters.AddWithValue("@saltedPassword", salt);
             cmd.Parameters.AddWithValue("@email", newEmployee.Email);
             cmd.Parameters.AddWithValue("@gender", newEmployee.Gender.ToString());
             cmd.Parameters.AddWithValue("@age", newEmployee.Age);
@@ -44,7 +48,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from People where id = @id";
+            string query = "select * from Person where id = @id";
             //try
             //{
             Employee newEmp = null;
@@ -61,11 +65,12 @@ namespace DAL
                     string lastName = reader.GetString(2);
                     string username = reader.GetString(3);
                     string password = reader.GetString(4);
+                    string salt = reader.GetString(5);
                     string email = reader.GetString(6);
                     string string_gender = reader.GetString(7);
                     Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
                     int age = reader.GetInt32(8);
-                    newEmp = new Employee(firstName, lastName, username, email, password, gender, age);
+                    newEmp = new Employee(firstName, lastName, username, email, password, salt, gender, age);
                     newEmp.SetId(e_id);
                 }
             }
@@ -83,7 +88,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from People where username = @username";
+            string query = "select * from People where username = @username and age is not null";
             //try
             //{
             Employee newEmp = null;
@@ -100,11 +105,12 @@ namespace DAL
                     string lastName = reader.GetString(2);
                     string e_username = reader.GetString(3);
                     string password = reader.GetString(4);
+                    string salt = reader.GetString(5);
                     string email = reader.GetString(6);
                     string string_gender = reader.GetString(7);
                     Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
                     int age = reader.GetInt32(8);
-                    newEmp = new Employee(firstName, lastName, e_username, email, password, gender, age);
+                    newEmp = new Employee(firstName, lastName, e_username, email, password,salt,  gender, age);
                     newEmp.SetId(id);
                 }
             }
@@ -117,11 +123,10 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from People where email = @email";
+            string query = "select * from Person where email = @email and age is not null";
             //try
             //{
             Employee newEmp = null;
-            CreateConnection().Open();
             SqlCommand command = new SqlCommand(query, conn);
             command.Parameters.AddWithValue("@email", email);
             SqlDataReader reader = command.ExecuteReader();
@@ -134,11 +139,12 @@ namespace DAL
                     string lastName = reader.GetString(2);
                     string username = reader.GetString(3);
                     string password = reader.GetString(4);
+                    string salt = reader.GetString(5);
                     string e_email = reader.GetString(6);
                     string string_gender = reader.GetString(7);
                     Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
                     int age = reader.GetInt32(8);
-                    newEmp = new Employee(firstName, lastName, username, e_email, password, gender, age);
+                    newEmp = new Employee(firstName, lastName, username, e_email, password, salt, gender, age);
                     newEmp.SetId(id);
                 }
             }
@@ -150,10 +156,11 @@ namespace DAL
         public Employee[] GetAll()
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from People where saltedPassword is null";
+            string query = "select * from Person where age is not null";
             List<Employee> employees = new List<Employee>();
             //try
             //{
+
                 conn.Open();
                 SqlCommand command = new SqlCommand(query, conn);
                 SqlDataReader reader = command.ExecuteReader();
@@ -166,11 +173,12 @@ namespace DAL
                         string lastName = reader.GetString(2);
                         string username = reader.GetString(3);
                         string password = reader.GetString(4);
-                        string email = reader.GetString(6);
+                    string salt = reader.GetString(5);
+                    string email = reader.GetString(6);
                         string string_gender = reader.GetString(7);
                         Gender gender = (Gender)Enum.Parse(typeof(Gender), string_gender);
                         int age = reader.GetInt32(8);
-                        Employee newEmp = new Employee(firstName, lastName, username, email, password, gender, age);
+                         Employee newEmp = new Employee(firstName, lastName, username, email, password, salt, gender, age);
                         newEmp.SetId(id);
                         employees.Add(newEmp);
                     }
@@ -190,7 +198,7 @@ namespace DAL
             SqlConnection conn = CreateConnection();
             try
             {
-                string commandSql = "UPDATE People SET firstName = @e_fname, lastName = @e_lname, username = @e_username, email = @e_email, gender = @e_gender, age = @e_age, profilePicture = @profilePicture WHERE id = @e_id;";
+                string commandSql = "UPDATE Person SET firstName = @e_fname, lastName = @e_lname, username = @e_username, email = @e_email, gender = @e_gender, age = @e_age, profilePicture = @profilePicture WHERE id = @e_id;";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@e_id", employee.GetId());
@@ -219,7 +227,7 @@ namespace DAL
             {
                 try
                 {
-                    string query = "DELETE FROM People WHERE id = @id";
+                    string query = "DELETE FROM Person WHERE id = @id";
                     SqlCommand commandSql = new SqlCommand(query, conn);
                     commandSql.Parameters.AddWithValue("@id", id);
                     conn.Open();
@@ -245,7 +253,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "SELECT profilePicture FROM People WHERE id = @id";
+            string query = "SELECT profilePicture FROM Person WHERE id = @id";
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
@@ -274,7 +282,7 @@ namespace DAL
             string commandSql;
 
           
-            commandSql = "UPDATE People SET isAccountDeleted = 1, reasonForDeleting = @reasonForDeleting, WHERE id = @u_id;";
+            commandSql = "UPDATE Person SET isAccountDeleted = 1, reasonForDeleting = @reasonForDeleting, WHERE id = @u_id;";
             
 
             SqlCommand cmd = new SqlCommand(commandSql, conn);
@@ -293,7 +301,50 @@ namespace DAL
             //}
         }
 
+        public string GetPasswords(int id)
+        {
+            SqlConnection conn = CreateConnection();
+            string query = "select password from Person where saltedPassword is null and id = @id";
+            string passwords = null;
+            //try
+            //{
+            conn.Open();
+            SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@id", id);
 
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                     passwords = reader.GetString(0);
+                }
+            }
+
+            reader.Close();
+            conn.Close();
+            return passwords;
+            //}
+            //catch (Exception)
+            //{
+            //    return null;
+            //}
+        }
+        public void UpdatePasswordInDatabase(string hashedPassword, string salt, int id)
+        {
+            SqlConnection conn = CreateConnection();
+
+                string commandSql = "UPDATE Person SET password = @password, saltedPassword = @saltedPassword WHERE id = @e_id;";
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(commandSql, conn);
+                cmd.Parameters.AddWithValue("@password", hashedPassword);
+                cmd.Parameters.AddWithValue("@saltedPassword", salt);
+                cmd.Parameters.AddWithValue("@e_id", id);
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+
+        }
 
     }
 }

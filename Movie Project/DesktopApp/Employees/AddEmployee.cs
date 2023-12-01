@@ -80,14 +80,10 @@ namespace DesktopApp.Employees
                 return;
             }
             string password = textBoxPassword.Text;
-            Gender gender = (Gender)comboBoxGender.SelectedItem;
+            string salt;
+            string hashedPassword = HashPassword.GenerateHash(password, out salt); Gender gender = (Gender)comboBoxGender.SelectedItem;
+           
             int age;
-            //if (!int.TryParse(textBoxAge.Text, out age))
-            //{
-            //    lblWarning.Text = "Please enter a valid age in years.";
-            //    return;
-            //}
-
             if (int.TryParse(textBoxAge.Text, out  age))
             {
                 if (age < 16 && age > 80)
@@ -102,8 +98,7 @@ namespace DesktopApp.Employees
             }
 
 
-            newEmp = new Employee(fName, lName, username, email,password, gender, age);
-            //empController.AddEmployee(newEmp);
+            newEmp = new Employee(fName, lName, username, email,hashedPassword, salt, gender, age);
             if (empController.AddEmployee(newEmp))
             {
                 lblWarning.Text = "Employee has been added successfully!";
