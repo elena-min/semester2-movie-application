@@ -80,8 +80,7 @@ namespace DesktopApp.Employees
                 return;
             }
             string password = textBoxPassword.Text;
-            string salt;
-            string hashedPassword = HashPassword.GenerateHash(password, out salt); Gender gender = (Gender)comboBoxGender.SelectedItem;
+            Gender gender = (Gender)comboBoxGender.SelectedItem;
            
             int age;
             if (int.TryParse(textBoxAge.Text, out  age))
@@ -98,7 +97,7 @@ namespace DesktopApp.Employees
             }
 
 
-            newEmp = new Employee(fName, lName, username, email,hashedPassword, salt, gender, age);
+            newEmp = new Employee(fName, lName, username, email,password, gender, age);
             if (empController.AddEmployee(newEmp))
             {
                 lblWarning.Text = "Employee has been added successfully!";

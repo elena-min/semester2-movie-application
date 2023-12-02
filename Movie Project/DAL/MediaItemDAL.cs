@@ -166,7 +166,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select m.id, m.title, r.rating from MediaItem as m inner join Review as r on m.id = r.pointedTowards where m.id = @mediaID";
+            string query = "select m.id, m.title, r.rating from MediaItem as m inner join Review as r on m.id = r.mediaItemID where m.id = @mediaID";
             List<int> givenRatings = new List<int>();
             //try
             //{

@@ -46,6 +46,8 @@ namespace WebApp.Pages
         public IActionResult OnPostLogout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            Response.Cookies.Delete("RememberMeCookie");
+
             return RedirectToPage("/Index");
         }
     }

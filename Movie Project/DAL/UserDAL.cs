@@ -48,7 +48,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from People where id = @id";
+            string query = "select * from Person where id = @id";
             //try
             //{
             User newUser = null;
@@ -102,7 +102,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from Person where username = @username and age is  null";
+            string query = "select * from Person where username = @username and role = 'User' ";
 
             User newUser = null;
 

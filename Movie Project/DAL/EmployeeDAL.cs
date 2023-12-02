@@ -26,7 +26,7 @@ namespace DAL
             cmd.Parameters.AddWithValue("@firstName", newEmployee.FirstName);
             cmd.Parameters.AddWithValue("@lastName", newEmployee.LastName);
             cmd.Parameters.AddWithValue("@username", newEmployee.Username);
-            cmd.Parameters.AddWithValue("@password", newEmployee.Password);
+            cmd.Parameters.AddWithValue("@password", hashedPassword);
             cmd.Parameters.AddWithValue("@saltedPassword", salt);
             cmd.Parameters.AddWithValue("@email", newEmployee.Email);
             cmd.Parameters.AddWithValue("@gender", newEmployee.Gender.ToString());
@@ -88,7 +88,7 @@ namespace DAL
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
-            string query = "select * from People where username = @username and age is not null";
+            string query = "select * from Person where username = @username and role = 'Employee'";
             //try
             //{
             Employee newEmp = null;
@@ -282,7 +282,7 @@ namespace DAL
             string commandSql;
 
           
-            commandSql = "UPDATE Person SET isAccountDeleted = 1, reasonForDeleting = @reasonForDeleting, WHERE id = @u_id;";
+            commandSql = "UPDATE Person SET isAccountDeleted = 1, reasonForDeleting = @reasonForDeleting WHERE id = @u_id;";
             
 
             SqlCommand cmd = new SqlCommand(commandSql, conn);

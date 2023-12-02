@@ -40,6 +40,7 @@ namespace WebApp.Pages
 
         [BindProperty]
         public string Gender { get; set; }
+
         public void OnGet()
         {
         }

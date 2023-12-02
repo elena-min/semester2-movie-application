@@ -174,13 +174,13 @@ namespace DAL
         {
             {
                 SqlConnection conn = CreateConnection();
-                string query = "select * from Review where isItDeleted = 0 AND pointedTowards = @pointedTowards";
+                string query = "select * from Review where isItDeleted = 0 AND mediaItemID = @mediaItemID";
                 List<Review> productReviews = new List<Review>();
                 //try
                 //{
                 conn.Open();
                 SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.AddWithValue("@pointedTowards", mediaItemID);
+                command.Parameters.AddWithValue("@mediaItemID", mediaItemID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {

@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using LogicLayer.Classes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Pages
 {
     public class WrittenReviewsModel : PageModel
     {
-        [Authorize]
+        //[Authorize]
         public User Userr { get; set; }
         public List<Review> Reviews {  get; set; }
         private readonly UserController _userController;
@@ -54,6 +55,8 @@ namespace WebApp.Pages
         public IActionResult OnPostLogout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            Response.Cookies.Delete("RememberMeCookie");
+
             return RedirectToPage("/Index");
         }
     }

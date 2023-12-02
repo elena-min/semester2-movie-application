@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using LogicLayer.Classes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Pages
 {
@@ -87,6 +88,8 @@ namespace WebApp.Pages
         public IActionResult OnPostLogout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            Response.Cookies.Delete("RememberMeCookie");
+
             return RedirectToPage("/Index");
         }
 
