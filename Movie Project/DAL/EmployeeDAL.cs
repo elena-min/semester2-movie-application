@@ -220,7 +220,7 @@ namespace DAL
             }
         }
 
-        public string DeleteEmployee(int id)
+        public string DeleteEmployee(Employee emp)
         {
         SqlConnection conn = CreateConnection();
         using (conn)
@@ -229,7 +229,7 @@ namespace DAL
                 {
                     string query = "DELETE FROM Person WHERE id = @id";
                     SqlCommand commandSql = new SqlCommand(query, conn);
-                    commandSql.Parameters.AddWithValue("@id", id);
+                    commandSql.Parameters.AddWithValue("@id", emp.GetId());
                     conn.Open();
                     int rowsAffected = commandSql.ExecuteNonQuery();      
                     conn.Close();
@@ -249,7 +249,7 @@ namespace DAL
                 }
             }
         }
-        public string GetProfilePicByID(int id)
+        public string GetProfilePicByID(Employee emp)
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
@@ -257,7 +257,7 @@ namespace DAL
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", emp.GetId());
                 object result = cmd.ExecuteScalar();
 
                 if (result != DBNull.Value && result != null)

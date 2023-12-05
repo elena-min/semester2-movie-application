@@ -16,31 +16,26 @@ namespace LogicLayer.Controllers
             this.iFavoritesDAL = FavoritesDAL;
         }
         
-        public bool AddProductToFavorite(int mediaID, int userID)
+        public bool AddProductToFavorite(MediaItem mediaItem, User user)
         {
-            return iFavoritesDAL.AddProductToFavorite(mediaID, userID);
+            return iFavoritesDAL.AddProductToFavorite(mediaItem, user);
         }
-        public bool CheckIfProductIsInFavorites(int mediaID, int userID)
+        public bool CheckIfProductIsInFavorites(MediaItem mediaItem, User user)
         {
-            return iFavoritesDAL.CheckIfProductIsInFavorites(mediaID, userID);
+            return iFavoritesDAL.CheckIfProductIsInFavorites(mediaItem, user);
         }
-        public MediaItem[] GetAllFavorites(int userID)
+        public MediaItem[] GetAllFavorites(User user)
         {
-            return iFavoritesDAL.GetAllFavorites(userID);
+            return iFavoritesDAL.GetAllFavorites(user);
         }
 
-        public MediaItem[] GetAllFavoriteMovies(int userID)
+        public string RemoveFromFavorites(MediaItem mediaItem, User user)
         {
-            return iFavoritesDAL.GetAllFavoriteMovies(userID);
-
+            return iFavoritesDAL.RemoveFromFavorites(mediaItem, user);
         }
-        public string RemoveFromFavorites(int mediaID, int userID)
+        public bool DeletedMediaItem(MediaItem mediaItem)
         {
-            return iFavoritesDAL.RemoveFromFavorites(mediaID, userID);
-        }
-        public bool DeletedMediaItem(int mediaID)
-        {
-            return iFavoritesDAL.DeletedMediaItem(mediaID);
+            return iFavoritesDAL.DeletedMediaItem(mediaItem);
         }
         public bool DeletedUser(User user)
         {

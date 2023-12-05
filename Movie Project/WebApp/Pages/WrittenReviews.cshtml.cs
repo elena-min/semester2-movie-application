@@ -38,7 +38,7 @@ namespace WebApp.Pages
                 return NotFound();
             }
 
-            Reviews = _reviewController.GetReviewsByUser(Userr.GetId()).ToList();
+            Reviews = _reviewController.GetReviewsByUser(Userr).ToList();
             
             return Page();
         }

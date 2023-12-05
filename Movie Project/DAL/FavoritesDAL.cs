@@ -17,7 +17,7 @@ namespace DAL
             return new SqlConnection("server=mssqlstud.fhict.local;Database=dbi500809_movieapp;User Id=dbi500809_movieapp;Password=movieapp;");
         }
 
-        public bool AddProductToFavorite(int mediaID, int userID)
+        public bool AddProductToFavorite(MediaItem mediaItem, User user)
         {
             SqlConnection conn = CreateConnection();
             // try
@@ -25,8 +25,8 @@ namespace DAL
             string commandSql = "INSERT INTO FavoritesList (userID, mediaID) VALUES (@userID, @mediaID);";
             conn.Open();
             SqlCommand cmd = new SqlCommand(commandSql, conn);
-            cmd.Parameters.AddWithValue("@userID", userID);
-            cmd.Parameters.AddWithValue("@mediaID", mediaID);
+            cmd.Parameters.AddWithValue("@userID", user.GetId());
+            cmd.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
             cmd.ExecuteNonQuery();
             conn.Close();
             return true;
@@ -36,14 +36,14 @@ namespace DAL
             //    return false;
             //}
         }
-        public bool CheckIfProductIsInFavorites(int mediaID, int userID)
+        public bool CheckIfProductIsInFavorites(MediaItem mediaItem, User user)
         {
             SqlConnection conn = CreateConnection();
             string query = "SELECT * FROM FavoritesList WHERE userID = @userID AND mediaID = @mediaID";
             conn.Open();
             SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@userID", userID);
-            command.Parameters.AddWithValue("@mediaID", mediaID);
+            command.Parameters.AddWithValue("@userID", user.GetId());
+            command.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
 
             object result = command.ExecuteScalar();
 
@@ -59,7 +59,7 @@ namespace DAL
                 return true;
             }
         }
-        public MediaItem[] GetAllFavorites(int userID)
+        public MediaItem[] GetAllFavorites(User user)
         {
             SqlConnection conn = CreateConnection();
             string query = "select f.mediaID, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.numberOfViews, M.director, M.writer, M.duration, S.seasons, S.episodes " +
@@ -73,7 +73,7 @@ namespace DAL
             {
                 conn.Open();
                 SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.AddWithValue("@userID", userID);
+                command.Parameters.AddWithValue("@userID", user.GetId());
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -139,7 +139,7 @@ namespace DAL
                 return null;
             }
         }
-        public MediaItem[] GetAllFavoriteMovies(int userID)
+        public MediaItem[] GetAllFavoriteMovies(User user)
         {
             SqlConnection conn = CreateConnection();
             string query = "select f.mediaID, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, M.director, M.writer, M.duration " +
@@ -152,7 +152,7 @@ namespace DAL
             //{
             conn.Open();
             SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@userID", userID);
+            command.Parameters.AddWithValue("@userID", user.GetId());
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
@@ -202,14 +202,14 @@ namespace DAL
             //}
         }
 
-        public string RemoveFromFavorites(int mediaID, int userID)
+        public string RemoveFromFavorites(MediaItem mediaItem, User user)
         {
             using (SqlConnection conn = CreateConnection())
             {
                 string query = "DELETE FROM FavoritesList WHERE userID = @userID AND mediaID = @mediaID";
                 SqlCommand commandSql = new SqlCommand(query, conn);
-                commandSql.Parameters.AddWithValue("@userID", userID);
-                commandSql.Parameters.AddWithValue("@mediaID", mediaID);
+                commandSql.Parameters.AddWithValue("@userID", user.GetId());
+                commandSql.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
                 conn.Open();
                 int rowsAffected = commandSql.ExecuteNonQuery();
 
@@ -224,13 +224,13 @@ namespace DAL
             }
         }
 
-        public bool DeletedMediaItem(int mediaID)
+        public bool DeletedMediaItem(MediaItem mediaItem)
         {
             using (SqlConnection conn = CreateConnection())
             {
                 string query = "DELETE FROM FavoritesList WHERE mediaID = @mediaID";
                 SqlCommand commandSql = new SqlCommand(query, conn);
-                commandSql.Parameters.AddWithValue("@mediaID", mediaID);
+                commandSql.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
                 conn.Open();
                 int rowsAffected = commandSql.ExecuteNonQuery();
 

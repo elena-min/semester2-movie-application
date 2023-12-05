@@ -1,4 +1,5 @@
-﻿using LogicLayer.Interfaces;
+﻿using LogicLayer.Classes;
+using LogicLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,17 +16,17 @@ namespace LogicLayer.Controllers
             this.imediaItemViewsDAL = mediaItemViewsDAL;
         }
 
-        public void UpdateViewsCount(int mediaID, DateTime currentDate)
+        public void UpdateViewsCount(MediaItem mediaItem, DateTime currentDate)
         {
-            this.imediaItemViewsDAL.UpdateViewsCount(mediaID, currentDate);
+            this.imediaItemViewsDAL.UpdateViewsCount(mediaItem, currentDate);
         }
-        public Dictionary<DateTime, int> GetAllViewsByMediaItem(int mediaID)
+        public Dictionary<DateTime, int> GetAllViewsByMediaItem(MediaItem mediaItem)
         {
-            return this.imediaItemViewsDAL.GetAllViewsByMediaItem(mediaID);
+            return this.imediaItemViewsDAL.GetAllViewsByMediaItem(mediaItem);
         }
-        public string RemoveMediaItemViews(int mediaID)
+        public string RemoveMediaItemViews(MediaItem mediaItem)
         {
-            return this.imediaItemViewsDAL.RemoveMediaItemViews(mediaID);
+            return this.imediaItemViewsDAL.RemoveMediaItemViews(mediaItem);
         }
 
     }

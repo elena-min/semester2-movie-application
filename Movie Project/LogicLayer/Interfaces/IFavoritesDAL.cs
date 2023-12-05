@@ -9,12 +9,12 @@ namespace LogicLayer.Interfaces
 {
     public interface IFavoritesDAL
     {
-        bool AddProductToFavorite(int mediaID, int userID);
-        bool CheckIfProductIsInFavorites(int mediaID, int userID);
-        MediaItem[] GetAllFavorites(int userID);
-        MediaItem[] GetAllFavoriteMovies(int userID);
-        string RemoveFromFavorites(int mediaID, int userID);
-        bool DeletedMediaItem(int mediaID);
+        bool AddProductToFavorite(MediaItem mediaItem, User user);
+        bool CheckIfProductIsInFavorites(MediaItem mediaItem, User user);
+        MediaItem[] GetAllFavorites(User user);
+        MediaItem[] GetAllFavoriteMovies(User user);
+        string RemoveFromFavorites(MediaItem mediaItem, User user);
+        bool DeletedMediaItem(MediaItem mediaItem);
         bool DeletedUser(User user);
     }
 }

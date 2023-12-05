@@ -53,9 +53,9 @@ namespace DesktopApp.Movies
                 }
             }
 
-            if (mediaItemController.GetMediaItemImageByID(movie.GetId()).Length != 0)
+            if (mediaItemController.GetMediaItemImageByID(movie).Length != 0)
             {
-                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(movie.GetId()));
+                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(movie));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);
                 Image pictureImage = Image.FromStream(memoryStream);
                 pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;
@@ -98,49 +98,73 @@ namespace DesktopApp.Movies
 
         private void buttonUpdateMovie_Click(object sender, EventArgs e)
         {
-            string title = textBoxMovieTitle.Text;
-            string description = richTextBoxDescription.Text;
-            double rating;
-            if (!double.TryParse(textBoxMovieRating.Text, out rating))
+
+            if (string.IsNullOrEmpty(textBoxCast.Text))
             {
-                lblWarning.Text = "Please enter a valid rating.";
+                lblWarning.Text = "No cast is filled in!";
                 return;
             }
-            DateTime pubslishDate = dateTimeMoviePublishment.Value;
-            string director = textBoxMovieDirector.Text;
-            string writer = textBoxMovieWriter.Text;
-            string cast = textBoxCast.Text;
-            string countryOfOrigin = textBMovieCountryOfOrigin.Text;
-            int duration;
-            if (!int.TryParse(textBoxMovieDuration.Text, out duration))
+            if (checkedLBGenres.CheckedIndices.Count == 0)
             {
-                lblWarning.Text = "Please enter a valid duartion in minutes.";
+                lblWarning.Text = "No genres are filled in!";
                 return;
             }
-
-
-            changedMovie = new Movie(title, description, pubslishDate, countryOfOrigin, rating, director, writer, duration);
-            changedMovie.SetId(Int32.Parse(labelMovieId.Text));
-            List<string> castList = cast.Split(',').ToList();
-            foreach (string actor in castList)
+            try
             {
-                changedMovie.Cast.AddToCast(actor);
-            }
-            foreach (object selectedGenre in checkedLBGenres.CheckedItems)
-            {
-                if (Enum.TryParse(selectedGenre.ToString(), out Genre enum_genre))
+                string title = textBoxMovieTitle.Text;
+                string description = richTextBoxDescription.Text;
+                double rating;
+                if (!double.TryParse(textBoxMovieRating.Text, out rating))
                 {
-                    changedMovie.AddGenre(enum_genre);
+                    lblWarning.Text = "Please enter a valid rating.";
+                    return;
+                }
+                DateTime pubslishDate = dateTimeMoviePublishment.Value;
+                string director = textBoxMovieDirector.Text;
+                string writer = textBoxMovieWriter.Text;
+                string cast = textBoxCast.Text;
+                string countryOfOrigin = textBMovieCountryOfOrigin.Text;
+                int duration;
+                if (!int.TryParse(textBoxMovieDuration.Text, out duration))
+                {
+                    lblWarning.Text = "Please enter a valid duartion in minutes.";
+                    return;
+                }
+
+
+                changedMovie = new Movie(title, description, pubslishDate, countryOfOrigin, rating, director, writer, duration);
+                changedMovie.SetId(Int32.Parse(labelMovieId.Text));
+                List<string> castList = cast.Split(',').ToList();
+                foreach (string actor in castList)
+                {
+                    changedMovie.Cast.AddToCast(actor);
+                }
+                foreach (object selectedGenre in checkedLBGenres.CheckedItems)
+                {
+                    if (Enum.TryParse(selectedGenre.ToString(), out Genre enum_genre))
+                    {
+                        changedMovie.AddGenre(enum_genre);
+                    }
+                }
+
+                if (mediaItemController.UpdateMediaItem(changedMovie, ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic)))
+                {
+                    lblWarning.Text = "Movie updated successfully!";
+                }
+                else
+                {
+                    lblWarning.Text = "Operation failed.";
                 }
             }
-
-            if (mediaItemController.UpdateMediaItem(changedMovie, ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic)))
+            catch (InvalidRatingException ex)
             {
-                lblWarning.Text = "Movie updated successfully!";
+                lblWarning.Text = ex.Message;
+                return;
             }
-            else
+            catch (Exception ex)
             {
-                lblWarning.Text = "Operation failed.";
+                lblWarning.Text = $"An unexpected error: {ex.Message}";
+                return;
             }
         }
     }

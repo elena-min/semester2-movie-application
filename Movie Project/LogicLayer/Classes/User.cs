@@ -22,14 +22,12 @@ namespace LogicLayer.Classes
         public User() { }
         public User(string firstName, string lastName, string username, string email, string password, Gender gender) : base(firstName, lastName, username, email, password, gender)
         {
-            FavoriteMediaItem = new FavoriteMediaItem(username);
             Role = "User";
             IsBanned = false;
         }
 
         public User(string firstName, string lastName, string username, string email, string password, string salt,  Gender gender) : base(firstName, lastName, username, email, password, salt, gender)
         {
-            FavoriteMediaItem = new FavoriteMediaItem(username);
             Role = "User";
             IsBanned = false;
         }
@@ -37,7 +35,6 @@ namespace LogicLayer.Classes
         {
 
             ProfileDescription = profileDescription;
-            FavoriteMediaItem = new FavoriteMediaItem(username);
             Role = "User";
             IsBanned = false;
         }

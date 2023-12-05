@@ -43,9 +43,9 @@
                     <div class="ratingIMG">
                         <img src="/images/icons8-review-48.png" alt="img" style="padding:5px">
                         @{
-                            if (mediaController.GetAllGivenRatings(@Model.Movie.GetId()).Length != 0)
+                            if (mediaController.GetAllGivenRatings(@Model.Movie).Length != 0)
                             {
-                                foreach (int rating in mediaController.GetAllGivenRatings(@Model.Movie.GetId()))
+                                foreach (int rating in mediaController.GetAllGivenRatings(@Model.Movie))
                                 {
                                     Model.Movie.AddRating(rating);
                                 }
@@ -64,9 +64,9 @@
                     <div class="ratingIMG">
                         <img src="/images/icons8-review-50.png" alt="img" style="padding:5px">
                         @{
-                            if (mediaController.GetAllGivenRatings(@Model.Movie.GetId()).Length != 0)
+                            if (mediaController.GetAllGivenRatings(@Model.Movie).Length != 0)
                             {
-                                foreach (int rating in mediaController.GetAllGivenRatings(@Model.Movie.GetId()))
+                                foreach (int rating in mediaController.GetAllGivenRatings(@Model.Movie))
                                 {
                                     Model.Movie.AddRating(rating);
                                 }
@@ -96,9 +96,9 @@
             <p><b>Duration : </b>@(((Movie)Model.Movie).Duration.ToString())</p>
 
             @{
-                if (mediaController.GetAllGivenRatings(@Model.Movie.GetId()).Length != 0)
+                if (mediaController.GetAllGivenRatings(@Model.Movie).Length != 0)
                 {
-                    foreach (int rating in mediaController.GetAllGivenRatings(@Model.Movie.GetId()))
+                    foreach (int rating in mediaController.GetAllGivenRatings(@Model.Movie))
                     {
                         Model.Movie.AddRating(rating);
                     }
@@ -114,7 +114,7 @@
             }
         </div>
         <div class="cover">
-            <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Movie.GetId())" alt="Movie cover" style="padding:10px">
+            <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Movie)" alt="Movie cover" style="padding:10px">
         </div>
     </div>
     
@@ -143,7 +143,7 @@
 
 <h3>All written Reviews</h3>
 <div id="reviewsContainers">
-    @foreach (Review review in reviewController.GetReviewsByMediaItem(@Model.Movie.GetId()))
+    @foreach (Review review in reviewController.GetReviewsByMediaItem(@Model.Movie))
     {
         Review writtenReview = review;
         <div class="review">

@@ -62,7 +62,7 @@ namespace WebApp.Pages
 
                     if (result)
                     {
-                        string reasonForBanning = _userController.CheckIfUserIsBanned(user.GetId());
+                        string reasonForBanning = _userController.CheckIfUserIsBanned(user);
                         if (reasonForBanning == null)
                         {
                             List<Claim> claims = new List<Claim>();

@@ -32,39 +32,42 @@ namespace DesktopApp
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            string email = textBoxEmail.Text;
-            Employee employee = employeeController.GetEmployeeByEmail(textBoxEmail.Text);
-            bool isLoggedIn = false;
+            try
+            {
+                string email = textBoxEmail.Text;
+                Employee employee = employeeController.GetEmployeeByEmail(email);
+                bool isLoggedIn = false;
 
-            if (employee == null)
-            {
-                lblWarning.Text = $"No employee with the email {email} exists.";
-                return;
-            }
-            else if (employee.Username != textBoxUsername.Text)
-            {
-                lblWarning.Text = "Incorrect username.";
-                return;
-            }
-            else if (!HashPassword.VerifyPassword(textBoxPassword.Text ,employee.Password, employee.Salt))
-            {
-                lblWarning.Text = "Incorrect password.";
-                return;
-            }
-            else
-            {
-                isLoggedIn = true;
-            }
+                if (employee == null)
+                {
+                    lblWarning.Text = $"No employee with the email {email} exists.";
+                    return;
+                }
+                else if (employee.Username != textBoxUsername.Text)
+                {
+                    lblWarning.Text = "Incorrect username.";
+                    return;
+                }
+                else if (!HashPassword.VerifyPassword(textBoxPassword.Text, employee.Password, employee.Salt))
+                {
+                    lblWarning.Text = "Incorrect password.";
+                    return;
+                }
+                else
+                {
+                    isLoggedIn = true;
+                }
 
-            if (isLoggedIn)
-            {
-                mainform = new MainPage(employee);
-                mainform.Show();
-                this.Hide();
+                if (isLoggedIn)
+                {
+                    mainform = new MainPage(employee);
+                    mainform.Show();
+                    this.Hide();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return;
+                lblWarning.Text = $"An error occurred: {ex.Message}";
             }
         }
 

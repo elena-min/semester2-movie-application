@@ -12,13 +12,13 @@ namespace LogicLayer.Interfaces
         bool AddReview(Review newReview);
         Review[] GetAll();
         Review GetReviewByID(int id);
-        Review[] GetReviewsByUser(int userID);
-        Review[] GetReviewsByMediaItem(int mediaItemID);
+        Review[] GetReviewsByUser(User user);
+        Review[] GetReviewsByMediaItem(MediaItem mediaItem);
         Review[] GetReviewsByDate(DateTime date);
-        Review[] GetDeletedReviewsByUser(int userID);
+        Review[] GetDeletedReviewsByUser(User user);
         string Delete(Review review);
         string DeletebyUser(Review review);
-        bool DeletedMediaItem(int mediaID);
+        bool DeletedMediaItem(MediaItem mediaItem);
         bool DeletedUser(User deletedUser);
 
     }

@@ -300,7 +300,7 @@ namespace DAL
             //    return failed;
             //}
         }
-        public string DeleteUser(int id)
+        public string DeleteUser(User user)
         {
             SqlConnection conn = CreateConnection();
             using (conn)
@@ -309,7 +309,7 @@ namespace DAL
                 {
                     string query = "DELETE FROM Person WHERE id = @id";
                     SqlCommand commandSql = new SqlCommand(query, conn);
-                    commandSql.Parameters.AddWithValue("@id", id);
+                    commandSql.Parameters.AddWithValue("@id", user.GetId());
                     conn.Open();
                     int rowsAffected = commandSql.ExecuteNonQuery();
                     conn.Close();
@@ -330,7 +330,7 @@ namespace DAL
             }
         }
         
-        public bool SetProfilePicture(int id, byte[] imageArray)
+        public bool SetProfilePicture(User user, byte[] imageArray)
         {
             SqlConnection conn = CreateConnection();
             //try
@@ -338,7 +338,7 @@ namespace DAL
             conn.Open();
             string commandSql = "UPDATE Person SET profilePicture = @profilePicture WHERE id = @id";
             SqlCommand cmd = new SqlCommand(commandSql, conn);
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@id", user.GetId());
             cmd.Parameters.AddWithValue("@profilePicture", imageArray);
             cmd.ExecuteNonQuery();
 
@@ -351,7 +351,7 @@ namespace DAL
             //}
         }
 
-        public string GetProfilePicByID(int id)
+        public string GetProfilePicByID(User user)
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
@@ -359,7 +359,7 @@ namespace DAL
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", user.GetId());
                 object result = cmd.ExecuteScalar();
 
                 if (result != DBNull.Value && result != null)
@@ -375,7 +375,7 @@ namespace DAL
             }
         }
 
-        public string CheckIfUserIsBanned(int id)
+        public string CheckIfUserIsBanned(User user)
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
@@ -383,7 +383,7 @@ namespace DAL
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", user.GetId());
                 var result = cmd.ExecuteScalar();
                 if (result != DBNull.Value && result != null)
                 {

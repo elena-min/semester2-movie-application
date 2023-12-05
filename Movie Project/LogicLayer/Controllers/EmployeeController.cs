@@ -44,26 +44,18 @@ namespace LogicLayer.Controllers
         {
             return iemployeeDAL.UpdateEmployee(employee, pictureBytes);
         }
-        public string DeleteEmployee(int id)
+        public string DeleteEmployee(Employee emp)
         {
-            return iemployeeDAL.DeleteEmployee(id);    
+            return iemployeeDAL.DeleteEmployee(emp);    
         }
-        public string GetProfilePicByID(int id)
+        public string GetProfilePicByID(Employee emp)
         {
-            return iemployeeDAL.GetProfilePicByID(id);  
+            return iemployeeDAL.GetProfilePicByID(emp);  
         }
         public bool DeleteUserAccount(User user, string reasonForDeleting)
         {
             return iemployeeDAL.DeleteUserAccount(user, reasonForDeleting);
 
-        }
-        public string GetPasswords(int id)
-        {
-            return iemployeeDAL.GetPasswords(id);
-        }
-        public void UpdatePasswordInDatabase(string hashedPassword, string salt, int id)
-        {
-            iemployeeDAL.UpdatePasswordInDatabase(hashedPassword, salt, id);    
         }
     }
 }

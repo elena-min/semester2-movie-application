@@ -40,22 +40,22 @@ namespace LogicLayer.Controllers
         {
             return iuserDAL.UpdateUser(user);
         }
-        public string DeleteUser(int id)
+        public string DeleteUser(User user)
         {
-            return iuserDAL.DeleteUser(id);
+            return iuserDAL.DeleteUser(user);
         }
-        public bool SetProfilePicture(int id, byte[] imageArray)
+        public bool SetProfilePicture(User user, byte[] imageArray)
         {
-            return iuserDAL.SetProfilePicture(id, imageArray);
+            return iuserDAL.SetProfilePicture(user, imageArray);
         }
-        public string GetProfilePicByID(int id)
+        public string GetProfilePicByID(User user)
         {
-            return iuserDAL.GetProfilePicByID(id);
+            return iuserDAL.GetProfilePicByID(user);
 
         }
-        public string CheckIfUserIsBanned(int id)
+        public string CheckIfUserIsBanned(User user)
         {
-            return iuserDAL.CheckIfUserIsBanned(id);
+            return iuserDAL.CheckIfUserIsBanned(user);
 
         }
     }

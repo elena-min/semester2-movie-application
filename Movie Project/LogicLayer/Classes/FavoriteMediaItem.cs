@@ -10,11 +10,11 @@ namespace LogicLayer.Classes
     public class FavoriteMediaItem
     {
         private List<MediaItem> favoriteMediaItems;
-        public string Username { get; private set; }
-        public FavoriteMediaItem(string username)
+        public Person User { get; private set; }
+        public FavoriteMediaItem(string username, User user)
         {
             favoriteMediaItems = new List<MediaItem>();
-            Username = username;    
+            User = user;    
         }
         public void AddToFavoroites(MediaItem mediaItem)
         {

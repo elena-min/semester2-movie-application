@@ -144,10 +144,10 @@ namespace WebApp.Pages
 
             foreach (MediaItem movie in updatedMoviesTrendingDailyCache)
             {
-                foreach (int rating in _mediaController.GetAllGivenRatings(movie.GetId()))
+                foreach (int rating in _mediaController.GetAllGivenRatings(movie))
                 {
                     movie.AddRating(rating);
-                    movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(movie.GetId());
+                    movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(movie);
                 }
             }
 
@@ -174,10 +174,10 @@ namespace WebApp.Pages
 
             foreach (MediaItem movie in updatedMoviesTrendingCache)
             {
-                foreach (int rating in _mediaController.GetAllGivenRatings(movie.GetId()))
+                foreach (int rating in _mediaController.GetAllGivenRatings(movie))
                 {
                     movie.AddRating(rating);
-                    movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(movie.GetId());
+                    movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(movie);
                 }
             }
 

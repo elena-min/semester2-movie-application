@@ -19,14 +19,83 @@ namespace LogicLayer.Classes
         private bool isDeleted;
         private string reasonForDeleting;
 
-        public string Title { get; set; }
-        public string ReviewContent { get; set; }
-        public int Rating { get; set; }
+        public string Title
+        {
+            get => title;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Title should not be empty!");
+                }
+                if (!value.Any(char.IsLetter))
+                {
+                    throw new ArgumentException("Title should contain at least one letter!");
+                }
+                title = value;
+            }
+        }
+        public string ReviewContent
+        {
+            get => reviewContent;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("The review content should not be empty!");
+                }
+                if (!value.Any(char.IsLetter))
+                {
+                    throw new ArgumentException("The review content should contain at least one letter!");
+                }
+                reviewContent = value;
+            }
+        }
+
+        public int Rating
+        {
+            get => rating;
+            set
+            {
+                if (value <= 1 || value >= 5)
+                {
+                    throw new ArgumentException("The rating should be between 1 and 5!");
+                }
+
+                rating = value;
+            }
+        }
         public MediaItem PointedTowards { get; set; }
         public User ReviewWriter { get; set; }
-        public DateTime DateOfPublication { get; set; }
+        public DateTime DateOfPublication
+        {
+            get => dateOfPublication;
+            set
+            {
+                if (value > DateTime.Now)
+                {
+                    throw new ArgumentException("Date of publication cannot be in the future.");
+                }
+                dateOfPublication = value;
+            }
+        }
         public bool IsDeleted { get; set; }
-        public string ReasonForDeleting { get; set; }
+        public string ReasonForDeleting
+        {
+            get => reasonForDeleting;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("The reason for deleting should not be empty!");
+                }
+                if (!value.Any(char.IsLetter))
+                {
+                    throw new ArgumentException("The reason for deleting should contain at least one letter!");
+                }
+                reasonForDeleting = value;
+            }
+        }
         public Review() { }
         public Review(string title, string content, int rating, MediaItem pointedTowards, User reviewWriter)
         {

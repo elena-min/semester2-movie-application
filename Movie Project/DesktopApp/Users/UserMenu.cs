@@ -153,7 +153,7 @@ namespace DesktopApp.Users
                     LogicLayer.Classes.User selectedUser = userController.GetUserByID(selected_user_id);
                     if(selectedUser != null)
                     {
-                        lblWarning.Text = userController.DeleteUser(selected_user_id);
+                        lblWarning.Text = userController.DeleteUser(selectedUser);
                         reviewController.DeletedUser(selectedUser);
                         favController.DeletedUser(selectedUser);
                     }

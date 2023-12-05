@@ -19,9 +19,9 @@
 }
 <main class="mainProfileInfo">
     <div class="profilePicture">
-        @if (userController.GetProfilePicByID(Model.Userr.GetId()) != null && userController.GetProfilePicByID(Model.Userr.GetId()).Length > 0)
+        @if (userController.GetProfilePicByID(Model.Userr) != null && userController.GetProfilePicByID(Model.Userr).Length > 0)
         {
-            <img src="data:image;base64,@userController.GetProfilePicByID(@Model.Userr.GetId())" alt="Profile picture" style="padding:10px">
+            <img src="data:image;base64,@userController.GetProfilePicByID(@Model.Userr)" alt="Profile picture" style="padding:10px">
         }
         else
         {

@@ -45,18 +45,18 @@ namespace DesktopApp.Series
                 listBoxInsertGenres.Items.Add(genre.ToString());
             }
 
-            if (mediaItemController.GetMediaItemImageByID(serie.GetId()).Length != 0)
+            if (mediaItemController.GetMediaItemImageByID(serie).Length != 0)
             {
-                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(serie.GetId()));
+                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(serie));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);
                 Image pictureImage = Image.FromStream(memoryStream);
                 pictureBoxBookPic.BackgroundImageLayout = ImageLayout.Stretch;
                 pictureBoxBookPic.BackgroundImage = pictureImage;
             }
 
-            if (mediaItemController.GetAllGivenRatings(serie.GetId()).Length != 0)
+            if (mediaItemController.GetAllGivenRatings(serie).Length != 0)
             {
-                foreach (int rating in mediaItemController.GetAllGivenRatings(serie.GetId()))
+                foreach (int rating in mediaItemController.GetAllGivenRatings(serie))
                 {
                     serie.AddRating(rating);
                 }

@@ -40,9 +40,9 @@ namespace DesktopApp.Reviews
             lblInsertDateOfPublishment.Text = review.DateOfPublication.ToString("dd-MM-yyyy");
             lblInsertGivenRating.Text = $"{review.Rating.ToString()}/5";
             labelTowardsTitle.Text = review.PointedTowards.Title;
-            if (mediaController.GetMediaItemImageByID(review.PointedTowards.GetId()).Length != 0)
+            if (mediaController.GetMediaItemImageByID(review.PointedTowards).Length != 0)
             {
-                byte[] pictureBytes = Convert.FromBase64String(mediaController.GetMediaItemImageByID(review.PointedTowards.GetId()));
+                byte[] pictureBytes = Convert.FromBase64String(mediaController.GetMediaItemImageByID(review.PointedTowards));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);
                 Image pictureImage = Image.FromStream(memoryStream);
                 pictureBoxPic.BackgroundImageLayout = ImageLayout.Stretch;

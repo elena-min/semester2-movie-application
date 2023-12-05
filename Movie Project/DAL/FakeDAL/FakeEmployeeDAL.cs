@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.FakeDAL
 {
-    public class FakeEmployeeDAL /*: IEmployeeDAL*/
+    public class FakeEmployeeDAL : IEmployeeDAL
     {
         private List<Employee> employees;
         public FakeEmployeeDAL()
@@ -49,12 +49,12 @@ namespace DAL.FakeDAL
 
         }
 
-        public string GetProfilePicByID(int id)
+        public string GetProfilePicByID(Employee employee)
         {
-            var employee = employees.FirstOrDefault(e => e.GetId() == id);
-            if (employee != null && employee.ProfilePicture != null)
+            var slectedemployee = employees.FirstOrDefault(e => e == employee);
+            if (slectedemployee != null && slectedemployee.ProfilePicture != null)
             {
-                return Convert.ToBase64String(employee.ProfilePicture);
+                return Convert.ToBase64String(slectedemployee.ProfilePicture);
             }
             else
             {
@@ -83,9 +83,9 @@ namespace DAL.FakeDAL
                 return false;
             }
         }
-        public string DeleteEmployee(int id)
+        public string DeleteEmployee(Employee employee)
         {
-            var employeeToDelete = employees.FirstOrDefault(e => e.GetId() == id);
+            var employeeToDelete = employees.FirstOrDefault(e => e == employee);
             if (employeeToDelete != null)
             {
                 employees.Remove(employeeToDelete);
@@ -95,6 +95,11 @@ namespace DAL.FakeDAL
             {
                 return "No data found.";
             }
+        }
+
+        public bool DeleteUserAccount(User user, string reasonForDeleting)
+        {
+            throw new NotImplementedException();
         }
     }
 }

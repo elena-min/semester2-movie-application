@@ -35,39 +35,9 @@ namespace DesktopApp.Series
 
         private void buttonAddSerie_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(textBoxSerieTitle.Text))
-            {
-                lblWarning.Text = "No title is filled in!";
-                return;
-            }
-            if (string.IsNullOrEmpty(richTextBoxDescription.Text))
-            {
-                lblWarning.Text = "No description is filled in!";
-                return;
-            }
-            if (string.IsNullOrEmpty(textBoxSerieRating.Text))
-            {
-                lblWarning.Text = "No rating is filled in!";
-                return;
-            }
             if (string.IsNullOrEmpty(textBoxCast.Text))
             {
                 lblWarning.Text = "No cast is filled in!";
-                return;
-            }
-            if (string.IsNullOrEmpty(textBSerieCountryOfOrigin.Text))
-            {
-                lblWarning.Text = "No counrry of origin is filled in!";
-                return;
-            }
-            if (string.IsNullOrEmpty(textBoxSerieSeasons.Text))
-            {
-                lblWarning.Text = "No number of seasons is filled in!";
-                return;
-            }
-            if (string.IsNullOrEmpty(textBoxSerieEpisodes.Text))
-            {
-                lblWarning.Text = "No number of episodes is filled in!";
                 return;
             }
             if (checkedLBGenres.CheckedIndices.Count == 0)
@@ -76,47 +46,60 @@ namespace DesktopApp.Series
                 return;
             }
 
-
-            string title = textBoxSerieTitle.Text;
-            string description = richTextBoxDescription.Text;
-            double rating;
-            if (!double.TryParse(textBoxSerieRating.Text, out rating))
-            {
-                lblWarning.Text = "Please enter a valid rating.";
-                return;
-            }
-
-            DateTime pubslishDate = dateTimeSeriePublishment.Value;
-            string cast = textBoxCast.Text;
-            string countryOfOrigin = textBSerieCountryOfOrigin.Text;
-            int seasons;
-            if (!int.TryParse(textBoxSerieSeasons.Text, out seasons))
-            {
-                lblWarning.Text = "Please enter a valid number of seasons.";
-                return;
-            }
-            int episodes;
-            if (!int.TryParse(textBoxSerieEpisodes.Text, out episodes))
-            {
-                lblWarning.Text = "Please enter a valid number of episodes.";
-                return;
-            }
-            int checkedItemCount = 0;
-
-
-            newSerie = new Serie(title, description, pubslishDate, countryOfOrigin, rating,seasons, episodes);
-            List<string> castList = cast.Split(',').ToList();
-            foreach (string actor in castList)
-            {
-                ((Serie)newSerie).Cast.AddToCast(actor);
-            }
-            foreach (object selectedGenre in checkedLBGenres.CheckedItems)
-            {
-                if (Enum.TryParse(selectedGenre.ToString(), out Genre enum_genre))
+            try{
+                string title = textBoxSerieTitle.Text;
+                string description = richTextBoxDescription.Text;
+                double rating;
+                if (!double.TryParse(textBoxSerieRating.Text, out rating))
                 {
-                    newSerie.AddGenre(enum_genre);
+                    lblWarning.Text = "Please enter a rating using numbers.";
+                    return;
+                }
+
+                DateTime pubslishDate = dateTimeSeriePublishment.Value;
+                string cast = textBoxCast.Text;
+                string countryOfOrigin = textBSerieCountryOfOrigin.Text;
+                int seasons;
+                if (!int.TryParse(textBoxSerieSeasons.Text, out seasons))
+                {
+                    lblWarning.Text = "Please enter a valid number of seasons.";
+                    return;
+                }
+                int episodes;
+                if (!int.TryParse(textBoxSerieEpisodes.Text, out episodes))
+                {
+                    lblWarning.Text = "Please enter a valid number of episodes.";
+                    return;
+                }
+                int checkedItemCount = 0;
+
+
+                newSerie = new Serie(title, description, pubslishDate, countryOfOrigin, rating, seasons, episodes);
+                List<string> castList = cast.Split(',').ToList();
+                foreach (string actor in castList)
+                {
+                    ((Serie)newSerie).Cast.AddToCast(actor);
+                }
+                foreach (object selectedGenre in checkedLBGenres.CheckedItems)
+                {
+                    if (Enum.TryParse(selectedGenre.ToString(), out Genre enum_genre))
+                    {
+                        newSerie.AddGenre(enum_genre);
+                    }
                 }
             }
+            catch (InvalidRatingException ex)
+            {
+                lblWarning.Text = ex.Message;
+                return;
+            }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"An unexpected error: {ex.Message}";
+                return;
+            }
+
+
 
             if (mediaController.AddMediaItem(newSerie, ImageToBytes(pictureBoxSeriePic.BackgroundImage, pictureBoxSeriePic)))
             {

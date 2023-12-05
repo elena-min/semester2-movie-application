@@ -9,9 +9,9 @@ namespace LogicLayer.Interfaces
 {
     public interface IMediaItemViewsDAL
     {
-        void UpdateViewsCount(int mediaID, DateTime currentDate);
-        Dictionary<DateTime, int> GetAllViewsByMediaItem(int mediaID);
-        string RemoveMediaItemViews(int mediaID);
+        void UpdateViewsCount(MediaItem mediaItem, DateTime currentDate);
+        Dictionary<DateTime, int> GetAllViewsByMediaItem(MediaItem mediaItem);
+        string RemoveMediaItemViews(MediaItem mediaItem);
 
     }
 }

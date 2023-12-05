@@ -47,50 +47,63 @@ namespace WebApp.Pages
 
         public IActionResult OnPost(int movieId)
         {
-            var userID = User.FindFirst("Id").Value;
-            if (userID == null)
+            try
             {
-                return RedirectToPage("/Login");
-            }
-            Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
+                var userID = User.FindFirst("Id").Value;
+                if (userID == null)
+                {
+                    return RedirectToPage("/Login");
+                }
+                Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
 
-            int rating = Convert.ToInt32(Request.Form["Rating"]);
-            if (rating == 0)
+                int rating = Convert.ToInt32(Request.Form["Rating"]);
+                if (rating == 0)
+                {
+                    rating = 1;
+                }
+
+                MediaItem mediaItem = _mediaController.GetMediaItemById(movieId);
+                if (mediaItem is Movie)
+                {
+                    Movie = _mediaController.GetMediaItemById(movieId);
+
+                }
+                else if (mediaItem is Serie)
+                {
+                    Serie = _mediaController.GetMediaItemById(movieId);
+                }
+                else
+                {
+                    RedirectToPage("/Main");
+                }
+
+                if (Movie != null)
+                {
+                    Review review = new Review { Title = ReviewTitle, ReviewContent = ReviewContent, Rating = rating, PointedTowards = Movie, ReviewWriter = Userr };
+                    _reviewController.AddReview(review);
+                    return RedirectToPage("/MovieInfoPage", new { id = Movie.GetId() });
+
+                }
+                else if (Serie != null)
+                {
+                    Review review = new Review { Title = ReviewTitle, ReviewContent = ReviewContent, Rating = rating, PointedTowards = Serie, ReviewWriter = Userr };
+                    _reviewController.AddReview(review);
+                    return RedirectToPage("/SerieInfoPage", new { id = Serie.GetId() });
+
+                }
+
+                return RedirectToPage("/Main");
+            }
+            catch (ArgumentException ex)
             {
-                rating = 1;
+                TempData["Message"] = $"{ex.Message}";
+                return Page();
             }
-
-            MediaItem mediaItem = _mediaController.GetMediaItemById(movieId);
-            if (mediaItem is Movie)
+            catch (Exception ex)
             {
-                Movie = _mediaController.GetMediaItemById(movieId);
-
+                TempData["Message"] = $"An unexpected error: {ex.Message}";
+                return Page();
             }
-            else if (mediaItem is Serie)
-            {
-                Serie = _mediaController.GetMediaItemById(movieId);
-            }
-            else
-            {
-                RedirectToPage("/Main");
-            }
-
-            if (Movie != null)
-            {
-                Review review = new Review { Title = ReviewTitle, ReviewContent = ReviewContent, Rating = rating, PointedTowards = Movie, ReviewWriter = Userr };
-                _reviewController.AddReview(review);
-                return RedirectToPage("/MovieInfoPage", new { id = Movie.GetId() });
-
-            }
-            else if (Serie != null)
-            {
-                Review review = new Review { Title = ReviewTitle, ReviewContent = ReviewContent, Rating = rating, PointedTowards = Serie, ReviewWriter = Userr };
-                _reviewController.AddReview(review);
-                return RedirectToPage("/SerieInfoPage", new { id = Serie.GetId() });
-
-            }
-
-            return RedirectToPage("/Main");
 
         }
         public IActionResult OnPostLogout()
@@ -101,24 +114,24 @@ namespace WebApp.Pages
             return RedirectToPage("/Index");
         }
 
-        public void OnGet(int movieId)
-        {
-            MediaItem mediaItem = _mediaController.GetMediaItemById(movieId);
-            if (mediaItem is Movie)
-            {
-                Movie = mediaItem;
+        //public void OnGet(int movieId)
+        //{
+        //    MediaItem mediaItem = _mediaController.GetMediaItemById(movieId);
+        //    if (mediaItem is Movie)
+        //    {
+        //        Movie = mediaItem;
 
-            }
-            else if (mediaItem is Serie)
-            {
-                Serie = mediaItem;
-            }
-            else
-            {
-                RedirectToPage("/Index");
-            }
+        //    }
+        //    else if (mediaItem is Serie)
+        //    {
+        //        Serie = mediaItem;
+        //    }
+        //    else
+        //    {
+        //        RedirectToPage("/Index");
+        //    }
 
-            MovieId = movieId;
-        }
+        //    MovieId = movieId;
+        //}
     }
 }

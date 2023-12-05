@@ -36,20 +36,14 @@ namespace DesktopApp.Employees
             labelEmail.Text = employee.Email;
             labelAge.Text = employee.Age.ToString() + " years";
             labelGender.Text = employee.Gender.ToString();
-            if (empController.GetProfilePicByID(employee.GetId()).Length != 0 || empController.GetProfilePicByID(employee.GetId()) == null)
+            if (empController.GetProfilePicByID(employee).Length != 0 || empController.GetProfilePicByID(employee) == null)
             {
-                byte[] pictureBytes = Convert.FromBase64String(empController.GetProfilePicByID(employee.GetId()));
+                byte[] pictureBytes = Convert.FromBase64String(empController.GetProfilePicByID(employee));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);
                 Image pictureImage = Image.FromStream(memoryStream);
                 pictureBoxProfilePic.BackgroundImageLayout = ImageLayout.Stretch;
                 pictureBoxProfilePic.BackgroundImage = pictureImage;
             }
-
-
-            string password = employee.Password;
-            string salt;
-            string hashedPassword = HashPassword.GenerateHash(password, out salt);
-            empController.UpdatePasswordInDatabase(hashedPassword, salt, employee.GetId());
         }
         private void ActivateButton(object btnSender)
         {

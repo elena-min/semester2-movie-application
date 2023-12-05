@@ -188,19 +188,28 @@ namespace DesktopApp.Series
                 if (listBoxViewSeries.SelectedIndex != -1)
                 {
                     int selected_serie_id = Int32.Parse(listBoxViewSeries.SelectedItem.ToString().Split('-')[1]);
-                    bool removalSuccess = mediaItemController.RemoveMediaItem(selected_serie_id);
-
-                    if (removalSuccess)
+                    MediaItem mediaItem = mediaItemController.GetMediaItemById(selected_serie_id);
+                    if(mediaItem != null)
                     {
-                        lblWarning.Text = "Media item deleted successfully";
-                        reviewController.DeletedMediaItem(selected_serie_id);
-                        favController.DeletedMediaItem(selected_serie_id);
+                        bool removalSuccess = mediaItemController.RemoveMediaItem(mediaItem);
 
+                        if (removalSuccess)
+                        {
+                            lblWarning.Text = "Media item deleted successfully";
+                            reviewController.DeletedMediaItem(mediaItem);
+                            favController.DeletedMediaItem(mediaItem);
+
+                        }
+                        else
+                        {
+                            lblWarning.Text = "Failed to delete media item";
+                        }
                     }
                     else
                     {
-                        lblWarning.Text = "Failed to delete media item";
+                        lblWarning.Text = "No data found.";
                     }
+
                     listBoxViewSeries.Items.Clear();
                     foreach (MediaItem serie in mediaItemController.GetAll())
                     {

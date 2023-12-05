@@ -15,11 +15,9 @@ namespace LogicLayer.Interfaces
         Employee GetEmployeeByEmail(string email);
         Employee[] GetAll();
         bool UpdateEmployee(Employee employee, byte[] pictureBytes);
-        string DeleteEmployee(int id);
-        string GetProfilePicByID(int id);
+        string DeleteEmployee(Employee emp);
+        string GetProfilePicByID(Employee emp);
         bool DeleteUserAccount(User user, string reasonForDeleting);
-        string GetPasswords(int id);
-         void UpdatePasswordInDatabase(string hashedPassword, string salt, int id);
 
     }
 }

@@ -215,11 +215,11 @@ namespace UnitTestProject
             user1.SetId(2);
             User user2 = new User("Lilly", "JThomas", "nickJ", "lilly@gmail.com", "12345", LogicLayer.Gender.Female);
             user2.SetId(3);
-            userController.InsertUser(user1);
+            userController.InsertUser(user2);
             userController.InsertUser(user2);
 
             //Act
-            string result = userController.DeleteUser(2);
+            string result = userController.DeleteUser(user1);
 
             //Assert
             Assert.AreEqual("User deleted successfully", result);
@@ -238,7 +238,7 @@ namespace UnitTestProject
             userController.InsertUser(user2);
 
             //Act
-            string result = userController.DeleteUser(3);
+            string result = userController.DeleteUser(user2);
 
             //Assert
             Assert.AreEqual("No data found.", result);
@@ -255,7 +255,7 @@ namespace UnitTestProject
             byte[] picture = new byte[] { 1, 2, 3 };
 
             // Act
-            bool result = userController.SetProfilePicture(2, picture);
+            bool result = userController.SetProfilePicture(user1, picture);
 
             // Assert
             Assert.IsTrue(result);
@@ -271,7 +271,7 @@ namespace UnitTestProject
             byte[] picture = null;
 
             // Act
-            bool result = userController.SetProfilePicture(1, picture); 
+            bool result = userController.SetProfilePicture(user1, picture); 
 
             // Assert
             Assert.IsFalse(result);
@@ -288,7 +288,7 @@ namespace UnitTestProject
             userController.InsertUser(user1);
 
             // Act
-            string result = userController.GetProfilePicByID(2);
+            string result = userController.GetProfilePicByID(user1);
 
             // Assert
             Assert.IsNotNull(result);
@@ -299,9 +299,9 @@ namespace UnitTestProject
         {
             // Arrange
             UserController userController = new UserController(createTestRepo());
-
+            User user = null;
             // Act
-            string result = userController.GetProfilePicByID(2);
+            string result = userController.GetProfilePicByID(user);
 
             // Assert
             Assert.IsNull(result);
@@ -318,7 +318,7 @@ namespace UnitTestProject
             userController.InsertUser(user1);
 
             // Act
-            string result = userController.GetProfilePicByID(2);
+            string result = userController.GetProfilePicByID(user1);
 
             // Assert
             Assert.IsNull(result);

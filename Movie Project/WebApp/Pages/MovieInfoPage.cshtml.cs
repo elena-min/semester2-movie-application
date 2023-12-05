@@ -31,13 +31,13 @@ namespace WebApp.Pages
         public void OnGet(int id)
         {
             Movie = _mediaController.GetMediaItemById(id);
-            foreach (int rating in _mediaController.GetAllGivenRatings(Movie.GetId()))
+            foreach (int rating in _mediaController.GetAllGivenRatings(Movie))
             {
                 Movie.AddRating(rating);
             }
-            Movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(Movie.GetId());
+            Movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(Movie);
             Movie.RecordView(DateTime.Now);
-            _mediaViewsController.UpdateViewsCount(Movie.GetId(), DateTime.Now);
+            _mediaViewsController.UpdateViewsCount(Movie, DateTime.Now);
             DateTime currentDate = DateTime.Now.Date;
             PopularityScores = new List<double>();
 
@@ -66,9 +66,9 @@ namespace WebApp.Pages
                 return RedirectToPage("/Login");
             }
 
-            if (_favoritesController.CheckIfProductIsInFavorites(movie.GetId(), Userr.GetId()) == false)
+            if (_favoritesController.CheckIfProductIsInFavorites(movie, Userr) == false)
             {
-                _favoritesController.AddProductToFavorite(movie.GetId(), Userr.GetId());
+                _favoritesController.AddProductToFavorite(movie, Userr);
                 TempData["Message"] = "Movie added to favorites!";
                 return RedirectToPage("/MovieInfoPage", new { id = movie.GetId() });
             }

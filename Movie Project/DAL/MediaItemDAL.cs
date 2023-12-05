@@ -162,7 +162,7 @@ namespace DAL
             return mediaItems.ToArray();
         }
 
-        public int[] GetAllGivenRatings(int id)
+        public int[] GetAllGivenRatings(MediaItem mediaItem)
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
@@ -171,7 +171,7 @@ namespace DAL
             //try
             //{
             SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@mediaID", id);
+            cmd.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
             {
@@ -334,7 +334,7 @@ namespace DAL
             return mediaItem;
         }
 
-        public string GetMediaItemImageByID(int id)
+        public string GetMediaItemImageByID(MediaItem mediaItem)
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
@@ -342,14 +342,14 @@ namespace DAL
             //try
             //{
             SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@id", mediaItem.GetId());
             byte[] imageData = (byte[])cmd.ExecuteScalar();
 
             string base64StringImage = Convert.ToBase64String(imageData);
             return base64StringImage;
         }
 
-        public bool RemoveMediaItem(int id)
+        public bool RemoveMediaItem(MediaItem mediaItem)
         {
             SqlConnection conn = CreateConnection();
             using (conn)
@@ -358,18 +358,18 @@ namespace DAL
                 //{
                 string query = "DELETE FROM Movie WHERE id = @id";
                 SqlCommand commandSql = new SqlCommand(query, conn);
-                commandSql.Parameters.AddWithValue("@id", id);
+                commandSql.Parameters.AddWithValue("@id", mediaItem.GetId());
                 conn.Open();
                 int rowsAffected = commandSql.ExecuteNonQuery();
 
                 string query2 = "DELETE FROM Serie WHERE id = @id";
                 SqlCommand commandSql2 = new SqlCommand(query2, conn);
-                commandSql2.Parameters.AddWithValue("@id", id);
+                commandSql2.Parameters.AddWithValue("@id", mediaItem.GetId());
                 int rowsAffected2 = commandSql2.ExecuteNonQuery();
 
                 string query3 = "DELETE FROM MediaItem WHERE id = @id";
                 SqlCommand commandSql3 = new SqlCommand(query3, conn);
-                commandSql3.Parameters.AddWithValue("@id", id);
+                commandSql3.Parameters.AddWithValue("@id", mediaItem.GetId());
                 int rowsAffected3 = commandSql3.ExecuteNonQuery();
                 conn.Close();
 

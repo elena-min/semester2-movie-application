@@ -42,9 +42,9 @@
                     <div class="ratingIMG">
                         <img src="/images/icons8-review-48.png" alt="img" style="padding:5px">
                         @{
-                            if (mediaController.GetAllGivenRatings(@Model.Serie.GetId()).Length != 0)
+                            if (mediaController.GetAllGivenRatings(@Model.Serie).Length != 0)
                             {
-                                foreach (int rating in mediaController.GetAllGivenRatings(@Model.Serie.GetId()))
+                                foreach (int rating in mediaController.GetAllGivenRatings(@Model.Serie))
                                 {
                                     Model.Serie.AddRating(rating);
                                 }
@@ -63,9 +63,9 @@
                     <div class="ratingIMG">
                         <img src="/images/icons8-review-50.png" alt="img" style="padding:5px">
                         @{
-                            if (mediaController.GetAllGivenRatings(@Model.Serie.GetId()).Length != 0)
+                            if (mediaController.GetAllGivenRatings(@Model.Serie).Length != 0)
                             {
-                                foreach (int rating in mediaController.GetAllGivenRatings(@Model.Serie.GetId()))
+                                foreach (int rating in mediaController.GetAllGivenRatings(@Model.Serie))
                                 {
                                     Model.Serie.AddRating(rating);
                                 }
@@ -94,9 +94,9 @@
             <p><b>Episodes : </b>@(((Serie)Model.Serie).Episodes.ToString())</p>
 
             @{
-                if (mediaController.GetAllGivenRatings(@Model.Serie.GetId()).Length != 0)
+                if (mediaController.GetAllGivenRatings(@Model.Serie).Length != 0)
                 {
-                    foreach (int rating in mediaController.GetAllGivenRatings(@Model.Serie.GetId()))
+                    foreach (int rating in mediaController.GetAllGivenRatings(@Model.Serie))
                     {
                         Model.Serie.AddRating(rating);
                     }
@@ -112,7 +112,7 @@
             }
         </div>
         <div class="cover">
-            <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Serie.GetId())" alt="Movie cover" style="padding:10px">
+            <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Serie)" alt="Movie cover" style="padding:10px">
         </div>
     </div>
     
@@ -142,7 +142,7 @@
 
 <h3>All written Reviews</h3>
 <div id="reviewsContainers">
-    @foreach (Review review in reviewController.GetReviewsByMediaItem(@Model.Serie.GetId()))
+    @foreach (Review review in reviewController.GetReviewsByMediaItem(@Model.Serie))
     {
         Review writtenReview = review;
         <div class="review">

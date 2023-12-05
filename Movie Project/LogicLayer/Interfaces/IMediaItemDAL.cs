@@ -13,10 +13,10 @@ namespace LogicLayer.Interfaces
         MediaItem[] GetAll();
         MediaItem GetMediaItem(string title);
         MediaItem GetMediaItemById(int id);
-        int[] GetAllGivenRatings(int id);
-        string GetMediaItemImageByID(int id);
+        int[] GetAllGivenRatings(MediaItem mediaItem);
+        string GetMediaItemImageByID(MediaItem mediaItem);
         bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes);
-        bool RemoveMediaItem(int id);
+        bool RemoveMediaItem(MediaItem mediaItem);
 
     }
 }

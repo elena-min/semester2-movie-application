@@ -31,13 +31,13 @@ namespace WebApp.Pages
         public void OnGet(int id)
         {
             Serie = _mediaController.GetMediaItemById(id);
-            foreach (int rating in _mediaController.GetAllGivenRatings(Serie.GetId()))
+            foreach (int rating in _mediaController.GetAllGivenRatings(Serie))
             {
                 Serie.AddRating(rating);
             }
-            Serie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(Serie.GetId());
+            Serie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(Serie);
             Serie.RecordView(DateTime.Now);
-            _mediaViewsController.UpdateViewsCount(Serie.GetId(), DateTime.Now);
+            _mediaViewsController.UpdateViewsCount(Serie, DateTime.Now);
 
             DateTime currentDate = DateTime.Now.Date;
             PopularityScores = new List<double>();
@@ -67,9 +67,9 @@ namespace WebApp.Pages
                 return RedirectToPage("/Login");
             }
 
-            if (_favoritesController.CheckIfProductIsInFavorites(serie.GetId(), Userr.GetId()) == false)
+            if (_favoritesController.CheckIfProductIsInFavorites(serie, Userr) == false)
             {
-                _favoritesController.AddProductToFavorite(serie.GetId(), Userr.GetId());
+                _favoritesController.AddProductToFavorite(serie, Userr);
                 TempData["Message"] = "Serie added to favorites!";
                 return RedirectToPage("/SerieInfoPage", new { id = serie.GetId() });
             }

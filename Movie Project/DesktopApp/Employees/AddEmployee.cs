@@ -33,31 +33,6 @@ namespace DesktopApp.Employees
 
         private void buttonAddEmp_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(textBoxFName.Text))
-            {
-                lblWarning.Text = "No first name is filled in!";
-                return;
-            }
-            if (string.IsNullOrEmpty(textBoxLName.Text))
-            {
-                lblWarning.Text = "No last name is filled in!";
-                return;
-            }
-            if (string.IsNullOrEmpty(textBoxUsername.Text))
-            {
-                lblWarning.Text = "No username is filled in!";
-                return;
-            }
-            if (string.IsNullOrEmpty(textBoxPassword.Text))
-            {
-                lblWarning.Text = "No password is filled in!";
-                return;
-            }
-            if (string.IsNullOrEmpty(textBoxEmail.Text))
-            {
-                lblWarning.Text = "No email is filled in!";
-                return;
-            }
             if (string.IsNullOrEmpty(textBoxAge.Text))
             {
                 lblWarning.Text = "No age is filled in!";
@@ -69,35 +44,42 @@ namespace DesktopApp.Employees
                 return;
             }
 
-            string fName = textBoxFName.Text;
-            string lName = textBoxLName.Text;
-            string username = textBoxUsername.Text;
-            string email = textBoxEmail.Text;
-            string emailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
-            if (!Regex.IsMatch(email, emailPattern))
+            try
             {
-                lblWarning.Text = "Please enter a valid email address.";
-                return;
-            }
-            string password = textBoxPassword.Text;
-            Gender gender = (Gender)comboBoxGender.SelectedItem;
-           
-            int age;
-            if (int.TryParse(textBoxAge.Text, out  age))
-            {
-                if (age < 16 && age > 80)
+                string fName = textBoxFName.Text;
+                string lName = textBoxLName.Text;
+                string username = textBoxUsername.Text;
+                string email = textBoxEmail.Text;
+                string emailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+                if (!Regex.IsMatch(email, emailPattern))
                 {
-                    lblWarning.Text = "e is not valid. You must be at least 16 years old and under 80.";
+                    lblWarning.Text = "Please enter a valid email address.";
+                    return;
                 }
+                string password = textBoxPassword.Text;
+                Gender gender = (Gender)comboBoxGender.SelectedItem;
+
+                int age;
+                if (!int.TryParse(textBoxAge.Text, out age))
+                {
+                    lblWarning.Text = "Please enter age using numbers!";
+                    return;
+                }
+
+                newEmp = new Employee(fName, lName, username, email, password, gender, age);
             }
-            else
+            catch (InvalidAgeException ex)
             {
-                lblWarning.Text = "Please enter a valid age in years.";
+                lblWarning.Text = ex.Message;
+                return;
+            }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"An unexpected error: {ex.Message}";
                 return;
             }
 
 
-            newEmp = new Employee(fName, lName, username, email,password, gender, age);
             if (empController.AddEmployee(newEmp))
             {
                 lblWarning.Text = "Employee has been added successfully!";

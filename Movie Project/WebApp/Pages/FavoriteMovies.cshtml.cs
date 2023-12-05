@@ -19,6 +19,7 @@ namespace WebApp.Pages
         public User Userr { get; set; }
 
         private readonly UserController _userController;
+        private readonly MediaItemController _mediaItemController;
         private readonly FavoritesController _favoritesController;
         private readonly FilterContext _filterContext;
 
@@ -30,12 +31,13 @@ namespace WebApp.Pages
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
 
-        public FavoriteMoviesModel(UserController userController, FavoritesController favoritesController, FilterContext filterContext)
+        public FavoriteMoviesModel(UserController userController, FavoritesController favoritesController, FilterContext filterContext, MediaItemController mediaItemController)
         {
             this._userController = userController;
             FavoriteMovies = new List<MediaItem>();
             _favoritesController = favoritesController;
             _filterContext = filterContext;
+            _mediaItemController = mediaItemController;
         }
         public IActionResult OnGet(string searchTerm, Genre? genreSelect, int pageIndex = 1)
         {
@@ -53,9 +55,9 @@ namespace WebApp.Pages
                 return NotFound();
             }
             
-            if (_favoritesController.GetAllFavoriteMovies(Userr.GetId()) != null)
+            if (_favoritesController.GetAllFavorites(Userr) != null)
             {
-                foreach (MediaItem item in _favoritesController.GetAllFavoriteMovies(Userr.GetId()))
+                foreach (MediaItem item in _favoritesController.GetAllFavorites(Userr))
                 {
                     if (item is Movie)
                     {
@@ -105,8 +107,14 @@ namespace WebApp.Pages
                 return NotFound();
             }
 
-            TempData["Message"] = _favoritesController.RemoveFromFavorites(movieId, Int32.Parse(userID));
-            return RedirectToPage("/FavoriteMovies");
+            MediaItem movie = _mediaItemController.GetMediaItemById(Int32.Parse(movieId.ToString()));
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            TempData["Message"] = _favoritesController.RemoveFromFavorites(movie, Userr); return RedirectToPage("/FavoriteMovies");
         }
 
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.FakeDAL
 {
-    public class FakeUserDAL /*: IUserDAL*/
+    public class FakeUserDAL : IUserDAL
     {
         private List<User> users;
         public FakeUserDAL()
@@ -66,9 +66,9 @@ namespace DAL.FakeDAL
                 return false;
             }
         }
-        public string DeleteUser(int id)
+        public string DeleteUser(User user)
         {
-            var userToDelete = users.FirstOrDefault(e => e.GetId() == id);
+            var userToDelete = users.FirstOrDefault(e => e == user);
             if (userToDelete != null)
             {
                 users.Remove(userToDelete);
@@ -80,9 +80,9 @@ namespace DAL.FakeDAL
             }
         }
 
-        public bool SetProfilePicture(int id, byte[] imageArray)
+        public bool SetProfilePicture(User user, byte[] imageArray)
         {
-            var userToUpdate = users.FirstOrDefault(u => u.GetId() == id);
+            var userToUpdate = users.FirstOrDefault(u => u == user);
 
             if (userToUpdate != null && imageArray != null)
             {
@@ -94,13 +94,13 @@ namespace DAL.FakeDAL
                 return false;
             }
         }
-        public string GetProfilePicByID(int id)
+        public string GetProfilePicByID(User user)
         {
-            var user = users.FirstOrDefault(u => u.GetId() == id);
+            var selcteduser = users.FirstOrDefault(u => u == user);
 
-            if (user != null && user.ProfilePicture != null)
+            if (selcteduser != null && selcteduser.ProfilePicture != null)
             {
-                return Convert.ToBase64String(user.ProfilePicture);
+                return Convert.ToBase64String(selcteduser.ProfilePicture);
             }
             else
             {
@@ -108,6 +108,9 @@ namespace DAL.FakeDAL
             }
         }
 
-        
+        public string CheckIfUserIsBanned(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

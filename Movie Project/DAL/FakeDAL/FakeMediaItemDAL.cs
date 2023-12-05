@@ -29,13 +29,13 @@ namespace DAL.FakeDAL
             return mediaItems.ToArray();
         }
 
-        public int[] GetAllGivenRatings(int id)
+        public int[] GetAllGivenRatings(MediaItem mediaItem)
         {
-            MediaItem medaiItem =  mediaItems.Find(item => item.GetId() == id);
+            MediaItem medaiItemSelected =  mediaItems.Find(item => item== mediaItem);
             int[] ratings;
-            if (medaiItem != null)
+            if (medaiItemSelected != null)
             {
-                ratings = medaiItem.GetAllRatings();
+                ratings = medaiItemSelected.GetAllRatings();
                 return ratings;
             }
             else
@@ -54,22 +54,22 @@ namespace DAL.FakeDAL
             return mediaItems.Find(item => item.GetId() == id);
         }
 
-        public string GetMediaItemImageByID(int id)
+        public string GetMediaItemImageByID(MediaItem mediaItem)
         {
-            var mediaItem = mediaItems.FirstOrDefault(u => u.GetId() == id);
+            var mediaItemSelected = mediaItems.FirstOrDefault(u => u == mediaItem);
 
-            if (mediaItem != null && mediaItem.Picture != null)
+            if (mediaItemSelected != null && mediaItemSelected.Picture != null)
             {
-                return Convert.ToBase64String(mediaItem.Picture);
+                return Convert.ToBase64String(mediaItemSelected.Picture);
             }
             else
             {
                 return null;
             }
         }
-        public bool RemoveMediaItem(int id)
+        public bool RemoveMediaItem(MediaItem mediaItem)
         {
-            MediaItem mediaItemToRemove = mediaItems.Find(item => item.GetId() == id);
+            MediaItem mediaItemToRemove = mediaItems.Find(item => item == mediaItem);
             if (mediaItemToRemove != null)
             {
                 mediaItems.Remove(mediaItemToRemove);
@@ -102,6 +102,5 @@ namespace DAL.FakeDAL
             throw new NotImplementedException();
         }
 
-        
     }
 }

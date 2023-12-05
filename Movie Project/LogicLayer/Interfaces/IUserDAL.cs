@@ -15,9 +15,9 @@ namespace LogicLayer.Interfaces
         User GetUserByEmail(string email);
         User[] GetAll();
         bool UpdateUser(User user);
-        string DeleteUser(int id);
-        bool SetProfilePicture(int id, byte[] imageArray);
-        string GetProfilePicByID(int id);
-        string CheckIfUserIsBanned(int id);
+        string DeleteUser(User user);
+        bool SetProfilePicture(User user, byte[] imageArray);
+        string GetProfilePicByID(User user);
+        string CheckIfUserIsBanned(User user);
     }
 }

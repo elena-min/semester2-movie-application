@@ -38,7 +38,7 @@ namespace WebApp.Pages
                 return NotFound();
             }
 
-            string profilePictureBytes = _userController.GetProfilePicByID(Userr.GetId());
+            string profilePictureBytes = _userController.GetProfilePicByID(Userr);
 
             if (profilePictureBytes != null)
             {
@@ -70,7 +70,7 @@ namespace WebApp.Pages
                     profilePicture.CopyTo(memoryStream);
                     byte[] imageArray = memoryStream.ToArray();
 
-                    if (_userController.SetProfilePicture(Userr.GetId(), imageArray))
+                    if (_userController.SetProfilePicture(Userr, imageArray))
                     {
                         TempData["Message"] = "Profile Picture successfully changed";
 

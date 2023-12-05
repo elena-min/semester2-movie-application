@@ -19,8 +19,38 @@ namespace LogicLayer.Classes
         protected string countryOfOrigin;
         public Cast Cast { get; set; }
 
-        public string Title { get; private set; }
-        public string Description { get; private set; }
+        public string Title
+        {
+            get => title;
+            private set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Title should not be empty!");
+                }
+                if (!value.Any(char.IsLetter))
+                {
+                    throw new ArgumentException("Title should contain at least one letter!");
+                }
+                title = value;
+            }
+        }
+        public string Description
+        {
+            get => description;
+            private set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Description should not be empty!");
+                }
+                if (!value.Any(char.IsLetter))
+                {
+                    throw new ArgumentException("Description should contain at least one letter!");
+                }
+                description = value;
+            }
+        }
         public DateTime ReleaseDate { get; private set; }
         public double Rating
         {
@@ -31,11 +61,26 @@ namespace LogicLayer.Classes
                 {
                     throw new InvalidRatingException();
                 }
+                //if(!double.IsNullOrWhiteSpace(value))
+                //{
+                //    throw new ArgumentException("Rating should not be empty!");
+                //}
 
                 rating = value;
             }
         }
-        public string CountryOfOrigin { get; private set; }
+        public string CountryOfOrigin
+        {
+            get => countryOfOrigin;
+            private set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Country of origin should not be empty!");
+                }
+                countryOfOrigin = value;
+            }
+        }
         public byte[] Picture { get; set; }
 
         public Dictionary<DateTime, int> ViewsNumberByDate { get;  set; }

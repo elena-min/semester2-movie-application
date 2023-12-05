@@ -31,21 +31,21 @@ namespace LogicLayer.Controllers
         {
             return imediaItemDAL.GetMediaItemById(id);
         }
-        public int[] GetAllGivenRatings(int id)
+        public int[] GetAllGivenRatings(MediaItem mediaItem)
         {
-            return imediaItemDAL.GetAllGivenRatings(id);
+            return imediaItemDAL.GetAllGivenRatings(mediaItem);
         }
-        public string GetMediaItemImageByID(int id)
+        public string GetMediaItemImageByID(MediaItem mediaItem)
         {
-            return imediaItemDAL.GetMediaItemImageByID((int)id);
+            return imediaItemDAL.GetMediaItemImageByID(mediaItem);
         }
         public bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes)
         {
             return imediaItemDAL.UpdateMediaItem(mediaItem, pictureBytes); 
         }
-        public bool RemoveMediaItem(int id)
+        public bool RemoveMediaItem(MediaItem mediaItem)
         {
-            return imediaItemDAL.RemoveMediaItem(id);
+            return imediaItemDAL.RemoveMediaItem(mediaItem);
         }
 
     }

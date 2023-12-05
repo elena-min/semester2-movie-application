@@ -20,7 +20,7 @@
     <div class="profilePicture">
         @if (!string.IsNullOrWhiteSpace(Model.ProfilePicture))
         {
-            <img src="data:image;base64,@userController.GetProfilePicByID(@Model.Userr.GetId())" alt="Profile picture" style="padding:10px">
+            <img src="data:image;base64,@userController.GetProfilePicByID(@Model.Userr)" alt="Profile picture" style="padding:10px">
         }
         else
         {

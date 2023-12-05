@@ -186,20 +186,28 @@ namespace DesktopApp.Movies
                 if (listBoxViewMovies.SelectedIndex != -1)
                 {
                     int selected_movie_id = Int32.Parse(listBoxViewMovies.SelectedItem.ToString().Split('-')[1]);
-                    //lblWarning.Text = mediaItemController.RemoveMediaItem(selected_movie_id);
-                    bool removalSuccess = mediaItemController.RemoveMediaItem(selected_movie_id);
-
-                    if (removalSuccess)
+                    MediaItem mediaItem = mediaItemController.GetMediaItemById(selected_movie_id);
+                    if (mediaItem != null)
                     {
-                        lblWarning.Text = "Media item deleted successfully";
-                        reviewController.DeletedMediaItem(selected_movie_id);
-                        favController.DeletedMediaItem(selected_movie_id);
+                        bool removalSuccess = mediaItemController.RemoveMediaItem(mediaItem);
 
+                        if (removalSuccess)
+                        {
+                            lblWarning.Text = "Media item deleted successfully";
+                            reviewController.DeletedMediaItem(mediaItem);
+                            favController.DeletedMediaItem(mediaItem);
+
+                        }
+                        else
+                        {
+                            lblWarning.Text = "Failed to delete media item";
+                        }
                     }
                     else
                     {
-                        lblWarning.Text = "Failed to delete media item";
+                        lblWarning.Text = "No data found.";
                     }
+
                     listBoxViewMovies.Items.Clear();
                     foreach (MediaItem movie in mediaItemController.GetAll())
                     {

@@ -47,18 +47,18 @@ namespace DesktopApp.Movies
                 listBoxInsertGenres.Items.Add(genre.ToString());
             }
 
-            if (mediaItemController.GetMediaItemImageByID(movie.GetId()).Length != 0)
+            if (mediaItemController.GetMediaItemImageByID(movie).Length != 0)
             {
-                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(movie.GetId()));
+                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(movie));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);
                 Image pictureImage = Image.FromStream(memoryStream);
                 pictureBoxBookPic.BackgroundImageLayout = ImageLayout.Stretch;
                 pictureBoxBookPic.BackgroundImage = pictureImage;
             }
 
-            if (mediaItemController.GetAllGivenRatings(movie.GetId()).Length != 0)
+            if (mediaItemController.GetAllGivenRatings(movie).Length != 0)
             {
-                foreach (int rating in mediaItemController.GetAllGivenRatings(movie.GetId()))
+                foreach (int rating in mediaItemController.GetAllGivenRatings(movie))
                 {
                     movie.AddRating(rating);
                 }

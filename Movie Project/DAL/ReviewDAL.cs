@@ -128,7 +128,7 @@ namespace DAL
             //}        }
         }
         
-        public Review[] GetReviewsByUser(int userID)
+        public Review[] GetReviewsByUser(User user)
         {
             SqlConnection conn = CreateConnection();
             string query = "select * from Review where isItDeleted = 0 AND personID = @personID";
@@ -137,7 +137,7 @@ namespace DAL
             //{
             conn.Open();
             SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@personID", userID);
+            command.Parameters.AddWithValue("@personID", user.GetId());
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
@@ -170,7 +170,7 @@ namespace DAL
             //}        }
         }
 
-        public Review[] GetReviewsByMediaItem(int mediaItemID)
+        public Review[] GetReviewsByMediaItem(MediaItem mediaItem)
         {
             {
                 SqlConnection conn = CreateConnection();
@@ -180,7 +180,7 @@ namespace DAL
                 //{
                 conn.Open();
                 SqlCommand command = new SqlCommand(query, conn);
-                command.Parameters.AddWithValue("@mediaItemID", mediaItemID);
+                command.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId());
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -191,7 +191,7 @@ namespace DAL
                         string reviewContent = reader.GetString(2);
                         int rating = reader.GetInt32(3);
                         int pointedTowardsID = reader.GetInt32(4);
-                        MediaItem pointedTowards = mediaDAL.GetMediaItemById(mediaItemID);
+                        MediaItem pointedTowards = mediaDAL.GetMediaItemById(mediaItem.GetId());
                         pointedTowards.AddRating(rating);
                         int reviewWriterID = reader.GetInt32(5);
                         User reviewWriter = userDAL.GetUserByID(reviewWriterID);
@@ -253,7 +253,7 @@ namespace DAL
             //}
         }
 
-        public Review[] GetDeletedReviewsByUser(int userID)
+        public Review[] GetDeletedReviewsByUser(User user)
         {
             SqlConnection conn = CreateConnection();
             string query = "select * from Review where isItDeleted = 1 AND personID = @personID";
@@ -262,7 +262,7 @@ namespace DAL
             //{
             conn.Open();
             SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@personID", userID);
+            command.Parameters.AddWithValue("@personID", user.GetId());
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
@@ -348,13 +348,13 @@ namespace DAL
             //}
         }
 
-        public bool DeletedMediaItem(int mediaID)
+        public bool DeletedMediaItem(MediaItem mediaItem)
         {
             using (SqlConnection conn = CreateConnection())
             {
                 string query = "DELETE FROM Review WHERE mediaItemID = @mediaItemID";
                 SqlCommand commandSql = new SqlCommand(query, conn);
-                commandSql.Parameters.AddWithValue("@mediaItemID", mediaID);
+                commandSql.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId());
                 conn.Open();
                 int rowsAffected = commandSql.ExecuteNonQuery();
 

@@ -196,7 +196,15 @@ namespace DesktopApp.Employees
                 if (listBoxViewEmpoyees.SelectedIndex != -1)
                 {
                     int selected_emp_id = Int32.Parse(listBoxViewEmpoyees.SelectedItem.ToString().Split('-')[0]);
-                    lblWarning.Text = empController.DeleteEmployee(selected_emp_id); ;
+                    Employee  selectedEMp = empController.GetEmployeeByID(selected_emp_id);
+                    if (selectedEMp != null)
+                    {
+                        lblWarning.Text = empController.DeleteEmployee(selectedEMp);
+                    }
+                    else
+                    {
+                        lblWarning.Text = "No data found.";
+                    }
                     listBoxViewEmpoyees.Items.Clear();
                     foreach (Employee emp in empController.GetAll())
                     {

@@ -212,7 +212,7 @@ namespace UnitTestProject
             empController.AddEmployee(emp2);
 
             //Act
-            string result = empController.DeleteEmployee(2);
+            string result = empController.DeleteEmployee(emp2);
 
             //Assert
             Assert.AreEqual("Employee deleted successfully", result);
@@ -228,10 +228,9 @@ namespace UnitTestProject
             emp1.SetId(1);
             emp2.SetId(2);
             empController.AddEmployee(emp1);
-            empController.AddEmployee(emp2);
 
             //Act
-            string result = empController.DeleteEmployee(3);
+            string result = empController.DeleteEmployee(emp2);
 
             //Assert
             Assert.AreEqual("No data found.", result);
@@ -249,7 +248,7 @@ namespace UnitTestProject
             empController.AddEmployee(emp1);
 
             // Act
-            string result = empController.GetProfilePicByID(1);
+            string result = empController.GetProfilePicByID(emp1);
 
             // Assert
             Assert.IsNotNull(result);
@@ -260,8 +259,10 @@ namespace UnitTestProject
         {
             // Arrange
             EmployeeController empController = new EmployeeController(createTestRepo());
+            Employee emp1 = null;
+            emp1.SetId(6);
             // Act
-            string result = empController.GetProfilePicByID(3);
+            string result = empController.GetProfilePicByID(emp1);
 
             // Assert
             Assert.IsNull(result);
@@ -278,7 +279,7 @@ namespace UnitTestProject
             empController.AddEmployee(emp1);
 
             // Act
-            string result = empController.GetProfilePicByID(1);
+            string result = empController.GetProfilePicByID(emp1);
 
             // Assert
             Assert.IsNull(result);

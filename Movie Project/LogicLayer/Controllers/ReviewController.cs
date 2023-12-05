@@ -27,22 +27,22 @@ namespace LogicLayer.Controllers
         {
             return ireviewDAL.GetReviewByID(id);
         }
-        public Review[] GetReviewsByUser(int userID)
+        public Review[] GetReviewsByUser(User user)
         {
-            return ireviewDAL.GetReviewsByUser(userID).ToArray();
+            return ireviewDAL.GetReviewsByUser(user).ToArray();
 
         }
-        public Review[] GetReviewsByMediaItem(int mediaItemID)
+        public Review[] GetReviewsByMediaItem(MediaItem mediaItem)
         {
-            return ireviewDAL.GetReviewsByMediaItem(mediaItemID).ToArray();
+            return ireviewDAL.GetReviewsByMediaItem(mediaItem).ToArray();
         }
         public Review[] GetReviewsByDate(DateTime date)
         {
             return ireviewDAL.GetReviewsByDate(date).ToArray();
         }
-        public Review[] GetDeletedReviewsByUser(int userID)
+        public Review[] GetDeletedReviewsByUser(User user)
         {
-            return ireviewDAL.GetDeletedReviewsByUser(userID).ToArray();
+            return ireviewDAL.GetDeletedReviewsByUser(user).ToArray();
         }
         public string Delete(Review review)
         {
@@ -53,9 +53,9 @@ namespace LogicLayer.Controllers
             return ireviewDAL.DeletebyUser(review);
         }
 
-        public bool DeletedMediaItem(int mediaID)
+        public bool DeletedMediaItem(MediaItem mediaItem)
         {
-            return ireviewDAL.DeletedMediaItem(mediaID);
+            return ireviewDAL.DeletedMediaItem(mediaItem);
         }
         public bool DeletedUser(User deletedUser)
         {

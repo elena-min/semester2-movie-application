@@ -26,7 +26,7 @@
     </div>
 
     <div id="movies-container">
-        @if (favController.GetAllFavorites(Model.Userr.GetId()) != null && favController.GetAllFavorites(Model.Userr.GetId()).Length > 0)
+        @if (favController.GetAllFavorites(Model.Userr) != null && favController.GetAllFavorites(Model.Userr).Length > 0)
         {
             <h3 class="display-5 text-md-start p-3">Recommendations from us depending on genres you like:</h3>
             @if (Model.Recommendations != null && Model.Recommendations.Count > 0)
@@ -41,7 +41,7 @@
                             <div class="movie">
                                 <div class="image-grid">
                                     <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
-                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie.GetId())" alt="Movie cover">
+                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie)" alt="Movie cover">
                                     </a>
                                 </div>
                                 <div class="movie-text p-1">
@@ -57,7 +57,7 @@
                             <div class="movie">
                                 <div class="image-grid">
                                     <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
-                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie.GetId())" alt="Serie cover">
+                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie)" alt="Serie cover">
                                     </a>
                                 </div>
                                 <div class="movie-text p-1">
@@ -82,7 +82,7 @@
                             <div class="movie">
                                 <div class="image-grid">
                                     <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
-                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie.GetId())" alt="Movie cover">
+                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie)" alt="Movie cover">
                                     </a>
                                 </div>
                                 <div class="movie-text p-1">
@@ -98,7 +98,7 @@
                             <div class="movie">
                                 <div class="image-grid">
                                     <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
-                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie.GetId())" alt="Serie cover">
+                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie)" alt="Serie cover">
                                     </a>
                                 </div>
                                 <div class="movie-text p-1">
@@ -127,7 +127,7 @@
                         <div class="movie">
                             <div class="image-grid">
                                 <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
-                                    <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie.GetId())" alt="Movie cover">
+                                    <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie)" alt="Movie cover">
                                 </a>
                             </div>
                             <div class="movie-text p-1">
@@ -145,7 +145,7 @@
                     <div class="movie">
                         <div class="image-grid">
                             <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
-                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie.GetId())" alt="Movie cover">
+                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie)" alt="Movie cover">
                             </a>
                         </div>
                         <div class="movie-text p-1">
@@ -164,7 +164,7 @@
                     <div class="movie">
                         <div class="image-grid">
                             <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
-                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie.GetId())" alt="Serie cover">
+                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie)" alt="Serie cover">
                             </a>
                         </div>
                         <div class="movie-text p-1">
@@ -184,7 +184,7 @@
                     <div class="movie">
                         <div class="image-grid">
                             <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
-                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie.GetId())" alt="Serie cover">
+                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie)" alt="Serie cover">
                             </a>
                         </div>
                         <div class="movie-text p-1">

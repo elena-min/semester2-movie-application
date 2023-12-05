@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace DAL
             return new SqlConnection("server=mssqlstud.fhict.local;Database=dbi500809_movieapp;User Id=dbi500809_movieapp;Password=movieapp;");
         }
 
-        public Dictionary<DateTime, int> GetAllViewsByMediaItem(int mediaID)
+        public Dictionary<DateTime, int> GetAllViewsByMediaItem(MediaItem mediaItem)
         {
             Dictionary<DateTime, int> viewsNumberByDate = new Dictionary<DateTime, int>();
 
@@ -26,7 +27,7 @@ namespace DAL
 
             string commandSql = "select date, viewsCount from MediaItemViews where mediaItemID = @mediaItemID";
             SqlCommand cmd = new SqlCommand(commandSql, conn);
-            cmd.Parameters.AddWithValue("@mediaItemID", mediaID);
+            cmd.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId());
 
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
@@ -44,7 +45,7 @@ namespace DAL
             return viewsNumberByDate;
         }
 
-        public void UpdateViewsCount(int mediaID, DateTime currentDate)
+        public void UpdateViewsCount(MediaItem mediaItem, DateTime currentDate)
         {
             SqlConnection conn = CreateConnection();
             conn.Open();
@@ -53,7 +54,7 @@ namespace DAL
             // Check if a record for the current date already exists
             string selectCommandSql = "SELECT TOP 1 viewsCount FROM MediaItemViews WHERE mediaItemID = @mediaItemID AND date = @date ORDER BY date DESC";
             SqlCommand selectCmd = new SqlCommand(selectCommandSql, conn);
-            selectCmd.Parameters.AddWithValue("@mediaItemID", mediaID); 
+            selectCmd.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId()); 
             selectCmd.Parameters.AddWithValue("@date", currentDate);
 
             SqlDataReader reader = selectCmd.ExecuteReader();
@@ -67,7 +68,7 @@ namespace DAL
 
                 string updateCommandSql = "UPDATE MediaItemViews SET viewsCount = @viewsCount WHERE mediaItemID = @mediaItemID AND date = @date";
                 SqlCommand updateCmd = new SqlCommand(updateCommandSql, conn);
-                updateCmd.Parameters.AddWithValue("@mediaItemID", mediaID);
+                updateCmd.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId());
                 updateCmd.Parameters.AddWithValue("@date", currentDate);
                 updateCmd.Parameters.AddWithValue("@viewsCount", existingViewsCount + 1);
 
@@ -80,7 +81,7 @@ namespace DAL
                 // If no record exists for the current date, insert a new record with viewsCount = 1
                 string insertCommandSql = "INSERT INTO MediaItemViews (mediaItemID, date, viewsCount) VALUES (@mediaItemID, @date, @viewsCount)";
                 SqlCommand insertCmd = new SqlCommand(insertCommandSql, conn);
-                insertCmd.Parameters.AddWithValue("@mediaItemID", mediaID); 
+                insertCmd.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId()); 
                 insertCmd.Parameters.AddWithValue("@date", currentDate);
                 insertCmd.Parameters.AddWithValue("@viewsCount", 1);
 
@@ -89,7 +90,7 @@ namespace DAL
 
             conn.Close();
         }
-        public string RemoveMediaItemViews(int mediaID)
+        public string RemoveMediaItemViews(MediaItem mediaItem)
         {
             SqlConnection conn = CreateConnection();
             using (conn)
@@ -98,7 +99,7 @@ namespace DAL
                 //{
                 string query = "delete from MediaItemViews where mediaItemID = @mediaID";
                 SqlCommand commandSql = new SqlCommand(query, conn);
-                commandSql.Parameters.AddWithValue("@mediaID", mediaID);
+                commandSql.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
                 conn.Open();
                 int rowsAffected = commandSql.ExecuteNonQuery();
 

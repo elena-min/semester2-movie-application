@@ -10,8 +10,31 @@ namespace LogicLayer.Classes
     {
         private int seasons;
         private int episodes;
-        public int Seasons { get; private set; }
-        public int Episodes { get; private set; }
+        public int Seasons
+        {
+            get => seasons;
+            private set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("There should be at leats one season.");
+                }
+                seasons = value;
+            }
+        }
+
+        public int Episodes
+        {
+            get => episodes;
+            private set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("There should be at leats one episode.");
+                }
+                episodes = value;
+            }
+        }
         public Serie(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating, int _seasons, int _episodes) : base(_title, _description, _releaseDate, _countryOfOrigin, _rating)
         {
             Seasons = _seasons;

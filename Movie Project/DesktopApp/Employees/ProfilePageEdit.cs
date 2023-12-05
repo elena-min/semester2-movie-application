@@ -37,9 +37,9 @@ namespace DesktopApp.Employees
             comboBoxGender.DataSource = Enum.GetValues(typeof(Gender));
             comboBoxGender.SelectedItem = _user.Gender;
 
-            if (employeeController.GetProfilePicByID(_user.GetId()).Length != 0 || employeeController.GetProfilePicByID(_user.GetId()) == null)
+            if (employeeController.GetProfilePicByID(_user).Length != 0 || employeeController.GetProfilePicByID(_user) == null)
             {
-                byte[] pictureBytes = Convert.FromBase64String(employeeController.GetProfilePicByID(_user.GetId()));
+                byte[] pictureBytes = Convert.FromBase64String(employeeController.GetProfilePicByID(_user));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);
                 Image pictureImage = Image.FromStream(memoryStream);
                 pictureBoxProfilePic.BackgroundImageLayout = ImageLayout.Stretch;

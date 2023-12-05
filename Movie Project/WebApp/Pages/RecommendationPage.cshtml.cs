@@ -51,7 +51,7 @@ namespace WebApp.Pages
                     return NotFound();
                 }
 
-                foreach (MediaItem favMedia in _favController.GetAllFavorites(Userr.GetId()))
+                foreach (MediaItem favMedia in _favController.GetAllFavorites(Userr))
                 {
                     Userr.FavoriteMediaItem.AddToFavoroites(favMedia);
                 }
@@ -82,7 +82,7 @@ namespace WebApp.Pages
                 }
             }
 
-            if(_favController.GetAllFavorites(Userr.GetId()) != null && _favController.GetAllFavorites(Userr.GetId()).Length > 0)
+            if(_favController.GetAllFavorites(Userr) != null && _favController.GetAllFavorites(Userr).Length > 0)
             {
                 _filterContext.SetFilterStrategy(new RecommendationsFilterStrategy(Userr));
                 Recommendations = _filterContext.GetFilteredMediaItems(MediaItems).ToList();

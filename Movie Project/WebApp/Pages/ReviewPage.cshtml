@@ -25,7 +25,7 @@
                 <h2><b>@Model.Movie.Title</b></h2><br>
             </div>
             <div class="coverReview">
-                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Movie.GetId())" alt="Movie cover" style="padding:10px">
+                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Movie)" alt="Movie cover" style="padding:10px">
             </div>
         }
         else if (@Model.Serie != null)
@@ -34,7 +34,7 @@
                 <h2><b>@Model.Serie.Title</b></h2><br>
             </div>
             <div class="coverReview">
-                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Serie.GetId())" alt="Serie cover" style="padding:10px">
+                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@Model.Serie)" alt="Serie cover" style="padding:10px">
             </div>
         }
     </div>

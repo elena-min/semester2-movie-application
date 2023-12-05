@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LogicLayer.Classes
@@ -16,13 +17,93 @@ namespace LogicLayer.Classes
         private string password;
         private Gender gender;
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FirstName
+        {
+            get => firstName;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("First name should not be empty!");
+                }
+                if (!value.Any(char.IsLetter))
+                {
+                    throw new ArgumentException("First name should contain at least one letter!");
+                }
+                firstName = value;
+            }
+        }
+        public string LastName
+        {
+            get => lastName;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Last name should not be empty!");
+                }
+                if (!value.Any(char.IsLetter))
+                {
+                    throw new ArgumentException("Last name should contain at least one letter!");
+                }
+                lastName = value;
+            }
+        }
 
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string Username
+        {
+            get => username;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Username should not be empty!");
+                }
+
+                if (value.Length < 2)
+                {
+                    throw new ArgumentException("Username should be at least 2 characters long.");
+                }
+                username = value;
+            }
+        }
+        public string Password
+        {
+            get => password;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Password should not be empty!");
+                }
+
+                if (value.Length < 2)
+                {
+                    throw new ArgumentException("Password should be at least 2 characters long.");
+                }
+                password = value;
+            }
+        }
         public string Salt { get; set; }
-        public string Email { get; set; }
+        public string Email
+        {
+            get => email;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Email should not be empty!");
+                }
+
+                string emailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+                if (!Regex.IsMatch(value, emailPattern))
+                {
+                    throw new ArgumentException("Please enter a valid email address.");
+                }
+
+                email = value;
+            }
+        }
         public Gender Gender { get; set; }
         public byte[] ProfilePicture { get; set; }
 

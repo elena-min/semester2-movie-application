@@ -39,7 +39,7 @@ namespace DesktopApp.Users
             richTextBoxDescription.Text = selectedUser.ProfileDescription;
             labelGender.Text = selectedUser.Gender.ToString();
 
-            if (userController.GetProfilePicByID(selectedUser.GetId()) == null || userController.GetProfilePicByID(selectedUser.GetId()).Length == 0 )
+            if (userController.GetProfilePicByID(selectedUser) == null || userController.GetProfilePicByID(selectedUser).Length == 0 )
             {
                 pictureBoxBookPic.Image = null;
                 btnRemoveImage.Visible = false;
@@ -47,14 +47,14 @@ namespace DesktopApp.Users
             }
             else
             {
-                byte[] pictureBytes = Convert.FromBase64String(userController.GetProfilePicByID(selectedUser.GetId()));
+                byte[] pictureBytes = Convert.FromBase64String(userController.GetProfilePicByID(selectedUser));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);
                 Image pictureImage = Image.FromStream(memoryStream);
                 pictureBoxBookPic.BackgroundImageLayout = ImageLayout.Stretch;
                 pictureBoxBookPic.BackgroundImage = pictureImage;
             }
 
-            foreach (Review review in reviewController.GetReviewsByUser(selectedUser.GetId()))
+            foreach (Review review in reviewController.GetReviewsByUser(selectedUser))
             {
                 listBoxViewReviews.Items.Add(review.GetInfo());
             }
@@ -65,7 +65,7 @@ namespace DesktopApp.Users
             pictureBoxBookPic.Dispose();
             pictureBoxBookPic.Image = null;
             pictureBoxBookPic.BackgroundImage = null;
-            if (userController.SetProfilePicture(selectedUser.GetId(), ImageToBytes(pictureBoxBookPic.BackgroundImage, pictureBoxBookPic)))
+            if (userController.SetProfilePicture(selectedUser, ImageToBytes(pictureBoxBookPic.BackgroundImage, pictureBoxBookPic)))
             {
                 lblWarning.Text = "Picture removed successfully!";
             }
