@@ -14,50 +14,71 @@ namespace DAL
     {
         public static SqlConnection CreateConnection()
         {
-            return new SqlConnection("server=mssqlstud.fhict.local;Database=dbi500809_movieapp;User Id=dbi500809_movieapp;Password=movieapp;");
+            try
+            {
+                return new SqlConnection("server=mssqlstud.fhict.local;Database=dbi500809_movieapp;User Id=dbi500809_movieapp;Password=movieapp;");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error creating database connection", ex);
+            }
         }
 
         public bool AddProductToFavorite(MediaItem mediaItem, User user)
         {
             SqlConnection conn = CreateConnection();
-            // try
-            // {
-            string commandSql = "INSERT INTO FavoritesList (userID, mediaID) VALUES (@userID, @mediaID);";
-            conn.Open();
-            SqlCommand cmd = new SqlCommand(commandSql, conn);
-            cmd.Parameters.AddWithValue("@userID", user.GetId());
-            cmd.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
-            cmd.ExecuteNonQuery();
-            conn.Close();
-            return true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    return false;
-            //}
+            try
+            {
+                string commandSql = "INSERT INTO FavoritesList (userID, mediaID) VALUES (@userID, @mediaID);";
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(commandSql, conn);
+                cmd.Parameters.AddWithValue("@userID", user.GetId());
+                cmd.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error adding to the database", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
         public bool CheckIfProductIsInFavorites(MediaItem mediaItem, User user)
         {
             SqlConnection conn = CreateConnection();
-            string query = "SELECT * FROM FavoritesList WHERE userID = @userID AND mediaID = @mediaID";
-            conn.Open();
-            SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@userID", user.GetId());
-            command.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
+            try
+            {
+                string query = "SELECT * FROM FavoritesList WHERE userID = @userID AND mediaID = @mediaID";
+                conn.Open();
+                SqlCommand command = new SqlCommand(query, conn);
+                command.Parameters.AddWithValue("@userID", user.GetId());
+                command.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
 
-            object result = command.ExecuteScalar();
+                object result = command.ExecuteScalar();
 
-            if (result == null || string.IsNullOrEmpty(result.ToString()))
+                if (result == null || string.IsNullOrEmpty(result.ToString()))
+                {
+                    return false;
+
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Database error", ex);
+            }
+            finally
             {
                 conn.Close();
-                return false;
-
             }
-            else
-            {
-                conn.Close();
-                return true;
-            }
+           
         }
         public MediaItem[] GetAllFavorites(User user)
         {
@@ -131,12 +152,15 @@ namespace DAL
                 }
 
                 reader.Close();
-                conn.Close();
                 return favs.ToArray();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw new Exception("Error getting favorites", ex);
+            }
+            finally
+            {
+                conn.Close();
             }
         }
         public MediaItem[] GetAllFavoriteMovies(User user)
@@ -148,79 +172,94 @@ namespace DAL
                 "inner JOIN Movie as M ON MI.id = M.id " +
                 "where f.userID = @userID";
             List<MediaItem> favs = new List<MediaItem>();
-            //try
-            //{
-            conn.Open();
-            SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@userID", user.GetId());
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+            try
             {
-                while (reader.Read())
+                conn.Open();
+                SqlCommand command = new SqlCommand(query, conn);
+                command.Parameters.AddWithValue("@userID", user.GetId());
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
                 {
-                    int mediaItemId = reader.GetInt32(0);
-                    string title = reader.GetString(1);
-                    string description = reader.GetString(2);
-                    double rating = (double)reader.GetDecimal(3);
-                    DateTime releaseDate = reader.GetDateTime(4);
-                    string countryOfOrigin = reader.GetString(5);
-                    string string_cast = reader.GetString(7);
-                    string genres_string = reader.GetString(6);
-                    string[] string_genres = genres_string.Split(',');
-                    string[] cast = string_cast.Split(',');
-                    string director = reader.GetString(8);
-                    string writer = reader.GetString(9);
-                    int duration = reader.GetInt32(10);
-                    MediaItem mediaItem;
-                    mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
-
-
-                    mediaItem.SetId(mediaItemId);
-                    foreach (string string_genre in string_genres)
+                    while (reader.Read())
                     {
-                        if (Enum.TryParse(string_genre, out Genre enum_genre))
+                        int mediaItemId = reader.GetInt32(0);
+                        string title = reader.GetString(1);
+                        string description = reader.GetString(2);
+                        double rating = (double)reader.GetDecimal(3);
+                        DateTime releaseDate = reader.GetDateTime(4);
+                        string countryOfOrigin = reader.GetString(5);
+                        string string_cast = reader.GetString(7);
+                        string genres_string = reader.GetString(6);
+                        string[] string_genres = genres_string.Split(',');
+                        string[] cast = string_cast.Split(',');
+                        string director = reader.GetString(8);
+                        string writer = reader.GetString(9);
+                        int duration = reader.GetInt32(10);
+                        MediaItem mediaItem;
+                        mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
+
+
+                        mediaItem.SetId(mediaItemId);
+                        foreach (string string_genre in string_genres)
                         {
-                            mediaItem.AddGenre(enum_genre);
+                            if (Enum.TryParse(string_genre, out Genre enum_genre))
+                            {
+                                mediaItem.AddGenre(enum_genre);
+                            }
                         }
-                    }
-                    foreach (string actor in cast)
-                    {
-                        mediaItem.Cast.AddToCast(actor);
-                    }
+                        foreach (string actor in cast)
+                        {
+                            mediaItem.Cast.AddToCast(actor);
+                        }
 
-                    favs.Add(mediaItem);
+                        favs.Add(mediaItem);
+                    }
                 }
-            }
 
-            reader.Close();
-            conn.Close();
-            return favs.ToArray();
-            //}
-            //catch (Exception)
-            //{
-            //    return null;
-            //}
+                reader.Close();
+                return favs.ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving favorite movies", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         public string RemoveFromFavorites(MediaItem mediaItem, User user)
         {
             using (SqlConnection conn = CreateConnection())
             {
-                string query = "DELETE FROM FavoritesList WHERE userID = @userID AND mediaID = @mediaID";
-                SqlCommand commandSql = new SqlCommand(query, conn);
-                commandSql.Parameters.AddWithValue("@userID", user.GetId());
-                commandSql.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
-                conn.Open();
-                int rowsAffected = commandSql.ExecuteNonQuery();
+                try
+                {
+                    string query = "DELETE FROM FavoritesList WHERE userID = @userID AND mediaID = @mediaID";
+                    SqlCommand commandSql = new SqlCommand(query, conn);
+                    commandSql.Parameters.AddWithValue("@userID", user.GetId());
+                    commandSql.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
+                    conn.Open();
+                    int rowsAffected = commandSql.ExecuteNonQuery();
 
-                if (rowsAffected > 0)
-                {
-                    return "Removed successfully";
+                    if (rowsAffected > 0)
+                    {
+                        return "Removed successfully";
+                    }
+                    else
+                    {
+                        return "No data found.";
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return "No data found.";
+                    throw new Exception("Error removing from database", ex);
                 }
+                finally
+                {
+                    conn.Close();
+                }
+
             }
         }
 
@@ -228,20 +267,32 @@ namespace DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                string query = "DELETE FROM FavoritesList WHERE mediaID = @mediaID";
-                SqlCommand commandSql = new SqlCommand(query, conn);
-                commandSql.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
-                conn.Open();
-                int rowsAffected = commandSql.ExecuteNonQuery();
+                try
+                {
+                    string query = "DELETE FROM FavoritesList WHERE mediaID = @mediaID";
+                    SqlCommand commandSql = new SqlCommand(query, conn);
+                    commandSql.Parameters.AddWithValue("@mediaID", mediaItem.GetId());
+                    conn.Open();
+                    int rowsAffected = commandSql.ExecuteNonQuery();
 
-                if (rowsAffected > 0)
-                {
-                    return true;
+                    if (rowsAffected > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return false;
+                    throw new Exception("Database error", ex);
                 }
+                finally
+                {
+                    conn.Close();
+                }
+                
             }
 
         }
@@ -250,20 +301,32 @@ namespace DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                string query = "DELETE FROM FavoritesList WHERE userID = @userID";
-                SqlCommand commandSql = new SqlCommand(query, conn);
-                commandSql.Parameters.AddWithValue("@userID", user.GetId());
-                conn.Open();
-                int rowsAffected = commandSql.ExecuteNonQuery();
+                try
+                {
+                    string query = "DELETE FROM FavoritesList WHERE userID = @userID";
+                    SqlCommand commandSql = new SqlCommand(query, conn);
+                    commandSql.Parameters.AddWithValue("@userID", user.GetId());
+                    conn.Open();
+                    int rowsAffected = commandSql.ExecuteNonQuery();
 
-                if (rowsAffected > 0)
-                {
-                    return true;
+                    if (rowsAffected > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return false;
+                    throw new Exception("Database error", ex);
                 }
+                finally
+                {
+                    conn.Close();
+                }
+                
             }
 
         }

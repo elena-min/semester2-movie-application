@@ -32,7 +32,6 @@ namespace DesktopApp.Movies
             }
             lblWarning.Text = "";
         }
-
         private void AddMovie_Load(object sender, EventArgs e)
         {
 

@@ -46,33 +46,40 @@ namespace WebApp.Pages
         }
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
+            try
             {
-                Gender genderEnum = (Gender)Enum.Parse(typeof(Gender), Gender);
-
-                User user = new User(Firstname, Lastname, Username, Email, Password, genderEnum);
-
-                if (userController.GetUserByUsername(user.Username) == null)
+                if (ModelState.IsValid)
                 {
-                    userController.InsertUser(user);
-                    User someUser = userController.GetUserByUsername(user.Username);
-                    user.SetId(someUser.GetId());
-                    List<Claim> claims = new List<Claim>();
-                    claims.Add(new Claim(ClaimTypes.Name, user.Username));
-                    claims.Add(new Claim("Password", user.Password));
-                    claims.Add(new Claim("Id", user.GetId().ToString()));
+                    Gender genderEnum = (Gender)Enum.Parse(typeof(Gender), Gender);
 
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+                    User user = new User(Firstname, Lastname, Username, Email, Password, genderEnum);
 
-                    return RedirectToPage("/Main");
+                    if (userController.GetUserByUsername(user.Username) == null)
+                    {
+                        userController.InsertUser(user);
+                        User someUser = userController.GetUserByUsername(user.Username);
+                        user.SetId(someUser.GetId());
+                        List<Claim> claims = new List<Claim>();
+                        claims.Add(new Claim(ClaimTypes.Name, user.Username));
+                        claims.Add(new Claim("Password", user.Password));
+                        claims.Add(new Claim("Id", user.GetId().ToString()));
+
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+
+                        return RedirectToPage("/Main");
+                    }
+                    else
+                    {
+                        TempData["Message"] = "This username is taken!";
+                    }
                 }
-                else
-                {
-                    TempData["Message"] = "This username is taken!";
-                }
+
             }
-
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
+            }
             return Page();
         }
 

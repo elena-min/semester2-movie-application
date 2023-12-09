@@ -61,10 +61,6 @@ namespace LogicLayer.Classes
                 {
                     throw new InvalidRatingException();
                 }
-                //if(!double.IsNullOrWhiteSpace(value))
-                //{
-                //    throw new ArgumentException("Rating should not be empty!");
-                //}
 
                 rating = value;
             }
@@ -165,53 +161,7 @@ namespace LogicLayer.Classes
                 ViewsNumberByDate[currentDate.Date] = 1;
             }
         }
-        public double CalculatePopularityScoreTwo(DateTime dateToCheck, TimePeriod timePeriod)
-        {
-            double ratingScore = CalculateAverageRating();
-            int viewsOnPeriod = 0;
-
-            switch (timePeriod)
-            {
-                case TimePeriod.Day:
-                    //Takes the media item's views for today
-                    viewsOnPeriod = ViewsNumberByDate.GetValueOrDefault(dateToCheck.Date);
-                    break;
-
-                case TimePeriod.Week:
-                    //
-                    DateTime startOfWeek = dateToCheck.Date.AddDays(-(int)dateToCheck.DayOfWeek + (int)DayOfWeek.Monday);
-                    DateTime endOfWeek = startOfWeek.AddDays(6);
-
-                    //Loop that goes through each day from the begining of the week until the end 
-                    for (DateTime date = startOfWeek; date <= endOfWeek; date = date.AddDays(1))
-                    {
-                        //The visits from each day are being added in the variable 'viewsOnPeriod' in order to get all the views for the current week
-                        viewsOnPeriod += ViewsNumberByDate.GetValueOrDefault(date.Date);
-                    }
-                    break;
-
-                case TimePeriod.Month:
-                    // Count views for the current month
-                    DateTime startOfMonth = new DateTime(dateToCheck.Year, dateToCheck.Month, 1);
-                    DateTime endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
-
-                    //Loop that goes through each day from the begining of the month until the end 
-                    for (DateTime date = startOfMonth; date <= endOfMonth; date = date.AddDays(1))
-                    {
-                        //The visits from each day are being added in the variable 'viewsOnPeriod' in order to get all the views for the current month
-                        viewsOnPeriod += ViewsNumberByDate.GetValueOrDefault(date.Date);
-                    }
-                    break;
-
-                //Invalid TimePeriod type gives out an exception
-                default:
-                    throw new ArgumentException("Invalid time period specified");
-            }
-
-            return PopularityScore = 0.7 * ratingScore + 0.3 * viewsOnPeriod;
-        }
-
-        public void CalculatePopularityScore(DateTime dateToCheck, TimePeriod timePeriod)
+        public double CalculatePopularityScore(DateTime dateToCheck, TimePeriod timePeriod)
         {
             double ratingScore = CalculateAverageRating();
             int viewsOnPeriod = 0;
@@ -255,6 +205,7 @@ namespace LogicLayer.Classes
             }
 
             PopularityScore = 0.7 * ratingScore + 0.3 * viewsOnPeriod;
+            return PopularityScore;
         }
         public virtual string ToString()
         {

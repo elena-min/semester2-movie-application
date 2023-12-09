@@ -52,7 +52,7 @@
             lblWarning.AutoSize = true;
             lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
             lblWarning.ForeColor = Color.Maroon;
-            lblWarning.Location = new Point(295, 31);
+            lblWarning.Location = new Point(435, 19);
             lblWarning.Name = "lblWarning";
             lblWarning.Size = new Size(81, 25);
             lblWarning.TabIndex = 112;
@@ -138,7 +138,7 @@
             // 
             labelAge.AutoSize = true;
             labelAge.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            labelAge.Location = new Point(535, 80);
+            labelAge.Location = new Point(16, 433);
             labelAge.Name = "labelAge";
             labelAge.Size = new Size(46, 25);
             labelAge.TabIndex = 102;
@@ -178,16 +178,16 @@
             // 
             textBoxAge.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             textBoxAge.ForeColor = Color.Black;
-            textBoxAge.Location = new Point(535, 108);
+            textBoxAge.Location = new Point(16, 461);
             textBoxAge.Name = "textBoxAge";
-            textBoxAge.Size = new Size(237, 31);
+            textBoxAge.Size = new Size(155, 31);
             textBoxAge.TabIndex = 115;
             // 
             // comboBoxGender
             // 
             comboBoxGender.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxGender.FormattingEnabled = true;
-            comboBoxGender.Location = new Point(535, 178);
+            comboBoxGender.Location = new Point(225, 461);
             comboBoxGender.Name = "comboBoxGender";
             comboBoxGender.Size = new Size(237, 33);
             comboBoxGender.TabIndex = 116;
@@ -196,7 +196,7 @@
             // 
             lblGender.AutoSize = true;
             lblGender.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            lblGender.Location = new Point(535, 152);
+            lblGender.Location = new Point(225, 435);
             lblGender.Name = "lblGender";
             lblGender.Size = new Size(72, 25);
             lblGender.TabIndex = 117;
@@ -223,7 +223,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(231, 223, 198);
-            ClientSize = new Size(816, 474);
+            ClientSize = new Size(816, 535);
             Controls.Add(buttonAddEmp);
             Controls.Add(lblGender);
             Controls.Add(comboBoxGender);

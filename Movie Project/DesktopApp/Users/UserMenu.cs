@@ -41,31 +41,38 @@ namespace DesktopApp.Users
             listBoxViewUsers.Items.Clear();
             allUsers = new List<LogicLayer.Classes.User>();
 
-            
-            if (userController.GetAll() == null)
+            try
             {
-
-            lblWarning.Text = "No users in the system.";
-            }
-            else
-            {
-                foreach (LogicLayer.Classes.User user in userController.GetAll())
+                if (userController.GetAll() == null)
                 {
-                    allUsers.Add(user);
+
+                    lblWarning.Text = "No users in the system.";
+                }
+                else
+                {
+                    foreach (LogicLayer.Classes.User user in userController.GetAll())
+                    {
+                        allUsers.Add(user);
+                    }
+                }
+
+                if (allUsers.Count > 0)
+                {
+                    foreach (LogicLayer.Classes.User user in allUsers)
+                    {
+                        listBoxViewUsers.Items.Add(user.ToString());
+                    }
+                }
+                else
+                {
+                    lblWarning.Text = "No users in the system.";
                 }
             }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
+            }
 
-            if (allUsers.Count > 0)
-            {
-                foreach (LogicLayer.Classes.User user in allUsers)
-                {
-                    listBoxViewUsers.Items.Add(user.ToString());
-                }
-            }
-            else
-            {
-                lblWarning.Text = "No users in the system.";
-            }
         }
 
         private void ActivateButton(object btnSender)
@@ -123,87 +130,109 @@ namespace DesktopApp.Users
         private void buttonMoreInfo_Click(object sender, EventArgs e)
         {
             lblWarning.Text = "";
-            if (listBoxViewUsers.SelectedItem != null)
+            try
             {
-                string selectedUser = listBoxViewUsers.SelectedItem.ToString();
-                foreach (LogicLayer.Classes.User user in userController.GetAll())
+                if (listBoxViewUsers.SelectedItem != null)
                 {
-                    if (selectedUser == user.ToString())
-                    {
-                        MoreInfoUser userMoreInfo = new MoreInfoUser(user);
-                        userMoreInfo.Show();
-                    }
-                }
-            }
-            else
-            {
-                lblWarning.Text = "There is no user selected.";
-            }
-        }
-
-        private void buttonDelete_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this account?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                if (listBoxViewUsers.SelectedIndex != -1)
-                {
-                    int selected_user_id = Int32.Parse(listBoxViewUsers.SelectedItem.ToString().Split('-')[0]);
-                    LogicLayer.Classes.User selectedUser = userController.GetUserByID(selected_user_id);
-                    if(selectedUser != null)
-                    {
-                        lblWarning.Text = userController.DeleteUser(selectedUser);
-                        reviewController.DeletedUser(selectedUser);
-                        favController.DeletedUser(selectedUser);
-                    }
-                    else
-                    {
-                        lblWarning.Text = "No data found.";
-                    }
-                    listBoxViewUsers.Items.Clear();
+                    string selectedUser = listBoxViewUsers.SelectedItem.ToString();
                     foreach (LogicLayer.Classes.User user in userController.GetAll())
                     {
-                        listBoxViewUsers.Items.Add(user.ToString());
+                        if (selectedUser == user.ToString())
+                        {
+                            MoreInfoUser userMoreInfo = new MoreInfoUser(user);
+                            userMoreInfo.Show();
+                        }
                     }
                 }
                 else
                 {
-                    lblWarning.Text = "There is no user selected!";
-
+                    lblWarning.Text = "There is no user selected.";
                 }
+            }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
+            }
+           
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this account?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    if (listBoxViewUsers.SelectedIndex != -1)
+                    {
+                        int selected_user_id = Int32.Parse(listBoxViewUsers.SelectedItem.ToString().Split('-')[0]);
+                        LogicLayer.Classes.User selectedUser = userController.GetUserByID(selected_user_id);
+                        if (selectedUser != null)
+                        {
+                            lblWarning.Text = userController.DeleteUser(selectedUser);
+                            reviewController.DeletedUser(selectedUser);
+                            favController.DeletedUser(selectedUser);
+                        }
+                        else
+                        {
+                            lblWarning.Text = "No data found.";
+                        }
+                        listBoxViewUsers.Items.Clear();
+                        foreach (LogicLayer.Classes.User user in userController.GetAll())
+                        {
+                            listBoxViewUsers.Items.Add(user.ToString());
+                        }
+                    }
+                    else
+                    {
+                        lblWarning.Text = "There is no user selected!";
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
             }
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             lblWarning.Text = "";
-            listBoxViewUsers.Items.Clear();
-            List<LogicLayer.Classes.User> allUsers = new List<LogicLayer.Classes.User>();
-            if (textBoxUserName.Text != null || textBoxUserName.Text == "")
+            try
             {
-                foreach (LogicLayer.Classes.User user in userController.GetAll())
+                listBoxViewUsers.Items.Clear();
+                List<LogicLayer.Classes.User> allUsers = new List<LogicLayer.Classes.User>();
+                if (textBoxUserName.Text != null || textBoxUserName.Text == "")
                 {
-
-                    if (user.FirstName.Contains(textBoxUserName.Text) || user.LastName.Contains(textBoxUserName.Text))
+                    foreach (LogicLayer.Classes.User user in userController.GetAll())
                     {
-                        allUsers.Add(user);    
+
+                        if (user.FirstName.Contains(textBoxUserName.Text) || user.LastName.Contains(textBoxUserName.Text))
+                        {
+                            allUsers.Add(user);
+                        }
+
                     }
-
                 }
-            }
-            else
-            {
-                foreach (LogicLayer.Classes.User user in userController.GetAll())
+                else
                 {
-                    allUsers.Add(user);
+                    foreach (LogicLayer.Classes.User user in userController.GetAll())
+                    {
+                        allUsers.Add(user);
+                    }
+                }
+
+
+                foreach (LogicLayer.Classes.User user in allUsers)
+                {
+                    listBoxViewUsers.Items.Add(user.ToString());
                 }
             }
-
-
-            foreach (LogicLayer.Classes.User user in allUsers)
+            catch (Exception ex)
             {
-                listBoxViewUsers.Items.Add(user.ToString());
+                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
             }
         }
     }

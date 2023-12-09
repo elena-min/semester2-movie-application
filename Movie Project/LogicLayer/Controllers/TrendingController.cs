@@ -40,7 +40,6 @@ namespace LogicLayer.Controllers
             return itrendingDAL.GetLastTrendingCalculationTime(givenDate);
 
         }
-
         public MediaItem[] GetTrendingWeekly(DateTime dayPicked)
         {
             return itrendingDAL.GetTrendingWeekly(dayPicked);

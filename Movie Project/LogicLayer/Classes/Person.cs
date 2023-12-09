@@ -16,40 +16,57 @@ namespace LogicLayer.Classes
         private string email;
         private string password;
         private Gender gender;
+        public List<string> ValidationErrors { get; } = new List<string>();
 
         public string FirstName
         {
             get => firstName;
             set
             {
+                ValidationErrors.Clear(); 
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("First name should not be empty!");
+                    ValidationErrors.Add("First name should not be empty!");
                 }
+                 
                 if (!value.Any(char.IsLetter))
                 {
-                    throw new ArgumentException("First name should contain at least one letter!");
+                    ValidationErrors.Add("First name should contain at least one letter!");
                 }
+
                 firstName = value;
+
+                if (ValidationErrors.Any())
+                {
+                    throw new ValidationException(ValidationErrors);
+                }
             }
         }
+
         public string LastName
         {
             get => lastName;
             set
             {
+
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("Last name should not be empty!");
+                    ValidationErrors.Add("Last name should not be empty!");
                 }
+
                 if (!value.Any(char.IsLetter))
                 {
-                    throw new ArgumentException("Last name should contain at least one letter!");
+                    ValidationErrors.Add("Last name should contain at least one letter!");
                 }
+
                 lastName = value;
+
+                if (ValidationErrors.Any())
+                {
+                    throw new ValidationException(ValidationErrors);
+                }
             }
         }
-
         public string Username
         {
             get => username;
@@ -57,14 +74,18 @@ namespace LogicLayer.Classes
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("Username should not be empty!");
+                    ValidationErrors.Add("Username should not be empty!");
                 }
 
                 if (value.Length < 2)
                 {
-                    throw new ArgumentException("Username should be at least 2 characters long.");
+                    ValidationErrors.Add("Username should be at least 2 characters long.");
                 }
                 username = value;
+                if (ValidationErrors.Any())
+                {
+                    throw new ValidationException(ValidationErrors);
+                }
             }
         }
         public string Password

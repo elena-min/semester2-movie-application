@@ -41,38 +41,44 @@ namespace WebApp.Pages
         }
         public IActionResult OnPost(string username, string firstName, string lastName, string gender, string profileDescription)
         {
-            var userID = User.FindFirst("Id").Value;
-            var existingUser = _userController.GetUserByID(Int32.Parse(userID));
+            try
+            {
+                var userID = User.FindFirst("Id").Value;
+                var existingUser = _userController.GetUserByID(Int32.Parse(userID));
 
-            //Checks if there is a user with this username already existing.
-            //Also check whether the new username is the same as the old one
-            if(_userController.GetUserByUsername(username) != null && username != existingUser.Username)
-            { 
-                TempData["Message"] = "Username is already taken. Please choose a different username.";
-                return Page();
-            }
+                //Checks if there is a user with this username already existing.
+                //Also check whether the new username is the same as the old one
+                if (_userController.GetUserByUsername(username) != null && username != existingUser.Username)
+                {
+                    TempData["Message"] = "Username is already taken. Please choose a different username.";
+                    return Page();
+                }
 
-            existingUser.Username = username;
-            existingUser.FirstName = firstName;
-            existingUser.LastName = lastName;
-            existingUser.Gender = (Gender)Enum.Parse(typeof(Gender), gender);
-            if (profileDescription != null)
-            {
-                existingUser.ProfileDescription = profileDescription;
+                existingUser.Username = username;
+                existingUser.FirstName = firstName;
+                existingUser.LastName = lastName;
+                existingUser.Gender = (Gender)Enum.Parse(typeof(Gender), gender);
+                if (profileDescription != null)
+                {
+                    existingUser.ProfileDescription = profileDescription;
+                }
+                else
+                {
+                    existingUser.ProfileDescription = null;
+                }
+                if (_userController.UpdateUser(existingUser))
+                {
+                    TempData["Message"] = "Successfully updated!";
+                }
+                else
+                {
+                    TempData["Message"] = "Update failed.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                existingUser.ProfileDescription = null;
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
             }
-            if (_userController.UpdateUser(existingUser))
-            {
-                TempData["Message"] = "Successfully updated!";
-            }
-            else
-            {
-                TempData["Message"] = "Update failed.";
-            }
-
             return Page();
         }
 

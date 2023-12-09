@@ -28,22 +28,30 @@ namespace DesktopApp.Employees
             InitializeComponent();
             iEmployeeDAL = new EmployeeDAL();
             empController = new EmployeeController(iEmployeeDAL);
-            this.employee = empController.GetEmployeeByID(selectedEmp.GetId());
-
-            labelFName.Text = employee.FirstName;
-            labelLName.Text = employee.LastName;
-            labelUsername.Text = employee.Username;
-            labelEmail.Text = employee.Email;
-            labelAge.Text = employee.Age.ToString() + " years";
-            labelGender.Text = employee.Gender.ToString();
-            if (empController.GetProfilePicByID(employee).Length != 0 || empController.GetProfilePicByID(employee) == null)
+            try
             {
-                byte[] pictureBytes = Convert.FromBase64String(empController.GetProfilePicByID(employee));
-                MemoryStream memoryStream = new MemoryStream(pictureBytes);
-                Image pictureImage = Image.FromStream(memoryStream);
-                pictureBoxProfilePic.BackgroundImageLayout = ImageLayout.Stretch;
-                pictureBoxProfilePic.BackgroundImage = pictureImage;
+                this.employee = empController.GetEmployeeByID(selectedEmp.GetId());
+
+                labelFName.Text = employee.FirstName;
+                labelLName.Text = employee.LastName;
+                labelUsername.Text = employee.Username;
+                labelEmail.Text = employee.Email;
+                labelAge.Text = employee.Age.ToString() + " years";
+                labelGender.Text = employee.Gender.ToString();
+                if (empController.GetProfilePicByID(employee).Length != 0 || empController.GetProfilePicByID(employee) == null)
+                {
+                    byte[] pictureBytes = Convert.FromBase64String(empController.GetProfilePicByID(employee));
+                    MemoryStream memoryStream = new MemoryStream(pictureBytes);
+                    Image pictureImage = Image.FromStream(memoryStream);
+                    pictureBoxProfilePic.BackgroundImageLayout = ImageLayout.Stretch;
+                    pictureBoxProfilePic.BackgroundImage = pictureImage;
+                }
             }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
+            }
+           
         }
         private void ActivateButton(object btnSender)
         {

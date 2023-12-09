@@ -29,14 +29,19 @@ namespace WebApp.Pages
         [Authorize(Roles = "Employee")]
         public IActionResult OnPostDeleteUser(int ID, string reason)
         {
-            // Authorization logic is handled by the [Authorize] attribute
-            User selectedUser = _userController.GetUserByID(ID);
+            try
+            {
+                // Authorization logic is handled by the [Authorize] attribute
+                User selectedUser = _userController.GetUserByID(ID);
+                _empController.DeleteUserAccount(selectedUser, reason);
+                return RedirectToPage("/Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
+            }
+            return Page();
 
-            // Additional logic to delete the user and log the reason
-            _empController.DeleteUserAccount(selectedUser, reason);
-
-            // Redirect to a suitable page
-            return RedirectToPage("/Index");
         }
         public IActionResult OnPostLogout()
         {

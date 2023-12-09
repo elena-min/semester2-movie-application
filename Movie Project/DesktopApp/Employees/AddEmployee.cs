@@ -33,15 +33,15 @@ namespace DesktopApp.Employees
 
         private void buttonAddEmp_Click(object sender, EventArgs e)
         {
+            StringBuilder exceptionMessages = new StringBuilder();
+
             if (string.IsNullOrEmpty(textBoxAge.Text))
             {
-                lblWarning.Text = "No age is filled in!";
-                return;
+                exceptionMessages.AppendLine("No age is filled in!");
             }
             if (string.IsNullOrEmpty(comboBoxGender.Text))
             {
-                lblWarning.Text = "No gender is filled in!";
-                return;
+                exceptionMessages.AppendLine("No gender is filled in!");
             }
 
             try
@@ -53,8 +53,7 @@ namespace DesktopApp.Employees
                 string emailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
                 if (!Regex.IsMatch(email, emailPattern))
                 {
-                    lblWarning.Text = "Please enter a valid email address.";
-                    return;
+                    exceptionMessages.AppendLine("Please enter a valid email address.");
                 }
                 string password = textBoxPassword.Text;
                 Gender gender = (Gender)comboBoxGender.SelectedItem;
@@ -62,31 +61,47 @@ namespace DesktopApp.Employees
                 int age;
                 if (!int.TryParse(textBoxAge.Text, out age))
                 {
-                    lblWarning.Text = "Please enter age using numbers!";
-                    return;
+                    exceptionMessages.AppendLine("Please enter age using numbers!");
                 }
 
                 newEmp = new Employee(fName, lName, username, email, password, gender, age);
             }
             catch (InvalidAgeException ex)
             {
-                lblWarning.Text = ex.Message;
-                return;
+                exceptionMessages.AppendLine(ex.Message);
+            }
+            catch(ValidationException ex)
+            {
+                foreach (var error in ex.ValidationErrors)
+                {
+                    exceptionMessages.AppendLine(error);
+                }
             }
             catch (Exception ex)
             {
-                lblWarning.Text = $"An unexpected error: {ex.Message}";
-                return;
+                exceptionMessages.AppendLine($"An unexpected error: {ex.Message}");
             }
 
-
-            if (empController.AddEmployee(newEmp))
+            // Display all exception messages at once
+            lblWarning.Text = exceptionMessages.ToString();
+            try
             {
-                lblWarning.Text = "Employee has been added successfully!";
+                if (string.IsNullOrEmpty(lblWarning.Text))
+                {
+                    // No exceptions occurred, proceed with adding the employee
+                    if (empController.AddEmployee(newEmp))
+                    {
+                        lblWarning.Text = "Employee has been added successfully!";
+                    }
+                    else
+                    {
+                        lblWarning.Text = "Operation failed.";
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblWarning.Text = "Operation failed.";
+                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
             }
         }
     }

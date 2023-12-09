@@ -13,11 +13,13 @@ namespace LogicLayer.Strategy
     public class RecommendationsFilterStrategy : IFilterStrategy
     {
         private User currentUser;
+        private FavoriteMediaItem favoriteMediaItem;
 
         public RecommendationsFilterStrategy(User _currentUser)
         {
             this.currentUser = _currentUser;
-           
+            this.favoriteMediaItem = new FavoriteMediaItem(currentUser);
+
         }
         public MediaItem[] GetFilteredMediaItems(List<MediaItem> mediaItems)
         {
@@ -29,7 +31,7 @@ namespace LogicLayer.Strategy
 
                 foreach (Genre mediaGenre in mediaItem.GetAllGenres())
                 {
-                    if (currentUser.FavoriteMediaItem.GetFavoriteGenres().Contains(mediaGenre))
+                    if (favoriteMediaItem.GetFavoriteGenres().Contains(mediaGenre))
                     {
                         matchedGenreCount++;
                     }
@@ -61,7 +63,7 @@ namespace LogicLayer.Strategy
 
         private bool IsMediaItemInFavorites(MediaItem mediaItem)
         {
-            foreach (MediaItem favMediaItem in currentUser.FavoriteMediaItem.GetAllFavorite())
+            foreach (MediaItem favMediaItem in favoriteMediaItem.GetAllFavorite())
             {
                 if (favMediaItem.GetId() == mediaItem.GetId())
                 {

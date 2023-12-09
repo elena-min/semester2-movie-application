@@ -35,6 +35,12 @@ namespace DesktopApp
             try
             {
                 string email = textBoxEmail.Text;
+                string password = textBoxPassword.Text;
+                string username = textBoxUsername.Text;
+
+                Employee emp = new Employee();
+                emp.Email = email;
+
                 Employee employee = employeeController.GetEmployeeByEmail(email);
                 bool isLoggedIn = false;
 
@@ -43,12 +49,18 @@ namespace DesktopApp
                     lblWarning.Text = $"No employee with the email {email} exists.";
                     return;
                 }
-                else if (employee.Username != textBoxUsername.Text)
+
+                emp.Username = username;
+
+                if (employee.Username != username)
                 {
                     lblWarning.Text = "Incorrect username.";
                     return;
                 }
-                else if (!HashPassword.VerifyPassword(textBoxPassword.Text, employee.Password, employee.Salt))
+
+                emp.Password = password;    
+
+                if (!HashPassword.VerifyPassword(password, employee.Password, employee.Salt))
                 {
                     lblWarning.Text = "Incorrect password.";
                     return;
@@ -65,9 +77,9 @@ namespace DesktopApp
                     this.Hide();
                 }
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                lblWarning.Text = $"An error occurred: {ex.Message}";
+                lblWarning.Text = $"{ex.Message}";
             }
         }
 

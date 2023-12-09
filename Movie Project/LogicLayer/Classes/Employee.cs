@@ -10,7 +10,19 @@ namespace LogicLayer.Classes
     {
 
         private int age;
-        public int Age { get; set; }
+        public int Age
+        {
+            get => age;
+            set
+            {
+                if (value <= 16 || value >= 65)
+                {
+                    throw new InvalidAgeException();
+                }
+
+                age = value;
+            }
+        }
         public byte[] ProfilePicture { get; set; }
 
 

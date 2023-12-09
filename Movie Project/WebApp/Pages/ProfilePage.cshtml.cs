@@ -49,40 +49,47 @@ namespace WebApp.Pages
         }
         public IActionResult OnPost(IFormFile profilePicture)
         {
-            var userID = User.FindFirst("Id")?.Value;
-
-            if (userID == null)
+            try
             {
-                return RedirectToPage("/Login");
-            }
+                var userID = User.FindFirst("Id")?.Value;
 
-            Userr = _userController.GetUserByID(Int32.Parse(userID));
-
-            if (Userr == null)
-            {
-                return NotFound();
-            }
-
-            if (profilePicture != null && profilePicture.Length > 0)
-            {
-                using (var memoryStream = new MemoryStream())
+                if (userID == null)
                 {
-                    profilePicture.CopyTo(memoryStream);
-                    byte[] imageArray = memoryStream.ToArray();
+                    return RedirectToPage("/Login");
+                }
 
-                    if (_userController.SetProfilePicture(Userr, imageArray))
-                    {
-                        TempData["Message"] = "Profile Picture successfully changed";
+                Userr = _userController.GetUserByID(Int32.Parse(userID));
 
-                    }
-                    else
+                if (Userr == null)
+                {
+                    return NotFound();
+                }
+
+                if (profilePicture != null && profilePicture.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
                     {
-                        TempData["Message"] = "Could not change profile picture.";
+                        profilePicture.CopyTo(memoryStream);
+                        byte[] imageArray = memoryStream.ToArray();
+
+                        if (_userController.SetProfilePicture(Userr, imageArray))
+                        {
+                            TempData["Message"] = "Profile Picture successfully changed";
+
+                        }
+                        else
+                        {
+                            TempData["Message"] = "Could not change profile picture.";
+                        }
                     }
                 }
             }
-
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
+            }
             return RedirectToPage();
+
         }
 
         public IActionResult OnPostLogout()

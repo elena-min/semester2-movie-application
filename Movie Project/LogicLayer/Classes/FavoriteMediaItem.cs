@@ -11,7 +11,7 @@ namespace LogicLayer.Classes
     {
         private List<MediaItem> favoriteMediaItems;
         public Person User { get; private set; }
-        public FavoriteMediaItem(string username, User user)
+        public FavoriteMediaItem(Person user)
         {
             favoriteMediaItems = new List<MediaItem>();
             User = user;    

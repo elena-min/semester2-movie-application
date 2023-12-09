@@ -30,49 +30,65 @@ namespace DesktopApp.Users
             userController = new UserController(iUserDAL);
             iReviewDAL = new ReviewDAL();
             reviewController = new ReviewController(iReviewDAL);
-            this.selectedUser = user;
-            lblWarning.Text = "";
-            labelFName.Text = selectedUser.FirstName;
-            labelLName.Text = selectedUser.LastName;
-            labelUsername.Text = selectedUser.Username;
-            labelEmail.Text = selectedUser.Email;
-            richTextBoxDescription.Text = selectedUser.ProfileDescription;
-            labelGender.Text = selectedUser.Gender.ToString();
-
-            if (userController.GetProfilePicByID(selectedUser) == null || userController.GetProfilePicByID(selectedUser).Length == 0 )
+            try
             {
-                pictureBoxBookPic.Image = null;
-                btnRemoveImage.Visible = false;
+                this.selectedUser = user;
+                lblWarning.Text = "";
+                labelFName.Text = selectedUser.FirstName;
+                labelLName.Text = selectedUser.LastName;
+                labelUsername.Text = selectedUser.Username;
+                labelEmail.Text = selectedUser.Email;
+                richTextBoxDescription.Text = selectedUser.ProfileDescription;
+                labelGender.Text = selectedUser.Gender.ToString();
 
+                if (userController.GetProfilePicByID(selectedUser) == null || userController.GetProfilePicByID(selectedUser).Length == 0)
+                {
+                    pictureBoxBookPic.Image = null;
+                    btnRemoveImage.Visible = false;
+
+                }
+                else
+                {
+                    byte[] pictureBytes = Convert.FromBase64String(userController.GetProfilePicByID(selectedUser));
+                    MemoryStream memoryStream = new MemoryStream(pictureBytes);
+                    Image pictureImage = Image.FromStream(memoryStream);
+                    pictureBoxBookPic.BackgroundImageLayout = ImageLayout.Stretch;
+                    pictureBoxBookPic.BackgroundImage = pictureImage;
+                }
+
+                foreach (Review review in reviewController.GetReviewsByUser(selectedUser))
+                {
+                    listBoxViewReviews.Items.Add(review.GetInfo());
+                }
             }
-            else
+            catch (Exception ex)
             {
-                byte[] pictureBytes = Convert.FromBase64String(userController.GetProfilePicByID(selectedUser));
-                MemoryStream memoryStream = new MemoryStream(pictureBytes);
-                Image pictureImage = Image.FromStream(memoryStream);
-                pictureBoxBookPic.BackgroundImageLayout = ImageLayout.Stretch;
-                pictureBoxBookPic.BackgroundImage = pictureImage;
+                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
             }
 
-            foreach (Review review in reviewController.GetReviewsByUser(selectedUser))
-            {
-                listBoxViewReviews.Items.Add(review.GetInfo());
-            }
         }
 
         private void btnRemoveImage_Click(object sender, EventArgs e)
         {
-            pictureBoxBookPic.Dispose();
-            pictureBoxBookPic.Image = null;
-            pictureBoxBookPic.BackgroundImage = null;
-            if (userController.SetProfilePicture(selectedUser, ImageToBytes(pictureBoxBookPic.BackgroundImage, pictureBoxBookPic)))
+            try
             {
-                lblWarning.Text = "Picture removed successfully!";
+                pictureBoxBookPic.Dispose();
+                pictureBoxBookPic.Image = null;
+                pictureBoxBookPic.BackgroundImage = null;
+                if (userController.SetProfilePicture(selectedUser, ImageToBytes(pictureBoxBookPic.BackgroundImage, pictureBoxBookPic)))
+                {
+                    lblWarning.Text = "Picture removed successfully!";
+                }
+                else
+                {
+                    lblWarning.Text = "Operation failed.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblWarning.Text = "Operation failed.";
+                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
             }
+            
         }
 
         byte[] Filename;

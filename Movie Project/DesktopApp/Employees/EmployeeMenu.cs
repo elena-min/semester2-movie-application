@@ -44,31 +44,38 @@ namespace DesktopApp.Employees
 
             listBoxViewEmpoyees.Items.Clear();
             allEmployees = new List<Employee>();
-
-            if (empController.GetAll() == null)
+            try
             {
-
-                lblWarning.Text = "No employees in the system.";
-            }
-            else
-            {
-                foreach (Employee emp in empController.GetAll())
+                if (empController.GetAll() == null)
                 {
-                    allEmployees.Add(emp);
+
+                    lblWarning.Text = "No employees in the system.";
+                }
+                else
+                {
+                    foreach (Employee emp in empController.GetAll())
+                    {
+                        allEmployees.Add(emp);
+                    }
+                }
+
+                if (allEmployees.Count > 0)
+                {
+                    foreach (Employee emp in allEmployees)
+                    {
+                        listBoxViewEmpoyees.Items.Add(emp.ToString());
+                    }
+                }
+                else
+                {
+                    lblWarning.Text = "No employees in the system.";
                 }
             }
-
-            if (allEmployees.Count > 0)
+            catch (Exception ex)
             {
-                foreach (Employee emp in allEmployees)
-                {
-                    listBoxViewEmpoyees.Items.Add(emp.ToString());
-                }
+                lblWarning.Text = $"An unexpected error: {ex.Message}";
             }
-            else
-            {
-                lblWarning.Text = "No employees in the system.";
-            }
+            
         }
 
         private void ActivateButton(object btnSender)
@@ -134,54 +141,70 @@ namespace DesktopApp.Employees
         private void buttonMoreInfo_Click(object sender, EventArgs e)
         {
             lblWarning.Text = "";
-            if (listBoxViewEmpoyees.SelectedItem != null)
+            try
             {
-                string selectedEmp = listBoxViewEmpoyees.SelectedItem.ToString();
-                foreach (Employee emp in empController.GetAll())
+                if (listBoxViewEmpoyees.SelectedItem != null)
                 {
-                    if (selectedEmp == emp.ToString())
+                    string selectedEmp = listBoxViewEmpoyees.SelectedItem.ToString();
+                    foreach (Employee emp in empController.GetAll())
                     {
-                        MoreInfoEmp empMoreInfo = new MoreInfoEmp(emp);
-                        empMoreInfo.Show();
+                        if (selectedEmp == emp.ToString())
+                        {
+                            MoreInfoEmp empMoreInfo = new MoreInfoEmp(emp);
+                            empMoreInfo.Show();
+                        }
                     }
                 }
             }
-        }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"An unexpected error: {ex.Message}";
+            }
+}
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             lblWarning.Text = "";
-            listBoxViewEmpoyees.Items.Clear();
-            List<Employee> allEmployees = new List<Employee>();
-            if (textBoxEmpName.Text != null || textBoxEmpName.Text == "" && textBoxEMpID.Text != null || textBoxEMpID.Text == "")
+            try
             {
-                foreach (Employee emp in empController.GetAll())
-                {
+                listBoxViewEmpoyees.Items.Clear();
 
-                    if (emp.FirstName.Contains(textBoxEmpName.Text) || emp.LastName.Contains(textBoxEmpName.Text))
+                List<Employee> allEmployees = new List<Employee>();
+                if (textBoxEmpName.Text != null || textBoxEmpName.Text == "" && textBoxEMpID.Text != null || textBoxEMpID.Text == "")
+                {
+                    foreach (Employee emp in empController.GetAll())
                     {
-                        string empID = emp.GetId().ToString();
-                        if (empID == textBoxEMpID.Text)
+
+                        if (emp.FirstName.Contains(textBoxEmpName.Text) || emp.LastName.Contains(textBoxEmpName.Text))
                         {
-                            allEmployees.Add(emp);
+                            string empID = emp.GetId().ToString();
+                            if (empID == textBoxEMpID.Text)
+                            {
+                                allEmployees.Add(emp);
+                            }
                         }
+
                     }
-
                 }
-            }
-            else
-            {
-                foreach (Employee emp in empController.GetAll())
+                else
                 {
-                    allEmployees.Add(emp);
+                    foreach (Employee emp in empController.GetAll())
+                    {
+                        allEmployees.Add(emp);
+                    }
+                }
+
+
+                foreach (Employee emp in allEmployees)
+                {
+                    listBoxViewEmpoyees.Items.Add(emp.ToString());
                 }
             }
-
-
-            foreach (Employee emp in allEmployees)
+            catch (Exception ex)
             {
-                listBoxViewEmpoyees.Items.Add(emp.ToString());
+                lblWarning.Text = $"An unexpected error: {ex.Message}";
             }
+
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
@@ -189,34 +212,42 @@ namespace DesktopApp.Employees
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this employee?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
+            try
             {
-                if (listBoxViewEmpoyees.SelectedIndex != -1)
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this employee?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    int selected_emp_id = Int32.Parse(listBoxViewEmpoyees.SelectedItem.ToString().Split('-')[0]);
-                    Employee  selectedEMp = empController.GetEmployeeByID(selected_emp_id);
-                    if (selectedEMp != null)
+                    if (listBoxViewEmpoyees.SelectedIndex != -1)
                     {
-                        lblWarning.Text = empController.DeleteEmployee(selectedEMp);
+                        int selected_emp_id = Int32.Parse(listBoxViewEmpoyees.SelectedItem.ToString().Split('-')[0]);
+                        Employee selectedEMp = empController.GetEmployeeByID(selected_emp_id);
+                        if (selectedEMp != null)
+                        {
+                            lblWarning.Text = empController.DeleteEmployee(selectedEMp);
+                        }
+                        else
+                        {
+                            lblWarning.Text = "No data found.";
+                        }
+                        listBoxViewEmpoyees.Items.Clear();
+                        foreach (Employee emp in empController.GetAll())
+                        {
+                            listBoxViewEmpoyees.Items.Add(emp.ToString());
+                        }
                     }
                     else
                     {
-                        lblWarning.Text = "No data found.";
-                    }
-                    listBoxViewEmpoyees.Items.Clear();
-                    foreach (Employee emp in empController.GetAll())
-                    {
-                        listBoxViewEmpoyees.Items.Add(emp.ToString());
-                    }
-                }
-                else
-                {
-                    lblWarning.Text = "There is no employee selected!";
+                        lblWarning.Text = "There is no employee selected!";
 
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
+            }
+
         }
     }
 }

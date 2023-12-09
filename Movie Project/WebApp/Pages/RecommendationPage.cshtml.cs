@@ -50,10 +50,11 @@ namespace WebApp.Pages
                 {
                     return NotFound();
                 }
+                FavoriteMediaItem favoriteMediaItem = new FavoriteMediaItem(Userr);
 
                 foreach (MediaItem favMedia in _favController.GetAllFavorites(Userr))
                 {
-                    Userr.FavoriteMediaItem.AddToFavoroites(favMedia);
+                    favoriteMediaItem.AddToFavoroites(favMedia);
                 }
             }
             else

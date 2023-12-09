@@ -54,142 +54,165 @@ namespace WebApp.Pages
 
         public void OnGet()
         {
-            string cacheKey = "MoviesTrendingDaily";
+            try
+            {
+                string cacheKey = "MoviesTrendingDaily";
 
-            // Attempt to retrieve data from cache
-            if (cache.TryGetValue(cacheKey, out List<MediaItem> cachedMovies))
-            {
-                // Use cached data if available
-                MoviesTrendingDaily = cachedMovies;
-            }
-            else
-            {
-                // Initialize the list to ensure it's not null
-                MoviesTrendingDaily = new List<MediaItem>();
-                if(_trendingController.GetTrendingDaily(DateTime.Today).Length > 0)
+                // Attempt to retrieve data from cache
+                if (cache.TryGetValue(cacheKey, out List<MediaItem> cachedMovies))
                 {
-                    MoviesTrendingDaily = _trendingController.GetTrendingDaily(DateTime.Today).ToList();
+                    // Use cached data if available
+                    MoviesTrendingDaily = cachedMovies;
                 }
                 else
                 {
-                    RecalculateTrending(null);
-                    MoviesTrendingDaily = MoviesTrendingDailyCache;
+                    // Initialize the list to ensure it's not null
+                    MoviesTrendingDaily = new List<MediaItem>();
+                    if (_trendingController.GetTrendingDaily(DateTime.Today).Length > 0)
+                    {
+                        MoviesTrendingDaily = _trendingController.GetTrendingDaily(DateTime.Today).ToList();
+                    }
+                    else
+                    {
+                        RecalculateTrending(null);
+                        MoviesTrendingDaily = MoviesTrendingDailyCache;
+                    }
+                    // Save the loaded data to cache
+                    cache.Set(cacheKey, MoviesTrendingDaily, TimeSpan.FromHours(1));
                 }
-                // Save the loaded data to cache
-                cache.Set(cacheKey, MoviesTrendingDaily, TimeSpan.FromHours(1));
-            }
 
-            DateTime now = DateTime.Now;
-            string cacheKey2 = "MoviesTrendingWeekly";
+                DateTime now = DateTime.Now;
+                string cacheKey2 = "MoviesTrendingWeekly";
 
-            if (cache.TryGetValue(cacheKey2, out List<MediaItem> cachedMoviesWeekly))
-            {
-                MoviesTrendingWeekly = cachedMoviesWeekly;
-            }
-            else
-            {
-                MoviesTrendingWeekly = new List<MediaItem>();
-                if (_trendingController.GetTrendingWeekly(DateTime.Today).Length > 0)
+                if (cache.TryGetValue(cacheKey2, out List<MediaItem> cachedMoviesWeekly))
                 {
-                    MoviesTrendingWeekly = _trendingController.GetTrendingWeekly(DateTime.Today).ToList();
+                    MoviesTrendingWeekly = cachedMoviesWeekly;
                 }
                 else
                 {
-                    RecalculateWeeklyMonthlyTrending(null);
-                    MoviesTrendingWeekly = MoviesTrendingWeeklyCache;
+                    MoviesTrendingWeekly = new List<MediaItem>();
+                    if (_trendingController.GetTrendingWeekly(DateTime.Today).Length > 0)
+                    {
+                        MoviesTrendingWeekly = _trendingController.GetTrendingWeekly(DateTime.Today).ToList();
+                    }
+                    else
+                    {
+                        RecalculateWeeklyMonthlyTrending(null);
+                        MoviesTrendingWeekly = MoviesTrendingWeeklyCache;
+                    }
+                    DateTime midnight = now.Date.AddDays(1);
+                    TimeSpan timeUntilMidnight = midnight - now;
+                    cache.Set(cacheKey2, MoviesTrendingWeekly, timeUntilMidnight);
                 }
-                DateTime midnight = now.Date.AddDays(1);
-                TimeSpan timeUntilMidnight = midnight - now;
-                cache.Set(cacheKey2, MoviesTrendingWeekly, timeUntilMidnight);
-            }
 
-            string cacheKey3 = "MoviesTrendingMonthly";
+                string cacheKey3 = "MoviesTrendingMonthly";
 
-            if (cache.TryGetValue(cacheKey3, out List<MediaItem> cachedMoviesMonthly))
-            {
-                MoviesTrendingMonthly = cachedMoviesMonthly;
-            }
-            else
-            {
-                MoviesTrendingMonthly = new List<MediaItem>();
-                if (_trendingController.GetTrendingMonthly(DateTime.Today).Length > 0)
+                if (cache.TryGetValue(cacheKey3, out List<MediaItem> cachedMoviesMonthly))
                 {
-                    MoviesTrendingMonthly = _trendingController.GetTrendingMonthly(DateTime.Today).ToList();
+                    MoviesTrendingMonthly = cachedMoviesMonthly;
                 }
                 else
                 {
-                    RecalculateWeeklyMonthlyTrending(null);
-                    MoviesTrendingMonthly = MoviesTrendingMonthlyCache;
+                    MoviesTrendingMonthly = new List<MediaItem>();
+                    if (_trendingController.GetTrendingMonthly(DateTime.Today).Length > 0)
+                    {
+                        MoviesTrendingMonthly = _trendingController.GetTrendingMonthly(DateTime.Today).ToList();
+                    }
+                    else
+                    {
+                        RecalculateWeeklyMonthlyTrending(null);
+                        MoviesTrendingMonthly = MoviesTrendingMonthlyCache;
+                    }
+                    DateTime midnight = now.Date.AddDays(1);
+                    TimeSpan timeUntilMidnight = midnight - now;
+                    cache.Set(cacheKey3, MoviesTrendingMonthly, timeUntilMidnight);
                 }
-                DateTime midnight = now.Date.AddDays(1);
-                TimeSpan timeUntilMidnight = midnight - now;
-                cache.Set(cacheKey3, MoviesTrendingMonthly, timeUntilMidnight);
             }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
+            }
+
         }
         private void RecalculateTrending(object state)
         {
             List<MediaItem> updatedMoviesTrendingDailyCache = new List<MediaItem>();
 
-            foreach (MediaItem mediaItem in _mediaController.GetAll())
+            try
             {
-                if (mediaItem is Movie)
+                foreach (MediaItem mediaItem in _mediaController.GetAll())
                 {
-                    updatedMoviesTrendingDailyCache.Add((Movie)mediaItem);
+                    if (mediaItem is Movie)
+                    {
+                        updatedMoviesTrendingDailyCache.Add((Movie)mediaItem);
+                    }
+                    if (mediaItem is Serie)
+                    {
+                        updatedMoviesTrendingDailyCache.Add((Serie)mediaItem);
+                    }
                 }
-                if (mediaItem is Serie)
-                {
-                    updatedMoviesTrendingDailyCache.Add((Serie)mediaItem);
-                }
-            }
 
-            foreach (MediaItem movie in updatedMoviesTrendingDailyCache)
+                foreach (MediaItem movie in updatedMoviesTrendingDailyCache)
+                {
+                    foreach (int rating in _mediaController.GetAllGivenRatings(movie))
+                    {
+                        movie.AddRating(rating);
+                        movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(movie);
+                    }
+                }
+
+                _filterContext.SetFilterStrategy(new TrendingFilterStrategy(DateTime.Now, LogicLayer.TimePeriod.Day));
+                updatedMoviesTrendingDailyCache = _filterContext.GetFilteredMediaItems(updatedMoviesTrendingDailyCache).ToList();
+                _trendingController.SaveTrendingDaily(updatedMoviesTrendingDailyCache.Take(10).ToList(), DateTime.Now);
+                MoviesTrendingDailyCache = updatedMoviesTrendingDailyCache;
+            }
+            catch (Exception ex)
             {
-                foreach (int rating in _mediaController.GetAllGivenRatings(movie))
-                {
-                    movie.AddRating(rating);
-                    movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(movie);
-                }
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
             }
-
-            _filterContext.SetFilterStrategy(new TrendingFilterStrategy(DateTime.Now, LogicLayer.TimePeriod.Day));
-            updatedMoviesTrendingDailyCache = _filterContext.GetFilteredMediaItems(updatedMoviesTrendingDailyCache).ToList();
-            _trendingController.SaveTrendingDaily(updatedMoviesTrendingDailyCache.Take(10).ToList(), DateTime.Now);
-            MoviesTrendingDailyCache = updatedMoviesTrendingDailyCache;
+            
         }
         private void RecalculateWeeklyMonthlyTrending(object state)
         {
             List<MediaItem> updatedMoviesTrendingCache = new List<MediaItem>();
-
-            foreach (MediaItem mediaItem in _mediaController.GetAll())
+            try
             {
-                if (mediaItem is Movie)
+                foreach (MediaItem mediaItem in _mediaController.GetAll())
                 {
-                    updatedMoviesTrendingCache.Add((Movie)mediaItem);
+                    if (mediaItem is Movie)
+                    {
+                        updatedMoviesTrendingCache.Add((Movie)mediaItem);
+                    }
+                    if (mediaItem is Serie)
+                    {
+                        updatedMoviesTrendingCache.Add((Serie)mediaItem);
+                    }
                 }
-                if (mediaItem is Serie)
+
+                foreach (MediaItem movie in updatedMoviesTrendingCache)
                 {
-                    updatedMoviesTrendingCache.Add((Serie)mediaItem);
+                    foreach (int rating in _mediaController.GetAllGivenRatings(movie))
+                    {
+                        movie.AddRating(rating);
+                        movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(movie);
+                    }
                 }
+
+                _filterContext.SetFilterStrategy(new TrendingFilterStrategy(DateTime.Now, LogicLayer.TimePeriod.Week));
+                updatedMoviesTrendingCache = _filterContext.GetFilteredMediaItems(updatedMoviesTrendingCache).ToList();
+                _trendingController.SaveTrendingWeekly(updatedMoviesTrendingCache.Take(10).ToList(), DateTime.Now);
+                MoviesTrendingWeeklyCache = updatedMoviesTrendingCache;
+
+                _filterContext.SetFilterStrategy(new TrendingFilterStrategy(DateTime.Now, LogicLayer.TimePeriod.Month));
+                updatedMoviesTrendingCache = _filterContext.GetFilteredMediaItems(updatedMoviesTrendingCache).ToList();
+                _trendingController.SaveTrendingMonthly(updatedMoviesTrendingCache.Take(10).ToList(), DateTime.Now);
+                MoviesTrendingMonthlyCache = updatedMoviesTrendingCache;
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
             }
 
-            foreach (MediaItem movie in updatedMoviesTrendingCache)
-            {
-                foreach (int rating in _mediaController.GetAllGivenRatings(movie))
-                {
-                    movie.AddRating(rating);
-                    movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(movie);
-                }
-            }
-
-            _filterContext.SetFilterStrategy(new TrendingFilterStrategy(DateTime.Now, LogicLayer.TimePeriod.Week));
-            updatedMoviesTrendingCache = _filterContext.GetFilteredMediaItems(updatedMoviesTrendingCache).ToList();
-            _trendingController.SaveTrendingWeekly(updatedMoviesTrendingCache.Take(10).ToList(), DateTime.Now);
-            MoviesTrendingWeeklyCache = updatedMoviesTrendingCache;
-
-            _filterContext.SetFilterStrategy(new TrendingFilterStrategy(DateTime.Now, LogicLayer.TimePeriod.Month));
-            updatedMoviesTrendingCache = _filterContext.GetFilteredMediaItems(updatedMoviesTrendingCache).ToList();
-            _trendingController.SaveTrendingMonthly(updatedMoviesTrendingCache.Take(10).ToList(), DateTime.Now);
-            MoviesTrendingMonthlyCache = updatedMoviesTrendingCache;
         }
 
 

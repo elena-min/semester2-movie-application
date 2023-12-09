@@ -11,10 +11,23 @@ namespace LogicLayer.Classes
     {
        
         private string profileDescription;
-        private List<MediaItem> favoriteMediaItems;
-        public string ProfileDescription { get; set; }
+        public string ProfileDescription
+        {
+            get => profileDescription;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Profile description should not be empty!");
+                }
+                if (!value.Any(char.IsLetter))
+                {
+                    throw new ArgumentException("Profile description should contain at least one letter!");
+                }
+                profileDescription = value;
+            }
+        }
         public byte[] ProfilePicture { get; set; }
-        public FavoriteMediaItem FavoriteMediaItem { get; set; }
 
         public bool IsBanned { get; set; }
         public string ReasonForDeleting { get; set; }
