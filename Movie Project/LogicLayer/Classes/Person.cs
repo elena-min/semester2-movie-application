@@ -9,13 +9,13 @@ namespace LogicLayer.Classes
 {
     public class Person
     {
-        private int id;
-        private string firstName;
-        private string lastName;
-        private string username;
-        private string email;
-        private string password;
-        private Gender gender;
+        protected int id;
+        protected string firstName;
+        protected string lastName;
+        protected string username;
+        protected string email;
+        protected string password;
+        protected Gender gender;
         public List<string> ValidationErrors { get; } = new List<string>();
 
         public string FirstName

@@ -16,7 +16,7 @@ namespace LogicLayer.Classes
             favoriteMediaItems = new List<MediaItem>();
             User = user;    
         }
-        public void AddToFavoroites(MediaItem mediaItem)
+        public void AddToFavorites(MediaItem mediaItem)
         {
             favoriteMediaItems.Add(mediaItem);
         }

@@ -44,6 +44,7 @@
             lblAge = new Label();
             btnEditProfile = new Button();
             panel1 = new Panel();
+            lblWarning = new Label();
             panelDesktop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxProfilePic).BeginInit();
             panel1.SuspendLayout();
@@ -52,6 +53,7 @@
             // panelDesktop
             // 
             panelDesktop.BackColor = Color.FromArgb(231, 223, 198);
+            panelDesktop.Controls.Add(lblWarning);
             panelDesktop.Controls.Add(pictureBoxProfilePic);
             panelDesktop.Controls.Add(labelGender);
             panelDesktop.Controls.Add(labelAge);
@@ -222,6 +224,17 @@
             panel1.Size = new Size(860, 67);
             panel1.TabIndex = 145;
             // 
+            // lblWarning
+            // 
+            lblWarning.AutoSize = true;
+            lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            lblWarning.ForeColor = Color.Maroon;
+            lblWarning.Location = new Point(30, 16);
+            lblWarning.Name = "lblWarning";
+            lblWarning.Size = new Size(81, 25);
+            lblWarning.TabIndex = 166;
+            lblWarning.Text = "Warning";
+            // 
             // ProfilePage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -259,5 +272,6 @@
         private Label lblFName;
         private Label lblAge;
         private PictureBox pictureBoxProfilePic;
+        private Label lblWarning;
     }
 }

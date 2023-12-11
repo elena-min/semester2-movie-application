@@ -84,6 +84,7 @@ namespace DesktopApp.Employees
 
             // Display all exception messages at once
             lblWarning.Text = exceptionMessages.ToString();
+
             try
             {
                 if (string.IsNullOrEmpty(lblWarning.Text))

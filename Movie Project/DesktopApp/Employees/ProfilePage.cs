@@ -51,7 +51,7 @@ namespace DesktopApp.Employees
             {
                 lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
             }
-           
+
         }
         private void ActivateButton(object btnSender)
         {
@@ -100,6 +100,6 @@ namespace DesktopApp.Employees
             OpenChildForm(new ProfilePageEdit(employee), sender);
         }
 
-        private void btnView_Click(object sender, EventArgs e) {}
+        private void btnView_Click(object sender, EventArgs e) { }
     }
 }

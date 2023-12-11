@@ -28,6 +28,7 @@ namespace WebApp.Pages
         public void OnGet()
         {
             // Check if the "RememberMeCookie" is present
+            //This will assign a value directly to the variable userDate if there is a cookie found
             if (Request.Cookies.TryGetValue("RememberMeCookie", out string userData))
             {
                 var userInfo = JsonConvert.DeserializeObject<dynamic>(userData);
@@ -82,7 +83,7 @@ namespace WebApp.Pages
                                         Expires = DateTime.Now.AddDays(30)
                                     };
 
-                                    // Serialize user information (e.g., user ID) and store it in the cookie
+                                    // Serialize userID and store it in the cookie
                                     var userData = user.GetId().ToString();
 
                                     //var userData = JsonConvert.SerializeObject(new { Id = user.GetId() });
