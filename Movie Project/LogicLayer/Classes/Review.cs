@@ -57,7 +57,7 @@ namespace LogicLayer.Classes
             get => rating;
             set
             {
-                if (value <= 1 || value >= 5)
+                if (value < 0 || value > 6)
                 {
                     throw new ArgumentException("The rating should be between 1 and 5!");
                 }

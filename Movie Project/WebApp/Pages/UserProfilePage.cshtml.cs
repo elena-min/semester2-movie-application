@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Pages
 {
+    [Authorize]
     public class UserProfilePageModel : PageModel
     {
         public User Userr { get; set; }
@@ -26,7 +27,7 @@ namespace WebApp.Pages
             Userr = _userController.GetUserByID(ID);
         }
 
-        [Authorize(Roles = "Employee")]
+        //[Authorize(Roles = "Employee")]
         public IActionResult OnPostDeleteUser(int ID, string reason)
         {
             try
@@ -34,7 +35,7 @@ namespace WebApp.Pages
                 // Authorization logic is handled by the [Authorize] attribute
                 User selectedUser = _userController.GetUserByID(ID);
                 _empController.DeleteUserAccount(selectedUser, reason);
-                return RedirectToPage("/Index");
+                return RedirectToPage("/Main");
             }
             catch (Exception ex)
             {

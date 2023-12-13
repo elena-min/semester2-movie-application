@@ -27,13 +27,6 @@
         {
             <img src="/images//noProfilePicture.png" alt="No Profile picture" style="padding:10px">
         }
-        <form method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="profilePicture">Upload Profile Picture:</label>
-                <input type="file" class="form-control" id="profilePicture" name="ProfilePicture">
-            </div>
-            <button type="submit" class="btn btn-primary">Save Profile Picture</button>
-        </form>
     </div>
 
     <div class="profileInformation">
@@ -44,10 +37,14 @@
     </div><br />
    
 </main>
-<div id="deleteProfileButton">
-    <form method="post" asp-page-handler="DeleteUser" asp-route-ID="@Model.Userr.GetId()">
-        <input type="text" name="reason" placeholder="Reason for deletion" />
-        <button type="submit">Ban User</button>
-    </form>
-</div>
+@if (User.IsInRole("Employee"))
+{
+    <div id="deleteProfileButton">
+        <form method="post" asp-page-handler="DeleteUser" asp-route-ID="@Model.Userr.GetId()">
+            <input type="text" name="reason" placeholder="Reason for deletion" />
+            <button type="submit">Ban User</button>
+        </form>
+    </div>
+}
+
 

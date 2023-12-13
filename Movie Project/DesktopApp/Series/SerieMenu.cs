@@ -51,34 +51,41 @@ namespace DesktopApp.Series
 
             listBoxViewSeries.Items.Clear();
             allSeries = new List<MediaItem>();
-
-            if (mediaItemController.GetAll() == null)
+            try
             {
-
-                lblWarning.Text = "No series in the system.";
-            }
-            else
-            {
-                foreach (MediaItem serie in mediaItemController.GetAll())
+                if (mediaItemController.GetAll() == null)
                 {
-                    if (serie is Serie)
+
+                    lblWarning.Text = "No series in the system.";
+                }
+                else
+                {
+                    foreach (MediaItem serie in mediaItemController.GetAll())
                     {
-                        allSeries.Add(serie);
+                        if (serie is Serie)
+                        {
+                            allSeries.Add(serie);
+                        }
                     }
                 }
-            }
 
-            if (allSeries.Count > 0)
-            {
-                foreach (MediaItem serie in allSeries)
+                if (allSeries.Count > 0)
                 {
-                    listBoxViewSeries.Items.Add(((Serie)serie).ToString());
+                    foreach (MediaItem serie in allSeries)
+                    {
+                        listBoxViewSeries.Items.Add(((Serie)serie).ToString());
+                    }
+                }
+                else
+                {
+                    lblWarning.Text = "No series in the system.";
                 }
             }
-            else
+            catch (Exception ex)
             {
-                lblWarning.Text = "No series in the system.";
+                lblWarning.Text = $"An unexpected error: {ex.Message}";
             }
+            
         }
 
         private void ActivateButton(object btnSender)

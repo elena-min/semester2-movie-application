@@ -54,7 +54,7 @@ namespace WebApp.Pages
 
                 foreach (MediaItem favMedia in _favController.GetAllFavorites(Userr))
                 {
-                    favoriteMediaItem.AddToFavoroites(favMedia);
+                    favoriteMediaItem.AddToFavorites(favMedia);
                 }
             }
             else

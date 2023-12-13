@@ -57,17 +57,20 @@ namespace UnitTestProject
         {
             // Arrange
             MediaItem mediaItem = new MediaItem("Test", "Description", DateTime.Now, "USA", 4.5);
-            mediaItem.RecordView(DateTime.Now);
+            mediaItem.ViewsNumberByDate = new Dictionary<DateTime, int>
+            {
+                { DateTime.Now.Date, 10 },
+                { DateTime.Now.AddDays(-1).Date, 10 },
+            };
             mediaItem.AddRating(4);
             mediaItem.AddRating(5);
-
             // Act
-            mediaItem.CalculatePopularityScore(DateTime.Now, TimePeriod.Day);
+            var popularityScore = mediaItem.CalculatePopularityScore(DateTime.Now, TimePeriod.Day);
             double avrgRating = mediaItem.CalculateAverageRating();
-            double expectedresult = 0.7 * avrgRating + 0.3 * 1;
+            double expectedresult = 0.7 * avrgRating + 0.3 * 10;
 
             // Assert
-            Assert.AreEqual(expectedresult, mediaItem.PopularityScore);
+            Assert.AreEqual(expectedresult, popularityScore);
         }
 
         [TestMethod]
@@ -75,14 +78,18 @@ namespace UnitTestProject
         {
             // Arrange
             MediaItem mediaItem = new MediaItem("Test", "Description", DateTime.Now, "USA", 4.5);
-            mediaItem.RecordView(DateTime.Now);
+            mediaItem.ViewsNumberByDate = new Dictionary<DateTime, int>
+            {
+                { DateTime.Now.Date, 5 },
+                { DateTime.Now.AddDays(-1).Date, 10 },
+            };
             mediaItem.AddRating(4);
             mediaItem.AddRating(5);
 
             // Act
             mediaItem.CalculatePopularityScore(DateTime.Now, TimePeriod.Week);
             double avrgRating = mediaItem.CalculateAverageRating();
-            double expectedresult = 0.7 * avrgRating + 0.3 * 1;
+            double expectedresult = 0.7 * avrgRating + 0.3 * 15;
 
             // Assert
             Assert.AreEqual(expectedresult, mediaItem.PopularityScore); 
@@ -93,14 +100,23 @@ namespace UnitTestProject
         {
             // Arrange
             MediaItem mediaItem = new MediaItem("Test", "Description", DateTime.Now, "USA", 4.5);
-            mediaItem.RecordView(DateTime.Now);
+            mediaItem.ViewsNumberByDate = new Dictionary<DateTime, int>
+            {
+                { DateTime.Now.Date, 8 },
+                { DateTime.Now.AddDays(-1).Date, 6 },
+                { DateTime.Now.AddDays(-7).Date, 4 },
+                { DateTime.Now.AddDays(-10).Date, 9 },
+                { DateTime.Now.AddDays(-13).Date, 10 },
+
+            // Add more date-views pairs as needed
+            }; 
             mediaItem.AddRating(4);
             mediaItem.AddRating(5);
 
             // Act
             mediaItem.CalculatePopularityScore(DateTime.Now, TimePeriod.Month);
             double avrgRating = mediaItem.CalculateAverageRating();
-            double expectedresult = 0.7 * avrgRating + 0.3 * 1;
+            double expectedresult = 0.7 * avrgRating + 0.3 * 27;
 
             // Assert
             Assert.AreEqual(expectedresult, mediaItem.PopularityScore);

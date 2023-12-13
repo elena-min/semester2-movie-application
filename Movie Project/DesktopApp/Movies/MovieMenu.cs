@@ -1,4 +1,5 @@
 ﻿using DAL;
+using LogicLayer;
 using LogicLayer.Classes;
 using LogicLayer.Controllers;
 using LogicLayer.Interfaces;
@@ -51,34 +52,47 @@ namespace DesktopApp.Movies
 
             listBoxViewMovies.Items.Clear();
             allMovies = new List<MediaItem>();
-
-            if (mediaItemController.GetAll() == null)
+            try
             {
+                MediaItem[] allMediaItems = mediaItemController.GetAll();
 
-                lblWarning.Text = "No movies in the system.";
-            }
-            else
-            {
-                foreach (MediaItem movie in mediaItemController.GetAll())
+                if (allMediaItems == null || allMediaItems.Length == 0)
                 {
-                    if (movie is Movie)
+                    lblWarning.Text = "No movies in the system.";
+                }
+                else
+                {
+                    foreach (MediaItem mediaItem in allMediaItems)
                     {
-                        allMovies.Add(movie);
+                        if (mediaItem is Movie)
+                        {
+                            allMovies.Add(mediaItem);
+                        }
+                    }
+
+                    if (allMovies.Count > 0)
+                    {
+                        foreach (MediaItem movie in allMovies)
+                        {
+                            listBoxViewMovies.Items.Add(((Movie)movie).ToString());
+                        }
+                    }
+                    else
+                    {
+                        lblWarning.Text = "No movies in the system.";
                     }
                 }
             }
+            catch (InvalidObjectException ex)
+            {
+                lblWarning.Text = $"{ex.Message}";
+            }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"An unexpected error: {ex.Message}";
+            }
 
-            if (allMovies.Count > 0)
-            {
-                foreach (MediaItem movie in allMovies)
-                {
-                    listBoxViewMovies.Items.Add(((Movie)movie).ToString());
-                }
-            }
-            else
-            {
-                lblWarning.Text = "No movies in the system.";
-            }
+
         }
         private void ActivateButton(object btnSender)
         {
