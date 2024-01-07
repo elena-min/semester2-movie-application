@@ -100,10 +100,9 @@ namespace DAL
         public MediaItem[] GetAll()
         {
             List<MediaItem> mediaItems = new List<MediaItem>();
-            List<Exception> exceptions = new List<Exception>();  
-            SqlConnection conn = CreateConnection();
-            //try
-            //{
+            List<Exception> exceptions = new List<Exception>();
+            using (SqlConnection conn = CreateConnection())
+            {
                 conn.Open();
 
                 string commandSql = "SELECT MI.id, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.image, " +
@@ -168,21 +167,25 @@ namespace DAL
                             }
 
                             mediaItems.Add(mediaItem);
-                    }
-                    catch (FormatException ex)
-                    {
-                        // Log the exception for the specific row
-                        exceptions.Add(ex);
-                        // Continue to the next iteration of the loop
-                        continue;
-                    }
-                    catch (Exception ex)
-                    {
-                        // Log other exceptions
-                        exceptions.Add(ex);
+                        }
+                        catch (FormatException ex)
+                        {
+                            // Log the exception for the specific row
+                            exceptions.Add(ex);
+                            // Continue to the next iteration of the loop
+                            continue;
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log other exceptions
+                            exceptions.Add(ex);
+                        }
                     }
                 }
             }
+                //try
+                //{
+                
 
             // If there were exceptions, throw a single exception with details
             if (exceptions.Count > 0)

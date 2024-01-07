@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1kBEBOpgRH9Q+2lJuQWUzUnazZlqBkaqdIdUEMtxCF/jqkP7eLJy/4mFt7Gb0W0tILzkNyrQnqpwTQh4MI8bxw==",
+  "dgSpecHash": "3z/DUOWnl8xLXXPEy9HTB61sX+VWa9nq6mr5At5DbY8hJmhHY33APibgEN/OGjqd3diYCUwdERug50pDPzmUZw==",
   "success": true,
   "projectFilePath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\DesktopApp\\DesktopApp.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\lenam\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\8.0.0\\microsoft.extensions.diagnostics.abstractions.8.0.0.nupkg.sha512",
@@ -14,6 +15,7 @@
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\lenam\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

@@ -1,13 +1,10 @@
-using LogicLayer.Interfaces;
-using LogicLayer.Classes;
 using LogicLayer.Controllers;
 using DAL;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc.Filters;
-using LogicLayer.Strategy;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
     options.LoginPath = new PathString("/Login");
@@ -43,6 +40,14 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 }
 );
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    // Add more policies as needed for other roles
+});
+
+
 
 var app = builder.Build();
 

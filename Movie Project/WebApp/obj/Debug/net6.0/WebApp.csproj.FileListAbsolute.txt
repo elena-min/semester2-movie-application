@@ -86,3 +86,5 @@ C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignmen
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\WebApp\obj\Debug\net6.0\WebApp.genruntimeconfig.cache
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\WebApp\obj\Debug\net6.0\ref\WebApp.dll
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\WebApp\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\WebApp\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\WebApp\bin\Debug\net6.0\BouncyCastle.Crypto.dll

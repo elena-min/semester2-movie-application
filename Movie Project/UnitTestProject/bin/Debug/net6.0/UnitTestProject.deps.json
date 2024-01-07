@@ -20,6 +20,14 @@
           "UnitTestProject.dll": {}
         }
       },
+      "BCrypt.Net-Next/4.0.3": {
+        "runtime": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.3.0",
+            "fileVersion": "4.0.3.0"
+          }
+        }
+      },
       "coverlet.collector/3.2.0": {},
       "Microsoft.CodeCoverage/17.5.0": {
         "runtime": {
@@ -412,6 +420,14 @@
           }
         }
       },
+      "Portable.BouncyCastle/1.9.0": {
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.9.0.0",
+            "fileVersion": "1.9.0.1"
+          }
+        }
+      },
       "runtime.native.System/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -621,7 +637,9 @@
       },
       "LogicLayer/1.0.0": {
         "dependencies": {
-          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0"
+          "BCrypt.Net-Next": "4.0.3",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Portable.BouncyCastle": "1.9.0"
         },
         "runtime": {
           "LogicLayer.dll": {}
@@ -642,6 +660,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BCrypt.Net-Next/4.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
+      "path": "bcrypt.net-next/4.0.3",
+      "hashPath": "bcrypt.net-next.4.0.3.nupkg.sha512"
     },
     "coverlet.collector/3.2.0": {
       "type": "package",
@@ -782,6 +807,13 @@
       "sha512": "sha512-eaiXkUjC4NPcquGWzAGMXjuxvLwc6XGKMptSyOGQeT0X70BUZObuybJFZLA0OfTdueLd3US23NBPTBb6iF3V1Q==",
       "path": "nuget.frameworks/5.11.0",
       "hashPath": "nuget.frameworks.5.11.0.nupkg.sha512"
+    },
+    "Portable.BouncyCastle/1.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
+      "path": "portable.bouncycastle/1.9.0",
+      "hashPath": "portable.bouncycastle.1.9.0.nupkg.sha512"
     },
     "runtime.native.System/4.3.0": {
       "type": "package",

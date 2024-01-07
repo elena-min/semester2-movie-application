@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "R5vBv16aMffBdSxqerP7A3tkAjrahUF/Yd7HWXe12qswvLyPPeK5MvD1+I27q+kNzNbyrtkVkAwwAu+blaHQCQ==",
+  "dgSpecHash": "sZR8+CJVklrZjIYXY2tlUtP9EkEfW9YgEIV/ScDdAhtrRerKZ2lKOfekqwn5B8FdzJNc9ghlULism8U/NWn5eQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\UnitTestProject\\UnitTestProject.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\lenam\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.codecoverage\\17.5.0\\microsoft.codecoverage.17.5.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
@@ -24,6 +25,7 @@
     "C:\\Users\\lenam\\.nuget\\packages\\mstest.testframework\\2.2.10\\mstest.testframework.2.2.10.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\nuget.frameworks\\5.11.0\\nuget.frameworks.5.11.0.nupkg.sha512",
+    "C:\\Users\\lenam\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

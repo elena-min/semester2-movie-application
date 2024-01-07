@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Pages
 {
+    [Authorize(Policy = "AdminOnly")]
     public class TrendingModel : PageModel
     {
         private readonly MediaItemController _mediaController;

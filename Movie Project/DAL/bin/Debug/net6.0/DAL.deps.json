@@ -15,6 +15,14 @@
           "DAL.dll": {}
         }
       },
+      "BCrypt.Net-Next/4.0.3": {
+        "runtime": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.3.0",
+            "fileVersion": "4.0.3.0"
+          }
+        }
+      },
       "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "8.0.0"
@@ -114,6 +122,14 @@
           "System.Security.Principal.Windows": "4.7.0"
         }
       },
+      "Portable.BouncyCastle/1.9.0": {
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.9.0.0",
+            "fileVersion": "1.9.0.1"
+          }
+        }
+      },
       "runtime.native.System.Data.SqlClient.sni/4.7.0": {
         "dependencies": {
           "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
@@ -196,7 +212,9 @@
       "System.Security.Principal.Windows/4.7.0": {},
       "LogicLayer/1.0.0": {
         "dependencies": {
-          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0"
+          "BCrypt.Net-Next": "4.0.3",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Portable.BouncyCastle": "1.9.0"
         },
         "runtime": {
           "LogicLayer.dll": {}
@@ -209,6 +227,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BCrypt.Net-Next/4.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
+      "path": "bcrypt.net-next/4.0.3",
+      "hashPath": "bcrypt.net-next.4.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
       "type": "package",
@@ -279,6 +304,13 @@
       "sha512": "sha512-KSrRMb5vNi0CWSGG1++id2ZOs/1QhRqROt+qgbEAdQuGjGrFcl4AOl4/exGPUYz2wUnU42nvJqon1T3U0kPXLA==",
       "path": "microsoft.win32.registry/4.7.0",
       "hashPath": "microsoft.win32.registry.4.7.0.nupkg.sha512"
+    },
+    "Portable.BouncyCastle/1.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
+      "path": "portable.bouncycastle/1.9.0",
+      "hashPath": "portable.bouncycastle.1.9.0.nupkg.sha512"
     },
     "runtime.native.System.Data.SqlClient.sni/4.7.0": {
       "type": "package",

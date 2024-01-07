@@ -8,10 +8,20 @@
     ".NETCoreApp,Version=v6.0": {
       "LogicLayer/1.0.0": {
         "dependencies": {
-          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0"
+          "BCrypt.Net-Next": "4.0.3",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Portable.BouncyCastle": "1.9.0"
         },
         "runtime": {
           "LogicLayer.dll": {}
+        }
+      },
+      "BCrypt.Net-Next/4.0.3": {
+        "runtime": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.3.0",
+            "fileVersion": "4.0.3.0"
+          }
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
@@ -106,6 +116,14 @@
           }
         }
       },
+      "Portable.BouncyCastle/1.9.0": {
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.9.0.0",
+            "fileVersion": "1.9.0.1"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/8.0.0": {
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -125,6 +143,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BCrypt.Net-Next/4.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
+      "path": "bcrypt.net-next/4.0.3",
+      "hashPath": "bcrypt.net-next.4.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
       "type": "package",
@@ -181,6 +206,13 @@
       "sha512": "sha512-bXJEZrW9ny8vjMF1JV253WeLhpEVzFo1lyaZu1vQ4ZxWUlVvknZ/+ftFgVheLubb4eZPSwwxBeqS1JkCOjxd8g==",
       "path": "microsoft.extensions.primitives/8.0.0",
       "hashPath": "microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+    },
+    "Portable.BouncyCastle/1.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
+      "path": "portable.bouncycastle/1.9.0",
+      "hashPath": "portable.bouncycastle.1.9.0.nupkg.sha512"
     },
     "System.Diagnostics.DiagnosticSource/8.0.0": {
       "type": "package",

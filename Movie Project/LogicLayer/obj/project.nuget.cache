@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zBOoLxgb+aiLyiKTZVj8nnp2j0jdUFH3b7X/XG98TZb8e/sI5Lg74zK/g3iKzYG11A7iKekjWoTFzexUjrok9Q==",
+  "dgSpecHash": "SBlCKPdzbja+CUqJGeyDXtZGLAD+H0oou87pq+6oyMKwgFxXmteNjn9iC85ZVUYgrIkBfoBpYE2MU2AmUQBOdQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\LogicLayer\\LogicLayer.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\lenam\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\8.0.0\\microsoft.extensions.diagnostics.abstractions.8.0.0.nupkg.sha512",
@@ -12,6 +13,7 @@
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "C:\\Users\\lenam\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\system.diagnostics.diagnosticsource\\8.0.0\\system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],

@@ -117,3 +117,5 @@ C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignmen
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\UnitTestProject\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\UnitTestProject\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\UnitTestProject\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\UnitTestProject\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\UnitTestProject\bin\Debug\net6.0\BouncyCastle.Crypto.dll
