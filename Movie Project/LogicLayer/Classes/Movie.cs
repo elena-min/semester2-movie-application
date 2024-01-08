@@ -56,6 +56,7 @@ namespace LogicLayer.Classes
             }
         }
 
+        public Movie() { }
         public Movie(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating, string _director, string _writer, int _duration) : base(_title, _description, _releaseDate, _countryOfOrigin, _rating)
         {
             Director = _director;

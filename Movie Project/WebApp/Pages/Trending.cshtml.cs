@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Pages
 {
-    [Authorize(Policy = "AdminOnly")]
     public class TrendingModel : PageModel
     {
         private readonly MediaItemController _mediaController;

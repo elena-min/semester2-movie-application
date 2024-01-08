@@ -259,7 +259,7 @@ namespace UnitTestProject
         {
             // Arrange
             EmployeeController empController = new EmployeeController(createTestRepo());
-            Employee emp1 = null;
+            Employee emp1 = new Employee();
             emp1.SetId(6);
             // Act
             string result = empController.GetProfilePicByID(emp1);

@@ -35,6 +35,7 @@ namespace LogicLayer.Classes
                 episodes = value;
             }
         }
+        public Serie() { }
         public Serie(string _title, string _description, DateTime _releaseDate, string _countryOfOrigin, double _rating, int _seasons, int _episodes) : base(_title, _description, _releaseDate, _countryOfOrigin, _rating)
         {
             Seasons = _seasons;

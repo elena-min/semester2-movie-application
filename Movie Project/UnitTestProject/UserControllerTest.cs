@@ -182,9 +182,8 @@ namespace UnitTestProject
             user1.SetId(2);
             userController.InsertUser(user1);
 
-            User updatedUser = new User("Lilly", "JThomas", "lillyJ", "nick@gmail.com", "nickJonas", LogicLayer.Gender.Male);
+            User updatedUser = new User("Lilly", "JThomas", "lillyJ", "nick@gmail.com", "nickJonas","salt", LogicLayer.Gender.Male, "Profile descriptiion");
             updatedUser.SetId(2);
-
             //Act
             bool result = userController.UpdateUser(updatedUser);
 
@@ -215,7 +214,7 @@ namespace UnitTestProject
             user1.SetId(2);
             User user2 = new User("Lilly", "JThomas", "nickJ", "lilly@gmail.com", "12345", LogicLayer.Gender.Female);
             user2.SetId(3);
-            userController.InsertUser(user2);
+            userController.InsertUser(user1);
             userController.InsertUser(user2);
 
             //Act

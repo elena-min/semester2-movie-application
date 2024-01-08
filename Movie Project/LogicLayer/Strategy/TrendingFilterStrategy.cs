@@ -18,6 +18,10 @@ namespace LogicLayer.Strategy
         }
         public MediaItem[] GetFilteredMediaItems(List<MediaItem> mediaItems)
         {
+            if (mediaItems == null || !mediaItems.Any())
+            {
+                return Array.Empty<MediaItem>();
+            }
             //Using this loop the PopularityScore is being calculated and assigned for each media item
             foreach (var movie in mediaItems)
             {

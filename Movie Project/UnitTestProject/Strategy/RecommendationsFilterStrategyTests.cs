@@ -41,11 +41,12 @@ namespace UnitTestProject.Strategy
             favMovies.AddToFavorites(movie1);
             var strategy = new RecommendationsFilterStrategy(currentUser);
             // Act
-            var filteredMediaItems = strategy.GetFilteredMediaItems(mediaItems);
+            var result = strategy.GetFilteredMediaItems(mediaItems);
 
             // Assert
-            Assert.IsNotNull(filteredMediaItems);
-            // Add more specific assertions based on your expectations for the filtering logic
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Length);
+            Assert.IsTrue(result.All(item => item.ReleaseDate >= DateTime.Now.AddYears(-10)));
         }
     }
 }

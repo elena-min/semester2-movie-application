@@ -56,7 +56,7 @@ namespace UnitTestProject
         public void CalculatePopularityScore_DayPeriodTest()
         {
             // Arrange
-            MediaItem mediaItem = new MediaItem("Test", "Description", DateTime.Now, "USA", 4.5);
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
             mediaItem.ViewsNumberByDate = new Dictionary<DateTime, int>
             {
                 { DateTime.Now.Date, 10 },
@@ -77,7 +77,7 @@ namespace UnitTestProject
         public void CalculatePopularityScore_WeekPeriodTest()
         {
             // Arrange
-            MediaItem mediaItem = new MediaItem("Test", "Description", DateTime.Now, "USA", 4.5);
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
             mediaItem.ViewsNumberByDate = new Dictionary<DateTime, int>
             {
                 { DateTime.Now.Date, 5 },
@@ -99,7 +99,7 @@ namespace UnitTestProject
         public void CalculatePopularityScore_MonthPeriodTest()
         {
             // Arrange
-            MediaItem mediaItem = new MediaItem("Test", "Description", DateTime.Now, "USA", 4.5);
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
             mediaItem.ViewsNumberByDate = new Dictionary<DateTime, int>
             {
                 { DateTime.Now.Date, 8 },

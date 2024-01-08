@@ -169,7 +169,7 @@ namespace UnitTestProject
         {
             //Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
-            MediaItem mediaItem =null;
+            MediaItem mediaItem =new Serie();
             mediaItem.SetId(2);
             //Act
             int[] ratings = mediaController.GetAllGivenRatings(mediaItem);
@@ -201,7 +201,7 @@ namespace UnitTestProject
         {
             // Arrange
             MediaItemController mediaController = new MediaItemController(createTestRepo());
-            MediaItem mediaItem = null;
+            MediaItem mediaItem = new Movie();
             mediaItem.SetId(2);
             // Act
             string result = mediaController.GetMediaItemImageByID(mediaItem);

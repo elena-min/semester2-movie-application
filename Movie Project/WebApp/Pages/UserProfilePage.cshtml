@@ -4,7 +4,6 @@
 @using LogicLayer.Interfaces;
 @using Microsoft.AspNetCore.Authorization;
 @model WebApp.Pages.UserProfilePageModel
-@attribute [Authorize(Roles = "Employee")]
 @{
     Layout = "_LayoutNoSearch";
     @functions {
@@ -36,6 +35,8 @@
 
     </div><br />
    
+    
+
 </main>
 @if (User.IsInRole("Employee"))
 {
@@ -46,5 +47,4 @@
         </form>
     </div>
 }
-
 

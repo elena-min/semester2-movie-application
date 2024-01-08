@@ -81,25 +81,29 @@ namespace WebApp.Pages
                     MediaItems.Add((Serie)mediaItem);
                     RecentShows.Add((Serie)mediaItem);
                 }
-            }
+            }            
 
-            if(_favController.GetAllFavorites(Userr) != null && _favController.GetAllFavorites(Userr).Length > 0)
+            if (_favController.GetAllFavorites(Userr) != null && _favController.GetAllFavorites(Userr).Length > 0)
             {
                 _filterContext.SetFilterStrategy(new RecommendationsFilterStrategy(Userr));
                 Recommendations = _filterContext.GetFilteredMediaItems(MediaItems).ToList();
             }
-            
 
-            RecentMovies = RecentMovies
-        .Where(movie => movie.ReleaseDate != null) 
-        .OrderByDescending(movie => movie.ReleaseDate)
-        .Take(10)
-        .ToList();
-            RecentShows = RecentShows
-        .Where(movie => movie.ReleaseDate != null)
-        .OrderByDescending(movie => movie.ReleaseDate)
-        .Take(10)
-        .ToList();
+            _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy());
+            MediaItems = _filterContext.GetFilteredMediaItems(MediaItems).ToList();
+            RecentMovies = _filterContext.GetFilteredMediaItems(RecentMovies).Take(10).ToList();
+            RecentShows = _filterContext.GetFilteredMediaItems(RecentShows).Take(10).ToList();
+
+            //    RecentMovies = RecentMovies
+            //.Where(movie => movie.ReleaseDate != null) 
+            //.OrderByDescending(movie => movie.ReleaseDate)
+            //.Take(10)
+            //.ToList();
+            //    RecentShows = RecentShows
+            //.Where(movie => movie.ReleaseDate != null)
+            //.OrderByDescending(movie => movie.ReleaseDate)
+            //.Take(10)
+            //.ToList();
             return Page();
 
         }

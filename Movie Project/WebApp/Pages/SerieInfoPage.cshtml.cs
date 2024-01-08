@@ -45,7 +45,7 @@ namespace WebApp.Pages
             for (int i = 6; i >= 0; i--)
             {
                 DateTime dateToCheck = currentDate.AddDays(-i);
-                double popularityScore = Serie.CalculatePopularityScore(dateToCheck, LogicLayer.TimePeriod.Day);
+                double popularityScore = Serie.CalculatePopularityScore(dateToCheck, LogicLayer.TimePeriod.Week);
                 PopularityScores.Add(popularityScore);
             }
         }

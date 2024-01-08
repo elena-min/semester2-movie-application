@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LogicLayer.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace DAL
 {
@@ -112,7 +113,6 @@ namespace DAL
                         string[] cast = string_cast.Split(',');
 
 
-                        MediaItem mediaItem;
 
                         if (reader["director"] != DBNull.Value)
                         {
@@ -120,34 +120,45 @@ namespace DAL
                             string writer = reader.GetString(10);
                             int duration = reader.GetInt32(11);
 
-                            mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
+                            MediaItem mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
+                            mediaItem.SetId(mediaItemId);
+                            foreach (string string_genre in string_genres)
+                            {
+                                if (Enum.TryParse(string_genre, out Genre enum_genre))
+                                {
+                                    mediaItem.AddGenre(enum_genre);
+                                }
+                            }
+                            foreach (string actor in cast)
+                            {
+                                mediaItem.Cast.AddToCast(actor);
+                            }
+
+                            favs.Add(mediaItem);
                         }
                         else if (reader["seasons"] != DBNull.Value)
                         {
                             int seasons = reader.GetInt32(12);
                             int episodes = reader.GetInt32(13);
 
-                            mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
-                        }
-                        else
-                        {
-                            mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating);
-                        }
-
-                        mediaItem.SetId(mediaItemId);
-                        foreach (string string_genre in string_genres)
-                        {
-                            if (Enum.TryParse(string_genre, out Genre enum_genre))
+                            MediaItem mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
+                            mediaItem.SetId(mediaItemId);
+                            foreach (string string_genre in string_genres)
                             {
-                                mediaItem.AddGenre(enum_genre);
+                                if (Enum.TryParse(string_genre, out Genre enum_genre))
+                                {
+                                    mediaItem.AddGenre(enum_genre);
+                                }
                             }
-                        }
-                        foreach (string actor in cast)
-                        {
-                            mediaItem.Cast.AddToCast(actor);
+                            foreach (string actor in cast)
+                            {
+                                mediaItem.Cast.AddToCast(actor);
+                            }
+
+                            favs.Add(mediaItem);
                         }
 
-                        favs.Add(mediaItem);
+                   
                     }
                 }
 

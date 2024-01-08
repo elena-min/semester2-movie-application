@@ -147,7 +147,7 @@
     {
         Review writtenReview = review;
         <div class="review">
-            <div class="reviewText p-1">
+            <div class="reviewText ">
                 <h3><b>@writtenReview.Title</b></h3>
                 <p>
                     <i> Written by:</i>
@@ -163,6 +163,7 @@
                     }
 
                 </p>
+                <p><i>Written on: @writtenReview.DateOfPublication.ToString("dd-MM-yyyy")</i></p>
                 <div class="rating">
                     <span class="star @((@writtenReview.Rating >= 1) ? "gold" : "")">&#9733;</span>
                     <span class="star @((@writtenReview.Rating >= 2) ? "gold" : "")">&#9733;</span>
@@ -171,7 +172,6 @@
                     <span class="star @((@writtenReview.Rating >= 5) ? "gold" : "")">&#9733;</span>
                 </div>
                 <p>@writtenReview.ReviewContent</p>
-                <p><i>Written on: @writtenReview.DateOfPublication.ToString("dd-MM-yyyy")</i></p>
             </div>
         </div>
     }
@@ -182,19 +182,25 @@
     var ctx = document.getElementById('popularityChart').getContext('2d');
     var popularityScores = @Html.Raw(Json.Serialize(Model.PopularityScores));
 
-    // Get the last 7 days, including today
-    var last7Days = [];
+    // Get the range of dates for the past 7 weeks
+    var last7Weeks = [];
     for (var i = 6; i >= 0; i--) {
         var currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - i);
-        var formattedDate = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
-        last7Days.push(formattedDate);
+        currentDate.setDate(currentDate.getDate() - (i * 7)); // Multiply by 7 to get weeks
+        var endDate = new Date(currentDate);
+        endDate.setDate(endDate.getDate() + 6); // Assuming a week is 7 days
+
+        var formattedDate = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }) +
+            ' - ' +
+            endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+
+        last7Weeks.push(formattedDate);
     }
 
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: last7Days,
+            labels: last7Weeks,
             datasets: [{
                 label: 'Popularity Scores',
                 data: popularityScores,

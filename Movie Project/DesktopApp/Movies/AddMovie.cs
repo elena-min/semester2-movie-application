@@ -89,7 +89,7 @@ namespace DesktopApp.Movies
                     }
                 }
 
-                if (mediaController.AddMediaItem(newMovie, ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic)))
+                if (mediaController.AddMediaItem(newMovie, ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic, 2097152)))
                 {
                     lblWarning.Text = "Movie has been added successfully!";
                 }
@@ -111,7 +111,7 @@ namespace DesktopApp.Movies
         }
 
         byte[] Filename;
-        public byte[] ImageToBytes(Image img, PictureBox pictureBox)
+        public byte[] ImageToBytes(Image img, PictureBox pictureBox, int maxSizeInBytes)
         {
             MemoryStream ms = new MemoryStream();
             if (img != null)
@@ -119,6 +119,11 @@ namespace DesktopApp.Movies
                 if (pictureBox != null)
                 {
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                    if (ms.Length > maxSizeInBytes)
+                    {
+                        throw new Exception("Image size exceeds the maximum allowed size (2 MB).");
+                    }
                 }
             }
             return ms.ToArray();
@@ -126,13 +131,25 @@ namespace DesktopApp.Movies
 
         private void btnImageUpload_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            DialogResult dialogResult = openFileDialog.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            try
             {
-                pictureBoxMoviePic.BackgroundImage = Image.FromFile(openFileDialog.FileName);
-                pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;
-                Filename = ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic);
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                DialogResult dialogResult = openFileDialog.ShowDialog();
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    pictureBoxMoviePic.BackgroundImage = Image.FromFile(openFileDialog.FileName);
+                    pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;
+
+                    //Maximum allowed file size to 2 MB (approximately 2,097,152 bytes)
+                    int maxSizeInBytes = 2097152;
+
+                    Filename = ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic, maxSizeInBytes);
+                }
+            }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"{ex.Message}";
             }
         }
 

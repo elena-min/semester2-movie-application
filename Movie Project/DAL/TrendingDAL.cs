@@ -217,8 +217,7 @@ namespace DAL
                         }
                         else
                         {
-                            // If it's neither a Movie nor Serie, create a generic MediaItem
-                            mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating);
+                            throw new Exception("Undetected type.");
                         }
 
                         mediaItem.SetId(mediaItemId);
@@ -340,8 +339,7 @@ namespace DAL
                         }
                         else
                         {
-                            // If it's neither a Movie nor Serie, create a generic MediaItem
-                            mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating);
+                            throw new Exception("Undetected type.");
                         }
 
                         mediaItem.SetId(mediaItemId);
@@ -427,8 +425,7 @@ namespace DAL
                         }
                         else
                         {
-                            // If it's neither a Movie nor Serie, create a generic MediaItem
-                            mediaItem = new MediaItem(title, description, releaseDate, countryOfOrigin, rating);
+                            throw new Exception("Undetected type.");
                         }
 
                         mediaItem.SetId(mediaItemId);

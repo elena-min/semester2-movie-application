@@ -32,7 +32,7 @@ namespace WebApp.Pages
             _mediaViewsController = mediaViewsController;
             _filterContext = filterContext;
         }
-        public IActionResult OnGet(string searchTerm, Genre? genreSelect, int pageIndex = 1)
+        public IActionResult OnGet(string searchTerm, Genre? genreSelect, string sortSelect, int pageIndex = 1)
         {
             Movies = new List<MediaItem>();
             Shows = new List<MediaItem>();
@@ -51,8 +51,16 @@ namespace WebApp.Pages
                     Shows.Add(m);
                     AllMediaItems.Add(m);
                 }
-
             }
+
+            foreach (MediaItem movie in AllMediaItems)
+            {
+                foreach (int rating in _mediaController.GetAllGivenRatings(movie))
+                {
+                    movie.AddRating(rating);
+                }
+            }
+
 
             const int pageSize = 4;
             int startIndex = (pageIndex - 1) * pageSize;
@@ -60,8 +68,25 @@ namespace WebApp.Pages
 
             if (string.IsNullOrEmpty(searchTerm) && !genreSelect.HasValue)
             {
-                _filterContext.SetFilterStrategy(new ReleaseDateFilterStrategy());
-
+                if (!string.IsNullOrEmpty(sortSelect))
+                {
+                    if (sortSelect.Equals("popularity", StringComparison.OrdinalIgnoreCase))
+                    {
+                        _filterContext.SetFilterStrategy(new RatingSortStrategy());
+                    }
+                    else if (sortSelect.Equals("newest", StringComparison.OrdinalIgnoreCase))
+                    {
+                        _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy(descending: true));
+                    }
+                    else if (sortSelect.Equals("oldest", StringComparison.OrdinalIgnoreCase))
+                    {
+                        _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy());
+                    }
+                }
+                else
+                {
+                    _filterContext.SetFilterStrategy(new ReleaseDateFilterStrategy());
+                }
                 MediaItem[] recentMediaItems = _filterContext.GetFilteredMediaItems(AllMediaItems);
                 Results = recentMediaItems.ToList();
 
@@ -75,10 +100,33 @@ namespace WebApp.Pages
                 Results = Results.GetRange(startIndex, endIndex - startIndex + 1);
                 return Page();
             }
+
             _filterContext.SetFilterStrategy(new SearchFilterStrategy(searchTerm, genreSelect));
 
             MediaItem[] trendingRecommendations = _filterContext.GetFilteredMediaItems(AllMediaItems);
-            Results = trendingRecommendations.ToList();
+
+            if (!string.IsNullOrEmpty(sortSelect))
+            {
+                if (sortSelect.Equals("popularity", StringComparison.OrdinalIgnoreCase))
+                {
+                    _filterContext.SetFilterStrategy(new RatingSortStrategy());
+                }
+                else if (sortSelect.Equals("newest", StringComparison.OrdinalIgnoreCase))
+                {
+                    _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy(descending: true));
+                }
+                else if (sortSelect.Equals("oldest", StringComparison.OrdinalIgnoreCase))
+                {
+                    _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy());
+                }
+            }
+            else
+            {
+                _filterContext.SetFilterStrategy(new ReleaseDateFilterStrategy());
+            }
+
+            MediaItem[] trendingRecommendationsSorted = _filterContext.GetFilteredMediaItems(trendingRecommendations.ToList());
+            Results = trendingRecommendationsSorted.ToList();
 
             TotalResults = Results.Count;
             TotalPages = (int)Math.Ceiling((double)TotalResults / (pageSize * 2));

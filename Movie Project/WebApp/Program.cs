@@ -10,7 +10,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = new PathString("/Login");
     options.AccessDeniedPath = new PathString("/AccessDenied");
     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-
 });
 builder.Services.AddSingleton<UserController>(new UserController(new UserDAL()));
 builder.Services.AddSingleton<UserDAL>(new UserDAL());
