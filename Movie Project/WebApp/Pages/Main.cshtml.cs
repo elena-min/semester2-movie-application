@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using LogicLayer.Strategy;
 using LogicLayer;
+using LogicLayer.SortingStrategy;
 
 namespace WebApp.Pages
 {
@@ -14,6 +15,8 @@ namespace WebApp.Pages
         private readonly MediaItemController _mediaController;
         private readonly MediaItemViewsController _mediaViewsController;
         private readonly FilterContext _filterContext;
+        private readonly SortingContext _sortingContext;
+
 
         public int TotalResults { get; set; }
         public int TotalPages { get; set; }
@@ -26,11 +29,12 @@ namespace WebApp.Pages
         public List<MediaItem> AllMediaItems { get; set; }
 
 
-        public MainModel(MediaItemController mediaController, MediaItemViewsController mediaViewsController, FilterContext filterContext)
+        public MainModel(MediaItemController mediaController, MediaItemViewsController mediaViewsController, FilterContext filterContext, SortingContext sortingContext)
         {
             _mediaController = mediaController;
             _mediaViewsController = mediaViewsController;
             _filterContext = filterContext;
+            _sortingContext = sortingContext;
         }
         public IActionResult OnGet(string searchTerm, Genre? genreSelect, string sortSelect, int pageIndex = 1)
         {
@@ -72,22 +76,22 @@ namespace WebApp.Pages
                 {
                     if (sortSelect.Equals("popularity", StringComparison.OrdinalIgnoreCase))
                     {
-                        _filterContext.SetFilterStrategy(new RatingSortStrategy());
+                        _sortingContext.SetSortingStrategy(new RatingSortingStrategy());
                     }
                     else if (sortSelect.Equals("newest", StringComparison.OrdinalIgnoreCase))
                     {
-                        _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy(descending: true));
+                        _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy(descending: true));
                     }
                     else if (sortSelect.Equals("oldest", StringComparison.OrdinalIgnoreCase))
                     {
-                        _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy());
+                        _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy());
                     }
                 }
                 else
                 {
-                    _filterContext.SetFilterStrategy(new ReleaseDateFilterStrategy());
+                    _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy());
                 }
-                MediaItem[] recentMediaItems = _filterContext.GetFilteredMediaItems(AllMediaItems);
+                MediaItem[] recentMediaItems = _sortingContext.GetSortedMediaItems(AllMediaItems);
                 Results = recentMediaItems.ToList();
 
                 TotalResults = Results.Count;
@@ -109,23 +113,23 @@ namespace WebApp.Pages
             {
                 if (sortSelect.Equals("popularity", StringComparison.OrdinalIgnoreCase))
                 {
-                    _filterContext.SetFilterStrategy(new RatingSortStrategy());
+                    _sortingContext.SetSortingStrategy(new RatingSortingStrategy());
                 }
                 else if (sortSelect.Equals("newest", StringComparison.OrdinalIgnoreCase))
                 {
-                    _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy(descending: true));
+                    _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy(descending: true));
                 }
                 else if (sortSelect.Equals("oldest", StringComparison.OrdinalIgnoreCase))
                 {
-                    _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy());
+                    _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy());
                 }
             }
             else
             {
-                _filterContext.SetFilterStrategy(new ReleaseDateFilterStrategy());
+                _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy());
             }
 
-            MediaItem[] trendingRecommendationsSorted = _filterContext.GetFilteredMediaItems(trendingRecommendations.ToList());
+            MediaItem[] trendingRecommendationsSorted = _sortingContext.GetSortedMediaItems(trendingRecommendations.ToList());
             Results = trendingRecommendationsSorted.ToList();
 
             TotalResults = Results.Count;

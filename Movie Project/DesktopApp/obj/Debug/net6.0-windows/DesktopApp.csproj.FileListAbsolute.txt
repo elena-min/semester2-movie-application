@@ -76,3 +76,5 @@ C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignmen
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.pdb
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\DesktopApp.genruntimeconfig.cache
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\ref\DesktopApp.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\bin\Debug\net6.0-windows\BCrypt.Net-Next.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\bin\Debug\net6.0-windows\BouncyCastle.Crypto.dll

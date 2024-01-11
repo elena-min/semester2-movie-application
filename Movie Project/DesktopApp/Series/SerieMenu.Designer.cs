@@ -38,14 +38,13 @@
             lblSearchMovies = new Label();
             textBoxSeriesTitle = new TextBox();
             labelSeriesTitle = new Label();
-            textBoxSeriesID = new TextBox();
-            labelSeriesID = new Label();
             listBoxViewSeries = new ListBox();
             panel1 = new Panel();
             btnView = new Button();
             btnAddSerie = new Button();
             panelDesktop = new Panel();
             panel1.SuspendLayout();
+            panelDesktop.SuspendLayout();
             SuspendLayout();
             // 
             // buttonSearch
@@ -56,7 +55,7 @@
             buttonSearch.FlatStyle = FlatStyle.Flat;
             buttonSearch.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
             buttonSearch.ForeColor = Color.FromArgb(138, 104, 86);
-            buttonSearch.Location = new Point(546, 331);
+            buttonSearch.Location = new Point(546, 215);
             buttonSearch.Name = "buttonSearch";
             buttonSearch.Size = new Size(263, 44);
             buttonSearch.TabIndex = 142;
@@ -117,7 +116,7 @@
             labelOrder.AutoSize = true;
             labelOrder.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
             labelOrder.ForeColor = Color.FromArgb(138, 104, 86);
-            labelOrder.Location = new Point(546, 246);
+            labelOrder.Location = new Point(546, 117);
             labelOrder.Name = "labelOrder";
             labelOrder.Size = new Size(61, 25);
             labelOrder.TabIndex = 138;
@@ -127,7 +126,7 @@
             // 
             comboBoxOrder.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxOrder.FormattingEnabled = true;
-            comboBoxOrder.Location = new Point(546, 274);
+            comboBoxOrder.Location = new Point(546, 159);
             comboBoxOrder.Name = "comboBoxOrder";
             comboBoxOrder.Size = new Size(263, 33);
             comboBoxOrder.TabIndex = 137;
@@ -173,26 +172,6 @@
             labelSeriesTitle.Size = new Size(50, 25);
             labelSeriesTitle.TabIndex = 134;
             labelSeriesTitle.Text = "Title:";
-            // 
-            // textBoxSeriesID
-            // 
-            textBoxSeriesID.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxSeriesID.ForeColor = Color.FromArgb(60, 144, 137);
-            textBoxSeriesID.Location = new Point(546, 207);
-            textBoxSeriesID.Name = "textBoxSeriesID";
-            textBoxSeriesID.Size = new Size(263, 31);
-            textBoxSeriesID.TabIndex = 131;
-            // 
-            // labelSeriesID
-            // 
-            labelSeriesID.AutoSize = true;
-            labelSeriesID.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            labelSeriesID.ForeColor = Color.FromArgb(138, 104, 86);
-            labelSeriesID.Location = new Point(546, 179);
-            labelSeriesID.Name = "labelSeriesID";
-            labelSeriesID.Size = new Size(34, 25);
-            labelSeriesID.TabIndex = 132;
-            labelSeriesID.Text = "ID:";
             // 
             // listBoxViewSeries
             // 
@@ -246,6 +225,9 @@
             // panelDesktop
             // 
             panelDesktop.BackColor = Color.FromArgb(231, 223, 198);
+            panelDesktop.Controls.Add(buttonSearch);
+            panelDesktop.Controls.Add(labelOrder);
+            panelDesktop.Controls.Add(comboBoxOrder);
             panelDesktop.Dock = DockStyle.Bottom;
             panelDesktop.Location = new Point(0, 62);
             panelDesktop.Name = "panelDesktop";
@@ -258,18 +240,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(231, 223, 198);
             ClientSize = new Size(834, 583);
-            Controls.Add(buttonSearch);
             Controls.Add(buttonMoreInfo);
             Controls.Add(buttonUpdate);
             Controls.Add(buttonDelete);
-            Controls.Add(labelOrder);
-            Controls.Add(comboBoxOrder);
             Controls.Add(lblWarning);
             Controls.Add(lblSearchMovies);
             Controls.Add(textBoxSeriesTitle);
             Controls.Add(labelSeriesTitle);
-            Controls.Add(textBoxSeriesID);
-            Controls.Add(labelSeriesID);
             Controls.Add(listBoxViewSeries);
             Controls.Add(panel1);
             Controls.Add(panelDesktop);
@@ -277,6 +254,8 @@
             Name = "SerieMenu";
             Text = "SerieMenu";
             panel1.ResumeLayout(false);
+            panelDesktop.ResumeLayout(false);
+            panelDesktop.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -293,8 +272,6 @@
         private Label lblSearchMovies;
         private TextBox textBoxSeriesTitle;
         private Label labelSeriesTitle;
-        private TextBox textBoxSeriesID;
-        private Label labelSeriesID;
         private ListBox listBoxViewSeries;
         private Panel panel1;
         private Button btnView;

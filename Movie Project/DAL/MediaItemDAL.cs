@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DAL
 {
@@ -43,7 +44,15 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@image", pictureBytes);
 
 
-                //cmd.Parameters.AddWithValue("@image", imageArray);
+                //int maxSizeInBytes = 2097152; // 2 MB
+                //byte[] largeImageBytes = ImageToBytes(Image.FromStream(new MemoryStream(pictureBytes)), null, maxSizeInBytes);
+                //cmd.Parameters.AddWithValue("@image", largeImageBytes); // Larger image
+
+                //// Resize the original image to fit within a smaller size for the smaller image
+                //int smallerSizeInBytes = 524288; // 512 KB
+                //byte[] smallImageBytes = ImageToBytes(Image.FromStream(new MemoryStream(originalImageBytes)), null, smallerSizeInBytes);
+                //cmd.Parameters.AddWithValue("@smallImage", smallImageBytes);
+
 
                 string stringGenres = "";
                 foreach (Genre genre in newMediaItem.GetAllGenres())

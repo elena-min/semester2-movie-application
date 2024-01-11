@@ -3,6 +3,8 @@ using LogicLayer;
 using LogicLayer.Classes;
 using LogicLayer.Controllers;
 using LogicLayer.Interfaces;
+using LogicLayer.SortingStrategy;
+using LogicLayer.Strategy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +24,8 @@ namespace DesktopApp.Movies
         private readonly MediaItemController mediaItemController;
         private readonly FavoritesController favController;
         private readonly ReviewController reviewController;
+        private FilterContext filterContext;
+        private SortingContext sortingContext;
 
         IMediaItemDAL iMediaItemDAL;
         IFavoritesDAL ifavoritesDAL;
@@ -36,6 +40,8 @@ namespace DesktopApp.Movies
             mediaItemController = new MediaItemController(iMediaItemDAL);
             favController = new FavoritesController(ifavoritesDAL);
             reviewController = new ReviewController(iReviewDAL);
+            filterContext = new FilterContext();
+            sortingContext = new SortingContext();
 
             lblWarning.Text = "";
             string[] orderOptions = new string[]
@@ -153,39 +159,72 @@ namespace DesktopApp.Movies
         {
             lblWarning.Text = "";
             listBoxViewMovies.Items.Clear();
-            List<MediaItem> allMovies = new List<MediaItem>();
-            if (textBoxMovieName.Text != null && textBoxMoviesID.Text != null)
+            List<MediaItem> filteredMovies = new List<MediaItem>();
+            string movieName = textBoxMovieName.Text;
+
+            filterContext.SetFilterStrategy(new SearchFilterStrategy(movieName, null));
+
+            filteredMovies = filterContext.GetFilteredMediaItems(allMovies).ToList();
+
+            string selectedOrder = comboBoxOrder.SelectedItem?.ToString();
+
+            switch (selectedOrder)
             {
-                foreach (MediaItem movie in mediaItemController.GetAll())
-                {
-                    if (movie is Movie)
-                    {
-                        if (movie.Title.Contains(textBoxMovieName.Text))
-                        {
-                            string movieID = movie.GetId().ToString();
-                            if (movieID == textBoxMoviesID.Text)
-                            {
-                                //listBoxViewMovies.Items.Add(movie.ToString());
-                                allMovies.Add(movie);
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (MediaItem movie in mediaItemController.GetAll())
-                {
-                    if (movie is Movie)
-                    {
-                        allMovies.Add(movie);
-                    }
-                    //listBoxViewMovies.Items.Add(book.ToString());
-                }
+                case "Ascending by title":
+                    sortingContext.SetSortingStrategy(new TitleSortingStrategy());
+                    filteredMovies = sortingContext.GetSortedMediaItems(filteredMovies).ToList();
+                    break;
+
+                case "Descending by title":
+                    sortingContext.SetSortingStrategy(new TitleSortingStrategy(descending: true));
+                    filteredMovies = sortingContext.GetSortedMediaItems(filteredMovies).ToList();
+                    break;
+
+                case "Ascending by id":
+                    sortingContext.SetSortingStrategy(new IDSortingStrategy());
+                    filteredMovies = sortingContext.GetSortedMediaItems(filteredMovies).ToList();
+                    break;
+                case "Descending by id":
+                    sortingContext.SetSortingStrategy(new IDSortingStrategy(descending: true));
+                    filteredMovies = sortingContext.GetSortedMediaItems(filteredMovies).ToList();
+                    break;
+
+
             }
 
 
-            foreach (MediaItem movie in allMovies)
+            //if (textBoxMovieName.Text != null && textBoxMoviesID.Text != null)
+            //{
+            //    foreach (MediaItem movie in mediaItemController.GetAll())
+            //    {
+            //        if (movie is Movie)
+            //        {
+            //            if (movie.Title.Contains(textBoxMovieName.Text))
+            //            {
+            //                string movieID = movie.GetId().ToString();
+            //                if (movieID == textBoxMoviesID.Text)
+            //                {
+            //                    //listBoxViewMovies.Items.Add(movie.ToString());
+            //                    allMovies.Add(movie);
+            //                }
+            //             }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    foreach (MediaItem movie in mediaItemController.GetAll())
+            //    {
+            //        if (movie is Movie)
+            //        {
+            //            allMovies.Add(movie);
+            //        }
+            //        //listBoxViewMovies.Items.Add(book.ToString());
+            //    }
+            //}
+
+
+            foreach (MediaItem movie in filteredMovies)
             {
                 listBoxViewMovies.Items.Add(movie.ToString());
             }

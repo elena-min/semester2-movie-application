@@ -5,15 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLayer.Strategy
+namespace LogicLayer.SortingStrategy
 {
-    public class RatingSortStrategy : IFilterStrategy
+    public class RatingSortingStrategy : ISortingStrategy
     {
-        public RatingSortStrategy() { }
+        public RatingSortingStrategy() { }
 
-        public MediaItem[] GetFilteredMediaItems(List<MediaItem> mediaItems)
+
+        public MediaItem[] GetSortedMediaItems(List<MediaItem> mediaItems)
         {
             return mediaItems.OrderByDescending(item => item.CalculateAverageRating()).ToArray();
+
         }
     }
 }

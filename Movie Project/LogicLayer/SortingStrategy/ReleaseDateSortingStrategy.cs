@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLayer.Strategy
+namespace LogicLayer.SortingStrategy
 {
-    public class ReleaseDateSortStrategy : IFilterStrategy
+    public class ReleaseDateSortingStrategy : ISortingStrategy
     {
         private readonly bool _descending;
-        public ReleaseDateSortStrategy(bool descending = false)
+        public ReleaseDateSortingStrategy(bool descending = false)
         {
             _descending = descending;
         }
 
-        public MediaItem[] GetFilteredMediaItems(List<MediaItem> mediaItems)
+        public MediaItem[] GetSortedMediaItems(List<MediaItem> mediaItems)
         {
             if (_descending)
             {

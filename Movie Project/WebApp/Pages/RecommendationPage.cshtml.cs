@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using LogicLayer.Strategy;
 using Microsoft.AspNetCore.Authorization;
+using LogicLayer.SortingStrategy;
 
 namespace WebApp.Pages
 {
@@ -16,6 +17,7 @@ namespace WebApp.Pages
         private readonly MediaItemController _mediaController;
         private readonly FavoritesController _favController;
         private readonly FilterContext _filterContext;
+        private readonly SortingContext _sortingContext;
         public User Userr { get; set; }
 
         public List<MediaItem> RecentMovies { get; set; }
@@ -26,12 +28,13 @@ namespace WebApp.Pages
 
 
 
-        public RecommendationPageModel(MediaItemController mediaController, FavoritesController favController, FilterContext filterContext, UserController userController)
+        public RecommendationPageModel(MediaItemController mediaController, FavoritesController favController, FilterContext filterContext, UserController userController, SortingContext sortingContext)
         {
             _mediaController = mediaController;
             _favController = favController;
             _filterContext = filterContext;
             _userController = userController;
+            _sortingContext = sortingContext;
         }
         public IActionResult OnGet()
         {
@@ -89,21 +92,11 @@ namespace WebApp.Pages
                 Recommendations = _filterContext.GetFilteredMediaItems(MediaItems).ToList();
             }
 
-            _filterContext.SetFilterStrategy(new ReleaseDateSortStrategy());
-            MediaItems = _filterContext.GetFilteredMediaItems(MediaItems).ToList();
-            RecentMovies = _filterContext.GetFilteredMediaItems(RecentMovies).Take(10).ToList();
-            RecentShows = _filterContext.GetFilteredMediaItems(RecentShows).Take(10).ToList();
+            _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy());
+            MediaItems = _sortingContext.GetSortedMediaItems(MediaItems).ToList();
+            RecentMovies = _sortingContext.GetSortedMediaItems(RecentMovies).Take(10).ToList();
+            RecentShows = _sortingContext.GetSortedMediaItems(RecentShows).Take(10).ToList();
 
-            //    RecentMovies = RecentMovies
-            //.Where(movie => movie.ReleaseDate != null) 
-            //.OrderByDescending(movie => movie.ReleaseDate)
-            //.Take(10)
-            //.ToList();
-            //    RecentShows = RecentShows
-            //.Where(movie => movie.ReleaseDate != null)
-            //.OrderByDescending(movie => movie.ReleaseDate)
-            //.Take(10)
-            //.ToList();
             return Page();
 
         }
