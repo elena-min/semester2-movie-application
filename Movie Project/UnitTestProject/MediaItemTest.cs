@@ -53,6 +53,158 @@ namespace UnitTestProject
         }
 
         [TestMethod]
+        public void AddRatingTest()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+
+            // Act
+            mediaItem.AddRating(4);
+
+            // Assert
+            CollectionAssert.AreEqual(new List<int> { 4 }, mediaItem.GetAllRatings());
+        }
+
+        [TestMethod]
+        public void AddRating_InvalidRatingTest()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+
+            // Act
+            Assert.ThrowsException<ArgumentException>(() =>
+            {
+                // Arrange
+                mediaItem.AddRating(6);
+            });
+        }
+
+        [TestMethod]
+        public void GetAllRatingsTest()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+            mediaItem.AddRating(4);
+            mediaItem.AddRating(5);
+            mediaItem.AddRating(1);
+
+            // Act
+            var result = mediaItem.GetAllRatings();
+
+            // Assert        
+            Assert.AreEqual(3, mediaItem.GetAllRatings().Length);
+            CollectionAssert.AreEquivalent(new int[] { 4, 5, 1 }, result);
+
+        }
+
+        [TestMethod]
+        public void GetAllRatings_EmptyListTest()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+
+            // Act
+            var result = mediaItem.GetAllRatings();
+
+            // Assert        
+            Assert.AreEqual(0, mediaItem.GetAllRatings().Length);
+            CollectionAssert.AreEquivalent(new int[] {  }, result);
+        }
+
+        [TestMethod]
+        public void AddGenreTest()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+
+            // Act
+            mediaItem.AddGenre(Genre.Family);
+            mediaItem.AddGenre(Genre.Action);
+            mediaItem.AddGenre(Genre.Documentary);
+
+            // Assert
+            Assert.AreEqual(3, mediaItem.GetAllGenres().Length);
+            CollectionAssert.AreEquivalent(new Genre[] { Genre.Family, Genre.Action, Genre.Documentary }, mediaItem.GetAllGenres());
+        }
+
+        [TestMethod]
+        public void AddGenre_DuplicateGenreTest()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+            mediaItem.AddGenre(Genre.Family);
+            mediaItem.AddGenre(Genre.Action);
+
+            // Act
+            mediaItem.AddGenre(Genre.Family);
+
+            // Assert
+            Assert.AreEqual(2, mediaItem.GetAllGenres().Length);
+            CollectionAssert.AreEquivalent(new Genre[] { Genre.Family, Genre.Action }, mediaItem.GetAllGenres());
+        }
+
+        [TestMethod]
+        public void GetAllGenresTest()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+            mediaItem.AddGenre(Genre.Family);
+            mediaItem.AddGenre(Genre.Action);
+            mediaItem.AddGenre(Genre.Documentary);
+
+            // Act
+            var result = mediaItem.GetAllGenres();
+
+            // Assert        
+            Assert.AreEqual(3, mediaItem.GetAllGenres().Length);
+            CollectionAssert.AreEquivalent(new Genre[] { Genre.Family, Genre.Action, Genre.Documentary }, result);
+
+        }
+
+        [TestMethod]
+        public void GetAllGenres_EmptyListTes()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+
+            // Act
+            var result = mediaItem.GetAllGenres();
+
+            // Assert        
+            Assert.AreEqual(0, mediaItem.GetAllGenres().Length);
+            CollectionAssert.AreEquivalent(new Genre[] { }, result);
+        }
+
+
+        [TestMethod]
+        public void CalculateAverageRatingTest()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+            mediaItem.AddRating(4);
+            mediaItem.AddRating(5);
+            mediaItem.AddRating(2);
+            mediaItem.AddRating(2);
+
+            // Act
+            double avrgRating = mediaItem.CalculateAverageRating();
+            // Assert
+            Assert.AreEqual(3.25, avrgRating);
+        }
+
+        [TestMethod]
+        public void CalculateAverageRating_NoRatingsTest()
+        {
+            // Arrange
+            MediaItem mediaItem = new Movie("Test", "Description", DateTime.Now, "USA", 4.5, "director", "writer", 84);
+
+            // Act
+            double avrgRating = mediaItem.CalculateAverageRating();
+            // Assert
+            Assert.AreEqual(0.00, avrgRating);
+        }
+
+        [TestMethod]
         public void CalculatePopularityScore_DayPeriodTest()
         {
             // Arrange

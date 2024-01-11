@@ -10,7 +10,9 @@
         "dependencies": {
           "BCrypt.Net-Next": "4.0.3",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
-          "Portable.BouncyCastle": "1.9.0"
+          "Portable.BouncyCastle": "1.9.0",
+          "SixLabors.ImageSharp": "3.1.2",
+          "System.Drawing.Common": "8.0.1"
         },
         "runtime": {
           "LogicLayer.dll": {}
@@ -116,11 +118,35 @@
           }
         }
       },
+      "Microsoft.Win32.SystemEvents/8.0.0": {
+        "runtime": {
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
       "Portable.BouncyCastle/1.9.0": {
         "runtime": {
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
             "assemblyVersion": "1.9.0.0",
             "fileVersion": "1.9.0.1"
+          }
+        }
+      },
+      "SixLabors.ImageSharp/3.1.2": {
+        "runtime": {
+          "lib/net6.0/SixLabors.ImageSharp.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.1.2.0"
           }
         }
       },
@@ -132,6 +158,17 @@
           "lib/net6.0/System.Diagnostics.DiagnosticSource.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "System.Drawing.Common/8.0.1": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "8.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.123.58006"
           }
         }
       },
@@ -207,6 +244,13 @@
       "path": "microsoft.extensions.primitives/8.0.0",
       "hashPath": "microsoft.extensions.primitives.8.0.0.nupkg.sha512"
     },
+    "Microsoft.Win32.SystemEvents/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9opKRyOKMCi2xJ7Bj7kxtZ1r9vbzosMvRrdEhVhDz8j8MoBGgB+WmC94yH839NPH+BclAjtQ/pyagvi/8gDLkw==",
+      "path": "microsoft.win32.systemevents/8.0.0",
+      "hashPath": "microsoft.win32.systemevents.8.0.0.nupkg.sha512"
+    },
     "Portable.BouncyCastle/1.9.0": {
       "type": "package",
       "serviceable": true,
@@ -214,12 +258,26 @@
       "path": "portable.bouncycastle/1.9.0",
       "hashPath": "portable.bouncycastle.1.9.0.nupkg.sha512"
     },
+    "SixLabors.ImageSharp/3.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PYdR6GUI+gW6LBaAQKTik0Ai8oLpFAz3a/KrVusxoTg3kf7F3cuIqKMhJGsuQcmDHCF+iD81Pyn4cexyHrb1ZA==",
+      "path": "sixlabors.imagesharp/3.1.2",
+      "hashPath": "sixlabors.imagesharp.3.1.2.nupkg.sha512"
+    },
     "System.Diagnostics.DiagnosticSource/8.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-c9xLpVz6PL9lp/djOWtk5KPDZq3cSYpmXoJQY524EOtuFl5z9ZtsotpsyrDW40U1DRnQSYvcPKEUV0X//u6gkQ==",
       "path": "system.diagnostics.diagnosticsource/8.0.0",
       "hashPath": "system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512"
+    },
+    "System.Drawing.Common/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-x0rAZECxIGx/YVjN28YRdpqka0+H7YMN9741FUDzipXPDzesd60gef/LI0ZCOcYSDsacTLTHvMAvxHG+TjbNNQ==",
+      "path": "system.drawing.common/8.0.1",
+      "hashPath": "system.drawing.common.8.0.1.nupkg.sha512"
     },
     "System.Runtime.CompilerServices.Unsafe/6.0.0": {
       "type": "package",

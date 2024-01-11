@@ -6,29 +6,74 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using LogicLayer.Classes;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using LogicLayer.SortingStrategy;
 
 namespace WebApp.Pages
 {
     public class UserProfilePageModel : PageModel
     {
         public User Userr { get; set; }
-        public string ReasonForBanning { get; set; }   
+        public string ReasonForBanning { get; set; }
+        public List<MediaItem> FavoriteMovies { get; set; }
+        public List<MediaItem> FavoriteSeries { get; set; }
+
 
         private readonly UserController _userController;
         private readonly EmployeeController _empController;
+        private readonly FavoritesController _favoritesController;
+        private readonly SortingContext _sortingContext; 
 
-        public UserProfilePageModel(UserController userController, EmployeeController empController)
+
+        public UserProfilePageModel(UserController userController, EmployeeController empController, FavoritesController favoritesController, SortingContext sortingContext)
         {
             _userController = userController;
             _empController = empController;
+            _favoritesController = favoritesController;
+            _sortingContext = sortingContext;
         }
-        public void OnGet(int ID)
+        public IActionResult OnGet(int ID)
         {
             Userr = _userController.GetUserByID(ID);
+            if (Userr == null)
+            {
+                return NotFound();
+            }
+
+            FavoriteMediaItem favoriteMediaItem = new FavoriteMediaItem(Userr);
+
+            if (_favoritesController.GetAllFavorites(Userr) != null)
+            {
+                foreach (MediaItem item in _favoritesController.GetAllFavorites(Userr))
+                {
+                    favoriteMediaItem.AddToFavorites(item);
+                }
+            }
+
+            if (favoriteMediaItem.GetAllFavorite() != null)
+            {
+                foreach (MediaItem item in favoriteMediaItem.GetAllFavorite())
+                {
+                    if (item is Movie)
+                    {
+                        FavoriteMovies.Add(item);
+                    }
+                    else if (item is Serie)
+                    {
+                        FavoriteSeries.Add(item);
+                    }
+                }
+            }
+            
+            _sortingContext.SetSortingStrategy( new ReleaseDateSortingStrategy());
+            FavoriteMovies = _sortingContext.GetSortedMediaItems(FavoriteMovies).ToList();
+            FavoriteSeries = _sortingContext.GetSortedMediaItems(FavoriteSeries).ToList();
+
             if (!string.IsNullOrEmpty(Userr.ReasonForDeleting))
             {
                 ReasonForBanning = Userr.ReasonForDeleting;
             }
+            return Page();
+
         }
 
         [Authorize(Roles = "Employee")]
@@ -43,8 +88,7 @@ namespace WebApp.Pages
             try
             {
                 User selectedUser = _userController.GetUserByID(ID);
-
-                                _empController.DeleteUserAccount(selectedUser, reason);
+                _empController.DeleteUserAccount(selectedUser, reason);
                 return RedirectToPage("/Main");
             }
             catch (Exception ex)

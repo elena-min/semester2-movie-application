@@ -78,3 +78,7 @@ C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignmen
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\obj\Debug\net6.0-windows\ref\DesktopApp.dll
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\bin\Debug\net6.0-windows\BCrypt.Net-Next.dll
 C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\bin\Debug\net6.0-windows\BouncyCastle.Crypto.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\bin\Debug\net6.0-windows\Microsoft.Win32.SystemEvents.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\bin\Debug\net6.0-windows\SixLabors.ImageSharp.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\bin\Debug\net6.0-windows\System.Drawing.Common.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DesktopApp\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll

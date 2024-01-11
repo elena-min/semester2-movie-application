@@ -26,14 +26,14 @@ namespace DAL
                 throw new Exception("Error creating database connection", ex);
             }
         }
-        public bool AddMediaItem(MediaItem newMediaItem, byte[] pictureBytes)
+        public bool AddMediaItem(MediaItem newMediaItem, byte[] pictureBytes, byte[] pictureBytesCompressed)
         {
             bool addMediaItem = false;
             SqlConnection conn = CreateConnection();
             try
             {
                 conn.Open();
-                string commandSql = "INSERT INTO MediaItem (title, description, rating, releaseDate, countryOfOrigin, genres, cast, image) VALUES (@title, @description, @rating, @releaseDate, @countryOfOrigin, @genres, @cast, @image); SELECT SCOPE_IDENTITY();";
+                string commandSql = "INSERT INTO MediaItem (title, description, rating, releaseDate, countryOfOrigin, genres, cast, image, imageCompressed) VALUES (@title, @description, @rating, @releaseDate, @countryOfOrigin, @genres, @cast, @image, @imageCompressed); SELECT SCOPE_IDENTITY();";
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@title", newMediaItem.Title);
                 cmd.Parameters.AddWithValue("@description", newMediaItem.Description);
@@ -42,17 +42,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@countryOfOrigin", newMediaItem.CountryOfOrigin);
                 cmd.Parameters.AddWithValue("@cast", newMediaItem.Cast.ToString());
                 cmd.Parameters.AddWithValue("@image", pictureBytes);
-
-
-                //int maxSizeInBytes = 2097152; // 2 MB
-                //byte[] largeImageBytes = ImageToBytes(Image.FromStream(new MemoryStream(pictureBytes)), null, maxSizeInBytes);
-                //cmd.Parameters.AddWithValue("@image", largeImageBytes); // Larger image
-
-                //// Resize the original image to fit within a smaller size for the smaller image
-                //int smallerSizeInBytes = 524288; // 512 KB
-                //byte[] smallImageBytes = ImageToBytes(Image.FromStream(new MemoryStream(originalImageBytes)), null, smallerSizeInBytes);
-                //cmd.Parameters.AddWithValue("@smallImage", smallImageBytes);
-
+                cmd.Parameters.AddWithValue("@imageCompressed", pictureBytesCompressed);
 
                 string stringGenres = "";
                 foreach (Genre genre in newMediaItem.GetAllGenres())
@@ -419,6 +409,30 @@ namespace DAL
             {
                 conn.Open();
                 string query = "select image from MediaItem where id = @id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@id", mediaItem.GetId());
+                byte[] imageData = (byte[])cmd.ExecuteScalar();
+
+                string base64StringImage = Convert.ToBase64String(imageData);
+                return base64StringImage;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Database error", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        public string GetMediaItemCompressedImageByID(MediaItem mediaItem)
+        {
+            SqlConnection conn = CreateConnection();
+
+            try
+            {
+                conn.Open();
+                string query = "select imageCompressed from MediaItem where id = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", mediaItem.GetId());
                 byte[] imageData = (byte[])cmd.ExecuteScalar();

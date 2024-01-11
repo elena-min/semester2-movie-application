@@ -101,7 +101,7 @@ namespace DesktopApp.Series
 
 
 
-            if (mediaController.AddMediaItem(newSerie, ImageToBytes(pictureBoxSeriePic.BackgroundImage, pictureBoxSeriePic)))
+            if (mediaController.AddMediaItem(newSerie, ImageToBytes(pictureBoxSeriePic.BackgroundImage, pictureBoxSeriePic), ImageToBytes(pictureBoxSeriePic.BackgroundImage, pictureBoxSeriePic)))
             {
                 lblWarning.Text = "Serie has been added successfully!";
             }

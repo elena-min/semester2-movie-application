@@ -115,6 +115,10 @@ namespace LogicLayer.Classes
 
         public void AddRating(int newRating)
         {
+            if (newRating < 1 || newRating > 5)
+            {
+                throw new ArgumentException("Rating should be between 1 and 5!");
+            }
             ratings.Add(newRating);
         }
         public int[] GetAllRatings()

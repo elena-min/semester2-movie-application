@@ -89,7 +89,7 @@ namespace DesktopApp.Movies
                     }
                 }
 
-                if (mediaController.AddMediaItem(newMovie, ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic, 2097152)))
+                if (mediaController.AddMediaItem(newMovie, Filename, FilenameCompressed))
                 {
                     lblWarning.Text = "Movie has been added successfully!";
                 }
@@ -111,7 +111,9 @@ namespace DesktopApp.Movies
         }
 
         byte[] Filename;
-        public byte[] ImageToBytes(Image img, PictureBox pictureBox, int maxSizeInBytes)
+        byte[] FilenameCompressed;
+
+        public byte[] ImageToBytes(Image img, PictureBox pictureBox)
         {
             MemoryStream ms = new MemoryStream();
             if (img != null)
@@ -119,11 +121,6 @@ namespace DesktopApp.Movies
                 if (pictureBox != null)
                 {
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-                    if (ms.Length > maxSizeInBytes)
-                    {
-                        throw new Exception("Image size exceeds the maximum allowed size (2 MB).");
-                    }
                 }
             }
             return ms.ToArray();
@@ -138,13 +135,22 @@ namespace DesktopApp.Movies
 
                 if (dialogResult == DialogResult.OK)
                 {
-                    pictureBoxMoviePic.BackgroundImage = Image.FromFile(openFileDialog.FileName);
+                    SixLabors.ImageSharp.Image imageSharp;
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        pictureBoxMoviePic.BackgroundImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        imageSharp = SixLabors.ImageSharp.Image.Load(ms.ToArray());
+                    }
+                    //Save the file as a 2mb file
+                    Filename = ImageHelper.CompressImageToByteArray(imageSharp, 2 * 1024 * 1024);
+
+                    //The picture box on the form shows the 2mb version of the photo
+                    pictureBoxMoviePic.BackgroundImage = Image.FromStream(new MemoryStream(Filename));
                     pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;
 
-                    //Maximum allowed file size to 2 MB (approximately 2,097,152 bytes)
-                    int maxSizeInBytes = 2097152;
-
-                    Filename = ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic, maxSizeInBytes);
+                    //Compress the photo again as 1000kb and save it to FilenameCompressed
+                    FilenameCompressed = ImageHelper.CompressImageToByteArray(imageSharp, 1000 * 1024);
                 }
             }
             catch (Exception ex)

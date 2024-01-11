@@ -25,9 +25,6 @@ namespace WebApp.Pages
         public List<MediaItem> Recommendations { get; set; }
         public List<MediaItem> MediaItems { get; set; }
 
-
-
-
         public RecommendationPageModel(MediaItemController mediaController, FavoritesController favController, FilterContext filterContext, UserController userController, SortingContext sortingContext)
         {
             _mediaController = mediaController;

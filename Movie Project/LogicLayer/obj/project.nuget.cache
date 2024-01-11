@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SBlCKPdzbja+CUqJGeyDXtZGLAD+H0oou87pq+6oyMKwgFxXmteNjn9iC85ZVUYgrIkBfoBpYE2MU2AmUQBOdQ==",
+  "dgSpecHash": "LfpJ+HyGhldL+XXSrZOcrgUdkp3uNkuF3h3ZFvCsFE62snY7w/BwLsdKNAR/pk+/xit3r9Ya92Ha8QYBv3Qupw==",
   "success": true,
   "projectFilePath": "C:\\Users\\lenam\\Music\\S2-S - 2\\Individual assignment\\new git\\individual-assignment-movie-application\\Movie Project\\LogicLayer\\LogicLayer.csproj",
   "expectedPackageFiles": [
@@ -13,8 +13,11 @@
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "C:\\Users\\lenam\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
+    "C:\\Users\\lenam\\.nuget\\packages\\sixlabors.imagesharp\\3.1.2\\sixlabors.imagesharp.3.1.2.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\system.diagnostics.diagnosticsource\\8.0.0\\system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
+    "C:\\Users\\lenam\\.nuget\\packages\\system.drawing.common\\8.0.1\\system.drawing.common.8.0.1.nupkg.sha512",
     "C:\\Users\\lenam\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []

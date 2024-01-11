@@ -18,7 +18,7 @@ namespace DAL.FakeDAL
             mediaItems = new List<MediaItem>();
         }
 
-        public bool AddMediaItem(MediaItem newMediaItem, byte[] pictureBytes)
+        public bool AddMediaItem(MediaItem newMediaItem, byte[] pictureBytes, byte[] pictureBytesCompressed)
         {
             newMediaItem.SetId(nextId++);
             mediaItems.Add(newMediaItem);
@@ -68,6 +68,21 @@ namespace DAL.FakeDAL
                 return null;
             }
         }
+
+        public string GetMediaItemCompressedImageByID(MediaItem mediaItem)
+        {
+            var mediaItemSelected = mediaItems.FirstOrDefault(u => u == mediaItem);
+
+            if (mediaItemSelected != null && mediaItemSelected.Picture != null)
+            {
+                return Convert.ToBase64String(mediaItemSelected.Picture);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public bool RemoveMediaItem(MediaItem mediaItem)
         {
             MediaItem mediaItemToRemove = mediaItems.Find(item => item == mediaItem);

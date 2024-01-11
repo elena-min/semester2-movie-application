@@ -1,6 +1,8 @@
 ﻿using LogicLayer.Classes;
+using Org.BouncyCastle.Asn1;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,52 @@ namespace UnitTestProject
     [TestClass]
     public class ReviewTest
     {
+        [TestMethod]
+        public void ReviewConstructorTest()
+        {
+            // Arrange
+            string title = "Titanic";
+            string content = "Love story";
+            int rating = 4;
+            Movie pointedTowards = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
+            User reviewWriter = new User("Nick", "Jonas", "nickJ", "nick@gmail.com", "nickJonas", LogicLayer.Gender.Male);
+
+            // Act
+            var review = new Review(title, content, rating, pointedTowards, reviewWriter);
+
+            // Assert
+            Assert.AreEqual(title, review.Title);
+            Assert.AreEqual(content, review.ReviewContent);
+            Assert.AreEqual(pointedTowards, review.PointedTowards);
+            Assert.AreEqual(reviewWriter, review.ReviewWriter);
+            Assert.AreEqual(rating, review.Rating);
+            Assert.IsFalse(review.IsDeleted);
+        }
+
+        [TestMethod]
+        public void ReviewConstructor_WithDateOfPublicationTest()
+        {
+            // Arrange
+            string title = "Titanic";
+            string content = "Love story";
+            DateTime dateOfPublication = DateTime.Now;
+            int rating = 4;
+            Movie pointedTowards = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
+            User reviewWriter = new User("Nick", "Jonas", "nickJ", "nick@gmail.com", "nickJonas", LogicLayer.Gender.Male);
+
+            // Act
+            var review = new Review(title, content, rating, pointedTowards, reviewWriter, dateOfPublication);
+
+            // Assert
+            Assert.AreEqual(title, review.Title);
+            Assert.AreEqual(content, review.ReviewContent);
+            Assert.AreEqual(pointedTowards, review.PointedTowards);
+            Assert.AreEqual(reviewWriter, review.ReviewWriter);
+            Assert.AreEqual(rating, review.Rating);
+            Assert.AreEqual(dateOfPublication, review.DateOfPublication);
+            Assert.IsFalse(review.IsDeleted);
+        }
+
         [TestMethod]
         public void TitleWithValidInputTest()
         {
@@ -101,7 +149,7 @@ namespace UnitTestProject
         }
 
         [TestMethod]
-        public void RatingWithInvalidInput_ThrowsArgumentException()
+        public void Rating_WithInvalidInput_ThrowsArgumentExceptionTest()
         {
             // Arrange
             var review = new Review();
@@ -117,6 +165,7 @@ namespace UnitTestProject
                 review.Rating = 6;
             });
         }
+
         [TestMethod]
         public void DateOfPublicationWithFutureDate_ThrowsArgumentException()
         {
@@ -167,6 +216,27 @@ namespace UnitTestProject
             {
                 review.ReasonForDeleting = "12345";
             });
+        }
+
+        [TestMethod]
+        public void SetReviewAsDeletedTest()
+        {
+            // Arrange
+            string title = "Titanic";
+            string content = "Love story";
+            DateTime dateOfPublication = DateTime.Now;
+            int rating = 4;
+            Movie pointedTowards = new Movie("Inception", "Mind-bending movie", DateTime.Now, "USA", 9.5, "Christopher Nolan", "Jonathan Nolan", 148);
+            User reviewWriter = new User("Nick", "Jonas", "nickJ", "nick@gmail.com", "nickJonas", LogicLayer.Gender.Male);
+            var review = new Review(title, content, rating, pointedTowards, reviewWriter, dateOfPublication);
+            string reasonForDeleting = "Bad language";
+
+            // Act
+            review.SetReviewAsDeleted(reasonForDeleting);
+
+            // Assert
+            Assert.AreEqual(reasonForDeleting, review.ReasonForDeleting);
+            Assert.IsTrue(review.IsDeleted);
         }
     }
 }

@@ -196,6 +196,14 @@
             "Portable.BouncyCastle": {
               "target": "Package",
               "version": "[1.9.0, )"
+            },
+            "SixLabors.ImageSharp": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.1, )"
             }
           },
           "imports": [

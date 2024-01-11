@@ -505,6 +505,28 @@
           }
         }
       },
+      "Microsoft.Win32.SystemEvents/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
       "MSTest.TestAdapter/2.2.10": {
         "type": "package",
         "dependencies": {
@@ -617,6 +639,22 @@
             "assetType": "native",
             "rid": "win-x86"
           }
+        }
+      },
+      "SixLabors.ImageSharp/3.1.2": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/SixLabors.ImageSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/SixLabors.ImageSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/_._": {}
         }
       },
       "System.Collections/4.3.0": {
@@ -738,6 +776,25 @@
             "assetType": "runtime",
             "rid": "win"
           }
+        }
+      },
+      "System.Drawing.Common/8.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/System.Drawing.Common.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.Drawing.Common.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
         }
       },
       "System.Globalization/4.3.0": {
@@ -972,7 +1029,9 @@
         "dependencies": {
           "BCrypt.Net-Next": "4.0.3",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
-          "Portable.BouncyCastle": "1.9.0"
+          "Portable.BouncyCastle": "1.9.0",
+          "SixLabors.ImageSharp": "3.1.2",
+          "System.Drawing.Common": "8.0.1"
         },
         "compile": {
           "bin/placeholder/LogicLayer.dll": {}
@@ -1706,6 +1765,41 @@
         "version.txt"
       ]
     },
+    "Microsoft.Win32.SystemEvents/8.0.0": {
+      "sha512": "9opKRyOKMCi2xJ7Bj7kxtZ1r9vbzosMvRrdEhVhDz8j8MoBGgB+WmC94yH839NPH+BclAjtQ/pyagvi/8gDLkw==",
+      "type": "package",
+      "path": "microsoft.win32.systemevents/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Win32.SystemEvents.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Win32.SystemEvents.targets",
+        "lib/net462/Microsoft.Win32.SystemEvents.dll",
+        "lib/net462/Microsoft.Win32.SystemEvents.xml",
+        "lib/net6.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/net6.0/Microsoft.Win32.SystemEvents.xml",
+        "lib/net7.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/net7.0/Microsoft.Win32.SystemEvents.xml",
+        "lib/net8.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/net8.0/Microsoft.Win32.SystemEvents.xml",
+        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
+        "microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+        "microsoft.win32.systemevents.nuspec",
+        "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.xml",
+        "runtimes/win/lib/net7.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/net7.0/Microsoft.Win32.SystemEvents.xml",
+        "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.xml",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "MSTest.TestAdapter/2.2.10": {
       "sha512": "KOc7XVNM0Q5GrTAx4RhxTgwdt9O5gOqSzmLpUMyl9ywa6vvUNFVQ9nCjtEE7qDQW54MZdc82e287PzZDc7yQtA==",
       "type": "package",
@@ -2173,6 +2267,22 @@
         "version.txt"
       ]
     },
+    "SixLabors.ImageSharp/3.1.2": {
+      "sha512": "PYdR6GUI+gW6LBaAQKTik0Ai8oLpFAz3a/KrVusxoTg3kf7F3cuIqKMhJGsuQcmDHCF+iD81Pyn4cexyHrb1ZA==",
+      "type": "package",
+      "path": "sixlabors.imagesharp/3.1.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "build/SixLabors.ImageSharp.props",
+        "lib/net6.0/SixLabors.ImageSharp.dll",
+        "lib/net6.0/SixLabors.ImageSharp.xml",
+        "sixlabors.imagesharp.128.png",
+        "sixlabors.imagesharp.3.1.2.nupkg.sha512",
+        "sixlabors.imagesharp.nuspec"
+      ]
+    },
     "System.Collections/4.3.0": {
       "sha512": "3Dcj85/TBdVpL5Zr+gEEBUuFe2icOnLalmEh9hfck1PTYbbyWuZgh4fmm2ysCLTrqLQw6t3TgTyJ+VLp+Qb+Lw==",
       "type": "package",
@@ -2502,6 +2612,46 @@
         "runtimes/win/lib/netstandard1.3/System.Diagnostics.TraceSource.dll",
         "system.diagnostics.tracesource.4.3.0.nupkg.sha512",
         "system.diagnostics.tracesource.nuspec"
+      ]
+    },
+    "System.Drawing.Common/8.0.1": {
+      "sha512": "x0rAZECxIGx/YVjN28YRdpqka0+H7YMN9741FUDzipXPDzesd60gef/LI0ZCOcYSDsacTLTHvMAvxHG+TjbNNQ==",
+      "type": "package",
+      "path": "system.drawing.common/8.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Drawing.Common.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Drawing.Common.targets",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net462/System.Drawing.Common.dll",
+        "lib/net462/System.Drawing.Common.pdb",
+        "lib/net462/System.Drawing.Common.xml",
+        "lib/net6.0/System.Drawing.Common.dll",
+        "lib/net6.0/System.Drawing.Common.pdb",
+        "lib/net6.0/System.Drawing.Common.xml",
+        "lib/net7.0/System.Drawing.Common.dll",
+        "lib/net7.0/System.Drawing.Common.pdb",
+        "lib/net7.0/System.Drawing.Common.xml",
+        "lib/net8.0/System.Drawing.Common.dll",
+        "lib/net8.0/System.Drawing.Common.pdb",
+        "lib/net8.0/System.Drawing.Common.xml",
+        "lib/netstandard2.0/System.Drawing.Common.dll",
+        "lib/netstandard2.0/System.Drawing.Common.pdb",
+        "lib/netstandard2.0/System.Drawing.Common.xml",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "system.drawing.common.8.0.1.nupkg.sha512",
+        "system.drawing.common.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
     "System.Globalization/4.3.0": {
