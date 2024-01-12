@@ -84,7 +84,7 @@ namespace DAL
         public MediaItem[] GetAllFavorites(User user)
         {
             SqlConnection conn = CreateConnection();
-            string query = "select f.mediaID, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, MI.numberOfViews, M.director, M.writer, M.duration, S.seasons, S.episodes " +
+            string query = "select f.mediaID, MI.title, MI.description, MI.rating, MI.releaseDate, MI.countryOfOrigin, MI.genres, MI.cast, M.director, M.writer, M.duration, S.seasons, S.episodes " +
                 "from FavoritesList as f " +
                 "inner join  MediaItem as MI on f.mediaID = MI.id " +
                 "LEFT JOIN Movie as M ON MI.id = M.id " +
@@ -116,9 +116,9 @@ namespace DAL
 
                         if (reader["director"] != DBNull.Value)
                         {
-                            string director = reader.GetString(9);
-                            string writer = reader.GetString(10);
-                            int duration = reader.GetInt32(11);
+                            string director = reader.GetString(8);
+                            string writer = reader.GetString(9);
+                            int duration = reader.GetInt32(10);
 
                             MediaItem mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
                             mediaItem.SetId(mediaItemId);
@@ -138,8 +138,8 @@ namespace DAL
                         }
                         else if (reader["seasons"] != DBNull.Value)
                         {
-                            int seasons = reader.GetInt32(12);
-                            int episodes = reader.GetInt32(13);
+                            int seasons = reader.GetInt32(11);
+                            int episodes = reader.GetInt32(12);
 
                             MediaItem mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
                             mediaItem.SetId(mediaItemId);

@@ -17,7 +17,8 @@ namespace LogicLayer.Interfaces
         string GetMediaItemImageByID(MediaItem mediaItem);
         string GetMediaItemCompressedImageByID(MediaItem mediaItem);
 
-        bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes);
+        bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes, byte[] pictureBytesCompressed);
+
         bool RemoveMediaItem(MediaItem mediaItem);
 
     }

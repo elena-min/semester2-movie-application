@@ -30,52 +30,68 @@ namespace WebApp.Pages
 
         public void OnGet(int id)
         {
-            Serie = _mediaController.GetMediaItemById(id);
-            foreach (int rating in _mediaController.GetAllGivenRatings(Serie))
+            try
             {
-                Serie.AddRating(rating);
+                Serie = _mediaController.GetMediaItemById(id);
+                foreach (int rating in _mediaController.GetAllGivenRatings(Serie))
+                {
+                    Serie.AddRating(rating);
+                }
+                Serie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(Serie);
+                Serie.RecordView(DateTime.Now);
+                _mediaViewsController.UpdateViewsCount(Serie, DateTime.Now);
+
+                DateTime currentDate = DateTime.Now.Date;
+                PopularityScores = new List<double>();
+
+                for (int i = 6; i >= 0; i--)
+                {
+                    DateTime dateToCheck = currentDate.AddDays(-i);
+                    double popularityScore = Serie.CalculatePopularityScore(dateToCheck, LogicLayer.TimePeriod.Week);
+                    PopularityScores.Add(popularityScore);
+                }
             }
-            Serie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(Serie);
-            Serie.RecordView(DateTime.Now);
-            _mediaViewsController.UpdateViewsCount(Serie, DateTime.Now);
-
-            DateTime currentDate = DateTime.Now.Date;
-            PopularityScores = new List<double>();
-
-            for (int i = 6; i >= 0; i--)
+            catch (Exception ex)
             {
-                DateTime dateToCheck = currentDate.AddDays(-i);
-                double popularityScore = Serie.CalculatePopularityScore(dateToCheck, LogicLayer.TimePeriod.Week);
-                PopularityScores.Add(popularityScore);
+                TempData["Message"] = ex.ToString();
             }
+            
         }
 
         public IActionResult OnPost(int id)
         {
-            var serie = _mediaController.GetMediaItemById(id);
-
-            if (serie == null)
+            try
             {
-                return NotFound();
-            }
+                var serie = _mediaController.GetMediaItemById(id);
 
-            var userID = User.FindFirst("Id").Value;
-            Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
+                if (serie == null)
+                {
+                    return NotFound();
+                }
 
-            if (Userr == null)
-            {
-                return RedirectToPage("/Login");
-            }
+                var userID = User.FindFirst("Id").Value;
+                Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
 
-            if (_favoritesController.CheckIfProductIsInFavorites(serie, Userr) == false)
-            {
-                _favoritesController.AddProductToFavorite(serie, Userr);
-                TempData["Message"] = "Serie added to favorites!";
+                if (Userr == null)
+                {
+                    return RedirectToPage("/Login");
+                }
+
+                if (_favoritesController.CheckIfProductIsInFavorites(serie, Userr) == false)
+                {
+                    _favoritesController.AddProductToFavorite(serie, Userr);
+                    TempData["Message"] = "Serie added to favorites!";
+                    return RedirectToPage("/SerieInfoPage", new { id = serie.GetId() });
+                }
+
+                TempData["Message"] = "Serie is already in favorites!";
                 return RedirectToPage("/SerieInfoPage", new { id = serie.GetId() });
             }
-
-            TempData["Message"] = "Serie is already in favorites!";
-            return RedirectToPage("/SerieInfoPage", new { id = serie.GetId() });
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToPage("/SerieInfoPage", new { id = id });
+            }
         }
         public IActionResult OnPostLogout()
         {

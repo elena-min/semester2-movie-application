@@ -41,12 +41,11 @@
                             <div class="movie">
                                 <div class="image-grid">
                                     <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
-                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie)" alt="Movie cover">
+                                        <img src="data:image;base64,@mediaController.GetMediaItemCompressedImageByID(@movie)" alt="Movie cover">
                                     </a>
                                 </div>
                                 <div class="movie-text p-1">
                                     <h5><b><a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()">@movie.Title</a></b></h5>
-                                    <h6><i>@movie.CalculatePopularityScore(DateTime.Today, LogicLayer.TimePeriod.Day).ToString()</i></h6>
                                 </div>
                             </div>
                         }
@@ -57,18 +56,15 @@
                             <div class="movie">
                                 <div class="image-grid">
                                     <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
-                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie)" alt="Serie cover">
+                                        <img src="data:image;base64,@mediaController.GetMediaItemCompressedImageByID(@serie)" alt="Serie cover">
                                     </a>
                                 </div>
                                 <div class="movie-text p-1">
                                     <h5><b><a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()">@serie.Title</a></b></h5>
-                                    <h6><i>@serie.CalculatePopularityScore(DateTime.Today, LogicLayer.TimePeriod.Day).ToString()</i></h6>
                                     <h6><i>@(((Serie)serie).Seasons) seasons</i></h6>
                                 </div>
                             </div>
                         }
-
-
 
                     }
                 </div>
@@ -82,12 +78,11 @@
                             <div class="movie">
                                 <div class="image-grid">
                                     <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
-                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie)" alt="Movie cover">
+                                        <img src="data:image;base64,@mediaController.GetMediaItemCompressedImageByID(@movie)" alt="Movie cover">
                                     </a>
                                 </div>
                                 <div class="movie-text p-1">
                                     <h5><b><a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()">@movie.Title</a></b></h5>
-                                    <h6><i>@movie.CalculatePopularityScore(DateTime.Today, LogicLayer.TimePeriod.Day).ToString()</i></h6>
                                 </div>
                             </div>
                         }
@@ -98,12 +93,11 @@
                             <div class="movie">
                                 <div class="image-grid">
                                     <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
-                                        <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie)" alt="Serie cover">
+                                        <img src="data:image;base64,@mediaController.GetMediaItemCompressedImageByID(@serie)" alt="Serie cover">
                                     </a>
                                 </div>
                                 <div class="movie-text p-1">
                                     <h5><b><a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()">@serie.Title</a></b></h5>
-                                    <h6><i>@serie.CalculatePopularityScore(DateTime.Today, LogicLayer.TimePeriod.Day).ToString()</i></h6>
                                     <h6><i>@(((Serie)serie).Seasons) seasons</i></h6>
                                 </div>
                             </div>
@@ -127,7 +121,7 @@
                         <div class="movie">
                             <div class="image-grid">
                                 <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
-                                    <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie)" alt="Movie cover">
+                                <img src="data:image;base64,@mediaController.GetMediaItemCompressedImageByID(@movie)" alt="Movie cover">
                                 </a>
                             </div>
                             <div class="movie-text p-1">
@@ -145,7 +139,7 @@
                     <div class="movie">
                         <div class="image-grid">
                             <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
-                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@movie)" alt="Movie cover">
+                                <img src="data:image;base64,@mediaController.GetMediaItemCompressedImageByID(@movie)" alt="Movie cover">
                             </a>
                         </div>
                         <div class="movie-text p-1">
@@ -164,7 +158,7 @@
                     <div class="movie">
                         <div class="image-grid">
                             <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
-                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie)" alt="Serie cover">
+                                <img src="data:image;base64,@mediaController.GetMediaItemCompressedImageByID(@serie)" alt="Serie cover">
                             </a>
                         </div>
                         <div class="movie-text p-1">
@@ -184,7 +178,7 @@
                     <div class="movie">
                         <div class="image-grid">
                             <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
-                                <img src="data:image;base64,@mediaController.GetMediaItemImageByID(@serie)" alt="Serie cover">
+                                <img src="data:image;base64,@mediaController.GetMediaItemCompressedImageByID(@serie)" alt="Serie cover">
                             </a>
                         </div>
                         <div class="movie-text p-1">

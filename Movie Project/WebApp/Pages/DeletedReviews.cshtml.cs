@@ -24,23 +24,32 @@ namespace WebApp.Pages
         }
         public IActionResult OnGet()
         {
-            var userID = User.FindFirst("Id").Value;
-
-            if (userID == null)
+            try
             {
-                return RedirectToPage("/Login");
+                var userID = User.FindFirst("Id").Value;
+
+                if (userID == null)
+                {
+                    return RedirectToPage("/Login");
+                }
+
+                Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
+
+                if (Userr == null)
+                {
+                    return NotFound();
+                }
+
+                Reviews = _reviewController.GetReviewsByUser(Userr).ToList();
+
+                return Page();
             }
-
-            Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
-
-            if (Userr == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                TempData["Message"] = ex.ToString();
+                return RedirectToPage("/Error");
             }
-
-            Reviews = _reviewController.GetReviewsByUser(Userr).ToList();
-
-            return Page();
+            
         }
 
         public IActionResult OnPostLogout()

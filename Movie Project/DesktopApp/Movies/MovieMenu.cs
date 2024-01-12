@@ -24,24 +24,23 @@ namespace DesktopApp.Movies
         private readonly MediaItemController mediaItemController;
         private readonly FavoritesController favController;
         private readonly ReviewController reviewController;
+        private readonly MediaItemViewsController mediaItemViewsController;
+        private readonly TrendingController trendingController;
+
         private FilterContext filterContext;
         private SortingContext sortingContext;
 
-        IMediaItemDAL iMediaItemDAL;
-        IFavoritesDAL ifavoritesDAL;
-        IReviewDAL iReviewDAL;
         List<MediaItem> allMovies;
         public MovieMenu()
         {
             InitializeComponent();
-            iMediaItemDAL = new MediaItemDAL();
-            ifavoritesDAL = new FavoritesDAL();
-            iReviewDAL = new ReviewDAL();
-            mediaItemController = new MediaItemController(iMediaItemDAL);
-            favController = new FavoritesController(ifavoritesDAL);
-            reviewController = new ReviewController(iReviewDAL);
+            mediaItemController = new MediaItemController(new MediaItemDAL());
+            favController = new FavoritesController(new FavoritesDAL());
+            reviewController = new ReviewController(new ReviewDAL());
             filterContext = new FilterContext();
             sortingContext = new SortingContext();
+            mediaItemViewsController = new MediaItemViewsController(new MediaItemViewsDAL());
+            trendingController = new TrendingController(new TrendingDAL());
 
             lblWarning.Text = "";
             string[] orderOptions = new string[]
@@ -97,7 +96,6 @@ namespace DesktopApp.Movies
             {
                 lblWarning.Text = $"An unexpected error: {ex.Message}";
             }
-
 
         }
         private void ActivateButton(object btnSender)
@@ -192,38 +190,6 @@ namespace DesktopApp.Movies
 
             }
 
-
-            //if (textBoxMovieName.Text != null && textBoxMoviesID.Text != null)
-            //{
-            //    foreach (MediaItem movie in mediaItemController.GetAll())
-            //    {
-            //        if (movie is Movie)
-            //        {
-            //            if (movie.Title.Contains(textBoxMovieName.Text))
-            //            {
-            //                string movieID = movie.GetId().ToString();
-            //                if (movieID == textBoxMoviesID.Text)
-            //                {
-            //                    //listBoxViewMovies.Items.Add(movie.ToString());
-            //                    allMovies.Add(movie);
-            //                }
-            //             }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    foreach (MediaItem movie in mediaItemController.GetAll())
-            //    {
-            //        if (movie is Movie)
-            //        {
-            //            allMovies.Add(movie);
-            //        }
-            //        //listBoxViewMovies.Items.Add(book.ToString());
-            //    }
-            //}
-
-
             foreach (MediaItem movie in filteredMovies)
             {
                 listBoxViewMovies.Items.Add(movie.ToString());
@@ -232,99 +198,123 @@ namespace DesktopApp.Movies
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this movie?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
+            try
             {
-                if (listBoxViewMovies.SelectedIndex != -1)
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this movie?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    int selected_movie_id = Int32.Parse(listBoxViewMovies.SelectedItem.ToString().Split('-')[1]);
-                    MediaItem mediaItem = mediaItemController.GetMediaItemById(selected_movie_id);
-                    if (mediaItem != null)
+                    if (listBoxViewMovies.SelectedIndex != -1)
                     {
-                        bool removalSuccess = mediaItemController.RemoveMediaItem(mediaItem);
-
-                        if (removalSuccess)
+                        int selected_movie_id = Int32.Parse(listBoxViewMovies.SelectedItem.ToString().Split('-')[1]);
+                        MediaItem mediaItem = mediaItemController.GetMediaItemById(selected_movie_id);
+                        if (mediaItem != null)
                         {
-                            lblWarning.Text = "Media item deleted successfully";
-                            reviewController.DeletedMediaItem(mediaItem);
-                            favController.DeletedMediaItem(mediaItem);
+                            bool removalSuccess = mediaItemController.RemoveMediaItem(mediaItem);
 
+                            if (removalSuccess)
+                            {
+                                lblWarning.Text = "Media item deleted successfully";
+                                reviewController.DeletedMediaItem(mediaItem);
+                                favController.DeletedMediaItem(mediaItem);
+                                mediaItemViewsController.RemoveMediaItemViews(mediaItem);
+                                trendingController.RemoveMediaItem(mediaItem);
+                            }
+                            else
+                            {
+                                lblWarning.Text = "Failed to delete media item";
+                            }
                         }
                         else
                         {
-                            lblWarning.Text = "Failed to delete media item";
+                            lblWarning.Text = "No data found.";
+                        }
+
+                        listBoxViewMovies.Items.Clear();
+                        foreach (MediaItem movie in mediaItemController.GetAll())
+                        {
+                            if (movie is Movie)
+                            {
+                                listBoxViewMovies.Items.Add(movie.ToString());
+                            }
                         }
                     }
                     else
                     {
-                        lblWarning.Text = "No data found.";
-                    }
+                        lblWarning.Text = "There is no movie selected!";
 
-                    listBoxViewMovies.Items.Clear();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblWarning.Text = ex.Message;
+            }
+
+        }
+
+        private void buttonMoreInfo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lblWarning.Text = "";
+                if (listBoxViewMovies.SelectedItem != null)
+                {
+                    string selectedMovie = listBoxViewMovies.SelectedItem.ToString();
                     foreach (MediaItem movie in mediaItemController.GetAll())
                     {
                         if (movie is Movie)
                         {
-                            listBoxViewMovies.Items.Add(movie.ToString());
+                            if (selectedMovie == ((Movie)movie).ToString())
+                            {
+                                MoreInfoMovie movieMoreInfo = new MoreInfoMovie(movie);
+                                movieMoreInfo.Show();
+                            }
                         }
                     }
                 }
                 else
                 {
-                    lblWarning.Text = "There is no movie selected!";
-
+                    lblWarning.Text = "There is no movie selected.";
                 }
             }
-        }
-
-        private void buttonMoreInfo_Click(object sender, EventArgs e)
-        {
-            lblWarning.Text = "";
-            if (listBoxViewMovies.SelectedItem != null)
+            catch(Exception ex) 
             {
-                string selectedMovie = listBoxViewMovies.SelectedItem.ToString();
-                foreach (MediaItem movie in mediaItemController.GetAll())
-                {
-                    if (movie is Movie)
-                    {
-                        if (selectedMovie == ((Movie)movie).ToString())
-                        {
-                            MoreInfoMovie movieMoreInfo = new MoreInfoMovie(movie);
-                            movieMoreInfo.Show();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                lblWarning.Text = "There is no movie selected.";
-            }
+                lblWarning.Text = ex.Message;
+            }        
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            lblWarning.Text = "";
-            if (listBoxViewMovies.SelectedItem != null)
+            try
             {
-                string selectedMovie = listBoxViewMovies.SelectedItem.ToString();
-                int movieID = Convert.ToInt32(selectedMovie.Split("-")[1]);
-                foreach (MediaItem movie in mediaItemController.GetAll())
+                lblWarning.Text = "";
+                if (listBoxViewMovies.SelectedItem != null)
                 {
-                    if (movie is Movie)
+                    string selectedMovie = listBoxViewMovies.SelectedItem.ToString();
+                    int movieID = Convert.ToInt32(selectedMovie.Split("-")[1]);
+                    foreach (MediaItem movie in mediaItemController.GetAll())
                     {
-                        if (selectedMovie == ((Movie)movie).ToString())
+                        if (movie is Movie)
                         {
-                            UpdateMovie movieUpdate = new UpdateMovie(movie, movieID);
-                            movieUpdate.Show();
+                            if (selectedMovie == ((Movie)movie).ToString())
+                            {
+                                UpdateMovie movieUpdate = new UpdateMovie(movie, movieID);
+                                movieUpdate.Show();
+                            }
                         }
                     }
                 }
+                else
+                {
+                    lblWarning.Text = "There is no movie selected.";
+                }
             }
-            else
+            catch( Exception ex) 
             {
-                lblWarning.Text = "There is no movie selected.";
+                lblWarning.Text = ex.Message;
             }
+            
         }
     }
 }

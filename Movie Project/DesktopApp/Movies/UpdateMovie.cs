@@ -53,17 +53,26 @@ namespace DesktopApp.Movies
                 }
             }
 
-            if (mediaItemController.GetMediaItemImageByID(movie).Length != 0)
+            try
             {
-                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(movie));
-                MemoryStream memoryStream = new MemoryStream(pictureBytes);
-                Image pictureImage = Image.FromStream(memoryStream);
-                pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;
-                pictureBoxMoviePic.BackgroundImage = pictureImage;
+                if (mediaItemController.GetMediaItemImageByID(movie).Length != 0)
+                {
+                    byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(movie));
+                    MemoryStream memoryStream = new MemoryStream(pictureBytes);
+                    Image pictureImage = Image.FromStream(memoryStream);
+                    pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;
+                    pictureBoxMoviePic.BackgroundImage = pictureImage;
+                }
             }
+            catch (Exception ex)
+            {
+                lblWarning.Text = ex.Message;
+            }
+
         }
 
         byte[] Filename;
+        byte[] FilenameCompressed;
         public byte[] ImageToBytes(Image img, PictureBox pictureBox)
         {
             MemoryStream ms = new MemoryStream();
@@ -79,14 +88,43 @@ namespace DesktopApp.Movies
 
         private void btnImageUpload_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            DialogResult dialogResult = openFileDialog.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            try
             {
-                pictureBoxMoviePic.BackgroundImage = Image.FromFile(openFileDialog.FileName);
-                pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;
-                Filename = ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic);
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                DialogResult dialogResult = openFileDialog.ShowDialog();
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    SixLabors.ImageSharp.Image imageSharp;
+
+                    pictureBoxMoviePic.BackgroundImage = Image.FromFile(openFileDialog.FileName);
+                    pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        pictureBoxMoviePic.BackgroundImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        // ms.Seek(0, SeekOrigin.Begin);
+                        // Load the original image into imageSharp
+                        imageSharp = SixLabors.ImageSharp.Image.Load(ms.ToArray());
+                    }
+
+                    //Save the file as a 2mb file
+                    Filename = ImageHelper.CompressImageToByteArray(imageSharp, 2 * 1024 * 1024);
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        pictureBoxMoviePic.BackgroundImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        // ms.Seek(0, SeekOrigin.Begin);
+                        imageSharp = SixLabors.ImageSharp.Image.Load(ms.ToArray());
+                    }
+                    //Compress the photo again as 100kb and save it to FilenameCompressed
+                    FilenameCompressed = ImageHelper.CompressImageToByteArray(imageSharp, 1000 * 1024);
+                }
             }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"{ex.Message}";
+            }
+
         }
 
         private void btnRemoveImage_Click(object sender, EventArgs e)
@@ -147,7 +185,16 @@ namespace DesktopApp.Movies
                     }
                 }
 
-                if (mediaItemController.UpdateMediaItem(changedMovie, ImageToBytes(pictureBoxMoviePic.BackgroundImage, pictureBoxMoviePic)))
+                if (Filename == null || Filename.Length == 0 || FilenameCompressed == null || FilenameCompressed.Length == 0)
+                {
+                    Filename = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(changedMovie));
+                FilenameCompressed = Convert.FromBase64String(mediaItemController.GetMediaItemCompressedImageByID(changedMovie));
+
+
+            }
+
+
+            if (mediaItemController.UpdateMediaItem(changedMovie, Filename, FilenameCompressed))
                 {
                     lblWarning.Text = "Movie updated successfully!";
                 }

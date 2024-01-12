@@ -49,13 +49,14 @@
             labelMovieDescription = new Label();
             lblInsertDateOfPublishment = new Label();
             lblInsertCast = new Label();
+            lblWarning = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBoxBookPic).BeginInit();
             SuspendLayout();
             // 
             // lblGivenRating
             // 
             lblGivenRating.AutoSize = true;
-            lblGivenRating.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblGivenRating.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
             lblGivenRating.ForeColor = Color.FromArgb(138, 104, 86);
             lblGivenRating.Location = new Point(639, 81);
             lblGivenRating.Name = "lblGivenRating";
@@ -66,7 +67,7 @@
             // labelGivenRating
             // 
             labelGivenRating.AutoSize = true;
-            labelGivenRating.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelGivenRating.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             labelGivenRating.ForeColor = Color.FromArgb(138, 104, 86);
             labelGivenRating.Location = new Point(641, 56);
             labelGivenRating.Name = "labelGivenRating";
@@ -77,7 +78,7 @@
             // lblInsertCountryOfOrigin
             // 
             lblInsertCountryOfOrigin.AutoSize = true;
-            lblInsertCountryOfOrigin.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblInsertCountryOfOrigin.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
             lblInsertCountryOfOrigin.ForeColor = Color.FromArgb(138, 104, 86);
             lblInsertCountryOfOrigin.Location = new Point(279, 436);
             lblInsertCountryOfOrigin.Name = "lblInsertCountryOfOrigin";
@@ -88,7 +89,7 @@
             // lblInsertEpisodes
             // 
             lblInsertEpisodes.AutoSize = true;
-            lblInsertEpisodes.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblInsertEpisodes.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
             lblInsertEpisodes.ForeColor = Color.FromArgb(138, 104, 86);
             lblInsertEpisodes.Location = new Point(276, 356);
             lblInsertEpisodes.Name = "lblInsertEpisodes";
@@ -99,7 +100,7 @@
             // lblInsertSeasons
             // 
             lblInsertSeasons.AutoSize = true;
-            lblInsertSeasons.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblInsertSeasons.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
             lblInsertSeasons.ForeColor = Color.FromArgb(138, 104, 86);
             lblInsertSeasons.Location = new Point(12, 356);
             lblInsertSeasons.Name = "lblInsertSeasons";
@@ -110,7 +111,7 @@
             // lblInsertCurrentRating
             // 
             lblInsertCurrentRating.AutoSize = true;
-            lblInsertCurrentRating.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblInsertCurrentRating.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
             lblInsertCurrentRating.ForeColor = Color.FromArgb(138, 104, 86);
             lblInsertCurrentRating.Location = new Point(639, 31);
             lblInsertCurrentRating.Name = "lblInsertCurrentRating";
@@ -130,9 +131,9 @@
             // lblInsertTitle
             // 
             lblInsertTitle.AutoSize = true;
-            lblInsertTitle.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblInsertTitle.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
             lblInsertTitle.ForeColor = Color.FromArgb(138, 104, 86);
-            lblInsertTitle.Location = new Point(9, 40);
+            lblInsertTitle.Location = new Point(8, 50);
             lblInsertTitle.Name = "lblInsertTitle";
             lblInsertTitle.Size = new Size(61, 25);
             lblInsertTitle.TabIndex = 159;
@@ -141,7 +142,7 @@
             // lblMovieCountryOfOrigin
             // 
             lblMovieCountryOfOrigin.AutoSize = true;
-            lblMovieCountryOfOrigin.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            lblMovieCountryOfOrigin.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             lblMovieCountryOfOrigin.ForeColor = Color.FromArgb(138, 104, 86);
             lblMovieCountryOfOrigin.Location = new Point(276, 411);
             lblMovieCountryOfOrigin.Name = "lblMovieCountryOfOrigin";
@@ -152,7 +153,7 @@
             // lblMovieCast
             // 
             lblMovieCast.AutoSize = true;
-            lblMovieCast.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            lblMovieCast.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             lblMovieCast.ForeColor = Color.FromArgb(138, 104, 86);
             lblMovieCast.Location = new Point(7, 269);
             lblMovieCast.Name = "lblMovieCast";
@@ -163,7 +164,7 @@
             // lblEpisodes
             // 
             lblEpisodes.AutoSize = true;
-            lblEpisodes.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            lblEpisodes.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             lblEpisodes.ForeColor = Color.FromArgb(138, 104, 86);
             lblEpisodes.Location = new Point(276, 331);
             lblEpisodes.Name = "lblEpisodes";
@@ -174,7 +175,7 @@
             // labelMovieRating
             // 
             labelMovieRating.AutoSize = true;
-            labelMovieRating.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelMovieRating.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             labelMovieRating.ForeColor = Color.FromArgb(138, 104, 86);
             labelMovieRating.Location = new Point(639, 6);
             labelMovieRating.Name = "labelMovieRating";
@@ -201,7 +202,7 @@
             // labelMovieGenre
             // 
             labelMovieGenre.AutoSize = true;
-            labelMovieGenre.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelMovieGenre.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             labelMovieGenre.ForeColor = Color.FromArgb(138, 104, 86);
             labelMovieGenre.Location = new Point(641, 108);
             labelMovieGenre.Name = "labelMovieGenre";
@@ -212,7 +213,7 @@
             // labelMoviePublishment
             // 
             labelMoviePublishment.AutoSize = true;
-            labelMoviePublishment.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelMoviePublishment.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             labelMoviePublishment.ForeColor = Color.FromArgb(138, 104, 86);
             labelMoviePublishment.Location = new Point(8, 411);
             labelMoviePublishment.Name = "labelMoviePublishment";
@@ -223,7 +224,7 @@
             // labelSeasons
             // 
             labelSeasons.AutoSize = true;
-            labelSeasons.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelSeasons.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             labelSeasons.ForeColor = Color.FromArgb(138, 104, 86);
             labelSeasons.Location = new Point(12, 331);
             labelSeasons.Name = "labelSeasons";
@@ -234,9 +235,9 @@
             // labelMovie
             // 
             labelMovie.AutoSize = true;
-            labelMovie.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelMovie.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             labelMovie.ForeColor = Color.FromArgb(138, 104, 86);
-            labelMovie.Location = new Point(8, 15);
+            labelMovie.Location = new Point(7, 25);
             labelMovie.Name = "labelMovie";
             labelMovie.Size = new Size(50, 25);
             labelMovie.TabIndex = 148;
@@ -245,7 +246,7 @@
             // labelMovieDescription
             // 
             labelMovieDescription.AutoSize = true;
-            labelMovieDescription.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
+            labelMovieDescription.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic);
             labelMovieDescription.ForeColor = Color.FromArgb(138, 104, 86);
             labelMovieDescription.Location = new Point(8, 75);
             labelMovieDescription.Name = "labelMovieDescription";
@@ -256,7 +257,7 @@
             // lblInsertDateOfPublishment
             // 
             lblInsertDateOfPublishment.AutoSize = true;
-            lblInsertDateOfPublishment.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblInsertDateOfPublishment.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
             lblInsertDateOfPublishment.ForeColor = Color.FromArgb(138, 104, 86);
             lblInsertDateOfPublishment.Location = new Point(8, 440);
             lblInsertDateOfPublishment.Name = "lblInsertDateOfPublishment";
@@ -267,7 +268,7 @@
             // lblInsertCast
             // 
             lblInsertCast.AutoSize = true;
-            lblInsertCast.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblInsertCast.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
             lblInsertCast.ForeColor = Color.FromArgb(138, 104, 86);
             lblInsertCast.Location = new Point(12, 294);
             lblInsertCast.Name = "lblInsertCast";
@@ -275,12 +276,24 @@
             lblInsertCast.TabIndex = 169;
             lblInsertCast.Text = "Cast...";
             // 
+            // lblWarning
+            // 
+            lblWarning.AutoSize = true;
+            lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic);
+            lblWarning.ForeColor = Color.Maroon;
+            lblWarning.Location = new Point(12, 0);
+            lblWarning.Name = "lblWarning";
+            lblWarning.Size = new Size(81, 25);
+            lblWarning.TabIndex = 170;
+            lblWarning.Text = "Warning";
+            // 
             // MoreInfoSerie
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(231, 223, 198);
             ClientSize = new Size(816, 474);
+            Controls.Add(lblWarning);
             Controls.Add(lblInsertCast);
             Controls.Add(lblInsertDateOfPublishment);
             Controls.Add(lblGivenRating);
@@ -333,5 +346,6 @@
         private Label labelMovieDescription;
         private Label lblInsertDateOfPublishment;
         private Label lblInsertCast;
+        private Label lblWarning;
     }
 }

@@ -27,27 +27,34 @@ namespace WebApp.Pages
         }
         public void OnGet()
         {
-            // Check if the "RememberMeCookie" is present
-            //This will assign a value directly to the variable userDate if there is a cookie found
-            if (Request.Cookies.TryGetValue("RememberMeCookie", out string userData))
+            try
             {
-                var userInfo = JsonConvert.DeserializeObject<dynamic>(userData);
-                var userId = int.Parse(userData);
-                var user = _userController.GetUserByID(userId);
-                if (user != null)
+                // Check if the "RememberMeCookie" is present
+                //This will assign a value directly to the variable userDate if there is a cookie found
+                if (Request.Cookies.TryGetValue("RememberMeCookie", out string userData))
                 {
+                    var userInfo = JsonConvert.DeserializeObject<dynamic>(userData);
+                    var userId = int.Parse(userData);
+                    var user = _userController.GetUserByID(userId);
+                    if (user != null)
+                    {
 
-                    var claims = new List<Claim>
+                        var claims = new List<Claim>
                      {
                     new Claim(ClaimTypes.Name, user.Username),
                     new Claim("Id", user.GetId().ToString()),
                     new Claim(ClaimTypes.Role, user.Role)
                     };
 
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
-                    Response.Redirect("Main");
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+                        Response.Redirect("Main");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.ToString();
             }
         }
 

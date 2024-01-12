@@ -35,11 +35,6 @@ namespace LogicLayer.Controllers
         {
             return itrendingDAL.GetTrendingDaily(dayPicked);
         }
-        public DateTime GetLastTrendingCalculationTime(DateTime givenDate)
-        {
-            return itrendingDAL.GetLastTrendingCalculationTime(givenDate);
-
-        }
         public MediaItem[] GetTrendingWeekly(DateTime dayPicked)
         {
             return itrendingDAL.GetTrendingWeekly(dayPicked);
@@ -49,6 +44,10 @@ namespace LogicLayer.Controllers
         public MediaItem[] GetTrendingMonthly(DateTime dayPicked)
         {
             return itrendingDAL.GetTrendingMonthly(dayPicked);
+        }
+        public bool RemoveMediaItem(MediaItem mediaItem)
+        {
+            return itrendingDAL.RemoveMediaItem(mediaItem);
         }
     }
 }

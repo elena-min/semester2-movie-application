@@ -34,32 +34,40 @@ namespace DesktopApp.Reviews
             listBoxViewReviews.Items.Clear();
             allReviews = new List<Review>();
 
-            if (reviewController.GetAll() == null)
+            try
             {
-
-                lblWarning.Text = "No reviews in the system.";
-            }
-            else
-            {
-                foreach (Review movie in reviewController.GetAll())
+                if (reviewController.GetAll() == null)
                 {
 
-                    allReviews.Add(movie);
-
+                    lblWarning.Text = "No reviews in the system.";
                 }
-            }
-
-            if (allReviews.Count > 0)
-            {
-                foreach (Review review in allReviews)
+                else
                 {
-                    listBoxViewReviews.Items.Add(review.ToString());
+                    foreach (Review movie in reviewController.GetAll())
+                    {
+
+                        allReviews.Add(movie);
+
+                    }
+                }
+
+                if (allReviews.Count > 0)
+                {
+                    foreach (Review review in allReviews)
+                    {
+                        listBoxViewReviews.Items.Add(review.ToString());
+                    }
+                }
+                else
+                {
+                    lblWarning.Text = "No reviews in the system.";
                 }
             }
-            else
+            catch (Exception ex)
             {
-                lblWarning.Text = "No reviews in the system.";
+                lblWarning.Text = ex.ToString();
             }
+
         }
         private void ActivateButton(object btnSender)
         {
@@ -159,32 +167,40 @@ namespace DesktopApp.Reviews
             listBoxViewReviews.Items.Clear();
             allReviews = new List<Review>();
 
-            if (reviewController.GetAll() == null)
+            try
             {
-
-                lblWarning.Text = "No reviews in the system.";
-            }
-            else
-            {
-                foreach (Review movie in reviewController.GetAll())
+                if (reviewController.GetAll() == null)
                 {
 
-                    allReviews.Add(movie);
-
+                    lblWarning.Text = "No reviews in the system.";
                 }
-            }
-
-            if (allReviews.Count > 0)
-            {
-                foreach (Review review in allReviews)
+                else
                 {
-                    listBoxViewReviews.Items.Add(review.ToString());
+                    foreach (Review movie in reviewController.GetAll())
+                    {
+
+                        allReviews.Add(movie);
+
+                    }
+                }
+
+                if (allReviews.Count > 0)
+                {
+                    foreach (Review review in allReviews)
+                    {
+                        listBoxViewReviews.Items.Add(review.ToString());
+                    }
+                }
+                else
+                {
+                    lblWarning.Text = "No reviews in the system.";
                 }
             }
-            else
+            catch (Exception ex)
             {
-                lblWarning.Text = "No reviews in the system.";
+                lblWarning.Text = ex.ToString();
             }
+
         }
     }
 }

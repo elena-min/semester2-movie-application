@@ -95,7 +95,6 @@ namespace DAL
                 conn.Close();
             }
         }
-
         public MediaItem[] GetAll()
         {
             List<MediaItem> mediaItems = new List<MediaItem>();
@@ -498,14 +497,14 @@ namespace DAL
             }
         }
 
-        public bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes)
+        public bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes, byte[] pictureBytesCompressed)
         {
             bool updateMediaItem = false;
             SqlConnection conn = CreateConnection();
             try
             {
                 conn.Open();
-                string commandSql = "UPDATE MediaItem SET title = @title, description = @description, rating = @rating, releaseDate = @releaseDate, countryOfOrigin = @countryOfOrigin, genres = @genres,  cast = @cast, image = @image WHERE id = @id";
+                string commandSql = "UPDATE MediaItem SET title = @title, description = @description, rating = @rating, releaseDate = @releaseDate, countryOfOrigin = @countryOfOrigin, genres = @genres,  cast = @cast, image = @image, imageCompressed = @imageCompressed WHERE id = @id";
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@id", mediaItem.GetId());
                 cmd.Parameters.AddWithValue("@title", mediaItem.Title);
@@ -515,6 +514,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@countryOfOrigin", mediaItem.CountryOfOrigin);
                 cmd.Parameters.AddWithValue("@cast", mediaItem.Cast.ToString());
                 cmd.Parameters.AddWithValue("@image", pictureBytes);
+                cmd.Parameters.AddWithValue("@imageCompressed", pictureBytesCompressed);
 
                 string stringGenres = "";
                 foreach (Genre genre in mediaItem.GetAllGenres())
@@ -546,7 +546,7 @@ namespace DAL
                 return updateMediaItem = true;
 
             }
-            catch (Exception ex)
+           catch (Exception ex)
             {
                 throw new Exception("Error updating into the database", ex);
             }
@@ -555,6 +555,7 @@ namespace DAL
                 conn.Close();
             }
         }
+
 
     }
 }

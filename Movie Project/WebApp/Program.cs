@@ -1,7 +1,7 @@
 using LogicLayer.Controllers;
 using DAL;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
+using LogicLayer.SortingStrategy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +25,7 @@ builder.Services.AddSingleton<FavoritesController>(new FavoritesController(new F
 builder.Services.AddSingleton<FavoritesDAL>(new FavoritesDAL());
 builder.Services.AddSingleton<TrendingController>(new TrendingController(new TrendingDAL()));
 builder.Services.AddSingleton<TrendingDAL>(new TrendingDAL());
+builder.Services.AddSingleton<SortingContext>(new SortingContext());
 
 builder.Services.AddSingleton<LogicLayer.Strategy.FilterContext>();
 

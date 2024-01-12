@@ -41,80 +41,97 @@ namespace WebApp.Pages
         }
         public IActionResult OnGet(string searchTerm, Genre? genreSelect, int pageIndex = 1)
         {
-            var userID = User.FindFirst("Id").Value;
-
-            if (userID == null)
+            try
             {
-                return RedirectToPage("/Login");
-            }
+                var userID = User.FindFirst("Id").Value;
 
-            Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
-
-            if (Userr == null)
-            {
-                return NotFound();
-            }
-            
-            if (_favoritesController.GetAllFavorites(Userr) != null)
-            {
-                foreach (MediaItem item in _favoritesController.GetAllFavorites(Userr))
+                if (userID == null)
                 {
-                    if (item is Movie)
+                    return RedirectToPage("/Login");
+                }
+
+                Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
+
+                if (Userr == null)
+                {
+                    return NotFound();
+                }
+
+                if (_favoritesController.GetAllFavorites(Userr) != null)
+                {
+                    foreach (MediaItem item in _favoritesController.GetAllFavorites(Userr))
                     {
-                        FavoriteMovies.Add(item);
+                        if (item is Movie)
+                        {
+                            FavoriteMovies.Add(item);
+                        }
                     }
                 }
+
+                //if (string.IsNullOrEmpty(searchTerm) && !genreSelect.HasValue)
+                //{
+                //    return Page();
+                //}
+                _filterContext.SetFilterStrategy(new SearchFilterStrategy(searchTerm, genreSelect));
+                MediaItem[] searchRecommendations = _filterContext.GetFilteredMediaItems(FavoriteMovies);
+                Results = searchRecommendations.ToList();
+                const int pageSize = 8;
+                TotalResults = Results.Count;
+                TotalPages = (int)Math.Ceiling((double)TotalResults / pageSize);
+                pageIndex = Math.Max(1, Math.Min(pageIndex, TotalPages));
+                CurrentPage = pageIndex;
+
+                int startIndex = (pageIndex - 1) * pageSize;
+                int endIndex = Math.Min(startIndex + pageSize - 1, TotalResults - 1);
+
+                Results = Results.GetRange(startIndex, endIndex - startIndex + 1);
+
+                if (Results.Count == 0)
+                {
+                    TempData["Message"] = "No favorite movies.";
+                }
+
+                return Page();
             }
-
-            //if (string.IsNullOrEmpty(searchTerm) && !genreSelect.HasValue)
-            //{
-            //    return Page();
-            //}
-            _filterContext.SetFilterStrategy(new SearchFilterStrategy(searchTerm, genreSelect));
-            MediaItem[] searchRecommendations = _filterContext.GetFilteredMediaItems(FavoriteMovies);
-            Results = searchRecommendations.ToList();
-            const int pageSize = 8;
-            TotalResults = Results.Count;
-            TotalPages = (int)Math.Ceiling((double)TotalResults / pageSize);
-            pageIndex = Math.Max(1, Math.Min(pageIndex, TotalPages));
-            CurrentPage = pageIndex;
-
-            int startIndex = (pageIndex - 1) * pageSize;
-            int endIndex = Math.Min(startIndex + pageSize - 1, TotalResults - 1);
-
-            Results = Results.GetRange(startIndex, endIndex - startIndex + 1);
-
-            if (Results.Count == 0)
+            catch (Exception ex)
             {
-                TempData["Message"] = "No favorite movies.";
+                TempData["Message"] = ex.Message;
+                return RedirectToPage("/Error"); 
             }
-
-            return Page();
         }
         public IActionResult OnPost(int movieId)
         {
-            var userID = User.FindFirst("Id").Value;
-
-            if (userID == null)
+            try
             {
-                return RedirectToPage("/Login");
+                var userID = User.FindFirst("Id").Value;
+
+                if (userID == null)
+                {
+                    return RedirectToPage("/Login");
+                }
+
+                Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
+
+                if (Userr == null)
+                {
+                    return NotFound();
+                }
+
+                MediaItem movie = _mediaItemController.GetMediaItemById(Int32.Parse(movieId.ToString()));
+
+                if (movie == null)
+                {
+                    return NotFound();
+                }
+
+                TempData["Message"] = _favoritesController.RemoveFromFavorites(movie, Userr);
+                return RedirectToPage("/FavoriteMovies");
             }
-
-            Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
-
-            if (Userr == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                TempData["Message"] = ex.Message;
+                return RedirectToPage("/FavoriteMovies");
             }
-
-            MediaItem movie = _mediaItemController.GetMediaItemById(Int32.Parse(movieId.ToString()));
-
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
-            TempData["Message"] = _favoritesController.RemoveFromFavorites(movie, Userr); return RedirectToPage("/FavoriteMovies");
         }
 
 

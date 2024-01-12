@@ -35,7 +35,7 @@ namespace DesktopApp.Users
             ifavDAL = new FavoritesDAL();
             favController = new FavoritesController(ifavDAL);
             iReviewDAL = new ReviewDAL();
-            reviewController = new ReviewController(iReviewDAL);    
+            reviewController = new ReviewController(iReviewDAL);
 
             lblWarning.Text = "";
             listBoxViewUsers.Items.Clear();
@@ -153,7 +153,7 @@ namespace DesktopApp.Users
             {
                 lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
             }
-           
+
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)

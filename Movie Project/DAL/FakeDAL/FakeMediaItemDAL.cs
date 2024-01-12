@@ -97,7 +97,12 @@ namespace DAL.FakeDAL
             }
         }
 
-        public bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes)
+        public void RecordView(MediaItem mediaItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateMediaItem(MediaItem mediaItem, byte[] pictureBytes, byte[] pictureBytesCompressed)
         {
             MediaItem existingItem = mediaItems.Find(item => item.GetId() == mediaItem.GetId());
             if (existingItem != null)
@@ -112,10 +117,6 @@ namespace DAL.FakeDAL
             {
                 return false;
             }
-        }
-        public void RecordView(MediaItem mediaItem)
-        {
-            throw new NotImplementedException();
         }
 
     }

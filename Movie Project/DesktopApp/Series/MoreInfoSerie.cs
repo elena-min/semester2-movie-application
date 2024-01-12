@@ -45,27 +45,35 @@ namespace DesktopApp.Series
                 listBoxInsertGenres.Items.Add(genre.ToString());
             }
 
-            if (mediaItemController.GetMediaItemImageByID(serie).Length != 0)
+            try
             {
-                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(serie));
-                MemoryStream memoryStream = new MemoryStream(pictureBytes);
-                Image pictureImage = Image.FromStream(memoryStream);
-                pictureBoxBookPic.BackgroundImageLayout = ImageLayout.Stretch;
-                pictureBoxBookPic.BackgroundImage = pictureImage;
-            }
-
-            if (mediaItemController.GetAllGivenRatings(serie).Length != 0)
-            {
-                foreach (int rating in mediaItemController.GetAllGivenRatings(serie))
+                if (mediaItemController.GetMediaItemImageByID(serie).Length != 0)
                 {
-                    serie.AddRating(rating);
+                    byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(serie));
+                    MemoryStream memoryStream = new MemoryStream(pictureBytes);
+                    Image pictureImage = Image.FromStream(memoryStream);
+                    pictureBoxBookPic.BackgroundImageLayout = ImageLayout.Stretch;
+                    pictureBoxBookPic.BackgroundImage = pictureImage;
                 }
-                lblGivenRating.Text = ((Serie)serie).CalculateAverageRating().ToString();
+
+                if (mediaItemController.GetAllGivenRatings(serie).Length != 0)
+                {
+                    foreach (int rating in mediaItemController.GetAllGivenRatings(serie))
+                    {
+                        serie.AddRating(rating);
+                    }
+                    lblGivenRating.Text = ((Serie)serie).CalculateAverageRating().ToString();
+                }
+                else
+                {
+                    lblGivenRating.Text = "No reviews yet.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblGivenRating.Text = "No reviews yet.";
+                lblWarning.Text = ex.Message;
             }
+            
         }
     }
 }

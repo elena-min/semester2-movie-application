@@ -16,10 +16,11 @@ namespace LogicLayer.Interfaces
         void SaveTrendingDaily(List<MediaItem> dailyTrendingMedias, DateTime dayPicked);
 
         MediaItem[] GetTrendingDaily(DateTime dayPicked);
-        DateTime GetLastTrendingCalculationTime(DateTime givenDate);
 
         MediaItem[] GetTrendingWeekly(DateTime dayPicked);
 
         MediaItem[] GetTrendingMonthly(DateTime dayPicked);
+
+        bool RemoveMediaItem(MediaItem mediaItem);
     }
 }

@@ -75,7 +75,7 @@ namespace DesktopApp.Employees
             {
                 lblWarning.Text = $"An unexpected error: {ex.Message}";
             }
-            
+
         }
 
         private void ActivateButton(object btnSender)
@@ -160,7 +160,7 @@ namespace DesktopApp.Employees
             {
                 lblWarning.Text = $"An unexpected error: {ex.Message}";
             }
-}
+        }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
@@ -247,6 +247,11 @@ namespace DesktopApp.Employees
             {
                 lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
             }
+
+        }
+
+        private void EmployeeMenu_Load(object sender, EventArgs e)
+        {
 
         }
     }

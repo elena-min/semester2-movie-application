@@ -15,10 +15,10 @@ namespace LogicLayer.Strategy
         private User currentUser;
         private FavoriteMediaItem favoriteMediaItem;
 
-        public RecommendationsFilterStrategy(User _currentUser)
+        public RecommendationsFilterStrategy(User _currentUser, FavoriteMediaItem _favoriteMediaItem)
         {
             this.currentUser = _currentUser;
-            this.favoriteMediaItem = new FavoriteMediaItem(currentUser);
+            this.favoriteMediaItem = _favoriteMediaItem;
 
         }
         public MediaItem[] GetFilteredMediaItems(List<MediaItem> mediaItems)
@@ -53,7 +53,7 @@ namespace LogicLayer.Strategy
             List<MediaItem> filteredMediaItems = new List<MediaItem>();
             foreach (var movie in recommendations)
             {
-                if (movie.ReleaseDate >= DateTime.Now.AddYears(-10))
+                if (movie.ReleaseDate.Date >= DateTime.Now.Date.AddYears(-10))
                 {
                     filteredMediaItems.Add(movie);
                 }

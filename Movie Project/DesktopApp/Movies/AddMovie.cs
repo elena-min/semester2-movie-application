@@ -137,19 +137,26 @@ namespace DesktopApp.Movies
                 {
                     SixLabors.ImageSharp.Image imageSharp;
 
-                    using (MemoryStream ms = new MemoryStream())
+                    pictureBoxMoviePic.BackgroundImage = Image.FromFile(openFileDialog.FileName);
+                    pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;                    
+                        using (MemoryStream ms = new MemoryStream())
                     {
                         pictureBoxMoviePic.BackgroundImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                      // ms.Seek(0, SeekOrigin.Begin);
+                        // Load the original image into imageSharp
                         imageSharp = SixLabors.ImageSharp.Image.Load(ms.ToArray());
                     }
+
                     //Save the file as a 2mb file
                     Filename = ImageHelper.CompressImageToByteArray(imageSharp, 2 * 1024 * 1024);
 
-                    //The picture box on the form shows the 2mb version of the photo
-                    pictureBoxMoviePic.BackgroundImage = Image.FromStream(new MemoryStream(Filename));
-                    pictureBoxMoviePic.BackgroundImageLayout = ImageLayout.Stretch;
-
-                    //Compress the photo again as 1000kb and save it to FilenameCompressed
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        pictureBoxMoviePic.BackgroundImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                      // ms.Seek(0, SeekOrigin.Begin);
+                        imageSharp = SixLabors.ImageSharp.Image.Load(ms.ToArray());
+                    }
+                    //Compress the photo again as 100kb and save it to FilenameCompressed
                     FilenameCompressed = ImageHelper.CompressImageToByteArray(imageSharp, 1000 * 1024);
                 }
             }

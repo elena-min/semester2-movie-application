@@ -40,38 +40,52 @@ namespace DesktopApp.Reviews
             lblInsertDateOfPublishment.Text = review.DateOfPublication.ToString("dd-MM-yyyy");
             lblInsertGivenRating.Text = $"{review.Rating.ToString()}/5";
             labelTowardsTitle.Text = review.PointedTowards.Title;
-            if (mediaController.GetMediaItemImageByID(review.PointedTowards).Length != 0)
+
+            try
             {
+                if (mediaController.GetMediaItemImageByID(review.PointedTowards).Length != 0)
+               {
                 byte[] pictureBytes = Convert.FromBase64String(mediaController.GetMediaItemImageByID(review.PointedTowards));
                 MemoryStream memoryStream = new MemoryStream(pictureBytes);
                 Image pictureImage = Image.FromStream(memoryStream);
                 pictureBoxPic.BackgroundImageLayout = ImageLayout.Stretch;
                 pictureBoxPic.BackgroundImage = pictureImage;
+               }
             }
+            catch (Exception ex)
+            {
+                lblWarning.Text = ex.Message;
+            }
+           
 
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this review?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
+            try
             {
-                if (!string.IsNullOrWhiteSpace(textBoxReason.Text))
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this review?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    Review reviewDelete = reviewController.GetReviewByID(review.GetId());
-                    string reasonForDeleting = textBoxReason.Text;
-                    reviewDelete.SetReviewAsDeleted(reasonForDeleting);
-                    reviewController.Delete(reviewDelete);
-                    this.Close();
-                }
-                else
-                {
-                    lblWarning.Text = "Please fill in a reason for deleting!";
+                    if (!string.IsNullOrWhiteSpace(textBoxReason.Text))
+                    {
+                        Review reviewDelete = reviewController.GetReviewByID(review.GetId());
+                        string reasonForDeleting = textBoxReason.Text;
+                        reviewDelete.SetReviewAsDeleted(reasonForDeleting);
+                        reviewController.Delete(reviewDelete);
+                        this.Close();
+                    }
+                    else
+                    {
+                        lblWarning.Text = "Please fill in a reason for deleting!";
+                    }
                 }
             }
-
-
+            catch(Exception ex)
+            {
+                lblWarning.Text =ex.Message;
+            }
         }
     }
 }

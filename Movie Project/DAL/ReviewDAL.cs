@@ -363,7 +363,7 @@ namespace DAL
 
                 if (rowsAffected > 0)
                 {
-                    return "Review deleted successfully";
+                    return "Review deleted successfully.";
                 }
                 else
                 {

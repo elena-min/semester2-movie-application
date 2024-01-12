@@ -33,47 +33,54 @@ namespace WebApp.Pages
         }
         public IActionResult OnGet(int ID)
         {
-            Userr = _userController.GetUserByID(ID);
-            if (Userr == null)
+            try
             {
-                return NotFound();
-            }
-
-            FavoriteMediaItem favoriteMediaItem = new FavoriteMediaItem(Userr);
-
-            if (_favoritesController.GetAllFavorites(Userr) != null)
-            {
-                foreach (MediaItem item in _favoritesController.GetAllFavorites(Userr))
+                Userr = _userController.GetUserByID(ID);
+                if (Userr == null)
                 {
-                    favoriteMediaItem.AddToFavorites(item);
+                    return NotFound();
                 }
-            }
 
-            if (favoriteMediaItem.GetAllFavorite() != null)
-            {
-                foreach (MediaItem item in favoriteMediaItem.GetAllFavorite())
+                FavoriteMediaItem favoriteMediaItem = new FavoriteMediaItem(Userr);
+
+                if (_favoritesController.GetAllFavorites(Userr) != null)
                 {
-                    if (item is Movie)
+                    foreach (MediaItem item in _favoritesController.GetAllFavorites(Userr))
                     {
-                        FavoriteMovies.Add(item);
-                    }
-                    else if (item is Serie)
-                    {
-                        FavoriteSeries.Add(item);
+                        favoriteMediaItem.AddToFavorites(item);
                     }
                 }
-            }
-            
-            _sortingContext.SetSortingStrategy( new ReleaseDateSortingStrategy());
-            FavoriteMovies = _sortingContext.GetSortedMediaItems(FavoriteMovies).ToList();
-            FavoriteSeries = _sortingContext.GetSortedMediaItems(FavoriteSeries).ToList();
 
-            if (!string.IsNullOrEmpty(Userr.ReasonForDeleting))
+                if (favoriteMediaItem.GetAllFavorite() != null)
+                {
+                    foreach (MediaItem item in favoriteMediaItem.GetAllFavorite())
+                    {
+                        if (item is Movie)
+                        {
+                            FavoriteMovies.Add(item);
+                        }
+                        else if (item is Serie)
+                        {
+                            FavoriteSeries.Add(item);
+                        }
+                    }
+                }
+
+                _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy());
+                FavoriteMovies = _sortingContext.GetSortedMediaItems(FavoriteMovies).ToList();
+                FavoriteSeries = _sortingContext.GetSortedMediaItems(FavoriteSeries).ToList();
+
+                if (!string.IsNullOrEmpty(Userr.ReasonForDeleting))
+                {
+                    ReasonForBanning = Userr.ReasonForDeleting;
+                }
+                return Page();
+            }
+            catch (Exception ex)
             {
-                ReasonForBanning = Userr.ReasonForDeleting;
+                TempData["Message"] = ex.Message;
+                return RedirectToPage("/Error");
             }
-            return Page();
-
         }
 
         [Authorize(Roles = "Employee")]

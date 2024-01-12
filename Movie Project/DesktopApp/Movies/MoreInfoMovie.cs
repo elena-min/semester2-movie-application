@@ -47,27 +47,35 @@ namespace DesktopApp.Movies
                 listBoxInsertGenres.Items.Add(genre.ToString());
             }
 
-            if (mediaItemController.GetMediaItemImageByID(movie).Length != 0)
+            try
             {
-                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(movie));
-                MemoryStream memoryStream = new MemoryStream(pictureBytes);
-                Image pictureImage = Image.FromStream(memoryStream);
-                pictureBoxBookPic.BackgroundImageLayout = ImageLayout.Stretch;
-                pictureBoxBookPic.BackgroundImage = pictureImage;
+                if (mediaItemController.GetMediaItemImageByID(movie).Length != 0)
+                {
+                    byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(movie));
+                    MemoryStream memoryStream = new MemoryStream(pictureBytes);
+                    Image pictureImage = Image.FromStream(memoryStream);
+                    pictureBoxBookPic.BackgroundImageLayout = ImageLayout.Stretch;
+                    pictureBoxBookPic.BackgroundImage = pictureImage;
+                }
+
+                if (mediaItemController.GetAllGivenRatings(movie).Length != 0)
+                {
+                    foreach (int rating in mediaItemController.GetAllGivenRatings(movie))
+                    {
+                        movie.AddRating(rating);
+                    }
+                    lblGivenRating.Text = ((Movie)movie).CalculateAverageRating().ToString();
+                }
+                else
+                {
+                    lblGivenRating.Text = "No reviews yet.";
+                }
+            }
+            catch (Exception ex)
+            {
+                lblWarning.Text = ex.Message;
             }
 
-            if (mediaItemController.GetAllGivenRatings(movie).Length != 0)
-            {
-                foreach (int rating in mediaItemController.GetAllGivenRatings(movie))
-                {
-                    movie.AddRating(rating);
-                }
-                lblGivenRating.Text = ((Movie)movie).CalculateAverageRating().ToString();
-            }
-            else
-            {
-                lblGivenRating.Text = "No reviews yet.";
-            }
         }
     }
 }

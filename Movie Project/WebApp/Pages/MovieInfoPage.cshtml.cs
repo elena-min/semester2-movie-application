@@ -30,51 +30,67 @@ namespace WebApp.Pages
 
         public void OnGet(int id)
         {
-            Movie = _mediaController.GetMediaItemById(id);
-            foreach (int rating in _mediaController.GetAllGivenRatings(Movie))
+            try
             {
-                Movie.AddRating(rating);
-            }
-            Movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(Movie);
-            Movie.RecordView(DateTime.Now);
-            _mediaViewsController.UpdateViewsCount(Movie, DateTime.Now);
-            DateTime currentDate = DateTime.Now.Date;
-            PopularityScores = new List<double>();
+                Movie = _mediaController.GetMediaItemById(id);
+                foreach (int rating in _mediaController.GetAllGivenRatings(Movie))
+                {
+                    Movie.AddRating(rating);
+                }
+                Movie.ViewsNumberByDate = _mediaViewsController.GetAllViewsByMediaItem(Movie);
+                Movie.RecordView(DateTime.Now);
+                _mediaViewsController.UpdateViewsCount(Movie, DateTime.Now);
+                DateTime currentDate = DateTime.Now.Date;
+                PopularityScores = new List<double>();
 
-            for (int i = 6; i >= 0; i--)
-            {
-                DateTime dateToCheck = currentDate.AddDays(-i);
-                double popularityScore = Movie.CalculatePopularityScore(dateToCheck, LogicLayer.TimePeriod.Week);
-                PopularityScores.Add(popularityScore);
+                for (int i = 6; i >= 0; i--)
+                {
+                    DateTime dateToCheck = currentDate.AddDays(-i);
+                    double popularityScore = Movie.CalculatePopularityScore(dateToCheck, LogicLayer.TimePeriod.Week);
+                    PopularityScores.Add(popularityScore);
+                }
             }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.ToString();
+            }
+            
         }
 
         public IActionResult OnPost(int id)
         {
-            var movie = _mediaController.GetMediaItemById(id);
+            //try
+            //{
+                var movie = _mediaController.GetMediaItemById(id);
 
-            if (movie == null)
-            {
-                return NotFound();
-            }
+                if (movie == null)
+                {
+                    return NotFound();
+                }
 
-            var userID = User.FindFirst("Id").Value;
-            Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
+                var userID = User.FindFirst("Id").Value;
+                Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
 
-            if (Userr == null)
-            {
-                return RedirectToPage("/Login");
-            }
+                if (Userr == null)
+                {
+                    return RedirectToPage("/Login");
+                }
 
-            if (_favoritesController.CheckIfProductIsInFavorites(movie, Userr) == false)
-            {
-                _favoritesController.AddProductToFavorite(movie, Userr);
-                TempData["Message"] = "Movie added to favorites!";
+                if (_favoritesController.CheckIfProductIsInFavorites(movie, Userr) == false)
+                {
+                    _favoritesController.AddProductToFavorite(movie, Userr);
+                    TempData["Message"] = "Movie added to favorites!";
+                    return RedirectToPage("/MovieInfoPage", new { id = movie.GetId() });
+                }
+
+                TempData["Message"] = "Movie is already in favorites!";
                 return RedirectToPage("/MovieInfoPage", new { id = movie.GetId() });
-            }
-
-            TempData["Message"] = "Movie is already in favorites!";
-            return RedirectToPage("/MovieInfoPage", new { id = movie.GetId() });
+            //}
+            //catch (Exception ex)
+            //{
+            //    TempData["Message"] = ex.Message;
+            //    return RedirectToPage("/MovieInfoPage", new { id = id});
+            //}
         }
 
         public IActionResult OnPostLogout()

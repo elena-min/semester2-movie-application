@@ -119,7 +119,6 @@ namespace DAL
             }
         }
             
-
         public void SaveTrendingDaily(List<MediaItem> dailyTrendingMedias, DateTime dayPicked)
         {
             SqlConnection conn = CreateConnection();
@@ -247,39 +246,6 @@ namespace DAL
                 conn.Close();
             }
 
-        }
-        public DateTime GetLastTrendingCalculationTime(DateTime givenDate)
-        {
-            SqlConnection conn = CreateConnection();
-            try
-            {
-                conn.Open();
-                DateTime lastCalculationTime = DateTime.MinValue;
-
-                string commandSql = "SELECT TOP 1 Day AS LastCalculationTime " +
-                    "FROM DailyTrendingMediaItems " +
-                    "WHERE CONVERT(DATE, [Day]) = CONVERT(DATE, @GivenDate);";
-                SqlCommand cmd = new SqlCommand(commandSql, conn);
-                cmd.Parameters.AddWithValue("@GivenDate", givenDate);
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("LastCalculationTime")))
-                    {
-                        lastCalculationTime = reader.GetDateTime(reader.GetOrdinal("LastCalculationTime"));
-                    }
-                }
-                return lastCalculationTime;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Database error", ex);
-            }
-            finally
-            {
-                conn.Close();
-            }
-            
         }
 
         public MediaItem[] GetTrendingWeekly(DateTime dayPicked)
@@ -457,5 +423,56 @@ namespace DAL
             
         }
 
+        public bool RemoveMediaItem(MediaItem mediaItem)
+        {
+            SqlConnection conn = CreateConnection();
+            using (conn)
+            {
+                try
+                {
+                    string query = "delete from DailyTrendingMediaItems where mediaItemID = @mediaItemID";
+                    SqlCommand commandSql = new SqlCommand(query, conn);
+                    commandSql.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId());
+                    conn.Open();
+                    int rowsAffected = commandSql.ExecuteNonQuery();
+
+                    string query2 = "delete from WeeklyTrendingMediaItems where mediaItemID = @mediaItemID";
+                    SqlCommand commandSql2 = new SqlCommand(query2, conn);
+                    commandSql2.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId());
+                    int rowsAffected2 = commandSql2.ExecuteNonQuery();
+
+                    string query3 = "delete from MonthlyTrendingMediaItems where mediaItemID = @mediaItemID";
+                    SqlCommand commandSql3 = new SqlCommand(query3, conn);
+                    commandSql3.Parameters.AddWithValue("@mediaItemID", mediaItem.GetId());
+                    int rowsAffected3 = commandSql3.ExecuteNonQuery();
+                    conn.Close();
+
+                    if (rowsAffected3 > 0 || rowsAffected > 0)
+                    {
+                        return true;
+                    }
+                    else if (rowsAffected3 > 0 || rowsAffected2 > 0)
+                    {
+                        return true;
+                    }
+                    else if (rowsAffected > 0 || rowsAffected2 > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error deleting form database", ex);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+        }
     }
 }

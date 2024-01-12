@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DesktopApp.Movies;
+using LogicLayer;
 using LogicLayer.Classes;
 using LogicLayer.Controllers;
 using LogicLayer.Interfaces;
@@ -24,21 +25,19 @@ namespace DesktopApp.Series
         private readonly MediaItemController mediaItemController;
         private readonly FavoritesController favController;
         private readonly ReviewController reviewController;
+        private readonly MediaItemViewsController mediaItemViewsController;
+        private readonly TrendingController trendingController;
         private FilterContext filterContext;
         private SortingContext sortingContext;
-        IMediaItemDAL iMediaItemDAL;
-        IFavoritesDAL ifavoritesDAL;
-        IReviewDAL iReviewDAL;
         List<MediaItem> allSeries;
         public SerieMenu()
         {
             InitializeComponent();
-            iMediaItemDAL = new MediaItemDAL();
-            ifavoritesDAL = new FavoritesDAL();
-            iReviewDAL = new ReviewDAL();
-            mediaItemController = new MediaItemController(iMediaItemDAL);
-            favController = new FavoritesController(ifavoritesDAL);
-            reviewController = new ReviewController(iReviewDAL);
+            mediaItemController = new MediaItemController(new MediaItemDAL());
+            favController = new FavoritesController(new FavoritesDAL());
+            reviewController = new ReviewController(new ReviewDAL());
+            mediaItemViewsController = new MediaItemViewsController(new MediaItemViewsDAL());
+            trendingController = new TrendingController(new TrendingDAL());
             filterContext = new FilterContext();
             sortingContext = new SortingContext();
 
@@ -91,7 +90,7 @@ namespace DesktopApp.Series
             {
                 lblWarning.Text = $"An unexpected error: {ex.Message}";
             }
-
+      
         }
 
         private void ActivateButton(object btnSender)
@@ -195,95 +194,120 @@ namespace DesktopApp.Series
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this serie?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
+            try
             {
-                if (listBoxViewSeries.SelectedIndex != -1)
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this serie?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    int selected_serie_id = Int32.Parse(listBoxViewSeries.SelectedItem.ToString().Split('-')[1]);
-                    MediaItem mediaItem = mediaItemController.GetMediaItemById(selected_serie_id);
-                    if (mediaItem != null)
+                    if (listBoxViewSeries.SelectedIndex != -1)
                     {
-                        bool removalSuccess = mediaItemController.RemoveMediaItem(mediaItem);
-
-                        if (removalSuccess)
+                        int selected_serie_id = Int32.Parse(listBoxViewSeries.SelectedItem.ToString().Split('-')[1]);
+                        MediaItem mediaItem = mediaItemController.GetMediaItemById(selected_serie_id);
+                        if (mediaItem != null)
                         {
-                            lblWarning.Text = "Media item deleted successfully";
-                            reviewController.DeletedMediaItem(mediaItem);
-                            favController.DeletedMediaItem(mediaItem);
+                            bool removalSuccess = mediaItemController.RemoveMediaItem(mediaItem);
 
+                            if (removalSuccess)
+                            {
+                                lblWarning.Text = "Media item deleted successfully";
+                                reviewController.DeletedMediaItem(mediaItem);
+                                favController.DeletedMediaItem(mediaItem);
+                                mediaItemViewsController.RemoveMediaItemViews(mediaItem);
+                                trendingController.RemoveMediaItem(mediaItem);
+
+                            }
+                            else
+                            {
+                                lblWarning.Text = "Failed to delete media item";
+                            }
                         }
                         else
                         {
-                            lblWarning.Text = "Failed to delete media item";
+                            lblWarning.Text = "No data found.";
+                        }
+
+                        listBoxViewSeries.Items.Clear();
+                        foreach (MediaItem serie in mediaItemController.GetAll())
+                        {
+                            if (serie is Serie)
+                            {
+                                listBoxViewSeries.Items.Add(serie.ToString());
+                            }
                         }
                     }
                     else
                     {
-                        lblWarning.Text = "No data found.";
-                    }
+                        lblWarning.Text = "There is no serie selected!";
 
-                    listBoxViewSeries.Items.Clear();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblWarning.Text = ex.Message;
+            }
+            
+        }
+
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lblWarning.Text = "";
+                if (listBoxViewSeries.SelectedItem != null)
+                {
+                    string selectedSerie = listBoxViewSeries.SelectedItem.ToString();
+                    int serieID = Convert.ToInt32(selectedSerie.Split("-")[1]);
                     foreach (MediaItem serie in mediaItemController.GetAll())
                     {
                         if (serie is Serie)
                         {
-                            listBoxViewSeries.Items.Add(serie.ToString());
+                            if (selectedSerie == ((Serie)serie).ToString())
+                            {
+                                UpdateSerie serieUpdate = new UpdateSerie(serie, serieID);
+                                serieUpdate.Show();
+                            }
                         }
                     }
                 }
                 else
                 {
-                    lblWarning.Text = "There is no serie selected!";
-
+                    lblWarning.Text = "There is no serie selected.";
                 }
             }
-        }
-
-        private void buttonUpdate_Click(object sender, EventArgs e)
-        {
-            lblWarning.Text = "";
-            if (listBoxViewSeries.SelectedItem != null)
+            catch (Exception ex)
             {
-                string selectedSerie = listBoxViewSeries.SelectedItem.ToString();
-                int serieID = Convert.ToInt32(selectedSerie.Split("-")[1]);
-                foreach (MediaItem serie in mediaItemController.GetAll())
-                {
-                    if (serie is Serie)
-                    {
-                        if (selectedSerie == ((Serie)serie).ToString())
-                        {
-                            UpdateSerie serieUpdate = new UpdateSerie(serie, serieID);
-                            serieUpdate.Show();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                lblWarning.Text = "There is no serie selected.";
-            }
+                lblWarning.Text = ex.Message;
+            }         
         }
 
         private void buttonMoreInfo_Click(object sender, EventArgs e)
         {
-            lblWarning.Text = "";
-            if (listBoxViewSeries.SelectedItem != null)
+            try
             {
-                string selectedSerie = listBoxViewSeries.SelectedItem.ToString();
-                foreach (MediaItem serie in mediaItemController.GetAll())
+                lblWarning.Text = "";
+                if (listBoxViewSeries.SelectedItem != null)
                 {
-                    if (serie is Serie)
+                    string selectedSerie = listBoxViewSeries.SelectedItem.ToString();
+                    foreach (MediaItem serie in mediaItemController.GetAll())
                     {
-                        if (selectedSerie == ((Serie)serie).ToString())
+                        if (serie is Serie)
                         {
-                            MoreInfoSerie serieMoreInfo = new MoreInfoSerie(serie);
-                            serieMoreInfo.Show();
+                            if (selectedSerie == ((Serie)serie).ToString())
+                            {
+                                MoreInfoSerie serieMoreInfo = new MoreInfoSerie(serie);
+                                serieMoreInfo.Show();
+                            }
                         }
                     }
                 }
             }
+            catch(Exception ex)
+            {
+                lblWarning.Text = ex.Message;
+            }
+            
         }
     }
 }

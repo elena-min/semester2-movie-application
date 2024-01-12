@@ -30,13 +30,7 @@
         {
             btnView = new Button();
             panel1 = new Panel();
-            labelOrder = new Label();
-            comboBoxOrder = new ComboBox();
-            textBoxUserName = new TextBox();
-            labelName = new Label();
             buttonDelete = new Button();
-            lblSearchMovies = new Label();
-            buttonSearch = new Button();
             listBoxViewUsers = new ListBox();
             buttonMoreInfo = new Button();
             lblWarning = new Label();
@@ -49,7 +43,7 @@
             // 
             btnView.FlatAppearance.BorderSize = 0;
             btnView.FlatStyle = FlatStyle.Flat;
-            btnView.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnView.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             btnView.ForeColor = Color.White;
             btnView.Location = new Point(12, 3);
             btnView.Name = "btnView";
@@ -69,53 +63,13 @@
             panel1.Size = new Size(860, 67);
             panel1.TabIndex = 145;
             // 
-            // labelOrder
-            // 
-            labelOrder.AutoSize = true;
-            labelOrder.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            labelOrder.ForeColor = Color.FromArgb(138, 104, 86);
-            labelOrder.Location = new Point(565, 121);
-            labelOrder.Name = "labelOrder";
-            labelOrder.Size = new Size(61, 25);
-            labelOrder.TabIndex = 139;
-            labelOrder.Text = "Order:";
-            // 
-            // comboBoxOrder
-            // 
-            comboBoxOrder.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            comboBoxOrder.FormattingEnabled = true;
-            comboBoxOrder.Location = new Point(565, 149);
-            comboBoxOrder.Name = "comboBoxOrder";
-            comboBoxOrder.Size = new Size(263, 33);
-            comboBoxOrder.TabIndex = 138;
-            // 
-            // textBoxUserName
-            // 
-            textBoxUserName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxUserName.ForeColor = Color.FromArgb(60, 144, 137);
-            textBoxUserName.Location = new Point(565, 72);
-            textBoxUserName.Name = "textBoxUserName";
-            textBoxUserName.Size = new Size(263, 31);
-            textBoxUserName.TabIndex = 134;
-            // 
-            // labelName
-            // 
-            labelName.AutoSize = true;
-            labelName.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            labelName.ForeColor = Color.FromArgb(138, 104, 86);
-            labelName.Location = new Point(565, 44);
-            labelName.Name = "labelName";
-            labelName.Size = new Size(64, 25);
-            labelName.TabIndex = 135;
-            labelName.Text = "Name:";
-            // 
             // buttonDelete
             // 
             buttonDelete.BackColor = Color.White;
             buttonDelete.FlatAppearance.BorderColor = Color.FromArgb(138, 104, 86);
             buttonDelete.FlatAppearance.BorderSize = 2;
             buttonDelete.FlatStyle = FlatStyle.Flat;
-            buttonDelete.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonDelete.Font = new Font("MV Boli", 13.8F, FontStyle.Bold);
             buttonDelete.ForeColor = Color.FromArgb(138, 104, 86);
             buttonDelete.Location = new Point(299, 483);
             buttonDelete.Name = "buttonDelete";
@@ -125,36 +79,9 @@
             buttonDelete.UseVisualStyleBackColor = false;
             buttonDelete.Click += buttonDelete_Click;
             // 
-            // lblSearchMovies
-            // 
-            lblSearchMovies.AutoSize = true;
-            lblSearchMovies.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            lblSearchMovies.ForeColor = Color.FromArgb(138, 104, 86);
-            lblSearchMovies.Location = new Point(565, 19);
-            lblSearchMovies.Name = "lblSearchMovies";
-            lblSearchMovies.Size = new Size(93, 25);
-            lblSearchMovies.TabIndex = 136;
-            lblSearchMovies.Text = "Search by:";
-            // 
-            // buttonSearch
-            // 
-            buttonSearch.BackColor = Color.White;
-            buttonSearch.FlatAppearance.BorderColor = Color.FromArgb(138, 104, 86);
-            buttonSearch.FlatAppearance.BorderSize = 2;
-            buttonSearch.FlatStyle = FlatStyle.Flat;
-            buttonSearch.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonSearch.ForeColor = Color.FromArgb(138, 104, 86);
-            buttonSearch.Location = new Point(565, 197);
-            buttonSearch.Name = "buttonSearch";
-            buttonSearch.Size = new Size(263, 44);
-            buttonSearch.TabIndex = 143;
-            buttonSearch.Text = "Search";
-            buttonSearch.UseVisualStyleBackColor = false;
-            buttonSearch.Click += buttonSearch_Click;
-            // 
             // listBoxViewUsers
             // 
-            listBoxViewUsers.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            listBoxViewUsers.Font = new Font("Segoe UI", 10.2F);
             listBoxViewUsers.FormattingEnabled = true;
             listBoxViewUsers.ItemHeight = 23;
             listBoxViewUsers.Location = new Point(12, 47);
@@ -168,7 +95,7 @@
             buttonMoreInfo.FlatAppearance.BorderColor = Color.FromArgb(138, 104, 86);
             buttonMoreInfo.FlatAppearance.BorderSize = 2;
             buttonMoreInfo.FlatStyle = FlatStyle.Flat;
-            buttonMoreInfo.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonMoreInfo.Font = new Font("MV Boli", 13.8F, FontStyle.Bold);
             buttonMoreInfo.ForeColor = Color.FromArgb(138, 104, 86);
             buttonMoreInfo.Location = new Point(12, 483);
             buttonMoreInfo.Name = "buttonMoreInfo";
@@ -181,7 +108,7 @@
             // lblWarning
             // 
             lblWarning.AutoSize = true;
-            lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic);
             lblWarning.ForeColor = Color.Maroon;
             lblWarning.Location = new Point(12, 19);
             lblWarning.Name = "lblWarning";
@@ -195,13 +122,7 @@
             panelDesktop.Controls.Add(lblWarning);
             panelDesktop.Controls.Add(buttonMoreInfo);
             panelDesktop.Controls.Add(listBoxViewUsers);
-            panelDesktop.Controls.Add(buttonSearch);
-            panelDesktop.Controls.Add(lblSearchMovies);
             panelDesktop.Controls.Add(buttonDelete);
-            panelDesktop.Controls.Add(labelName);
-            panelDesktop.Controls.Add(textBoxUserName);
-            panelDesktop.Controls.Add(comboBoxOrder);
-            panelDesktop.Controls.Add(labelOrder);
             panelDesktop.Location = new Point(0, 62);
             panelDesktop.Name = "panelDesktop";
             panelDesktop.Size = new Size(860, 541);
@@ -228,13 +149,7 @@
         #endregion
         private Button btnView;
         private Panel panel1;
-        private Label labelOrder;
-        private ComboBox comboBoxOrder;
-        private TextBox textBoxUserName;
-        private Label labelName;
         private Button buttonDelete;
-        private Label lblSearchMovies;
-        private Button buttonSearch;
         private ListBox listBoxViewUsers;
         private Button buttonMoreInfo;
         private Label lblWarning;

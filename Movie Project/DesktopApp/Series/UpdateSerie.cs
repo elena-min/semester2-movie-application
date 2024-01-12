@@ -53,17 +53,26 @@ namespace DesktopApp.Series
                 }
             }
 
-            if (mediaItemController.GetMediaItemImageByID(serie).Length != 0)
+            try
             {
-                byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(serie));
-                MemoryStream memoryStream = new MemoryStream(pictureBytes);
-                Image pictureImage = Image.FromStream(memoryStream);
-                pictureBoxSeriePic.BackgroundImageLayout = ImageLayout.Stretch;
-                pictureBoxSeriePic.BackgroundImage = pictureImage;
+                if (mediaItemController.GetMediaItemImageByID(serie).Length != 0)
+                    {
+                       byte[] pictureBytes = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(serie));
+                       MemoryStream memoryStream = new MemoryStream(pictureBytes);
+                       Image pictureImage = Image.FromStream(memoryStream);
+                       pictureBoxSeriePic.BackgroundImageLayout = ImageLayout.Stretch;
+                       pictureBoxSeriePic.BackgroundImage = pictureImage;
+                    }
             }
+            catch (Exception ex)
+            {
+                lblWarning.Text = ex.Message;
+            }
+            
         }
 
         byte[] Filename;
+        byte[] FilenameCompressed;
         public byte[] ImageToBytes(Image img, PictureBox pictureBox)
         {
             MemoryStream ms = new MemoryStream();
@@ -79,14 +88,41 @@ namespace DesktopApp.Series
 
         private void btnImageUpload_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            DialogResult dialogResult = openFileDialog.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            try
             {
-                pictureBoxSeriePic.BackgroundImage = Image.FromFile(openFileDialog.FileName);
-                pictureBoxSeriePic.BackgroundImageLayout = ImageLayout.Stretch;
-                Filename = ImageToBytes(pictureBoxSeriePic.BackgroundImage, pictureBoxSeriePic);
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                DialogResult dialogResult = openFileDialog.ShowDialog();
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    SixLabors.ImageSharp.Image imageSharp;
+
+                    pictureBoxSeriePic.BackgroundImage = Image.FromFile(openFileDialog.FileName);
+                    pictureBoxSeriePic.BackgroundImageLayout = ImageLayout.Stretch;
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        pictureBoxSeriePic.BackgroundImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        // Load the original image into imageSharp
+                        imageSharp = SixLabors.ImageSharp.Image.Load(ms.ToArray());
+                    }
+
+                    //Save the file as a 2mb file
+                    Filename = ImageHelper.CompressImageToByteArray(imageSharp, 2 * 1024 * 1024);
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        pictureBoxSeriePic.BackgroundImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        imageSharp = SixLabors.ImageSharp.Image.Load(ms.ToArray());
+                    }
+                    //Compress the photo again as 100kb and save it to FilenameCompressed
+                    FilenameCompressed = ImageHelper.CompressImageToByteArray(imageSharp, 1000 * 1024);
+                }
             }
+            catch (Exception ex)
+            {
+                lblWarning.Text = $"{ex.Message}";
+            }
+
         }
 
         private void btnRemoveImage_Click(object sender, EventArgs e)
@@ -149,7 +185,13 @@ namespace DesktopApp.Series
                     }
                 }
 
-                if (mediaItemController.UpdateMediaItem(changedSerie, ImageToBytes(pictureBoxSeriePic.BackgroundImage, pictureBoxSeriePic)))
+                if (Filename == null || Filename.Length == 0 || FilenameCompressed == null || FilenameCompressed.Length == 0)
+                {
+                    Filename = Convert.FromBase64String(mediaItemController.GetMediaItemImageByID(changedSerie));
+                    FilenameCompressed = Convert.FromBase64String(mediaItemController.GetMediaItemCompressedImageByID(changedSerie));
+                }
+
+                if (mediaItemController.UpdateMediaItem(changedSerie, Filename, FilenameCompressed))
                 {
                     lblWarning.Text = "Serie updated successfully!";
                 }

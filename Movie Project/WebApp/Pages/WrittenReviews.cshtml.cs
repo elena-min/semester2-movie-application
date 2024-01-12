@@ -24,32 +24,49 @@ namespace WebApp.Pages
         }
         public IActionResult OnGet()
         {
-            var userID = User.FindFirst("Id").Value;
-
-            if (userID == null)
+            try
             {
-                return RedirectToPage("/Login");
+                var userID = User.FindFirst("Id").Value;
+
+                if (userID == null)
+                {
+                    return RedirectToPage("/Login");
+                }
+
+                Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
+
+                if (Userr == null)
+                {
+                    return NotFound();
+                }
+
+                Reviews = _reviewController.GetReviewsByUser(Userr).ToList();
+
+                return Page();
             }
-
-            Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
-
-            if (Userr == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                TempData["Message"] = ex.ToString();
+                return RedirectToPage("/Error");
             }
-
-            Reviews = _reviewController.GetReviewsByUser(Userr).ToList();
             
-            return Page();
         }
         public IActionResult OnPostDelete(int reviewId)
         {
-            var review = _reviewController.GetReviewByID(reviewId);
-            if (review != null)
+            try
             {
-                _reviewController.DeletebyUser(review);
+                var review = _reviewController.GetReviewByID(reviewId);
+                if (review != null)
+                {
+                    _reviewController.DeletebyUser(review);
+                }
+                return RedirectToPage("/WrittenReviews");
             }
-            return RedirectToPage("/WrittenReviews");
+            catch(Exception ex) 
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
+                return RedirectToPage("/WrittenReviews");
+            }
         }
 
         public IActionResult OnPostLogout()

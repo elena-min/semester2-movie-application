@@ -28,17 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            buttonSearch = new Button();
             buttonMoreInfo = new Button();
             buttonDelete = new Button();
-            labelOrder = new Label();
-            comboBoxOrder = new ComboBox();
             lblWarning = new Label();
-            lblSearchMovies = new Label();
-            textBoxEmpName = new TextBox();
-            labelName = new Label();
-            textBoxEMpID = new TextBox();
-            labelEmpID = new Label();
             listBoxViewEmpoyees = new ListBox();
             panel1 = new Panel();
             btnView = new Button();
@@ -48,29 +40,13 @@
             panelDesktop.SuspendLayout();
             SuspendLayout();
             // 
-            // buttonSearch
-            // 
-            buttonSearch.BackColor = Color.White;
-            buttonSearch.FlatAppearance.BorderColor = Color.FromArgb(138, 104, 86);
-            buttonSearch.FlatAppearance.BorderSize = 2;
-            buttonSearch.FlatStyle = FlatStyle.Flat;
-            buttonSearch.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonSearch.ForeColor = Color.FromArgb(138, 104, 86);
-            buttonSearch.Location = new Point(565, 249);
-            buttonSearch.Name = "buttonSearch";
-            buttonSearch.Size = new Size(263, 44);
-            buttonSearch.TabIndex = 143;
-            buttonSearch.Text = "Search";
-            buttonSearch.UseVisualStyleBackColor = false;
-            buttonSearch.Click += buttonSearch_Click;
-            // 
             // buttonMoreInfo
             // 
             buttonMoreInfo.BackColor = Color.White;
             buttonMoreInfo.FlatAppearance.BorderColor = Color.FromArgb(138, 104, 86);
             buttonMoreInfo.FlatAppearance.BorderSize = 2;
             buttonMoreInfo.FlatStyle = FlatStyle.Flat;
-            buttonMoreInfo.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonMoreInfo.Font = new Font("MV Boli", 13.8F, FontStyle.Bold);
             buttonMoreInfo.ForeColor = Color.FromArgb(138, 104, 86);
             buttonMoreInfo.Location = new Point(12, 483);
             buttonMoreInfo.Name = "buttonMoreInfo";
@@ -86,7 +62,7 @@
             buttonDelete.FlatAppearance.BorderColor = Color.FromArgb(138, 104, 86);
             buttonDelete.FlatAppearance.BorderSize = 2;
             buttonDelete.FlatStyle = FlatStyle.Flat;
-            buttonDelete.Font = new Font("MV Boli", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonDelete.Font = new Font("MV Boli", 13.8F, FontStyle.Bold);
             buttonDelete.ForeColor = Color.FromArgb(138, 104, 86);
             buttonDelete.Location = new Point(606, 483);
             buttonDelete.Name = "buttonDelete";
@@ -96,30 +72,10 @@
             buttonDelete.UseVisualStyleBackColor = false;
             buttonDelete.Click += buttonDelete_Click;
             // 
-            // labelOrder
-            // 
-            labelOrder.AutoSize = true;
-            labelOrder.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            labelOrder.ForeColor = Color.FromArgb(138, 104, 86);
-            labelOrder.Location = new Point(565, 173);
-            labelOrder.Name = "labelOrder";
-            labelOrder.Size = new Size(61, 25);
-            labelOrder.TabIndex = 139;
-            labelOrder.Text = "Order:";
-            // 
-            // comboBoxOrder
-            // 
-            comboBoxOrder.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            comboBoxOrder.FormattingEnabled = true;
-            comboBoxOrder.Location = new Point(565, 201);
-            comboBoxOrder.Name = "comboBoxOrder";
-            comboBoxOrder.Size = new Size(263, 33);
-            comboBoxOrder.TabIndex = 138;
-            // 
             // lblWarning
             // 
             lblWarning.AutoSize = true;
-            lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            lblWarning.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic);
             lblWarning.ForeColor = Color.Maroon;
             lblWarning.Location = new Point(12, 19);
             lblWarning.Name = "lblWarning";
@@ -127,60 +83,9 @@
             lblWarning.TabIndex = 137;
             lblWarning.Text = "Warning";
             // 
-            // lblSearchMovies
-            // 
-            lblSearchMovies.AutoSize = true;
-            lblSearchMovies.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            lblSearchMovies.ForeColor = Color.FromArgb(138, 104, 86);
-            lblSearchMovies.Location = new Point(565, 19);
-            lblSearchMovies.Name = "lblSearchMovies";
-            lblSearchMovies.Size = new Size(93, 25);
-            lblSearchMovies.TabIndex = 136;
-            lblSearchMovies.Text = "Search by:";
-            // 
-            // textBoxEmpName
-            // 
-            textBoxEmpName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxEmpName.ForeColor = Color.FromArgb(60, 144, 137);
-            textBoxEmpName.Location = new Point(565, 72);
-            textBoxEmpName.Name = "textBoxEmpName";
-            textBoxEmpName.Size = new Size(263, 31);
-            textBoxEmpName.TabIndex = 134;
-            // 
-            // labelName
-            // 
-            labelName.AutoSize = true;
-            labelName.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            labelName.ForeColor = Color.FromArgb(138, 104, 86);
-            labelName.Location = new Point(565, 44);
-            labelName.Name = "labelName";
-            labelName.Size = new Size(64, 25);
-            labelName.TabIndex = 135;
-            labelName.Text = "Name:";
-            // 
-            // textBoxEMpID
-            // 
-            textBoxEMpID.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxEMpID.ForeColor = Color.FromArgb(60, 144, 137);
-            textBoxEMpID.Location = new Point(565, 139);
-            textBoxEMpID.Name = "textBoxEMpID";
-            textBoxEMpID.Size = new Size(263, 31);
-            textBoxEMpID.TabIndex = 132;
-            // 
-            // labelEmpID
-            // 
-            labelEmpID.AutoSize = true;
-            labelEmpID.Font = new Font("Segoe UI", 10.8F, FontStyle.Italic, GraphicsUnit.Point);
-            labelEmpID.ForeColor = Color.FromArgb(138, 104, 86);
-            labelEmpID.Location = new Point(565, 106);
-            labelEmpID.Name = "labelEmpID";
-            labelEmpID.Size = new Size(34, 25);
-            labelEmpID.TabIndex = 133;
-            labelEmpID.Text = "ID:";
-            // 
             // listBoxViewEmpoyees
             // 
-            listBoxViewEmpoyees.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            listBoxViewEmpoyees.Font = new Font("Segoe UI", 10.2F);
             listBoxViewEmpoyees.FormattingEnabled = true;
             listBoxViewEmpoyees.ItemHeight = 23;
             listBoxViewEmpoyees.Location = new Point(12, 47);
@@ -203,7 +108,7 @@
             // 
             btnView.FlatAppearance.BorderSize = 0;
             btnView.FlatStyle = FlatStyle.Flat;
-            btnView.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnView.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             btnView.ForeColor = Color.White;
             btnView.Location = new Point(481, 0);
             btnView.Name = "btnView";
@@ -217,7 +122,7 @@
             // 
             btnAddEmployee.FlatAppearance.BorderSize = 0;
             btnAddEmployee.FlatStyle = FlatStyle.Flat;
-            btnAddEmployee.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnAddEmployee.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             btnAddEmployee.ForeColor = Color.White;
             btnAddEmployee.Location = new Point(3, 0);
             btnAddEmployee.Name = "btnAddEmployee";
@@ -233,15 +138,7 @@
             panelDesktop.Controls.Add(lblWarning);
             panelDesktop.Controls.Add(buttonMoreInfo);
             panelDesktop.Controls.Add(listBoxViewEmpoyees);
-            panelDesktop.Controls.Add(buttonSearch);
-            panelDesktop.Controls.Add(lblSearchMovies);
             panelDesktop.Controls.Add(buttonDelete);
-            panelDesktop.Controls.Add(labelName);
-            panelDesktop.Controls.Add(textBoxEmpName);
-            panelDesktop.Controls.Add(labelEmpID);
-            panelDesktop.Controls.Add(comboBoxOrder);
-            panelDesktop.Controls.Add(labelOrder);
-            panelDesktop.Controls.Add(textBoxEMpID);
             panelDesktop.Location = new Point(0, 63);
             panelDesktop.Name = "panelDesktop";
             panelDesktop.Size = new Size(860, 541);
@@ -260,6 +157,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "EmployeeMenu";
             Text = "EmployeeMenu";
+            Load += EmployeeMenu_Load;
             panel1.ResumeLayout(false);
             panelDesktop.ResumeLayout(false);
             panelDesktop.PerformLayout();
@@ -267,18 +165,9 @@
         }
 
         #endregion
-
-        private Button buttonSearch;
         private Button buttonMoreInfo;
         private Button buttonDelete;
-        private Label labelOrder;
-        private ComboBox comboBoxOrder;
         private Label lblWarning;
-        private Label lblSearchMovies;
-        private TextBox textBoxEmpName;
-        private Label labelName;
-        private TextBox textBoxEMpID;
-        private Label labelEmpID;
         private ListBox listBoxViewEmpoyees;
         private Panel panel1;
         private Button btnView;

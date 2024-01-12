@@ -108,21 +108,29 @@ namespace DesktopApp.Users
         private void btnSeeReview_Click(object sender, EventArgs e)
         {
             lblWarning.Text = "";
-            if (listBoxViewReviews.SelectedItem != null)
+            try
             {
-                string selectedReview = listBoxViewReviews.SelectedItem.ToString();
-                foreach (Review review in reviewController.GetAll())
+                if (listBoxViewReviews.SelectedItem != null)
                 {
-                    if (selectedReview == review.GetInfo())
+                    string selectedReview = listBoxViewReviews.SelectedItem.ToString();
+                    foreach (Review review in reviewController.GetAll())
                     {
-                        MoreInfoReview reviewMoreInfo = new MoreInfoReview(review);
-                        reviewMoreInfo.Show();
+                        if (selectedReview == review.GetInfo())
+                        {
+                            MoreInfoReview reviewMoreInfo = new MoreInfoReview(review);
+                            reviewMoreInfo.Show();
+                        }
                     }
                 }
+                else
+                {
+                    lblWarning.Text = "There is no review selected.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblWarning.Text = "There is no review selected.";
+                lblWarning.Text = ex.ToString();
+
             }
         }
     }

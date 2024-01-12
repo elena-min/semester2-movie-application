@@ -24,28 +24,37 @@ namespace WebApp.Pages
         }
         public IActionResult OnGet()
         {
-            var userID = User.FindFirst("Id")?.Value;
-
-            if (userID == null)
+            try
             {
-                return RedirectToPage("/Login");
+                var userID = User.FindFirst("Id")?.Value;
+
+                if (userID == null)
+                {
+                    return RedirectToPage("/Login");
+                }
+
+                Userr = _userController.GetUserByID(Int32.Parse(userID));
+
+                if (Userr == null)
+                {
+                    return NotFound();
+                }
+
+                string profilePictureBytes = _userController.GetProfilePicByID(Userr);
+
+                if (profilePictureBytes != null)
+                {
+                    ProfilePicture = profilePictureBytes;
+                }
+
+                return Page();
             }
-
-            Userr = _userController.GetUserByID(Int32.Parse(userID));
-
-            if (Userr == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                TempData["Message"] = ex.ToString();
+                return RedirectToPage("/Error");
             }
-
-            string profilePictureBytes = _userController.GetProfilePicByID(Userr);
-
-            if (profilePictureBytes != null)
-            {
-                ProfilePicture = profilePictureBytes;
-            }
-
-            return Page();
+            
         }
         public IActionResult OnPost(IFormFile profilePicture)
         {
