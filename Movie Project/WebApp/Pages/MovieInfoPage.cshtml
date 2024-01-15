@@ -165,17 +165,26 @@
                 </p>
                 <p><i>Written on: @writtenReview.DateOfPublication.ToString("dd-MM-yyyy")</i></p>
                 <div class="rating">
-                    <span class="star @((@writtenReview.Rating >= 1) ? "gold" : "")">&#9733;</span>
-                    <span class="star @((@writtenReview.Rating >= 2) ? "gold" : "")">&#9733;</span>
-                    <span class="star @((@writtenReview.Rating >= 3) ? "gold" : "")">&#9733;</span>
-                    <span class="star @((@writtenReview.Rating >= 4) ? "gold" : "")">&#9733;</span>
-                    <span class="star @((@writtenReview.Rating >= 5) ? "gold" : "")">&#9733;</span>
+                    @for (int i = 1; i <= writtenReview.Rating; i++)
+                    {
+                        @* <span class="star @(writtenReview.Rating >= i ? "gold" : "")">&#9733;</span> *@
+                        <span class="fa fa-star checked"></span>
+
+                    }
                 </div>
+
+
                 <p>@writtenReview.ReviewContent</p>
             </div>
         </div>
     }
 </div>
+
+<style>
+.checked {
+  color: gold;
+}
+</style>
 
 
 <script>

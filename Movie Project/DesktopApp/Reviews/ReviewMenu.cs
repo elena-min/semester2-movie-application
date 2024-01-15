@@ -142,15 +142,15 @@ namespace DesktopApp.Reviews
 
             foreach (Review review in reviewController.GetReviewsByDate(chosenDate))
             {
-                if (review.ReviewWriter.Username.Contains(textBoxUsername.Text))
-                {
-                    string productTitle = review.PointedTowards.Title;
-                    if (productTitle.Contains(textBoxTitle.Text))
-                    {
+                //if (review.ReviewWriter.Username.Contains(textBoxUsername.Text))
+                //{
+                //    string productTitle = review.PointedTowards.Title;
+                //    if (productTitle.Contains(textBoxTitle.Text))
+                //    {
                         matchingReviews.Add(review);
                         listBoxViewReviews.Items.Add(review.ToString());
-                    }
-                }
+                   // }
+               // }
             }
 
         }

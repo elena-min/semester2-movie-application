@@ -33,6 +33,8 @@ namespace WebApp.Pages
         }
         public IActionResult OnGet(int ID)
         {
+            FavoriteMovies = new List<MediaItem>();
+            FavoriteSeries = new List<MediaItem>();
             try
             {
                 Userr = _userController.GetUserByID(ID);

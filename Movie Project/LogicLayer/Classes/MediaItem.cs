@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LogicLayer.Classes
 {
-    public abstract class MediaItem
+    public class MediaItem
     {
         protected int id;
         protected string title;

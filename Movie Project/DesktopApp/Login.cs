@@ -44,6 +44,7 @@ namespace DesktopApp
                 Employee employee = employeeController.GetEmployeeByEmail(email);
                 bool isLoggedIn = false;
 
+
                 if (employee == null)
                 {
                     lblWarning.Text = $"No employee with the email {email} exists.";
@@ -78,6 +79,10 @@ namespace DesktopApp
                 }
             }
             catch (ArgumentException ex)
+            {
+                lblWarning.Text = $"{ex.Message}";
+            }
+            catch (ValidationException ex)
             {
                 lblWarning.Text = $"{ex.Message}";
             }

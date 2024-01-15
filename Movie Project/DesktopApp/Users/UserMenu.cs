@@ -199,41 +199,41 @@ namespace DesktopApp.Users
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            lblWarning.Text = "";
-            try
-            {
-                listBoxViewUsers.Items.Clear();
-                List<LogicLayer.Classes.User> allUsers = new List<LogicLayer.Classes.User>();
-                if (textBoxUserName.Text != null || textBoxUserName.Text == "")
-                {
-                    foreach (LogicLayer.Classes.User user in userController.GetAll())
-                    {
+            //lblWarning.Text = "";
+            //try
+            //{
+            //    listBoxViewUsers.Items.Clear();
+            //    List<LogicLayer.Classes.User> allUsers = new List<LogicLayer.Classes.User>();
+            //    if (textBoxUserName.Text != null || textBoxUserName.Text == "")
+            //    {
+            //        foreach (LogicLayer.Classes.User user in userController.GetAll())
+            //        {
 
-                        if (user.FirstName.Contains(textBoxUserName.Text) || user.LastName.Contains(textBoxUserName.Text))
-                        {
-                            allUsers.Add(user);
-                        }
+            //            if (user.FirstName.Contains(textBoxUserName.Text) || user.LastName.Contains(textBoxUserName.Text))
+            //            {
+            //                allUsers.Add(user);
+            //            }
 
-                    }
-                }
-                else
-                {
-                    foreach (LogicLayer.Classes.User user in userController.GetAll())
-                    {
-                        allUsers.Add(user);
-                    }
-                }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        foreach (LogicLayer.Classes.User user in userController.GetAll())
+            //        {
+            //            allUsers.Add(user);
+            //        }
+            //    }
 
 
-                foreach (LogicLayer.Classes.User user in allUsers)
-                {
-                    listBoxViewUsers.Items.Add(user.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
-            }
+            //    foreach (LogicLayer.Classes.User user in allUsers)
+            //    {
+            //        listBoxViewUsers.Items.Add(user.ToString());
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    lblWarning.Text = $"An unexpected error occurred: {ex.Message}";
+            //}
         }
     }
 }

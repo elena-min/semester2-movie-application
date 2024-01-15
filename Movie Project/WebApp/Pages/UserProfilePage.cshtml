@@ -51,14 +51,17 @@
     </div>
 }
 
+
 <div id="mediasContainers">
     @if (Model.FavoriteMovies != null && Model.FavoriteSeries != null)
     {
-        <div id="products-containers1">
+        <h3>Favorite Movies</h3>
+
+        <div class="movies">
             @foreach (MediaItem mediaItem in Model.FavoriteMovies.Take(4))
             {
                 Movie movie = mediaItem as Movie;
-                <div class="favProduct">
+                <div class="movie">
                     <div class="image-grid">
                         <a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()" target="_blank">
                             <img src="data:image;base64,@mediaController.GetMediaItemImageByID(movie)" alt="Movie cover" style="padding:10px">
@@ -67,18 +70,17 @@
                     <div class="movieText p-1">
                         <h3><b>@movie.Title</b></h3>
                         <p>@movie.Director</p>
-                        <form method="post">
-                            <button type="submit" name="movieId" value="@mediaItem.GetId()">Remove</button>
-                        </form>
+                      
                     </div>
                 </div>
             }
         </div>
-        <div id="products-containers2">
+        <h3>Favorite Shows</h3>
+        <div class="movies">
             @foreach (MediaItem mediaItem in Model.FavoriteSeries.Take(4))
             {
                 Serie serie = mediaItem as Serie;
-                <div class="favProduct">
+                <div class="movie">
                     <div class="image-grid">
                         <a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()" target="_blank">
                             <img src="data:image;base64,@mediaController.GetMediaItemImageByID(serie)" alt="Serie cover" style="padding:10px">
@@ -87,9 +89,7 @@
                     <div class="movieText p-1">
                         <h3><b>@serie.Title</b></h3>
                         <p> Seaons: @serie.Seasons.ToString()</p>
-                        <form method="post">
-                            <button type="submit" name="movieId" value="@mediaItem.GetId()">Remove</button>
-                        </form>
+
                     </div>
                 </div>
             }

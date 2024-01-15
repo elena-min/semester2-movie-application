@@ -50,6 +50,10 @@ namespace WebApp.Pages
                     PopularityScores.Add(popularityScore);
                 }
             }
+            catch (ArgumentException ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
             catch (Exception ex)
             {
                 TempData["Message"] = ex.ToString();
@@ -59,8 +63,8 @@ namespace WebApp.Pages
 
         public IActionResult OnPost(int id)
         {
-            //try
-            //{
+            try
+            {
                 var movie = _mediaController.GetMediaItemById(id);
 
                 if (movie == null)
@@ -85,12 +89,17 @@ namespace WebApp.Pages
 
                 TempData["Message"] = "Movie is already in favorites!";
                 return RedirectToPage("/MovieInfoPage", new { id = movie.GetId() });
-            //}
-            //catch (Exception ex)
-            //{
-            //    TempData["Message"] = ex.Message;
-            //    return RedirectToPage("/MovieInfoPage", new { id = id});
-            //}
+            }
+            catch (ArgumentException ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToPage("/MovieInfoPage", new { id = id });
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToPage("/MovieInfoPage", new { id = id});
+            }
         }
 
         public IActionResult OnPostLogout()

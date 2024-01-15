@@ -40,7 +40,7 @@ namespace WebApp.Pages
                     return NotFound();
                 }
 
-                Reviews = _reviewController.GetReviewsByUser(Userr).ToList();
+                Reviews = _reviewController.GetDeletedReviewsByUser(Userr).ToList();
 
                 return Page();
             }

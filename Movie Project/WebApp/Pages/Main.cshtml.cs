@@ -42,8 +42,8 @@ namespace WebApp.Pages
             Shows = new List<MediaItem>();
             AllMediaItems = new List<MediaItem>();
 
-            try
-            {
+            //try
+            //{
                 foreach (MediaItem m in _mediaController.GetAll())
                 {
                     if (m is Movie)
@@ -67,7 +67,7 @@ namespace WebApp.Pages
                 }
 
 
-                const int pageSize = 4;
+                const int pageSize = 5;
                 int startIndex = (pageIndex - 1) * pageSize;
                 int endIndex = startIndex + pageSize - 1;
 
@@ -103,7 +103,8 @@ namespace WebApp.Pages
                     endIndex = Math.Min(startIndex + (pageSize * 2) - 1, TotalResults - 1);
 
                     Results = Results.GetRange(startIndex, endIndex - startIndex + 1);
-                    return Page();
+                //return RedirectToPage("/Main", new { searchTerm = searchTerm, genreSelect = genreSelect, sortSelect = sortSelect });
+                return Page();
                 }
 
                 _filterContext.SetFilterStrategy(new SearchFilterStrategy(searchTerm, genreSelect));
@@ -146,12 +147,12 @@ namespace WebApp.Pages
                     TempData["Message"] = "No results.";
                 }
                 return Page();
-            }
-            catch (Exception ex) 
-            {
-                TempData["Message"] = ex.Message;
-                return RedirectToPage("/Error");
-            }
+            //}
+            //catch (Exception ex) 
+            //{
+            //    TempData["Message"] = ex.Message;
+            //    return RedirectToPage("/Error");
+            //}
 
         }
 

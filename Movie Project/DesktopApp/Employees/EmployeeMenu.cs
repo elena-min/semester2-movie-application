@@ -37,10 +37,10 @@ namespace DesktopApp.Employees
                 "Ascending by title",
                 "Descending by title"
             };
-            foreach (string option in orderOptions)
-            {
-                comboBoxOrder.Items.Add(option);
-            }
+            //foreach (string option in orderOptions)
+            //{
+            //    comboBoxOrder.Items.Add(option);
+            //}
 
             listBoxViewEmpoyees.Items.Clear();
             allEmployees = new List<Employee>();
@@ -164,46 +164,46 @@ namespace DesktopApp.Employees
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            lblWarning.Text = "";
-            try
-            {
-                listBoxViewEmpoyees.Items.Clear();
+            //lblWarning.Text = "";
+            //try
+            //{
+            //    listBoxViewEmpoyees.Items.Clear();
 
-                List<Employee> allEmployees = new List<Employee>();
-                if (textBoxEmpName.Text != null || textBoxEmpName.Text == "" && textBoxEMpID.Text != null || textBoxEMpID.Text == "")
-                {
-                    foreach (Employee emp in empController.GetAll())
-                    {
+            //    List<Employee> allEmployees = new List<Employee>();
+            //    if (textBoxEmpName.Text != null || textBoxEmpName.Text == "" && textBoxEMpID.Text != null || textBoxEMpID.Text == "")
+            //    {
+            //        foreach (Employee emp in empController.GetAll())
+            //        {
 
-                        if (emp.FirstName.Contains(textBoxEmpName.Text) || emp.LastName.Contains(textBoxEmpName.Text))
-                        {
-                            string empID = emp.GetId().ToString();
-                            if (empID == textBoxEMpID.Text)
-                            {
-                                allEmployees.Add(emp);
-                            }
-                        }
+            //            if (emp.FirstName.Contains(textBoxEmpName.Text) || emp.LastName.Contains(textBoxEmpName.Text))
+            //            {
+            //                string empID = emp.GetId().ToString();
+            //                if (empID == textBoxEMpID.Text)
+            //                {
+            //                    allEmployees.Add(emp);
+            //                }
+            //            }
 
-                    }
-                }
-                else
-                {
-                    foreach (Employee emp in empController.GetAll())
-                    {
-                        allEmployees.Add(emp);
-                    }
-                }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        foreach (Employee emp in empController.GetAll())
+            //        {
+            //            allEmployees.Add(emp);
+            //        }
+            //    }
 
 
-                foreach (Employee emp in allEmployees)
-                {
-                    listBoxViewEmpoyees.Items.Add(emp.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                lblWarning.Text = $"An unexpected error: {ex.Message}";
-            }
+            //    foreach (Employee emp in allEmployees)
+            //    {
+            //        listBoxViewEmpoyees.Items.Add(emp.ToString());
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    lblWarning.Text = $"An unexpected error: {ex.Message}";
+            //}
 
         }
 

@@ -28,6 +28,7 @@ namespace DesktopApp.Employees
             InitializeComponent();
             iEmployeeDAL = new EmployeeDAL();
             empController = new EmployeeController(iEmployeeDAL);
+            lblWarning.Text = "";
             try
             {
                 this.employee = empController.GetEmployeeByID(selectedEmp.GetId());

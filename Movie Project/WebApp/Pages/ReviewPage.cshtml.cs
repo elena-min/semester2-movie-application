@@ -62,13 +62,13 @@ namespace WebApp.Pages
                     rating = 1;
                 }
 
-                MediaItem mediaItem = _mediaController.GetMediaItemById(movieId);
-                if (mediaItem is Movie)
+                //MediaItem mediaItem = _mediaController.GetMediaItemById(movieId);
+                if (_mediaController.GetMediaItemById(movieId) is Movie)
                 {
                     Movie = _mediaController.GetMediaItemById(movieId);
 
                 }
-                else if (mediaItem is Serie)
+                else if (_mediaController.GetMediaItemById(movieId) is Serie)
                 {
                     Serie = _mediaController.GetMediaItemById(movieId);
                 }
@@ -114,24 +114,39 @@ namespace WebApp.Pages
             return RedirectToPage("/Index");
         }
 
-        //public void OnGet(int movieId)
-        //{
-        //    MediaItem mediaItem = _mediaController.GetMediaItemById(movieId);
-        //    if (mediaItem is Movie)
-        //    {
-        //        Movie = mediaItem;
+        public IActionResult OnGet(int movieId)
+        {
+            try
+            {
+                MediaItem mediaItem = _mediaController.GetMediaItemById(movieId);
+                if (mediaItem is Movie)
+                {
+                    Movie = mediaItem;
 
-        //    }
-        //    else if (mediaItem is Serie)
-        //    {
-        //        Serie = mediaItem;
-        //    }
-        //    else
-        //    {
-        //        RedirectToPage("/Index");
-        //    }
+                }
+                else if (mediaItem is Serie)
+                {
+                    Serie = mediaItem;
+                }
+                else
+                {
+                    RedirectToPage("/Index");
+                }
 
-        //    MovieId = movieId;
-        //}
+                MovieId = movieId;
+                return Page();
+            }
+            catch (ArgumentException ex)
+            {
+                TempData["Message"] = $"{ex.Message}";
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An unexpected error: {ex.Message}";
+                return Page();
+            }
+
+        }
     }
 }

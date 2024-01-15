@@ -62,6 +62,11 @@ namespace DesktopApp.Reviews
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textBoxReason.Text))
+            {
+                lblWarning.Text = "Cannot delete a review without a reason!";
+                return;
+            }
             try
             {
                 DialogResult result = MessageBox.Show("Are you sure you want to delete this review?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

@@ -33,6 +33,7 @@ namespace DesktopApp.Movies
             userController = new UserController(iuserDAL);
             this.selectedMovie = movie;
 
+            lblWarning.Text = "";
             lblInsertTitle.Text = movie.Title;
             richTextBoxDescription.Text = movie.Description;
             lblInsertDirector.Text = ((Movie)movie).Director;

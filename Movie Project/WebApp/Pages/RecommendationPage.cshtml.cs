@@ -92,7 +92,7 @@ namespace WebApp.Pages
                     Recommendations = _filterContext.GetFilteredMediaItems(MediaItems).ToList();
                 }
 
-                _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy());
+                _sortingContext.SetSortingStrategy(new ReleaseDateSortingStrategy(descending: true));
                 MediaItems = _sortingContext.GetSortedMediaItems(MediaItems).ToList();
                 RecentMovies = _sortingContext.GetSortedMediaItems(RecentMovies).Take(10).ToList();
                 RecentShows = _sortingContext.GetSortedMediaItems(RecentShows).Take(10).ToList();
