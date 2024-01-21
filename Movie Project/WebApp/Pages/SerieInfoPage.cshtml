@@ -5,7 +5,7 @@
 @using LogicLayer.Interfaces;
 @model WebApp.Pages.SerieInfoPageModel
 @{
-    Layout = "_LayoutMain";
+    Layout = "_LayoutNoSearch";
     @functions {
         static IReviewDAL iReviewDAL = new ReviewDAL();
         static ReviewController reviewController = new ReviewController(iReviewDAL);

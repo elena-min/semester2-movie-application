@@ -51,28 +51,63 @@ namespace WebApp.Pages
                 if (ModelState.IsValid)
                 {
                     Gender genderEnum = (Gender)Enum.Parse(typeof(Gender), Gender);
-
-                    User user = new User(Firstname, Lastname, Username, Email, Password, genderEnum);
-
-                    if (userController.GetUserByUsername(user.Username) == null)
+                    User userByEmail = userController.GetUserByEmail(Email);
+                    if(userByEmail == null)
                     {
-                        userController.InsertUser(user);
-                        User someUser = userController.GetUserByUsername(user.Username);
-                        user.SetId(someUser.GetId());
-                        List<Claim> claims = new List<Claim>();
-                        claims.Add(new Claim(ClaimTypes.Name, user.Username));
-                        claims.Add(new Claim("Password", user.Password));
-                        claims.Add(new Claim("Id", user.GetId().ToString()));
+                        User user = new User(Firstname, Lastname, Username, Email, Password, genderEnum);
 
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+                        if (userController.GetUserByUsername(user.Username) == null)
+                        {
+                            userController.InsertUser(user);
+                            User someUser = userController.GetUserByUsername(user.Username);
+                            user.SetId(someUser.GetId());
+                            List<Claim> claims = new List<Claim>();
+                            claims.Add(new Claim(ClaimTypes.Name, user.Username));
+                            claims.Add(new Claim("Password", user.Password));
+                            claims.Add(new Claim("Id", user.GetId().ToString()));
 
-                        return RedirectToPage("/Main");
+                            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+
+                            return RedirectToPage("/Main");
+                        }
+                        else
+                        {
+                            TempData["Message"] = "This username is taken!";
+                        }
                     }
                     else
                     {
-                        TempData["Message"] = "This username is taken!";
+                        if (userController.CheckIfUserIsBanned(userByEmail))
+                        {
+                            TempData["Message"] = "This email is banned!";
+                        }
+                        else
+                        {
+                            User user = new User(Firstname, Lastname, Username, Email, Password, genderEnum);
+
+                            if (userController.GetUserByUsername(user.Username) == null)
+                            {
+                                userController.InsertUser(user);
+                                User someUser = userController.GetUserByUsername(user.Username);
+                                user.SetId(someUser.GetId());
+                                List<Claim> claims = new List<Claim>();
+                                claims.Add(new Claim(ClaimTypes.Name, user.Username));
+                                claims.Add(new Claim("Password", user.Password));
+                                claims.Add(new Claim("Id", user.GetId().ToString()));
+
+                                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                                HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+
+                                return RedirectToPage("/Main");
+                            }
+                            else
+                            {
+                                TempData["Message"] = "This username is taken!";
+                            }
+                        }
                     }
+                    
                 }
 
             }

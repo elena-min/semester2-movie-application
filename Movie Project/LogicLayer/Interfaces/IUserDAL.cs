@@ -18,6 +18,5 @@ namespace LogicLayer.Interfaces
         string DeleteUser(User user);
         bool SetProfilePicture(User user, byte[] imageArray);
         string GetProfilePicByID(User user);
-        string CheckIfUserIsBanned(User user);
     }
 }

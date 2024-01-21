@@ -134,7 +134,6 @@ namespace WebApp.Pages
             }
         }
 
-
         public IActionResult OnPostLogout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

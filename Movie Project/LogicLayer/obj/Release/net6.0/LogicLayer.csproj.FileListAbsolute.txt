@@ -1,0 +1,12 @@
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\bin\Release\net6.0\LogicLayer.deps.json
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\bin\Release\net6.0\LogicLayer.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\bin\Release\net6.0\LogicLayer.pdb
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\obj\Release\net6.0\LogicLayer.csproj.AssemblyReference.cache
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\obj\Release\net6.0\LogicLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\obj\Release\net6.0\LogicLayer.AssemblyInfoInputs.cache
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\obj\Release\net6.0\LogicLayer.AssemblyInfo.cs
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\obj\Release\net6.0\LogicLayer.csproj.CoreCompileInputs.cache
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\obj\Release\net6.0\LogicLayer.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\obj\Release\net6.0\refint\LogicLayer.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\obj\Release\net6.0\LogicLayer.pdb
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\LogicLayer\obj\Release\net6.0\ref\LogicLayer.dll

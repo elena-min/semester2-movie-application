@@ -412,38 +412,6 @@ namespace DAL
             }
         }
 
-        public string CheckIfUserIsBanned(User user)
-        {
-            SqlConnection conn = CreateConnection();
-            conn.Open();
-            string query = "SELECT reasonForDeleting FROM Person WHERE id = @id";
-
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                try
-                {
-                    cmd.Parameters.AddWithValue("@id", user.GetId());
-                    var result = cmd.ExecuteScalar();
-                    if (result != DBNull.Value && result != null)
-                    {
-                        return result.ToString();
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Database error", ex);
-                }
-                finally
-                {
-                    conn.Close();
-                }
-            }
-        }
-
     }
 }
 

@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Pages
 {
+    [Authorize]
     public class WrittenReviewsModel : PageModel
     {
-        //[Authorize]
         public User Userr { get; set; }
         public List<Review> Reviews {  get; set; }
         private readonly UserController _userController;
@@ -55,11 +55,21 @@ namespace WebApp.Pages
         {
             try
             {
-                var review = _reviewController.GetReviewByID(reviewId);
-                if (review != null)
+                //It takes the value of the confirmDelete from the form
+                string confirmParam = Request.Form["confirmDelete"];
+                //The confirmParam should not be null or empty and the confirmParam should be a bool.
+                //If both the conditions are kept and the bool is true, then the review will be deleted
+                bool userConfirmed = !string.IsNullOrEmpty(confirmParam) && bool.Parse(confirmParam);
+
+                if(userConfirmed)
                 {
-                    _reviewController.DeletebyUser(review);
+                    var review = _reviewController.GetReviewByID(reviewId);
+                    if (review != null)
+                    {
+                        _reviewController.DeletebyUser(review);
+                    }
                 }
+                
                 return RedirectToPage("/WrittenReviews");
             }
             catch(Exception ex) 

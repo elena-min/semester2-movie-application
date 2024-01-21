@@ -9,7 +9,8 @@
     Layout = "_LayoutNoSearch";
     @functions {
         static IUserDAL iuserDAL = new UserDAL();
-        static UserController userController = new UserController(iuserDAL);
+        static IBannedUserDAL ibannedUserDAL = new BannedUserDAL();
+        static UserController userController = new UserController(iuserDAL, ibannedUserDAL);
         static IMediaItemDAL imediaItemDAL = new MediaItemDAL();
         static MediaItemController mediaController = new MediaItemController(imediaItemDAL);
     }
@@ -38,17 +39,38 @@
 
     </div><br />
    
-    
 
 </main>
 @if (User.IsInRole("Employee"))
 {
-    <div id="deleteProfileButton">
-        <form method="post" asp-page-handler="DeleteUser" asp-route-ID="@Model.Userr.GetId()">
-            <input type="text" name="reason" placeholder="Reason for deletion" />
-            <button type="submit">Ban User</button>
-        </form>
-    </div>
+    if(Model.Userr.Role == "User")
+    {
+        if (userController.CheckIfUserIsBanned(Model.Userr) == false)
+        {
+            <div id="deleteProfileButton" style="text-align: right; padding: 10px; padding-right: 50px">
+                <form method="post" asp-page-handler="DeleteUser" asp-route-ID="@Model.Userr.GetId()">
+                    <input type="text" name="reason" placeholder="Reason for deletion"  style="width: 300px"/>
+                    <button type="submit">Ban User</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            DateTime? dateOfBanning = userController.GetDateOfBanning(Model.Userr);
+            if (dateOfBanning.HasValue)
+            {
+                DateTime banStartDate = dateOfBanning.Value.Date;
+                <div id="deleteProfileButton" style="text-align: right; padding: 10px; padding-right: 50px">
+                    <p>Reason for banning on @banStartDate.ToString("dd-MM-yyyy"): </p>
+                    <p style="color: red">@userController.GetReasonForBanning(Model.Userr)</p>
+                    <form method="post" asp-page-handler="UnBanUser" asp-route-ID="@Model.Userr.GetId()">
+                        <button type="submit">UnBan User</button>
+                    </form>
+                </div>
+            }
+        }
+    }
+    
 }
 
 

@@ -1,0 +1,15 @@
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\bin\Release\net6.0\DAL.deps.json
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\bin\Release\net6.0\DAL.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\bin\Release\net6.0\DAL.pdb
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\bin\Release\net6.0\LogicLayer.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\bin\Release\net6.0\LogicLayer.pdb
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\DAL.csproj.AssemblyReference.cache
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\DAL.AssemblyInfoInputs.cache
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\DAL.AssemblyInfo.cs
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\DAL.csproj.CoreCompileInputs.cache
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\DAL.csproj.CopyComplete
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\DAL.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\refint\DAL.dll
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\DAL.pdb
+C:\Users\lenam\Music\S2-S - 2\Individual assignment\new git\individual-assignment-movie-application\Movie Project\DAL\obj\Release\net6.0\ref\DAL.dll

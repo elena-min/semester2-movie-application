@@ -2,6 +2,7 @@ using LogicLayer.Controllers;
 using DAL;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using LogicLayer.SortingStrategy;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.AccessDeniedPath = new PathString("/AccessDenied");
     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
 });
+
+builder.Services.AddSingleton<BannedUserDAL>(new BannedUserDAL());
 builder.Services.AddSingleton<UserController>(new UserController(new UserDAL()));
+builder.Services.AddSingleton<UserController>(new UserController(new UserDAL(), new BannedUserDAL()));
 builder.Services.AddSingleton<UserDAL>(new UserDAL());
 builder.Services.AddSingleton<EmployeeController>(new EmployeeController(new EmployeeDAL()));
+builder.Services.AddSingleton<EmployeeController>(new EmployeeController(new EmployeeDAL(), new BannedUserDAL()));
 builder.Services.AddSingleton<EmployeeDAL>(new EmployeeDAL());
 builder.Services.AddSingleton<MediaItemController>(new MediaItemController(new MediaItemDAL()));
 builder.Services.AddSingleton<MediaItemDAL>(new MediaItemDAL());

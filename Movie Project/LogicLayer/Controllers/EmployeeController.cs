@@ -11,9 +11,16 @@ namespace LogicLayer.Controllers
     public class EmployeeController
     {
         private IEmployeeDAL iemployeeDAL;
+        private IBannedUserDAL ibannedUserDAL;
+
         public EmployeeController(IEmployeeDAL employeeDAL)
         {
             this.iemployeeDAL = employeeDAL;
+        }
+        public EmployeeController(IEmployeeDAL employeeDAL, IBannedUserDAL bannedUserDAL)
+        {
+            this.iemployeeDAL = employeeDAL;
+            this.ibannedUserDAL = bannedUserDAL;
         }
 
         public bool AddEmployee(Employee newEmployee)
@@ -52,10 +59,13 @@ namespace LogicLayer.Controllers
         {
             return iemployeeDAL.GetProfilePicByID(emp);  
         }
-        public bool DeleteUserAccount(User user, string reasonForDeleting)
+        public bool BanUserAccount(User user, string reasonForDeleting)
         {
-            return iemployeeDAL.DeleteUserAccount(user, reasonForDeleting);
-
+            return ibannedUserDAL.BanUserAccount(user, reasonForDeleting);
+        }
+        public string UnBanUserAccount(User user)
+        {
+            return ibannedUserDAL.UnBanUserAccount(user);
         }
     }
 }

@@ -97,7 +97,25 @@ namespace WebApp.Pages
             try
             {
                 User selectedUser = _userController.GetUserByID(ID);
-                _empController.DeleteUserAccount(selectedUser, reason);
+                _empController.BanUserAccount(selectedUser, reason);
+                return RedirectToPage("/Main");
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
+                return RedirectToPage("/UserProfilePage", new { ID = ID });
+
+            }
+
+        }
+
+        [Authorize(Roles = "Employee")]
+        public IActionResult OnPostUnBanUser(int ID)
+        {
+            try
+            {
+                User selectedUser = _userController.GetUserByID(ID);
+                _empController.UnBanUserAccount(selectedUser);
                 return RedirectToPage("/Main");
             }
             catch (Exception ex)

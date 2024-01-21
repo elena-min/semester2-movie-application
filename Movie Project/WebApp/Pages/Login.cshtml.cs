@@ -72,8 +72,7 @@ namespace WebApp.Pages
 
                         if (result)
                         {
-                            string reasonForBanning = _userController.CheckIfUserIsBanned(user);
-                            if (reasonForBanning == null)
+                            if(_userController.CheckIfUserIsBanned(user) == false)
                             {
                                 List<Claim> claims = new List<Claim>();
                                 claims.Add(new Claim(ClaimTypes.Name, user.Username));
@@ -103,9 +102,39 @@ namespace WebApp.Pages
                             }
                             else
                             {
-                                user.SetUserAsBanned(reasonForBanning);
-                                TempData["Message"] = "Your account has been banned. Reason: " + user.ReasonForDeleting;
-                                return Page();
+                                string reasonForBanning = _userController.GetReasonForBanning(user);
+                                if (reasonForBanning != null)
+                                {
+                                    user.SetUserAsBanned(reasonForBanning);
+                                    DateTime? dateOfBanning = _userController.GetDateOfBanning(user);
+
+                                    if (dateOfBanning.HasValue)
+                                    {
+                                        DateTime banStartDate = dateOfBanning.Value.Date;
+                                        DateTime banExpirationDate = banStartDate.AddDays(30);
+                                        TimeSpan timeRemaining = banExpirationDate - DateTime.UtcNow.Date;
+                                        int daysRemaining = (int)timeRemaining.TotalDays;
+                                        if(daysRemaining < 0)
+                                        {
+                                            _empController.UnBanUserAccount(user);
+                                            TempData["Message"] = "Your account has been unbanned. Try again to login:)";
+                                        }
+                                        else
+                                        {
+                                            TempData["Message"] = "Your account has been banned. Reason: " + user.ReasonForDeleting + ". Days of ban left: " + daysRemaining;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        TempData["Message"] = "Your account has been banned. Reason: " + user.ReasonForDeleting;
+                                    }
+                                    return Page();
+                                }
+                                else
+                                {
+                                    TempData["Message"] = "There is a problem with your account. ";
+                                    return Page();
+                                }
                             }
                         }
 

@@ -322,34 +322,5 @@ namespace DAL
                 conn.Close();
             }
         }
-
-        public bool DeleteUserAccount(User user, string reasonForDeleting)
-        {
-            SqlConnection conn = CreateConnection();
-            try
-            {
-                conn.Open();
-                string commandSql;
-
-
-                commandSql = "UPDATE Person SET isAccountDeleted = 1, reasonForDeleting = @reasonForDeleting WHERE id = @u_id;";
-
-
-                SqlCommand cmd = new SqlCommand(commandSql, conn);
-                cmd.Parameters.AddWithValue("@u_id", user.GetId());
-                cmd.Parameters.AddWithValue("@reasonForDeleting", reasonForDeleting);
-
-                cmd.ExecuteNonQuery();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error banning user's acccount", ex);
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
     }
 }

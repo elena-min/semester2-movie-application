@@ -68,8 +68,6 @@
                     </div>
                 }
 
-
-
             }
 
 
@@ -93,7 +91,6 @@
                         </div>
                         <div class="movie-text p-1">
                             <h5><b><a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()">@movie.Title</a></b></h5>
-                            <h6><i>@movie.PopularityScore.ToString()</i></h6>
                         </div>
                     </div>
                 }
@@ -109,7 +106,6 @@
                         </div>
                         <div class="movie-text p-1">
                             <h5><b><a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()">@serie.Title</a></b></h5>
-                            <h6><i>@serie.PopularityScore.ToString()</i></h6>
                             <h6><i>@(((Serie)serie).Seasons) seasons</i></h6>
                         </div>
                     </div>
@@ -143,7 +139,6 @@
                         </div>
                         <div class="movie-text p-1">
                             <h5><b><a asp-page="./MovieInfoPage" asp-route-id="@movie.GetId()">@movie.Title</a></b></h5>
-                            <h6><i>@movie.PopularityScore.ToString()</i></h6>
                         </div>
                     </div>
                 }
@@ -159,7 +154,6 @@
                         </div>
                         <div class="movie-text p-1">
                             <h5><b><a asp-page="./SerieInfoPage" asp-route-id="@serie.GetId()">@serie.Title</a></b></h5>
-                            <h6><i>@serie.PopularityScore.ToString()</i></h6>
                             <h6><i>@(((Serie)serie).Seasons) seasons</i></h6>
                         </div>
                     </div>

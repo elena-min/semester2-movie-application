@@ -17,7 +17,6 @@ namespace LogicLayer.Interfaces
         bool UpdateEmployee(Employee employee, byte[] pictureBytes);
         string DeleteEmployee(Employee emp);
         string GetProfilePicByID(Employee emp);
-        bool DeleteUserAccount(User user, string reasonForDeleting);
 
     }
 }
