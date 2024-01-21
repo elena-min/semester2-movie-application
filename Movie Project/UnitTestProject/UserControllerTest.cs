@@ -322,9 +322,11 @@ namespace UnitTestProject
             // Assert
             Assert.IsNull(result);
         }
+
         private IUserDAL createTestRepo()
         {
             return new FakeUserDAL();
         }
+
     }
 }

@@ -10,7 +10,8 @@
     @functions {
         static IUserDAL iuserDAL = new UserDAL();
         static IBannedUserDAL ibannedUserDAL = new BannedUserDAL();
-        static UserController userController = new UserController(iuserDAL, ibannedUserDAL);
+        static BannedUserController bannedUserController = new BannedUserController(ibannedUserDAL);
+        static UserController userController = new UserController(iuserDAL);
         static IMediaItemDAL imediaItemDAL = new MediaItemDAL();
         static MediaItemController mediaController = new MediaItemController(imediaItemDAL);
     }
@@ -45,7 +46,7 @@
 {
     if(Model.Userr.Role == "User")
     {
-        if (userController.CheckIfUserIsBanned(Model.Userr) == false)
+        if (bannedUserController.CheckIfUserIsBanned(Model.Userr) == false)
         {
             <div id="deleteProfileButton" style="text-align: right; padding: 10px; padding-right: 50px">
                 <form method="post" asp-page-handler="DeleteUser" asp-route-ID="@Model.Userr.GetId()">
@@ -56,13 +57,13 @@
         }
         else
         {
-            DateTime? dateOfBanning = userController.GetDateOfBanning(Model.Userr);
+            DateTime? dateOfBanning = bannedUserController.GetDateOfBanning(Model.Userr);
             if (dateOfBanning.HasValue)
             {
                 DateTime banStartDate = dateOfBanning.Value.Date;
                 <div id="deleteProfileButton" style="text-align: right; padding: 10px; padding-right: 50px">
                     <p>Reason for banning on @banStartDate.ToString("dd-MM-yyyy"): </p>
-                    <p style="color: red">@userController.GetReasonForBanning(Model.Userr)</p>
+                    <p style="color: red">@bannedUserController.GetReasonForBanning(Model.Userr)</p>
                     <form method="post" asp-page-handler="UnBanUser" asp-route-ID="@Model.Userr.GetId()">
                         <button type="submit">UnBan User</button>
                     </form>

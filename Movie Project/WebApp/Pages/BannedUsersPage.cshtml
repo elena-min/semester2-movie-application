@@ -10,8 +10,9 @@
         static IUserDAL iuserDAL = new UserDAL();
         static IEmployeeDAL iempDAL = new EmployeeDAL();
         static IBannedUserDAL ibannedUserDAL = new BannedUserDAL();
-        static UserController userController = new UserController(iuserDAL, ibannedUserDAL);
-        static EmployeeController empController = new EmployeeController(iempDAL, ibannedUserDAL);
+        static BannedUserController bannedUserController = new BannedUserController(ibannedUserDAL);
+        static UserController userController = new UserController(iuserDAL);
+        static EmployeeController empController = new EmployeeController(iempDAL);
     }
 }
 
@@ -45,8 +46,8 @@
                         <h3><b>@user.Username</b></h3>
                         </a>
                         <p>@user.FirstName @user.LastName</p>
-                        <p style="color: red">@userController.GetReasonForBanning(user)</p>
-                        <p style="color: red">@userController.GetDateOfBanning(user).Value.ToString("dd-MM-yyyy")</p>
+                        <p style="color: red">@bannedUserController.GetReasonForBanning(user)</p>
+                        <p style="color: red">@bannedUserController.GetDateOfBanning(user).Value.ToString("dd-MM-yyyy")</p>
                         <form method="post">
                             <button type="submit" name="userId" value="@user.GetId()">UnBan</button>
                         </form>
@@ -74,8 +75,8 @@
                     <div class="movieText p-1">
                         <h3><b>@user.Username</b></h3>
                         <p>@user.FirstName @user.LastName</p>
-                        <p style="color: red">@userController.GetReasonForBanning(user)</p>
-                        <p style="color: red">@userController.GetDateOfBanning(user).Value.ToString("dd-MM-yyyy")</p>
+                        <p style="color: red">@bannedUserController.GetReasonForBanning(user)</p>
+                        <p style="color: red">@bannedUserController.GetDateOfBanning(user).Value.ToString("dd-MM-yyyy")</p>
                         <form method="post">
                             <button type="submit" name="userId" value="@user.GetId()">UnBan</button>
                         </form>

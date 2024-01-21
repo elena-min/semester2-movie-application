@@ -1,3 +1,4 @@
+using DAL;
 using DAL.FakeDAL;
 using LogicLayer.Classes;
 using LogicLayer.Controllers;
@@ -42,7 +43,6 @@ namespace UnitTestProject
             Assert.IsTrue(resultS1);
             Assert.IsFalse(resultS2);
         }
-
 
         [TestMethod]
         public void GetEmployeeByIDTest()

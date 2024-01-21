@@ -11,16 +11,11 @@ namespace LogicLayer.Controllers
     public class UserController
     {
         private IUserDAL iuserDAL;
-        private IBannedUserDAL ibannedUserDAL;
         public UserController(IUserDAL userDAL)
         {
             this.iuserDAL = userDAL;
         }
-        public UserController(IUserDAL userDAL, IBannedUserDAL bannedUserDAL)
-        {
-            this.iuserDAL = userDAL;
-            this.ibannedUserDAL = bannedUserDAL;
-        }
+     
         public bool InsertUser(User newUser)
         {
             return iuserDAL.InsertUser(newUser);
@@ -58,22 +53,6 @@ namespace LogicLayer.Controllers
         {
             return iuserDAL.GetProfilePicByID(user);
 
-        }
-        public bool CheckIfUserIsBanned(User user)
-        {
-            return ibannedUserDAL.CheckIfUserIsBanned(user);
-        }
-        public string GetReasonForBanning(User user)
-        {
-            return ibannedUserDAL.GetReasonForBanning(user);
-        }
-        public DateTime? GetDateOfBanning(User user)
-        {
-            return ibannedUserDAL.GetDateOfBanning(user);
-        }
-        public User[] GetAllBannedUser()
-        {
-            return ibannedUserDAL.GetAllBannedUser();
         }
     }
 }

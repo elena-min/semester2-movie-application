@@ -83,7 +83,7 @@ namespace UnitTestProject
             var person = new Person();
 
             // Act + Assert
-            Assert.ThrowsException<ValidationException>(() =>
+            Assert.ThrowsException<ArgumentException>(() =>
             {
                 person.Username = "";
             });

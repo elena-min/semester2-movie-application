@@ -14,11 +14,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 
 builder.Services.AddSingleton<BannedUserDAL>(new BannedUserDAL());
+builder.Services.AddSingleton<BannedUserController>(new BannedUserController(new BannedUserDAL()));
 builder.Services.AddSingleton<UserController>(new UserController(new UserDAL()));
-builder.Services.AddSingleton<UserController>(new UserController(new UserDAL(), new BannedUserDAL()));
 builder.Services.AddSingleton<UserDAL>(new UserDAL());
 builder.Services.AddSingleton<EmployeeController>(new EmployeeController(new EmployeeDAL()));
-builder.Services.AddSingleton<EmployeeController>(new EmployeeController(new EmployeeDAL(), new BannedUserDAL()));
 builder.Services.AddSingleton<EmployeeDAL>(new EmployeeDAL());
 builder.Services.AddSingleton<MediaItemController>(new MediaItemController(new MediaItemDAL()));
 builder.Services.AddSingleton<MediaItemDAL>(new MediaItemDAL());

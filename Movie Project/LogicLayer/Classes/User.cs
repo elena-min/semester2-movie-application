@@ -57,6 +57,11 @@ namespace LogicLayer.Classes
             IsBanned = true;
             ReasonForDeleting = reason;
         }
+        public void SetUserAsUnBanned()
+        {
+            IsBanned = false;
+            ReasonForDeleting = null;
+        }
         public override string ToString()
         {
             return $"{this.GetId()}- {Username} - {FirstName} {LastName}";

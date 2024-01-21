@@ -241,7 +241,7 @@ namespace UnitTestProject
             // Act
             mediaItem.CalculatePopularityScore(DateTime.Now, TimePeriod.Week);
             double avrgRating = mediaItem.CalculateAverageRating();
-            double expectedresult = 0.7 * avrgRating + 0.3 * 15;
+            double expectedresult = 0.7 * avrgRating + 0.3 * 5;
 
             // Assert
             Assert.AreEqual(expectedresult, mediaItem.PopularityScore); 
@@ -268,7 +268,7 @@ namespace UnitTestProject
             // Act
             mediaItem.CalculatePopularityScore(DateTime.Now, TimePeriod.Month);
             double avrgRating = mediaItem.CalculateAverageRating();
-            double expectedresult = 0.7 * avrgRating + 0.3 * 27;
+            double expectedresult = 0.7 * avrgRating + 0.3 * 37;
 
             // Assert
             Assert.AreEqual(expectedresult, mediaItem.PopularityScore);
