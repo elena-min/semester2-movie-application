@@ -20,7 +20,6 @@ namespace DAL.FakeDAL
             favMediaItems = new List<MediaItem>();
         }
 
-
         public bool AddProductToFavorite(MediaItem mediaItem, User user)
         {
             if(user != null)

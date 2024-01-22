@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using LogicLayer.Classes;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json.Linq;
 
 namespace WebApp.Pages
 {
@@ -41,11 +42,10 @@ namespace WebApp.Pages
         }
         public IActionResult OnPost(string username, string firstName, string lastName, string gender, string profileDescription)
         {
+            var userID = User.FindFirst("Id").Value;
+            var existingUser = _userController.GetUserByID(Int32.Parse(userID));
             try
-            {
-                var userID = User.FindFirst("Id").Value;
-                var existingUser = _userController.GetUserByID(Int32.Parse(userID));
-
+            {             
                 //Checks if there is a user with this username already existing.
                 //Also check whether the new username is the same as the old one
                 if (_userController.GetUserByUsername(username) != null && username != existingUser.Username)
@@ -53,6 +53,35 @@ namespace WebApp.Pages
                     TempData["Message"] = "Username is already taken. Please choose a different username.";
                     return Page();
                 }
+
+                string user_firstName = existingUser.FirstName;
+                string fnameString = Request.Form["firstName"];
+                if (!string.IsNullOrEmpty(fnameString) && (fnameString.Any(char.IsLetter)))
+                {
+                    user_firstName = Request.Form["firstName"];               
+                }
+                else
+                {
+                    TempData["Message"] = $"The first name should be filled in and should contain atleast 1 letter!";
+                    return Page();
+                }
+
+                string user_lasstName = existingUser.LastName;
+                string lnameString = Request.Form["lastName"];
+                if (string.IsNullOrEmpty(lnameString) && (lnameString.Any(char.IsLetter)))
+                {
+                    TempData["Message"] = $"The last name should be filled in and should contain atleast 1 letter!";
+                    return Page();
+                }
+
+                string user_username = existingUser.Username;
+                string usernameString = Request.Form["username"];
+                if (string.IsNullOrEmpty(usernameString) && (usernameString.Any(char.IsLetter)))
+                {
+                    TempData["Message"] = $"The username should be filled in and should contain atleast 1 letter!";
+                    return Page();
+                }
+
 
                 existingUser.Username = username;
                 existingUser.FirstName = firstName;
@@ -66,6 +95,23 @@ namespace WebApp.Pages
                 {
                     existingUser.ProfileDescription = null;
                 }
+            }
+            catch (ArgumentException ex)
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
+            }
+            catch (ValidationException ex)
+            {
+                TempData["Message"] = $"{ex.Message}";
+
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
+            }
+
+            try 
+            {
                 if (_userController.UpdateUser(existingUser))
                 {
                     TempData["Message"] = "Successfully updated!";
@@ -75,10 +121,21 @@ namespace WebApp.Pages
                     TempData["Message"] = "Update failed.";
                 }
             }
+        
+            catch (ArgumentException ex)
+            {
+                TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
+            }
+            catch (ValidationException ex)
+            {
+                TempData["Message"] = $"{ex.Message}";
+
+            }
             catch (Exception ex)
             {
                 TempData["Message"] = $"An unexpected error occurred: {ex.Message}";
             }
+            
             return Page();
         }
 

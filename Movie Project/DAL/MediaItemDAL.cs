@@ -96,12 +96,10 @@ namespace DAL
             }
         }
         public MediaItem[] GetAll()
-        {
-
-            List<MediaItem> mediaItems = new List<MediaItem>();
-            List<Exception> exceptions = new List<Exception>();
-            using (SqlConnection conn = CreateConnection())
-            {
+        {      
+                List<MediaItem> mediaItems = new List<MediaItem>();
+                using (SqlConnection conn = CreateConnection())
+                {
                 try
                 {
                     conn.Open();
@@ -118,93 +116,72 @@ namespace DAL
                     {
                         while (reader.Read())
                         {
-                            try
+
+                            int mediaItemId = reader.GetInt32(0);
+                            string title = reader.GetString(1);
+                            string description = reader.GetString(2);
+                            double rating = (double)reader.GetDecimal(3);
+                            DateTime releaseDate = reader.GetDateTime(4);
+                            string countryOfOrigin = reader.GetString(5);
+                            string string_cast = reader.GetString(7);
+                            string genres_string = reader.GetString(6);
+                            string[] string_genres = genres_string.Split(',');
+                            string[] cast = string_cast.Split(',');
+
+                            MediaItem mediaItem;
+
+                            if (reader["director"] != DBNull.Value)
                             {
-                                int mediaItemId = reader.GetInt32(0);
-                                string title = reader.GetString(1);
-                                string description = reader.GetString(2);
-                                double rating = (double)reader.GetDecimal(3);
-                                DateTime releaseDate = reader.GetDateTime(4);
-                                string countryOfOrigin = reader.GetString(5);
-                                string string_cast = reader.GetString(7);
-                                string genres_string = reader.GetString(6);
-                                string[] string_genres = genres_string.Split(',');
-                                string[] cast = string_cast.Split(',');
+                                string director = reader.GetString(9);
+                                string writer = reader.GetString(10);
+                                int duration = reader.GetInt32(11);
 
-                                MediaItem mediaItem;
-
-                                if (reader["director"] != DBNull.Value)
-                                {
-                                    string director = reader.GetString(9);
-                                    string writer = reader.GetString(10);
-                                    int duration = reader.GetInt32(11);
-
-                                    mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
-                                }
-                                else if (reader["seasons"] != DBNull.Value)
-                                {
-                                    int seasons = reader.GetInt32(12);
-                                    int episodes = reader.GetInt32(13);
-
-                                    mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
-                                }
-                                else
-                                {
-                                    throw new Exception("Undetected type.");
-                                }
-
-                                mediaItem.SetId(mediaItemId);
-                                foreach (string string_genre in string_genres)
-                                {
-                                    if (Enum.TryParse(string_genre, out Genre enum_genre))
-                                    {
-                                        mediaItem.AddGenre(enum_genre);
-                                    }
-                                }
-                                foreach (string actor in cast)
-                                {
-                                    mediaItem.Cast.AddToCast(actor);
-                                }
-
-                                mediaItems.Add(mediaItem);
+                                mediaItem = new Movie(title, description, releaseDate, countryOfOrigin, rating, director, writer, duration);
                             }
-                            catch (FormatException ex)
+                            else if (reader["seasons"] != DBNull.Value)
                             {
-                                // Log the exception for the specific row
-                                exceptions.Add(ex);
-                                // Continue to the next iteration of the loop
-                                continue;
+                                int seasons = reader.GetInt32(12);
+                                int episodes = reader.GetInt32(13);
+
+                                mediaItem = new Serie(title, description, releaseDate, countryOfOrigin, rating, seasons, episodes);
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                // Log other exceptions
-                                exceptions.Add(ex);
+                                throw new Exception("Undetected type.");
                             }
+
+                            mediaItem.SetId(mediaItemId);
+                            foreach (string string_genre in string_genres)
+                            {
+                                if (Enum.TryParse(string_genre, out Genre enum_genre))
+                                {
+                                    mediaItem.AddGenre(enum_genre);
+                                }
+                            }
+                            foreach (string actor in cast)
+                            {
+                                mediaItem.Cast.AddToCast(actor);
+                            }
+
+                            mediaItems.Add(mediaItem);
                         }
+
                     }
-                
-
-
-
-            // If there were exceptions, throw a single exception with details
-            if (exceptions.Count > 0)
-                {
-                    string exceptionMessages = string.Join("\n", exceptions.Select(e => e.Message));
-                    throw new InvalidObjectException($"Error processing some rows:\n{exceptionMessages}", exceptions[0]);
                 }
-
+                catch (FormatException ex)
+                {
+                    throw new FormatException("Error retriveing media items from database", ex);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error retriveing media items from database", ex);
+                }
+                finally
+                {
+                    conn.Close();
+                }
                 return mediaItems.ToArray();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error retriveing media items from database", ex);
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
+            }               
         }
 
         public int[] GetAllGivenRatings(MediaItem mediaItem)

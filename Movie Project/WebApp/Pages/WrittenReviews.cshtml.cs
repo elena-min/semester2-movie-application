@@ -54,22 +54,12 @@ namespace WebApp.Pages
         public IActionResult OnPostDelete(int reviewId)
         {
             try
-            {
-                //It takes the value of the confirmDelete from the form
-                string confirmParam = Request.Form["confirmDelete"];
-                //The confirmParam should not be null or empty and the confirmParam should be a bool.
-                //If both the conditions are kept and the bool is true, then the review will be deleted
-                bool userConfirmed = !string.IsNullOrEmpty(confirmParam) && bool.Parse(confirmParam);
-
-                if(userConfirmed)
-                {
+            {             
                     var review = _reviewController.GetReviewByID(reviewId);
                     if (review != null)
                     {
                         _reviewController.DeletebyUser(review);
-                    }
-                }
-                
+                    }                             
                 return RedirectToPage("/WrittenReviews");
             }
             catch(Exception ex) 

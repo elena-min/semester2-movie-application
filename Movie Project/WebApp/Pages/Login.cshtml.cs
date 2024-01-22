@@ -14,16 +14,18 @@ namespace WebApp.Pages
     {
         private readonly UserController _userController;
         private readonly EmployeeController _empController;
+        private readonly BannedUserController _banController;
 
         [BindProperty(SupportsGet =true)]
         public User User { get; set; }
 
         [BindProperty]
         public bool RememberMe { get; set; }
-        public LoginModel(UserController userController, EmployeeController empController)
+        public LoginModel(UserController userController, EmployeeController empController, BannedUserController banController)
         {
             _userController = userController;
             _empController = empController;
+            _banController = banController;
         }
         public void OnGet()
         {
@@ -72,7 +74,7 @@ namespace WebApp.Pages
 
                         if (result)
                         {
-                            if(_userController.CheckIfUserIsBanned(user) == false)
+                            if(_banController.CheckIfUserIsBanned(user) == false)
                             {
                                 List<Claim> claims = new List<Claim>();
                                 claims.Add(new Claim(ClaimTypes.Name, user.Username));
@@ -102,11 +104,11 @@ namespace WebApp.Pages
                             }
                             else
                             {
-                                string reasonForBanning = _userController.GetReasonForBanning(user);
+                                string reasonForBanning = _banController.GetReasonForBanning(user);
                                 if (reasonForBanning != null)
                                 {
                                     user.SetUserAsBanned(reasonForBanning);
-                                    DateTime? dateOfBanning = _userController.GetDateOfBanning(user);
+                                    DateTime? dateOfBanning = _banController.GetDateOfBanning(user);
 
                                     if (dateOfBanning.HasValue)
                                     {
@@ -116,7 +118,7 @@ namespace WebApp.Pages
                                         int daysRemaining = (int)timeRemaining.TotalDays;
                                         if(daysRemaining < 0)
                                         {
-                                            _empController.UnBanUserAccount(user);
+                                            _banController.UnBanUserAccount(user);
                                             TempData["Message"] = "Your account has been unbanned. Try again to login:)";
                                         }
                                         else
@@ -153,6 +155,21 @@ namespace WebApp.Pages
                             claims.Add(new Claim("Id", emp.GetId().ToString()));
                             claims.Add(new Claim(ClaimTypes.Role, emp.Role));
                             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            // Check if "Remember Me" is checked
+                            if (RememberMe)
+                            {
+                                // Create a cookie with user information
+                                var userCookieOptions = new CookieOptions
+                                {
+                                    Expires = DateTime.Now.AddDays(30)
+                                };
+
+                                // Serialize userID and store it in the cookie
+                                var userData = emp.GetId().ToString();
+
+                                //var userData = JsonConvert.SerializeObject(new { Id = user.GetId() });
+                                Response.Cookies.Append("RememberMeCookie", userData, userCookieOptions);
+                            }
                             HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
 
                             return RedirectToPage("Main");

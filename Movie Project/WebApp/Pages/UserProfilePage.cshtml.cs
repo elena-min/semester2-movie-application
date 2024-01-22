@@ -20,14 +20,16 @@ namespace WebApp.Pages
 
         private readonly UserController _userController;
         private readonly EmployeeController _empController;
+        private readonly BannedUserController _banController;
         private readonly FavoritesController _favoritesController;
         private readonly SortingContext _sortingContext; 
 
 
-        public UserProfilePageModel(UserController userController, EmployeeController empController, FavoritesController favoritesController, SortingContext sortingContext)
+        public UserProfilePageModel(UserController userController, EmployeeController empController, BannedUserController bannedUserController, FavoritesController favoritesController, SortingContext sortingContext)
         {
             _userController = userController;
             _empController = empController;
+            _banController = bannedUserController;
             _favoritesController = favoritesController;
             _sortingContext = sortingContext;
         }
@@ -97,7 +99,7 @@ namespace WebApp.Pages
             try
             {
                 User selectedUser = _userController.GetUserByID(ID);
-                _empController.BanUserAccount(selectedUser, reason);
+                _banController.BanUserAccount(selectedUser, reason);
                 return RedirectToPage("/Main");
             }
             catch (Exception ex)
@@ -115,7 +117,7 @@ namespace WebApp.Pages
             try
             {
                 User selectedUser = _userController.GetUserByID(ID);
-                _empController.UnBanUserAccount(selectedUser);
+                _banController.UnBanUserAccount(selectedUser);
                 return RedirectToPage("/Main");
             }
             catch (Exception ex)

@@ -14,9 +14,9 @@ namespace WebApp.Pages
     public class BannedUsersPageModel : PageModel
     {
         [BindProperty]
-        public User Userr { get; set; }
+        public Person Userr { get; set; }
         private readonly UserController _userController;
-        private readonly EmployeeController _empController;
+        private readonly BannedUserController _banController;
 
         public List<User> BannedUsers { get; set; }
 
@@ -26,10 +26,10 @@ namespace WebApp.Pages
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
 
-        public BannedUsersPageModel(UserController userController, EmployeeController empController)
+        public BannedUsersPageModel(UserController userController, BannedUserController banController)
         {
             _userController = userController;
-            _empController = empController;
+            _banController = banController;
         }
         public IActionResult OnGet(int pageIndex = 1)
         {
@@ -50,9 +50,9 @@ namespace WebApp.Pages
                 }
 
                 BannedUsers = new List<User>();
-                foreach (User bannedUser in _userController.GetAllBannedUser())
+                foreach (User bannedUser in _banController.GetAllBannedUser())
                 {
-                    string reasonForbanning = _userController.GetReasonForBanning(bannedUser);
+                    string reasonForbanning = _banController.GetReasonForBanning(bannedUser);
                     bannedUser.SetUserAsBanned(reasonForbanning);
                     BannedUsers.Add(bannedUser);
                 }
@@ -108,7 +108,7 @@ namespace WebApp.Pages
                     return NotFound();
                 }
 
-                TempData["Message"] = _empController.UnBanUserAccount(userToBeUnBanned);
+                TempData["Message"] = _banController.UnBanUserAccount(userToBeUnBanned);
                 return RedirectToPage("/BannedUsersPage");
             }
             catch (Exception ex)

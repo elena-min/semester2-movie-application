@@ -16,14 +16,6 @@ namespace LogicLayer.Classes
             get => profileDescription;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Profile description should not be empty!");
-                }
-                if (!value.Any(char.IsLetter))
-                {
-                    throw new ArgumentException("Profile description should contain at least one letter!");
-                }
                 profileDescription = value;
             }
         }

@@ -30,7 +30,7 @@ namespace DAL
             {
                 string salt;
                 var hashedPassword = HashPassword.GenerateHash(newUser.Password, out salt);
-                string commandSql = "INSERT INTO Person (firstName, lastName, username, password, saltedPassword, email, gender, isAccountDeleted, role) VALUES ( @u_fname, @u_lname, @u_username, @u_password, @u_saltedPassword, @u_email, @u_gender, 0, @role);";
+                string commandSql = "INSERT INTO Person (firstName, lastName, username, password, saltedPassword, email, gender, role) VALUES ( @u_fname, @u_lname, @u_username, @u_password, @u_saltedPassword, @u_email, @u_gender, @role);";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(commandSql, conn);
                 cmd.Parameters.AddWithValue("@u_username", newUser.Username);
@@ -226,7 +226,7 @@ namespace DAL
         public User[] GetAll()
         {
             SqlConnection conn = CreateConnection();
-            string query = "select * from Person where age is  null";
+            string query = "select * from Person where age is null";
             List<User> users = new List<User>();
             try
             {
@@ -246,7 +246,7 @@ namespace DAL
                         string email = reader.GetString(6);
                         string string_gender = reader.GetString(7);
                         string profileDescription = null;
-                        if (!reader.IsDBNull(9))
+                        if (!reader.IsDBNull(10))
                         {
                             profileDescription = reader.GetString(10);
                         }
@@ -294,7 +294,7 @@ namespace DAL
                 }
                 else
                 {
-                    commandSql = "UPDATE People SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender WHERE id = @e_id;";
+                    commandSql = "UPDATE Person SET firstName = @e_fname, lastName = @e_lname, username = @e_username, gender = @e_gender WHERE id = @e_id;";
                 }
 
                 SqlCommand cmd = new SqlCommand(commandSql, conn);

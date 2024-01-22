@@ -56,11 +56,7 @@ namespace WebApp.Pages
                 }
                 Userr = _userController.GetUserByID(Int32.Parse(userID.ToString()));
 
-                int rating = Convert.ToInt32(Request.Form["Rating"]);
-                if (rating == 0)
-                {
-                    rating = 1;
-                }
+              
 
                 //MediaItem mediaItem = _mediaController.GetMediaItemById(movieId);
                 if (_mediaController.GetMediaItemById(movieId) is Movie)
@@ -77,19 +73,46 @@ namespace WebApp.Pages
                     RedirectToPage("/Main");
                 }
 
+                int rating = 3;
+                string ratingString = Request.Form["Rating"];
+                if (!string.IsNullOrEmpty(ratingString))
+                {
+                    rating = Convert.ToInt32(Request.Form["Rating"]);
+                    if (rating == 0)
+                    {
+                        if(Movie != null)
+                        {
+                            TempData["Message"] = $"The rating should be between 1 and 5!";
+                            return RedirectToPage("/ReviewPage", new { movieId = Movie.GetId() });
+                        }
+                        else if (Serie != null)
+                        {
+                            TempData["Message"] = $"The rating should be between 1 and 5!";
+                            return RedirectToPage("/ReviewPage", new { movieId = Serie.GetId() });
+
+                        }
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = $"The rating should be between 1 and 5!";
+                    return Page();
+                }
+
                 if (Movie != null)
                 {
-                    Review review = new Review { Title = ReviewTitle, ReviewContent = ReviewContent, Rating = rating, PointedTowards = Movie, ReviewWriter = Userr };
-                    _reviewController.AddReview(review);
-                    return RedirectToPage("/MovieInfoPage", new { id = Movie.GetId() });
-
+                    
+                        Review review = new Review { Title = ReviewTitle, ReviewContent = ReviewContent, Rating = rating, PointedTowards = Movie, ReviewWriter = Userr };
+                        _reviewController.AddReview(review);
+                        return RedirectToPage("/MovieInfoPage", new { id = Movie.GetId() });
                 }
                 else if (Serie != null)
                 {
-                    Review review = new Review { Title = ReviewTitle, ReviewContent = ReviewContent, Rating = rating, PointedTowards = Serie, ReviewWriter = Userr };
-                    _reviewController.AddReview(review);
-                    return RedirectToPage("/SerieInfoPage", new { id = Serie.GetId() });
-
+                      Review review = new Review { Title = ReviewTitle, ReviewContent = ReviewContent, Rating = 2, PointedTowards = Serie, ReviewWriter = Userr };
+                        review.Rating = rating;
+                        _reviewController.AddReview(review);
+                        return RedirectToPage("/SerieInfoPage", new { id = Serie.GetId() });
+                
                 }
 
                 return RedirectToPage("/Main");

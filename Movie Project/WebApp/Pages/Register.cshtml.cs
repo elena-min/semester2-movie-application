@@ -13,10 +13,12 @@ namespace WebApp.Pages
     public class RegisterModel : PageModel
     {
         private readonly UserController userController;
+        private readonly BannedUserController _banController;
 
-        public RegisterModel(UserController userController)
+        public RegisterModel(UserController userController, BannedUserController banController)
         {
             this.userController = userController;
+            _banController = banController;
         }
 
         [BindProperty]
@@ -78,7 +80,7 @@ namespace WebApp.Pages
                     }
                     else
                     {
-                        if (userController.CheckIfUserIsBanned(userByEmail))
+                        if (_banController.CheckIfUserIsBanned(userByEmail))
                         {
                             TempData["Message"] = "This email is banned!";
                         }

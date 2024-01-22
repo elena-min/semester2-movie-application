@@ -72,9 +72,9 @@
                 <input type="submit" value="Submit review">
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
-            @if (TempData["ErrorMessage"] != null)
+            @if (TempData["Message"] != null)
             {
-                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                <div class="alert alert-danger">@TempData["Message"]</div>
             }
         </form>
     </div>
